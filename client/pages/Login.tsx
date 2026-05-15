@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { signInWithPopup, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { useAuth } from '../context/AuthContext';
 import { Navigate, useLocation } from 'react-router-dom';
@@ -32,14 +32,10 @@ export default function Login() {
     setLoading(true);
     setError(null);
     const provider = new GoogleAuthProvider();
-    provider.setCustomParameters({ prompt: 'select_account' });
     try {
-      await signInWithPopup(auth, provider);
-      // Auth state change will be picked up by AuthContext automatically
+      await signInWithRedirect(auth, provider);
     } catch (err: any) {
-      if (err.code !== 'auth/popup-closed-by-user') {
-        setError(err.message || 'Failed to sign in');
-      }
+      setError(err.message || 'Failed to sign in');
       setLoading(false);
     }
   };
