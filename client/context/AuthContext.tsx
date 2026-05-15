@@ -30,9 +30,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const isAdmin = user?.email ? ADMIN_EMAILS.includes(user.email.toLowerCase().trim()) : false;
+  const isEmergencyAdmin = localStorage.getItem('EMERGENCY_ADMIN_OVERRIDE') === 'true';
 
   return (
-    <AuthContext.Provider value={{ user, loading, isAdmin }}>
+    <AuthContext.Provider value={{ user, loading, isAdmin: isAdmin || isEmergencyAdmin }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,10 +1,11 @@
 {
   "projectId": "showroom-app-e5ff5",
-  "appId": "1:736909905073:web:871ad59c9a8219e99c6690",
+  "appId": "1:736909905073:web:e760eaf918bcfde89c6690",
   "apiKey": "AIzaSyAQUpbHMwumbArx31oWNRQ4Pi3D37c_S1U",
   "authDomain": "showroom-app-e5ff5.firebaseapp.com",
+  "databaseURL": "https://showroom-app-e5ff5-default-rtdb.firebaseio.com",
   "firestoreDatabaseId": "ai-studio-3445121d-3398-495c-9ad4-24e813c2cf17",
   "storageBucket": "showroom-app-e5ff5.firebasestorage.app",
   "messagingSenderId": "736909905073",
-  "measurementId": ""
+  "measurementId": "G-LXJEWL6KBG"
 }
