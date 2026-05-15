@@ -1,0 +1,169 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      return isSignedIn();
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isAdmin() {
+      return isVerified() && (
+        request.auth.token.email == 'bryansmobiledetailing@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isOwner(userId) {
+      return isVerified() && request.auth.uid == userId;
+    }
+
+    // --- Entity Validations ---
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'role']) 
+        && data.keys().size() <= 10
+        && data.uid is string && data.uid.size() <= 128
+        && data.email is string && data.email.size() <= 255
+        && data.role in ['admin', 'customer'];
+    }
+
+    function isValidBooking(data) {
+      return data.keys().hasAll(['startAt', 'customer', 'status'])
+        && data.keys().size() <= 15
+        && data.startAt is string 
+        && data.customer is map
+        && data.status in ['pending', 'confirmed', 'cancelled', 'completed'];
+    }
+
+    function isValidQuote(data) {
+      return data.keys().hasAll(['name', 'email', 'vehicle'])
+        && data.keys().size() <= 15
+        && data.name is string && data.name.size() <= 100
+        && data.email is string && data.email.size() <= 255
+        && data.vehicle is string && data.vehicle.size() <= 255;
+    }
+
+    function isValidBlogPost(data) {
+      return data.keys().hasAll(['title', 'slug', 'content', 'published'])
+        && data.keys().size() <= 15
+        && data.title is string && data.title.size() <= 200
+        && data.slug is string && data.slug.size() <= 200
+        && data.content is string
+        && data.published is bool;
+    }
+
+    function isValidFaqItem(data) {
+      return data.keys().hasAll(['question', 'answer', 'order'])
+        && data.keys().size() <= 10
+        && data.question is string && data.question.size() <= 500
+        && data.answer is string && data.answer.size() <= 5000
+        && data.order is number;
+    }
+
+    // --- Collection Rules ---
+
+    match /test/connection {
+      allow read: if true;
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId) 
+        && isValidUser(incoming())
+        && incoming().uid == request.auth.uid
+        && incoming().role == 'customer';
+      allow update: if (isOwner(userId) || isAdmin())
+        && isValidUser(incoming())
+        && (isAdmin() || (
+            incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'photoURL', 'updatedAt', 'bookings'])
+            && incoming().uid == existing().uid
+            && incoming().role == existing().role
+        ));
+    }
+
+    match /bookings/{bookingId} {
+      allow list: if isVerified() && (isAdmin() || resource.data.userId == request.auth.uid);
+      allow get: if isVerified() && (isAdmin() || resource.data.userId == request.auth.uid);
+      allow create: if (isVerified() || !isSignedIn())
+        && isValidId(bookingId)
+        && isValidBooking(incoming())
+        && (isSignedIn() ? incoming().userId == request.auth.uid : incoming().userId == 'guest')
+        && incoming().status == 'pending'
+        && incoming().createdAt == request.time;
+      allow update: if isVerified()
+        && (isAdmin() || (
+            resource.data.userId == request.auth.uid
+            && incoming().diff(existing()).affectedKeys().hasOnly(['customer', 'updatedAt'])
+            && incoming().userId == existing().userId
+            && incoming().status == existing().status
+        ))
+        && isValidBooking(incoming());
+      allow delete: if isAdmin();
+    }
+
+    match /quotes/{quoteId} {
+      allow list: if isAdmin();
+      allow get: if isAdmin();
+      allow create: if isValidId(quoteId) 
+        && isValidQuote(incoming())
+        && incoming().createdAt == request.time;
+      allow delete: if isAdmin();
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /blog/{postId} {
+      allow list: if isAdmin() || resource.data.published == true;
+      allow get: if isAdmin() || resource.data.published == true;
+      allow create: if isAdmin() && isValidBlogPost(incoming());
+      allow update: if isAdmin() && isValidBlogPost(incoming());
+      allow delete: if isAdmin();
+    }
+
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    match /services/{serviceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /sync_logs/{logId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /faqs/{faqId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidFaqItem(incoming());
+      allow update: if isAdmin() && isValidFaqItem(incoming());
+      allow delete: if isAdmin();
+    }
+  }
+}

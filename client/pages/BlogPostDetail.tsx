@@ -1,0 +1,311 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
+import { 
+  Calendar, 
+  Clock, 
+  ChevronLeft, 
+  Share2, 
+  Tag, 
+  User,
+  ArrowRight,
+  Sparkles,
+  Link as LinkIcon,
+  Twitter,
+  Facebook
+} from 'lucide-react';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import ReactMarkdown from 'react-markdown';
+import { Button } from '../components/ui/button';
+import { BLOG_POSTS } from '@/shared/data/blog';
+
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  category: string;
+  featuredImage: string;
+  createdAt: any;
+  published: boolean;
+}
+
+export default function BlogPostDetail() {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPost() {
+      if (!slug) return;
+      try {
+        const blogRef = collection(db, 'blog');
+        const q = query(blogRef, where('slug', '==', slug), limit(1));
+        const querySnapshot = await getDocs(q);
+        
+        if (!querySnapshot.empty) {
+          const postData = {
+            id: querySnapshot.docs[0].id,
+            ...querySnapshot.docs[0].data()
+          } as BlogPost;
+          setPost(postData);
+
+          // Fetch related posts from Firebase
+          const relatedQ = query(
+            blogRef, 
+            where('category', '==', postData.category),
+            where('slug', '!=', slug),
+            where('published', '==', true),
+            limit(3)
+          );
+          const relatedSnapshot = await getDocs(relatedQ);
+          setRelatedPosts(relatedSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as BlogPost[]);
+        } else {
+          // Fall back to static post
+          const staticPost = BLOG_POSTS.find(p => p.slug === slug);
+          if (staticPost) {
+            setPost({
+              id: staticPost.slug,
+              title: staticPost.title,
+              slug: staticPost.slug,
+              excerpt: staticPost.excerpt,
+              content: staticPost.content,
+              author: 'Bryan',
+              category: staticPost.category,
+              featuredImage: staticPost.image,
+              createdAt: { toDate: () => new Date(staticPost.date) },
+              published: true,
+            });
+            // Related static posts
+            const related = BLOG_POSTS
+              .filter(p => p.slug !== slug && p.category === staticPost.category)
+              .slice(0, 3)
+              .map(p => ({
+                id: p.slug, title: p.title, slug: p.slug, excerpt: p.excerpt,
+                content: p.content, author: 'Bryan', category: p.category,
+                featuredImage: p.image, createdAt: { toDate: () => new Date(p.date) }, published: true,
+              }));
+            setRelatedPosts(related as BlogPost[]);
+          } else {
+            navigate('/blog');
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching post:', error);
+        // Try static fallback
+        const staticPost = BLOG_POSTS.find(p => p.slug === slug);
+        if (staticPost) {
+          setPost({
+            id: staticPost.slug, title: staticPost.title, slug: staticPost.slug,
+            excerpt: staticPost.excerpt, content: staticPost.content, author: 'Bryan',
+            category: staticPost.category, featuredImage: staticPost.image,
+            createdAt: { toDate: () => new Date(staticPost.date) }, published: true,
+          });
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchPost();
+  }, [slug, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-zinc-50 pt-32 pb-24 flex items-center justify-center">
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+        >
+          <Sparkles className="h-12 w-12 text-emerald-500" />
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (!post) return null;
+
+  return (
+    <div className="min-h-screen bg-zinc-50 pt-32 pb-24">
+      <Helmet>
+        <title>{post.title} | Bryan's Showroom Quality Detailing</title>
+        <meta name="description" content={post.excerpt} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "image": post.featuredImage,
+            "author": {
+              "@type": "Person",
+              "name": post.author
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Bryan's Showroom Quality Detailing",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://bryansdetailing.com/logo.png"
+              }
+            },
+            "datePublished": post.createdAt?.toDate ? post.createdAt.toDate().toISOString() : new Date().toISOString()
+          })}
+        </script>
+      </Helmet>
+      {/* Article Header */}
+      <div className="container mx-auto px-4 max-w-4xl mb-12">
+        <Link 
+          to="/blog" 
+          className="inline-flex items-center gap-2 text-zinc-400 font-black uppercase tracking-widest text-[10px] mb-8 hover:text-emerald-500 transition-colors"
+        >
+          <ChevronLeft className="h-3 w-3" /> Back to Articles
+        </Link>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="flex gap-2 mb-6">
+            <span className="px-4 py-1.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-black uppercase tracking-widest">
+              {post.category}
+            </span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black text-zinc-900 italic tracking-tighter mb-8 leading-[1.1]">
+            {post.title}
+          </h1>
+          
+          <div className="flex flex-wrap items-center gap-6 border-b border-zinc-100 pb-12">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-zinc-900 flex items-center justify-center text-white italic font-black shadow-lg">
+                {post.author.charAt(0)}
+              </div>
+              <div>
+                <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">Written By</p>
+                <p className="text-sm font-black text-zinc-900 italic">{post.author}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+              <div>
+                <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">Date</p>
+                <p className="text-sm font-black text-zinc-900 flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-emerald-500" />
+                  {post.createdAt?.toDate ? post.createdAt.toDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">Read Time</p>
+                <p className="text-sm font-black text-zinc-900 flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-emerald-500" />
+                  8 min
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Featured Image */}
+      <div className="container mx-auto px-4 max-w-6xl mb-16">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="aspect-[21/9] rounded-[3rem] overflow-hidden shadow-2xl"
+        >
+          <img 
+            src={post.featuredImage || 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&q=80&w=1200'} 
+            alt={post.title} 
+            className="w-full h-full object-cover shadow-inner"
+          />
+        </motion.div>
+      </div>
+
+      {/* Content Grid */}
+      <div className="container mx-auto px-4 max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-16">
+        {/* Main Content */}
+        <article className="lg:col-span-8">
+          <div className="bg-white rounded-[3rem] p-8 md:p-16 border border-zinc-100 shadow-sm">
+            <div className="prose prose-zinc prose-lg max-w-none prose-headings:italic prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-zinc-900 prose-p:text-zinc-600 prose-p:font-medium prose-p:leading-relaxed prose-strong:text-zinc-900 prose-strong:font-black prose-a:text-emerald-500 prose-a:font-black hover:prose-a:text-emerald-600 prose-img:rounded-[2rem] prose-table:text-sm prose-th:font-black prose-th:text-zinc-900 prose-td:text-zinc-600">
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              </div>
+            
+            <div className="mt-16 pt-12 border-t border-zinc-50 flex flex-wrap items-center justify-between gap-8">
+              <div className="flex items-center gap-4">
+                <Tag className="h-4 w-4 text-zinc-300" />
+                <div className="flex gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 bg-zinc-50 px-3 py-1 rounded-full">#detailing</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 bg-zinc-50 px-3 py-1 rounded-full">#omaha</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 bg-zinc-50 px-3 py-1 rounded-full">#carcare</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 italic">Share This Post</p>
+                <div className="flex gap-2">
+                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all">
+                    <Twitter className="h-4 w-4" />
+                  </button>
+                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all">
+                    <Facebook className="h-4 w-4" />
+                  </button>
+                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all">
+                    <LinkIcon className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        {/* Sidebar */}
+        <aside className="lg:col-span-4 space-y-12">
+          {/* Related Articles */}
+          <div className="bg-zinc-900 rounded-[2.5rem] p-8 text-white">
+            <h3 className="text-xl font-black italic tracking-tight mb-8 flex items-center gap-3">
+              <Sparkles className="h-5 w-5 text-emerald-500" /> Related Articles
+            </h3>
+            <div className="space-y-8">
+              {relatedPosts.map(rel => (
+                <Link key={rel.id} to={`/blog/${rel.slug}`} className="group block">
+                  <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500 mb-2 truncate">
+                    {rel.category}
+                  </p>
+                  <h4 className="text-sm font-black italic leading-snug group-hover:text-emerald-400 transition-colors">
+                    {rel.title}
+                  </h4>
+                  <div className="mt-2 flex items-center gap-1 text-[8px] font-black uppercase tracking-widest text-zinc-500 italic">
+                    Read More <ArrowRight className="h-2 w-2" />
+                  </div>
+                </Link>
+              ))}
+              {relatedPosts.length === 0 && (
+                <p className="text-sm text-zinc-500 italic">No related articles found yet.</p>
+              )}
+            </div>
+          </div>
+
+          {/* Booking CTA */}
+          <div className="bg-emerald-500 rounded-[2.5rem] p-10 text-white relative overflow-hidden group">
+            <div className="absolute -right-8 -bottom-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
+               <Sparkles className="w-48 h-48" />
+            </div>
+            <div className="relative z-10">
+              <h3 className="text-2xl font-black italic tracking-tight mb-4">Ready for a Transformation?</h3>
+              <p className="text-emerald-100 text-sm font-medium mb-8 leading-relaxed">
+                Bring back that showroom feel to your interior. Omaha's #1 rated deep clean.
+              </p>
+              <Button asChild className="w-full h-14 bg-zinc-900 hover:bg-black text-white rounded-2xl font-black italic tracking-tight shadow-xl">
+                <Link to="/book">Book Now</Link>
+              </Button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+}

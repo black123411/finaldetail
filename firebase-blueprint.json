@@ -1,0 +1,184 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "customer"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Service booking details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "squareBookingId": { "type": "string" },
+        "startAt": { "type": "string", "format": "date-time" },
+        "locationId": { "type": "string" },
+        "serviceVariationIds": { "type": "array", "items": { "type": "string" } },
+        "customer": {
+          "type": "object",
+          "properties": {
+            "firstName": { "type": "string" },
+            "lastName": { "type": "string" },
+            "email": { "type": "string" },
+            "phone": { "type": "string" }
+          }
+        },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled", "completed"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["startAt", "customer", "status"]
+    },
+    "Quote": {
+      "title": "Quote Request",
+      "description": "Instant quote request details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "vehicle": {
+          "type": "object",
+          "properties": {
+            "year": { "type": "string" },
+            "make": { "type": "string" },
+            "model": { "type": "string" },
+            "type": { "type": "string" },
+            "condition": { "type": "string" }
+          }
+        },
+        "services": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "vehicle"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Google Places review local cache",
+      "type": "object",
+      "properties": {
+        "authorName": { "type": "string" },
+        "content": { "type": "string" },
+        "rating": { "type": "number" },
+        "profilePhotoUrl": { "type": "string" },
+        "time": { "type": "number" },
+        "fetchedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "BlogPost": {
+      "title": "Blog Post",
+      "description": "Article for the tips and industry news section",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "author": { "type": "string" },
+        "category": { "type": "string" },
+        "featuredImage": { "type": "string" },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "content", "published"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Master service definition synced to Square",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "object", "additionalProperties": { "type": "number" } },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "duration": { "type": "string" },
+        "badge": { "type": "string" },
+        "active": { "type": "boolean" },
+        "squareId": { "type": "string" },
+        "squareVersion": { "type": "number" },
+        "lastSyncAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "categoryId", "price"]
+    },
+    "SyncLog": {
+      "title": "Sync Log",
+      "description": "Historical record of Square sync actions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "serviceId": { "type": "string" },
+        "action": { "type": "string", "enum": ["create", "update", "delete", "correct"] },
+        "status": { "type": "string", "enum": ["success", "failed"] },
+        "error": { "type": "string" },
+        "squareResponse": { "type": "object" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "FaqItem": {
+      "title": "FAQ Item",
+      "description": "Frequently asked question item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "question": { "type": "string" },
+        "answer": { "type": "string" },
+        "order": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["question", "answer", "order"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Booking records"
+    },
+    "quotes/{quoteId}": {
+      "schema": "Quote",
+      "description": "Quote requests"
+    },
+    "reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Cached reviews"
+    },
+    "blog/{postId}": {
+      "schema": "BlogPost",
+      "description": "Articles and tips"
+    },
+    "services/{serviceId}": {
+      "schema": "Service",
+      "description": "Master service list"
+    },
+    "sync_logs/{logId}": {
+      "schema": "SyncLog",
+      "description": "Square synchronization logs"
+    },
+    "faqs/{faqId}": {
+      "schema": "FaqItem",
+      "description": "Frequently asked questions"
+    }
+  }
+}
