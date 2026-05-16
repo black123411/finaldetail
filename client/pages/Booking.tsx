@@ -14,7 +14,8 @@ import {
   User,
   Info,
   CreditCard as CardIcon,
-  Star
+  Star,
+  Flame
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { VEHICLE_SIZES, SPECIALTY_SIZES, SERVICES, CATEGORIES, ADD_ONS } from '@/shared/data/services';
