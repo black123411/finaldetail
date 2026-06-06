@@ -5,7 +5,7 @@ import { randomUUID } from "crypto";
 import path from "path";
 import multer from "multer";
 import nodemailer from "nodemailer";
-import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, ADD_ONS } from '@/shared/data/services';
+import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, ADD_ONS } from "../shared/data/services.ts";
 import { logToSystem, logSquareError, LogLevel } from "./services/errorLogger.ts";
 
 // Configure multer for memory storage
@@ -13,6 +13,20 @@ const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
 });
+
+const getSquareErrorMessage = (error: any, fallback: string) => {
+  const detail = error?.errors?.[0]?.detail || error?.result?.errors?.[0]?.detail;
+  return detail || error?.message || fallback;
+};
+
+const logSquareApiError = (label: string, error: any) => {
+  const details = {
+    statusCode: error?.statusCode,
+    errors: error?.errors || error?.result?.errors,
+    message: error?.message,
+  };
+  console.error(label, details);
+};
 
 async function startServer() {
   console.log("Starting server...");
@@ -411,19 +425,53 @@ async function startServer() {
         }
       });
 
-      const availabilities = response.availabilities || [];
+      const availabilities = response.result?.availabilities || response.availabilities || [];
       res.json(availabilities);
     } catch (error: any) {
-      console.error("Square Availability Error:", error);
-      res.status(500).json({ error: error.message || "Failed to fetch availability" });
+      logSquareApiError("Square Availability Error:", error);
+      res.status(error.statusCode || 500).json({ error: getSquareErrorMessage(error, "Failed to fetch availability") });
     }
   });
 
   app.post("/api/bookings", async (req, res) => {
     try {
-      const { startAt, locationId, serviceVariationIds, customer } = req.body;
+      const { startAt, locationId, serviceVariationIds, appointmentSegments, customer, serviceName, addons } = req.body;
       
       const client = getClientFromReq(req) as any;
+      const resolvedLocationId = locationId || getLocFromReq(req);
+
+      if (!startAt || !resolvedLocationId || !customer?.email || !customer?.firstName || !customer?.phone) {
+        return res.status(400).json({ error: "Missing required booking details." });
+      }
+
+      if (!Array.isArray(serviceVariationIds) || serviceVariationIds.length === 0) {
+        return res.status(400).json({ error: "A Square service variation is required to create a booking." });
+      }
+
+      if (serviceVariationIds.some((id: string) => !id || id.startsWith("local-") || id.includes("-var-"))) {
+        return res.status(400).json({ error: "This service is not connected to a real Square service variation. Sync Square services before accepting online bookings." });
+      }
+
+      if (!Array.isArray(appointmentSegments) || appointmentSegments.length === 0) {
+        return res.status(400).json({ error: "Please choose an available Square time slot before confirming your booking." });
+      }
+
+      const bookingSegments = appointmentSegments.map((segment: any) => ({
+        durationMinutes: segment.durationMinutes,
+        serviceVariationId: segment.serviceVariationId,
+        serviceVariationVersion: segment.serviceVariationVersion,
+        teamMemberId: segment.teamMemberId,
+        anyTeamMember: segment.anyTeamMember,
+        intermissionMinutes: segment.intermissionMinutes,
+        resourceIds: segment.resourceIds,
+      })).map((segment: any) => {
+        Object.keys(segment).forEach(key => segment[key] === undefined && delete segment[key]);
+        return segment;
+      });
+
+      if (bookingSegments.some((segment: any) => !segment.serviceVariationId || !segment.teamMemberId)) {
+        return res.status(400).json({ error: "Square did not return a bookable team member for this slot. Please choose another time." });
+      }
 
       // 1. Create or Find Customer
       let customerId;
@@ -438,7 +486,7 @@ async function startServer() {
           }
         });
 
-        const customers = searchResult.customers;
+        const customers = searchResult.result?.customers || searchResult.customers;
         if (customers && customers.length > 0) {
           customerId = customers[0].id;
         } else {
@@ -449,35 +497,36 @@ async function startServer() {
             emailAddress: customer.email,
             phoneNumber: customer.phone,
           });
-          customerId = createResult.customer?.id;
+          customerId = createResult.result?.customer?.id || createResult.customer?.id;
         }
       } catch (e: any) {
         console.error("Customer Error:", e);
-        // Fallback to mock customer
-        customerId = 'mock-customer-id';
+        throw new Error(e.message || "Square customer creation failed");
       }
 
       // 2. Create Booking
-      let booking;
-      try {
-        const bookingResult = await client.bookingsApi.createBooking({
-          idempotencyKey: randomUUID(),
-          booking: {
-            startAt,
-            locationId: locationId || getLocFromReq(req),
-            customerId,
-            appointmentSegments: Array.isArray(serviceVariationIds) 
-              ? serviceVariationIds.map(id => ({
-                  serviceVariationId: id,
-                  teamMemberId: "ANY",
-                }))
-              : [{ serviceVariationId: req.body.serviceVariationId, teamMemberId: "ANY" }]
-          }
-        });
-        booking = bookingResult.booking;
-      } catch (e: any) {
-        console.error("Booking Error (Fallback to mock):", e);
-        booking = { id: 'mock-booking-id-' + Date.now(), customerId };
+      const customerNote = [
+        customer.notes,
+        customer.locationType ? `Service location: ${customer.locationType}` : "",
+        customer.address ? `Address: ${customer.address}` : "",
+        serviceName ? `Services: ${serviceName}` : "",
+        Array.isArray(addons) && addons.length > 0 ? `Add-ons: ${addons.join(", ")}` : "",
+      ].filter(Boolean).join("\n");
+
+      const bookingResult = await client.bookingsApi.createBooking({
+        idempotencyKey: randomUUID(),
+        booking: {
+          startAt,
+          locationId: resolvedLocationId,
+          customerId,
+          customerNote,
+          appointmentSegments: bookingSegments,
+        }
+      });
+      const booking = bookingResult.result?.booking || bookingResult.booking;
+
+      if (!booking?.id) {
+        throw new Error("Square did not return a booking ID.");
       }
 
       // 3. Send Confirmation Emails
@@ -528,8 +577,8 @@ async function startServer() {
 
       res.json(booking);
     } catch (error: any) {
-      console.error("Square Booking Error:", error);
-      res.status(500).json({ error: error.message || "Failed to create booking" });
+      logSquareApiError("Square Booking Error:", error);
+      res.status(error.statusCode || 500).json({ error: getSquareErrorMessage(error, "Failed to create booking") });
     }
   });
 

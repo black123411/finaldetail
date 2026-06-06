@@ -19,6 +19,7 @@ import BlogPostDetail from './pages/BlogPostDetail';
 import BlogManager from './pages/BlogManager';
 import Login from './pages/Login';
 import Sitemap from './pages/Sitemap';
+import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 import { FirebaseProvider } from './components/FirebaseProvider';
 import { AdminGuard } from './components/AdminGuard';
@@ -82,13 +83,17 @@ function SEO() {
   const seoData: Record<string, { title: string; description: string }> = {
     '/': {
       title: "Bryan's Showroom Quality Detailing | Omaha & Bellevue Auto Detailing",
-      description: "Premium auto detailing services in Bellevue and Omaha. Mobile and shop detailing, paint correction, ceramic coatings, and interior restoration."
+      description: "Premium auto detailing services in Bellevue and Omaha. Mobile and drop-off detailing, paint correction, ceramic coatings, and interior restoration."
     },
     '/services': {
       title: "Detailing Services | Paint Correction & Ceramic Coating Omaha",
       description: "Premium car detailing in Bellevue and Omaha. We offer comprehensive auto detailing services including interior detailing, exterior washes, multi-stage paint correction, and long-lasting ceramic coating."
     },
     '/book': {
+      title: "Book Your Detail | Professional Auto Detailing Bellevue",
+      description: "Schedule your professional car detail online. Instant availability for Bellevue and Omaha. Secure your spot with a deposit."
+    },
+    '/booking': {
       title: "Book Your Detail | Professional Auto Detailing Bellevue",
       description: "Schedule your professional car detail online. Instant availability for Bellevue and Omaha. Secure your spot with a deposit."
     },
@@ -113,7 +118,7 @@ function SEO() {
 
   const domain = "https://bryansdetailingomaha.com";
   const url = `${domain}${pathname}`;
-  const image = `${domain}/og-image.jpg`;
+  const image = `${domain}/20211009_025807-COLLAGE.jpg`;
 
   const schema = {
     "@context": "https://schema.org",
@@ -149,32 +154,14 @@ function SEO() {
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Auto Detailing Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Ceramic Coating",
-            "description": "Long-term paint protection and extreme hydrophobic properties."
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Paint Correction",
-            "description": "Professional swirl and scratch removal to restore mirror-like gloss."
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Interior Detailing",
-            "description": "Deep cleaning and sanitization for vehicle interiors."
-          }
+      "itemListElement": SERVICES.map(s => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": s.name,
+          "description": s.shortDescription
         }
-      ]
+      }))
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -246,6 +233,7 @@ export default function App() {
                 <Route path="/quote" element={<Quote />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/book" element={<Booking />} />
+                <Route path="/booking" element={<Booking />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPostDetail />} />
                 <Route path="/login" element={<Login />} />
@@ -285,6 +273,7 @@ export default function App() {
                 <Route path="/terms" element={<TermsOfService />} />
                 <Route path="/privacy" element={<PrivacyPolicy />} />
                 <Route path="/review" element={<ReviewPage />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
             <ChatAssistant />

@@ -21,8 +21,9 @@ import { Button } from '../components/ui/button';
 import { VEHICLE_SIZES, SPECIALTY_SIZES, SERVICES, CATEGORIES, ADD_ONS } from '@/shared/data/services';
 import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfToday, parseISO } from 'date-fns';
 import { getSquareAppId, getSquareLocationId } from '../lib/config';
-import { BookingAPI } from '../services/api';
+import { BookingAPI, ServiceAPI } from '../services/api';
 import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
+import BeforeAfterSlider from '../components/BeforeAfterSlider';
 
 type Step = 'service' | 'size' | 'addons' | 'datetime' | 'details' | 'payment' | 'success';
 
@@ -38,6 +39,9 @@ interface SquareService {
     price: number;
   }[];
 }
+
+const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+const isRealSquareVariationId = (id?: string) => !!id && !id.startsWith('local-') && !id.startsWith('addon-var-') && !id.includes('-var-');
 
 const formatDuration = (input: number | string) => {
   // If it's already a human-readable string like "2-3.5 hours" or "45 mins", return it directly
@@ -84,7 +88,9 @@ export default function Booking() {
     lastName: '',
     email: '',
     phone: '',
-    notes: ''
+    notes: '',
+    locationType: 'drop-off' as 'drop-off' | 'mobile',
+    address: ''
   });
   const [bookingLoading, setBookingLoading] = useState(false);
   const [paymentLoading, setPaymentLoading] = useState(false);
@@ -117,34 +123,53 @@ export default function Booking() {
   const fetchServices = async () => {
     try {
       setLoading(true);
-      
-      // Fallback/override to use local SERVICES directly mapped to square-like structure
-      // to avoid 'no service found in category' issues.
+
+      const squareServices = await ServiceAPI.getCatalogServices().catch(() => []);
+      const findSquareService = (name: string) => {
+        const normalized = normalizeName(name);
+        return squareServices.find((svc: SquareService) => {
+          const squareName = normalizeName(svc.name || '');
+          return squareName === normalized || squareName.includes(normalized) || normalized.includes(squareName);
+        });
+      };
+
       const localFormattedServices = SERVICES.map(ls => ({
         id: ls.id,
         name: ls.name,
         description: ls.shortDescription,
         categoryId: ls.categoryId,
-        variations: Object.keys(ls.price).map((size, idx) => ({
-          id: `${ls.id}-var-${idx}`,
-          name: size,
-          duration: typeof ls.duration === 'string' ? ls.duration : (ls.duration as any)[size] || '2h',
-          price: (ls.price as any)[size]
-        }))
+        variations: Object.keys(ls.price).map((size) => {
+          const sizeLabel = [...VEHICLE_SIZES, ...SPECIALTY_SIZES].find(v => v.id === size)?.name || size;
+          const squareMatch = findSquareService(ls.squareName || ls.name);
+          const squareVariation = squareMatch?.variations?.find((variation: any) => {
+            const variationName = normalizeName(variation.name || '');
+            return variationName === normalizeName(sizeLabel) || variationName === normalizeName(size);
+          });
+
+          return {
+            id: squareVariation?.id || `local-${ls.id}-${size}`,
+            name: size,
+            duration: squareVariation?.duration || (typeof ls.duration === 'string' ? ls.duration : (ls.duration as any)[size] || '2h'),
+            price: squareVariation?.price ?? (ls.price as any)[size]
+          };
+        })
       }));
 
-      const localFormattedAddons = ADD_ONS.map((addon, idx) => ({
+      const localFormattedAddons = ADD_ONS.map((addon) => {
+        const squareMatch = findSquareService(addon.name);
+        return {
         id: addon.id,
         name: addon.name,
         description: addon.description,
         categoryId: 'add-ons',
         variations: [{
-          id: `addon-var-${idx}`,
+          id: squareMatch?.variations?.[0]?.id || `local-addon-${addon.id}`,
           name: 'Regular',
-          duration: addon.duration,
-          price: addon.price
+          duration: squareMatch?.variations?.[0]?.duration || addon.duration,
+          price: squareMatch?.variations?.[0]?.price ?? addon.price
         }]
-      }));
+      };
+      });
       
       setServices([...localFormattedServices, ...localFormattedAddons]);
       
@@ -196,27 +221,15 @@ export default function Booking() {
       
       const start = format(date, "yyyy-MM-dd'T'00:00:00'Z'");
       const end = format(date, "yyyy-MM-dd'T'23:59:59'Z'");
-      
-      try {
-        const data = await BookingAPI.getAvailability(start, end, serviceVariationIds);
-        if (data && data.length > 0) {
-          setSlots(data);
-          return;
-        } else {
-          throw new Error('Empty availability, fallback to mock');
-        }
-      } catch (e) {
-        // Mock fallback for availability if Square is not configured or uses local mocked ids
-        const mockSlots = [9, 11, 13, 15].map(hour => {
-          const slotTime = new Date(date);
-          slotTime.setHours(hour, 0, 0, 0);
-          return {
-            startAt: slotTime.toISOString(),
-            locationId: 'MOCK_LOC'
-          };
-        });
-        setSlots(mockSlots);
+
+      if (serviceVariationIds.some(id => !isRealSquareVariationId(id))) {
+        setSlots([]);
+        setError('Online booking is not connected to Square for this service yet. Please call (712) 305-6313 to book.');
+        return;
       }
+
+      const data = await BookingAPI.getAvailability(start, end, serviceVariationIds);
+      setSlots(Array.isArray(data) ? data : []);
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Error checking availability. Please try another date.');
@@ -249,15 +262,24 @@ export default function Booking() {
         }
       });
 
+      if (serviceVariationIds.some(id => !isRealSquareVariationId(id)) || !selectedSlot.appointmentSegments?.length) {
+        throw new Error('This time slot is not connected to Square. Please choose a real available slot or call (712) 305-6313.');
+      }
+
       const booking = await BookingAPI.createBooking({
         startAt: selectedSlot.startAt,
+        locationId: selectedSlot.locationId,
         serviceVariationIds,
-        customer: customerInfo
+        appointmentSegments: selectedSlot.appointmentSegments,
+        customer: customerInfo,
+        serviceName: selectedServices.map(s => s.name).join(', '),
+        priceTotal: priceBreakdown.total,
+        addons: selectedAddons.map(id => availableAddons.find(a => a.id === id)?.name).filter(Boolean)
       });
 
       setPendingBooking(booking);
       
-      setStep('success'); // Skip payment, go straight to success
+      setStep('payment');
     } catch (err: any) {
       setError(err.message || 'Booking failed. My schedule might have just filled up. Please refresh or call me.');
     } finally {
@@ -352,11 +374,11 @@ export default function Booking() {
           <p className="text-zinc-500 font-medium max-w-xl mx-auto">Select your service, choose a convenient time, and lock in your appointment.</p>
         </div>
 
-        {/* Urgency Banner */}
+        {/* Trust Banner */}
         <div className="max-w-3xl mx-auto mb-8 px-4">
-          <div className="bg-red-50 border border-red-100 text-red-700 py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm animate-in fade-in zoom-in duration-500">
-            <Flame className="w-5 h-5" />
-            High Demand: Currently booking out 1-2 weeks in advance. Claim your spot now.
+          <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm animate-in fade-in zoom-in duration-500 mb-6">
+            <CheckCircle2 className="w-5 h-5" />
+            100% Satisfaction Guarantee • Licensed & Insured
           </div>
         </div>
 
@@ -364,15 +386,12 @@ export default function Booking() {
         <div className="relative mb-16 max-w-3xl mx-auto px-4">
           <div className="absolute top-1/2 left-0 w-full h-1 bg-zinc-200 -translate-y-1/2 rounded-full hidden sm:block"></div>
           <div className="relative flex justify-between">
-            {['Service', 'Details', 'Success'].map((label, i) => {
-              const steps: Step[] = ['service', 'details', 'success'];
-              // If current step is 'size', 'addons', or 'datetime', it's technically in between 'service' and 'details'
-              // but I'll consider it part of "Service" phase for the progress bar visual focus, or 
-              // 'details' phase. Let's simplify and make the progress logic robust.
-              let currentIndex = steps.indexOf(step as any);
-              if (step === 'size' || step === 'addons' || step === 'datetime') currentIndex = 0; 
+            {['Service', 'Details', 'Payment', 'Success'].map((label, i) => {
+              const steps = ['service', 'details', 'payment', 'success'];
+              let currentIndex = 0;
               if (step === 'details') currentIndex = 1;
-              if (step === 'success') currentIndex = 2;
+              if (step === 'payment') currentIndex = 2;
+              if (step === 'success') currentIndex = 3;
 
               const isCompleted = currentIndex > i;
               const isCurrent = currentIndex === i;
@@ -777,12 +796,83 @@ export default function Booking() {
                           className="w-full bg-zinc-50 border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-zinc-900"
                         />
                       </div>
+                      
+                      <div className="col-span-2 mt-4">
+                        <label className="text-[10px] font-bold uppercase text-zinc-400 mb-2 block">Service Location</label>
+                        <div className="grid grid-cols-2 gap-3">
+                          <button
+                            type="button"
+                            onClick={() => setCustomerInfo({...customerInfo, locationType: 'drop-off'})}
+                            className={`p-3 text-sm font-bold rounded-lg border-2 transition-all ${
+                              customerInfo.locationType === 'drop-off'
+                                ? 'bg-zinc-900 border-zinc-900 text-white'
+                                : 'bg-white border-zinc-200 text-zinc-600 hover:border-zinc-300'
+                            }`}
+                          >
+                            Vehicle Drop-off
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setCustomerInfo({...customerInfo, locationType: 'mobile'})}
+                            className={`p-3 text-sm font-bold rounded-lg border-2 transition-all ${
+                              customerInfo.locationType === 'mobile'
+                                ? 'bg-zinc-900 border-zinc-900 text-white'
+                                : 'bg-white border-zinc-200 text-zinc-600 hover:border-zinc-300'
+                            }`}
+                          >
+                            Mobile Details
+                          </button>
+                        </div>
+                        {customerInfo.locationType === 'mobile' && (
+                          <div className="mt-3">
+                            <label htmlFor="address" className="text-[10px] font-bold uppercase text-zinc-400 mb-1 block">Your Address</label>
+                            <input 
+                              id="address"
+                              name="address"
+                              type="text"
+                              placeholder="123 Main St, City, Zip"
+                              value={customerInfo.address}
+                              onChange={e => setCustomerInfo({...customerInfo, address: e.target.value})}
+                              className="w-full bg-zinc-50 border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-zinc-900"
+                            />
+                            <p className="text-[10px] text-zinc-500 mt-1">Must be within Omaha/Bellevue metro area. Ensure access to power and water.</p>
+                          </div>
+                        )}
+                        {customerInfo.locationType === 'drop-off' && (
+                          <div className="mt-3 p-3 bg-zinc-50 rounded-lg border border-zinc-100">
+                            <p className="text-xs text-zinc-600">
+                              <span className="font-bold">Drop-off Location:</span><br/>
+                              1907 Arlington Cir, Bellevue NE 68123
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="col-span-2">
+                        <label htmlFor="notes" className="text-[10px] font-bold uppercase text-zinc-400 mb-1 block">Vehicle Details & Notes (Optional)</label>
+                        <textarea 
+                          id="notes"
+                          name="notes"
+                          placeholder="Year, Make, Model and any specific concerns..."
+                          rows={2}
+                          value={customerInfo.notes}
+                          onChange={e => setCustomerInfo({...customerInfo, notes: e.target.value})}
+                          className="w-full bg-zinc-50 border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-zinc-900 resize-none"
+                        />
+                      </div>
                     </div>
                   </div>
 
                   <Button 
                     className="w-full h-14 text-lg font-bold shadow-xl shadow-zinc-200"
-                    disabled={!selectedSlot || !customerInfo.firstName || !customerInfo.email || bookingLoading}
+                    disabled={
+                      !selectedSlot || 
+                      !customerInfo.firstName || 
+                      !customerInfo.email || 
+                      !customerInfo.phone ||
+                      (customerInfo.locationType === 'mobile' && !customerInfo.address) ||
+                      bookingLoading
+                    }
                     onClick={handleBooking}
                   >
                     {bookingLoading ? (
@@ -794,10 +884,56 @@ export default function Booking() {
                       'Confirm Booking'
                     )}
                   </Button>
+                  
+                  <div className="mt-4 text-center">
+                    <p className="text-[10px] text-zinc-400 font-medium">
+                      By confirming your booking, you agree to our 24-hour cancellation policy. <br/>
+                      A secure connection is used to process your request.
+                    </p>
+                  </div>
                 </motion.div>
               )}
 
-
+              {step === 'payment' && pendingBooking && (
+                <motion.div
+                  key="payment"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="bg-white rounded-3xl p-8 shadow-xl border border-zinc-100"
+                >
+                  <h2 className="text-2xl font-bold text-zinc-900 mb-4 flex items-center gap-2">
+                    <CardIcon className="h-6 w-6 text-zinc-900" />
+                    Deposit Required
+                  </h2>
+                  <p className="text-zinc-500 mb-8">
+                    A $50 non-refundable deposit is required to secure your appointment. This amount will be applied to your final total.
+                  </p>
+                  
+                  {paymentLoading ? (
+                    <div className="flex flex-col items-center justify-center py-12">
+                      <Loader2 className="h-10 w-10 text-zinc-900 animate-spin mb-4" />
+                      <p className="text-zinc-600 font-medium">Processing payment...</p>
+                    </div>
+                  ) : (
+                    <div className="max-w-md mx-auto">
+                      <PaymentForm
+                        applicationId={getSquareAppId()}
+                        locationId={getSquareLocationId()}
+                        cardTokenizeResponseReceived={handlePayment}
+                      >
+                        <CreditCard />
+                      </PaymentForm>
+                    </div>
+                  )}
+                  
+                  {error && (
+                    <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-lg text-sm font-medium border border-red-100">
+                      {error}
+                    </div>
+                  )}
+                </motion.div>
+              )}
 
               {step === 'success' && (
                 <motion.div
@@ -881,7 +1017,7 @@ export default function Booking() {
                     </div>
                     <p className="text-[10px] text-zinc-400 mt-4 leading-relaxed bg-zinc-50 p-3 rounded-lg border border-zinc-100 flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                        <span>No upfront deposit required. Payment is collected upon completion of the service. Final price may vary based on actual vehicle condition.</span>
+                        <span>A $50 deposit is required to book. The remaining balance is securely collected upon completion of the service. Final price may vary based on actual vehicle condition. Your satisfaction is 100% guaranteed.</span>
                     </p>
                     <div className="mt-4 pt-4 border-t border-zinc-100 flex items-center justify-center gap-2">
                       <div className="flex -space-x-2">
