@@ -106,7 +106,7 @@ async function startServer() {
       // Stage 1: Create "Payment Intent" (Square Order) if no sourceId provided
       if (!sourceId) {
         console.log(`💳 Creating Payment Intent for Customer: ${customerId}, Amount: ${amount}`);
-        const orderResponse = await client.orders.create({
+        const orderResponse = await client.ordersApi.createOrder({
           idempotencyKey: randomUUID(),
           order: {
             locationId: getLocFromReq(req),
@@ -126,13 +126,13 @@ async function startServer() {
 
         // Return the Order ID as the "client_secret"
         return res.json({ 
-          client_secret: orderResponse.order.id,
-          id: orderResponse.order.id
+          client_secret: orderResponse.result?.order?.id || orderResponse.order?.id,
+          id: orderResponse.result?.order?.id || orderResponse.order?.id
         });
       }
 
       // Stage 2: Process the actual payment
-      const response = await client.payments.create({
+      const response = await client.paymentsApi.createPayment({
         sourceId,
         idempotencyKey: randomUUID(),
         amountMoney: {
@@ -144,7 +144,7 @@ async function startServer() {
         note: `Payment for Booking ${bookingId}${paymentIntentId ? ` (Order: ${paymentIntentId})` : ''}`,
       });
 
-      res.json(response.payment);
+      res.json(response.result?.payment || response.payment);
     } catch (error: any) {
       console.error("Square Payment Error:", error);
       res.status(500).json({ error: error.message || "Payment failed" });
@@ -476,7 +476,7 @@ async function startServer() {
       // 1. Create or Find Customer
       let customerId;
       try {
-        const searchResult = await client.customers.search({
+        const searchResult = await client.customersApi.searchCustomers({
           query: {
             filter: {
               emailAddress: {
@@ -490,7 +490,7 @@ async function startServer() {
         if (customers && customers.length > 0) {
           customerId = customers[0].id;
         } else {
-          const createResult = await client.customers.create({
+          const createResult = await client.customersApi.createCustomer({
             idempotencyKey: randomUUID(),
             givenName: customer.firstName,
             familyName: customer.lastName,
