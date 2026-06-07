@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { Helmet } from "react-helmet-async";
@@ -11,6 +11,7 @@ import {
   Clock,
   MapPin,
   ChevronRight,
+  ChevronDown,
   ArrowRight,
   Car,
   Info,
@@ -30,6 +31,7 @@ import {
 } from '@/shared/data/services';
 import { BOOKING_LINK } from "../lib/constants";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
+import { BEFORE_AFTERS, GALLERY_IMAGES } from "@/shared/data/photos";
 
 export default function ServiceDetail() {
   const { serviceId } = useParams<{ serviceId: string }>();
@@ -41,6 +43,8 @@ export default function ServiceDetail() {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [service]);
+
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   const allSizes = [...VEHICLE_SIZES, ...SPECIALTY_SIZES];
 
@@ -70,6 +74,15 @@ export default function ServiceDetail() {
 
   // Get suggested add-ons (first 3)
   const suggestedAddOns = ADD_ONS.slice(0, 3);
+  const isPaintService =
+    service.categoryId === "paint-correction" ||
+    service.id === "paint-enhancement-polish";
+  const paintProofImages = GALLERY_IMAGES.filter(
+    (image) => image.category === "paint",
+  ).slice(0, 3);
+  const visualProof =
+    (isPaintService && BEFORE_AFTERS.find((item) => item.category === "paint")) ||
+    BEFORE_AFTERS[0];
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -85,11 +98,27 @@ export default function ServiceDetail() {
             "provider": {
               "@type": "AutoBodyShop",
               "name": "Bryan's Showroom Quality Detailing",
-              "image": "https://images.unsplash.com/photo-1552930294-6b595f4c2974?auto=format&fit=crop&q=80&w=1200"
+              "image": "/20211009_025807-COLLAGE.jpg"
             },
             "url": `https://bryansdetailing.com/services/${service.id}`
           })}
         </script>
+        {service.faqs && service.faqs.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": service.faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": faq.answer
+                }
+              }))
+            })}
+          </script>
+        )}
       </Helmet>
       
       {/* Dynamic Header */}
@@ -249,9 +278,9 @@ export default function ServiceDetail() {
                  </div>
               </div>
               <div className="relative">
-                 <BeforeAfterSlider 
-                    beforeImage="/20191020_062847.jpg" 
-                    afterImage="/20191020_062924.jpg" 
+                 <BeforeAfterSlider
+                    beforeImage={visualProof.before}
+                    afterImage={visualProof.after}
                  />
                  <div className="absolute -bottom-6 -right-6 bg-emerald-500 text-white p-6 rounded-3xl shadow-xl shadow-emerald-500/20 z-20">
                     <Sparkles className="h-6 w-6" />
@@ -260,6 +289,94 @@ export default function ServiceDetail() {
            </div>
         </div>
       </section>
+
+      {isPaintService && (
+        <section className="py-24 bg-white border-b border-zinc-100">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-14 lg:gap-20 items-start">
+              <div className="space-y-7 lg:sticky lg:top-28">
+                <div className="space-y-4">
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600">
+                    Paint Correction Proof
+                  </span>
+                  <h2 className="text-4xl md:text-5xl font-black tracking-tight text-zinc-900 leading-none">
+                    Real gloss from Bryan's Google photos.
+                  </h2>
+                </div>
+                <p className="text-lg text-zinc-500 font-medium leading-relaxed">
+                  Paint correction is all about clarity under light. These shots
+                  show the kind of swirl removal, depth, and reflection clients
+                  are booking for across Bellevue and Omaha.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    "Paint depth checked before polishing",
+                    "Machine correction, not filler glaze",
+                    "$50 deposit locks your time",
+                    "Best paired with ceramic protection",
+                  ].map((point) => (
+                    <div
+                      key={point}
+                      className="flex items-center gap-3 rounded-2xl bg-zinc-50 border border-zinc-100 px-4 py-3"
+                    >
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                      <span className="text-xs font-black uppercase tracking-wider text-zinc-700">
+                        {point}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  size="lg"
+                  className="h-14 px-8 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-xs"
+                  asChild
+                >
+                  <Link
+                    to={`/book?serviceId=${service.id}`}
+                    className="flex items-center gap-2"
+                  >
+                    Book Paint Assessment
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {paintProofImages.map((image, index) => (
+                  <motion.figure
+                    key={image.id}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ delay: index * 0.08 }}
+                    className={`group overflow-hidden rounded-[2rem] bg-zinc-950 shadow-xl shadow-zinc-200/60 ${
+                      index === 0 ? "md:col-span-2" : ""
+                    }`}
+                  >
+                    <div
+                      className={`relative overflow-hidden ${
+                        index === 0 ? "aspect-[16/9]" : "aspect-[4/3]"
+                      }`}
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6">
+                        <figcaption className="text-sm font-black uppercase tracking-widest text-white">
+                          {image.label}
+                        </figcaption>
+                      </div>
+                    </div>
+                  </motion.figure>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Pricing & Selection Section */}
       <section className="py-24 bg-zinc-50">
@@ -446,6 +563,54 @@ export default function ServiceDetail() {
           </div>
         </div>
       </section>
+
+      {/* Service Specific FAQs */}
+      {service.faqs && service.faqs.length > 0 && (
+        <section className="py-24 bg-white border-t border-zinc-100">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <div className="text-center mb-16 space-y-4">
+              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-none">
+                Frequently Asked <span className="italic text-zinc-400 font-normal">Questions</span>
+              </h2>
+            </div>
+            <div className="space-y-4">
+              {service.faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="bg-white border border-zinc-200 rounded-2xl overflow-hidden shadow-sm"
+                >
+                  <button
+                    onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                    className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                  >
+                    <span className="text-lg font-bold text-zinc-900 pr-8">{faq.question}</span>
+                    <ChevronDown
+                      className={`h-5 w-5 text-zinc-500 shrink-0 transition-transform duration-300 ${
+                        openFaqIndex === index ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {openFaqIndex === index && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="p-6 pt-0 text-zinc-600 font-medium leading-relaxed border-t border-zinc-100 mt-2">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related Services */}
       <section className="py-24 bg-white border-t border-zinc-100">
