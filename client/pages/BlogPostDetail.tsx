@@ -219,7 +219,7 @@ export default function BlogPostDetail() {
           className="aspect-[21/9] rounded-[3rem] overflow-hidden shadow-2xl"
         >
           <img 
-            src={post.featuredImage || 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&q=80&w=1200'} 
+            src={post.featuredImage || '/20191020_110329.jpg'} 
             alt={post.title} 
             className="w-full h-full object-cover shadow-inner"
           />
@@ -247,13 +247,13 @@ export default function BlogPostDetail() {
               <div className="flex items-center gap-4">
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 italic">Share This Post</p>
                 <div className="flex gap-2">
-                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all">
+                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all" title="Share on Twitter" aria-label="Share on Twitter">
                     <Twitter className="h-4 w-4" />
                   </button>
-                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all">
+                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all" title="Share on Facebook" aria-label="Share on Facebook">
                     <Facebook className="h-4 w-4" />
                   </button>
-                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all">
+                  <button className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 hover:bg-emerald-50 hover:text-emerald-500 transition-all" title="Copy Link" aria-label="Copy Link">
                     <LinkIcon className="h-4 w-4" />
                   </button>
                 </div>

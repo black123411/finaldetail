@@ -74,9 +74,9 @@ export default function DetailingQuiz() {
       return {
         title: "Specialty Restoration",
         desc: "RVs and Boats require specialized industrial-grade decontamination and gelcoat protection to combat oxidation.",
-        package: "RV & Boat Restoration",
-        id: "rv-detail",
-        priceRange: "$450+",
+        package: "RV & Boat Wash & Wax",
+        id: "rv-boat-wash-wax",
+        priceRange: "$299+",
         highTicket: true
       };
     }
@@ -88,7 +88,7 @@ export default function DetailingQuiz() {
         desc: "To achieve permanent gloss and protection, I recommend my Ceramic Coating package paired with precision paint correction.",
         package: "3-Year Ceramic Coating",
         id: "ceramic-3yr",
-        priceRange: "$800 - $1,100",
+        priceRange: "$599 - $849",
         highTicket: true
       };
     }
@@ -97,9 +97,9 @@ export default function DetailingQuiz() {
       return {
         title: "The Showroom Reset",
         desc: "Your vehicle needs a deep technical decontamination and interior restoration to bring back that new-car feeling.",
-        package: "Level 3: Showroom Full Detail",
-        id: "showroom-full",
-        priceRange: "$449 - $649",
+        package: "Showroom Package",
+        id: "showroom-package",
+        priceRange: "$399 - $549",
         highTicket: false
       };
     }
@@ -108,19 +108,19 @@ export default function DetailingQuiz() {
       return {
         title: "Maintenance Advantage",
         desc: "Your vehicle is well-maintained! Keep it that way with my premium maintenance plan to prevent long-term wear.",
-        package: "Maintenance Wash / Detail",
-        id: "maintenance-wash",
-        priceRange: "$60 - $120",
+        package: "Maintenance Detail",
+        id: "maintenance-detail",
+        priceRange: "$89 - $149",
         highTicket: false
       };
     }
 
     return {
-      title: "Essential Refresh",
-      desc: "A thorough seasonal reset to remove light grime and protect your investment for the months ahead.",
-      package: "Level 1: Essential Full Detail",
-      id: "essential-full",
-      priceRange: "$249 - $399",
+      title: "Signature Full Detail",
+      desc: "A thorough seasonal reset to remove light grime, deep clean the interior, and protect your investment.",
+      package: "Signature Full Detail",
+      id: "full-detail-package",
+      priceRange: "$229 - $329",
       highTicket: false
     };
   };
@@ -211,7 +211,7 @@ export default function DetailingQuiz() {
 
               <div className="flex flex-col gap-3">
                 <Button className="w-full h-16 text-lg font-bold shadow-xl shadow-emerald-100 bg-zinc-900 hover:bg-zinc-800" asChild>
-                  <Link to="/book">
+                  <Link to={`/book?serviceId=${recommendation.id}`}>
                     Secure This Estimate Now
                     <ChevronRight className="ml-2 h-5 w-5" />
                   </Link>

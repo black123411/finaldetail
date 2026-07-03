@@ -200,7 +200,7 @@ export default function BlogManager() {
           >
             {status.success ? <CheckCircle2 className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
             <p className="text-sm font-black italic">{status.message}</p>
-            <button onClick={() => setStatus(null)} className="ml-auto"><X className="h-4 w-4" /></button>
+            <button onClick={() => setStatus(null)} aria-label="Close status" className="ml-auto"><X className="h-4 w-4" /></button>
           </motion.div>
         )}
 
@@ -343,6 +343,7 @@ export default function BlogManager() {
                       <span className="text-[9px] font-black uppercase tracking-widest text-zinc-400">Published Status</span>
                       <button 
                         type="button"
+                        aria-label="Toggle publish status"
                         onClick={() => setCurrentPost(prev => ({ ...prev!, published: !prev?.published }))}
                         className={`w-12 h-6 rounded-full transition-all relative ${currentPost.published ? 'bg-emerald-500' : 'bg-zinc-200'}`}
                       >
@@ -351,6 +352,7 @@ export default function BlogManager() {
                    </div>
                   <button 
                     onClick={() => setIsEditorOpen(false)}
+                    aria-label="Close editor"
                     className="p-2 hover:bg-zinc-200 rounded-full transition-colors"
                   >
                     <X className="h-5 w-5" />
@@ -422,6 +424,7 @@ export default function BlogManager() {
                       <div className="space-y-2">
                         <label className="text-[9px] font-black uppercase tracking-widest text-zinc-400 italic">Category</label>
                         <select 
+                          aria-label="Category"
                           value={currentPost.category}
                           onChange={(e) => setCurrentPost(prev => ({ ...prev!, category: e.target.value }))}
                           className="w-full bg-white border border-zinc-100 rounded-xl p-3 text-xs font-black uppercase tracking-widest focus:ring-2 focus:ring-zinc-900"

@@ -122,7 +122,7 @@ function SEO() {
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "AutoBodyShop", // Better than AutoDetailing which isn't standard, AutoBodyShop or LocalBusiness
+    "@type": ["LocalBusiness", "AutomotiveBusiness"],
     "name": "Bryan's Showroom Quality Detailing",
     "image": image,
     "@id": domain,
@@ -131,10 +131,10 @@ function SEO() {
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Bellevue Garage Service",
+      "streetAddress": "1907 Arlington Cir",
       "addressLocality": "Bellevue",
       "addressRegion": "NE",
-      "postalCode": "68005",
+      "postalCode": "68123",
       "addressCountry": "US"
     },
     "geo": {

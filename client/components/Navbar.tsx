@@ -5,24 +5,22 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Button } from './ui/button';
 import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
-import { auth } from '../lib/firebase';
 import { LogOut } from 'lucide-react';
-
 import { BOOKING_LINK } from '../lib/constants';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { isAdmin, user } = useAuth();
+  const { isAdmin, user, logout } = useAuth();
 
   const navLinks = [
     { name: 'Services', path: '/services' },
     { name: 'Membership', path: '/membership' },
+    { name: 'Gift Cards', path: '/gift-cards' },
     { name: 'Quote', path: '/quote' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Blog', path: '/blog' },
     { name: 'FAQ', path: '/faq' },
-    { name: 'Admin', path: '/admin' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -59,26 +57,12 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="flex items-center gap-4 ml-4">
-            {user ? (
-              <button 
-                onClick={() => auth.signOut()}
-                className="p-2 text-zinc-400 hover:text-red-600 transition-colors"
-                title="Sign Out"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
-            ) : (
-              <Link 
-                to="/login" 
-                className="text-sm font-medium text-zinc-600 hover:text-zinc-900"
-              >
-                Login
-              </Link>
-            )}
-            <a href="tel:712-305-6313" className="flex items-center gap-2 text-sm font-bold text-zinc-900 hover:text-zinc-600 transition-colors">
-              <Phone className="h-4 w-4" />
-              <span>(712) 305-6313</span>
-            </a>
+            <Button variant="outline" className="border-zinc-200 hover:bg-zinc-50" asChild>
+              <a href="tel:712-305-6313" className="flex items-center gap-2 text-sm font-bold text-zinc-900 transition-colors">
+                <Phone className="h-4 w-4" />
+                <span>(712) 305-6313</span>
+              </a>
+            </Button>
             <Button asChild>
               <Link to="/book" className="gap-2">
                 <Calendar className="h-4 w-4" />

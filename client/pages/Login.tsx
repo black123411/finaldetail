@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -8,36 +6,23 @@ import { ShieldCheck, LogIn, AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function Login() {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, login } = useAuth();
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/admin';
 
-  const isEmergencyAdmin = localStorage.getItem('EMERGENCY_ADMIN_OVERRIDE') === 'true';
-
-  if ((user && isAdmin) || isEmergencyAdmin) {
+  if (isAdmin) {
     return <Navigate to={from} replace />;
   }
 
-  const handleLogin = async () => {
-    setLoading(true);
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     setError(null);
-    const provider = new GoogleAuthProvider();
-    try {
-      // Use popup - works reliably across all hosting domains
-      await signInWithPopup(auth, provider);
-    } catch (err: any) {
-      // If popup is blocked, set the emergency override and navigate directly
-      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
-        console.warn('Popup blocked, activating emergency admin access');
-        localStorage.setItem('EMERGENCY_ADMIN_OVERRIDE', 'true');
-        window.location.href = '/admin';
-        return;
-      }
-      setError(err.message || 'Failed to sign in');
-      setLoading(false);
+    const success = await login(password);
+    if (!success) {
+      setError('Invalid administrator password');
     }
   };
 
@@ -49,11 +34,7 @@ export default function Login() {
         className="max-w-md w-full bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-zinc-200 border border-zinc-100 text-center"
       >
         <div 
-          onClick={() => {
-            localStorage.setItem('EMERGENCY_ADMIN_OVERRIDE', 'true');
-            window.location.href = '/admin';
-          }}
-          className="w-16 h-16 bg-zinc-900 rounded-3xl flex items-center justify-center mx-auto mb-8 text-white italic font-black text-2xl shadow-xl cursor-pointer hover:scale-105 transition-transform"
+          className="w-16 h-16 bg-zinc-900 rounded-3xl flex items-center justify-center mx-auto mb-8 text-white italic font-black text-2xl shadow-xl hover:scale-105 transition-transform"
         >
           IQ
         </div>
@@ -72,36 +53,23 @@ export default function Login() {
           </motion.div>
         )}
 
-        {user && !isAdmin ? (
-          <div className="space-y-6">
-            <div className="p-6 bg-zinc-50 rounded-2xl border border-zinc-100 italic">
-              <p className="text-sm text-zinc-500 font-medium">Logged in as: <span className="text-zinc-900 font-bold">{user.email}</span></p>
-              <p className="text-[10px] text-zinc-400 font-black uppercase tracking-widest mt-2">Access Denied</p>
-            </div>
-            <Button 
-              variant="outline" 
-              onClick={() => auth.signOut()}
-              className="w-full h-14 rounded-2xl font-black italic text-zinc-600"
-            >
-              Sign Out & Retry
-            </Button>
-          </div>
-        ) : (
+        <form onSubmit={handleLogin} className="space-y-6">
+          <input
+            type="password"
+            placeholder="Administrator Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full bg-zinc-50 border-none rounded-2xl p-4 text-center text-lg focus:ring-2 focus:ring-zinc-900 transition-all font-mono"
+            required
+          />
           <Button 
-            onClick={handleLogin}
-            disabled={loading}
+            type="submit"
             className="w-full h-16 rounded-2xl bg-zinc-900 text-white font-black italic text-lg shadow-xl shadow-zinc-200 gap-3"
           >
-            {loading ? (
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-            ) : (
-              <>
-                <LogIn className="h-5 w-5" />
-                Authenticate with Google
-              </>
-            )}
+            <LogIn className="h-5 w-5" />
+            Authenticate
           </Button>
-        )}
+        </form>
 
         <div className="mt-12 pt-8 border-t border-zinc-50">
           <div className="flex items-center justify-center gap-2 text-zinc-300">

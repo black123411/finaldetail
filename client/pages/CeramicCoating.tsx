@@ -415,6 +415,24 @@ export default function CeramicCoating() {
           </div>
         </div>
       </section>
+      
+      {/* SEO Content Block */}
+      <section className="py-24 bg-zinc-950 border-t border-zinc-900">
+        <div className="container mx-auto px-4 max-w-4xl text-center">
+          <h2 className="text-3xl font-black tracking-tight text-white mb-6">
+            The Science Behind System X Ceramic Coatings
+          </h2>
+          <p className="text-zinc-400 leading-relaxed font-medium mb-4 text-left">
+            Many vehicle owners confuse traditional carnauba waxes and synthetic sealants with true ceramic coatings. While waxes sit on top of the paint as a temporary sacrificial layer that melts away in the Omaha heat, a professional ceramic coating utilizes nanotechnology to interlock with your vehicle's clear coat at a microscopic level. 
+          </p>
+          <p className="text-zinc-400 leading-relaxed font-medium mb-4 text-left">
+            As a certified System X installer in Bellevue, Nebraska, Bryan's Showroom Quality Detailing utilizes aviation-grade silica-carbide formulas. This means the coating cures to form a flexible, glass-like shield that is chemically resistant to environmental fallout, bird droppings, acid rain, and harsh cleaning chemicals. The ultra-slick, hydrophobic surface drastically lowers the surface tension of your paint, meaning water and dirt simply slide off rather than sticking.
+          </p>
+          <p className="text-zinc-400 leading-relaxed font-medium text-left">
+            Investing in a professional ceramic coating package not only amplifies the gloss and depth of your car's finish but also makes routine washing incredibly fast and effortless. It is the ultimate protective measure for any vehicle owner looking to maintain a flawless aesthetic for years.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

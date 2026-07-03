@@ -74,14 +74,30 @@ export default function ServiceDetail() {
 
   // Get suggested add-ons (first 3)
   const suggestedAddOns = ADD_ONS.slice(0, 3);
+  const isInteriorService =
+    service.categoryId === "interior-only" ||
+    service.id?.includes("interior") ||
+    service.id === "odor-elimination";
+  const isFullOrMaintenance =
+    service.categoryId === "full-detailing" ||
+    service.categoryId === "maintenance" ||
+    service.id?.includes("full") ||
+    service.id?.includes("showroom") ||
+    service.id?.includes("maintenance") ||
+    service.id?.includes("pre-sale");
+
   const isPaintService =
     service.categoryId === "paint-correction" ||
-    service.id === "paint-enhancement-polish";
+    service.id?.includes("paint") ||
+    service.id?.includes("polish") ||
+    service.id?.includes("ceramic");
   const paintProofImages = GALLERY_IMAGES.filter(
     (image) => image.category === "paint",
   ).slice(0, 3);
   const visualProof =
     (isPaintService && BEFORE_AFTERS.find((item) => item.category === "paint")) ||
+    ((isInteriorService || isFullOrMaintenance) &&
+      BEFORE_AFTERS.find((item) => item.category === "interior")) ||
     BEFORE_AFTERS[0];
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Quote, Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { ReviewsAPI } from '../services/api';
+import { Button } from './ui/button';
 
 interface Review {
   id: number;
@@ -40,33 +40,8 @@ const FALLBACK_REVIEWS: Review[] = [
 ];
 
 export default function Testimonials() {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchReviews() {
-      try {
-        const data = await ReviewsAPI.getReviews();
-        if (data.success && data.reviews && data.reviews.length > 0) {
-          // Take up to 3 reviews
-          setReviews(data.reviews.slice(0, 3));
-        } else {
-          // Fallback if success is false (e.g. config error) or no reviews found
-          if (data.message) {
-            console.warn('Backend reported issue fetching reviews:', data.message);
-          }
-          setReviews(FALLBACK_REVIEWS);
-        }
-      } catch (error) {
-        console.warn('Falling back to local testimonials due to error:', error);
-        setReviews(FALLBACK_REVIEWS);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchReviews();
-  }, []);
+  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
+  const [loading, setLoading] = useState(false);
 
   if (loading) {
     return (
@@ -114,6 +89,13 @@ export default function Testimonials() {
           </div>
         </motion.div>
       ))}
+      <div className="col-span-1 md:col-span-3 flex justify-center mt-12">
+        <Button size="lg" className="h-14 px-10 bg-[#4285F4] hover:bg-[#3367d6] text-white rounded-2xl shadow-xl shadow-blue-500/20 font-black tracking-widest uppercase text-xs" asChild>
+          <a href="https://www.google.com/search?q=Bryan%27s+Showroom+Quality+Mobile+Detailing#lrd=0x879389b489395555:0x82615171e79faed,1,,," target="_blank" rel="noopener noreferrer">
+            Read all 40+ 5-Star Reviews on Google
+          </a>
+        </Button>
+      </div>
     </div>
   );
 }

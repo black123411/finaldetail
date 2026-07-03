@@ -17,10 +17,11 @@ export default function Hero({ onStartQuiz, onStartScan }: { onStartQuiz: () => 
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-xs font-semibold uppercase tracking-widest mb-8">
             <Sparkles size={14} /> Based in Bellevue, Nebraska
           </span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6 leading-[0.9]">
+          <h1 className="sr-only">Showroom Quality Mobile Auto Detailing & Ceramic Coating in Omaha and Bellevue, NE</h1>
+          <div className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6 leading-[0.9]">
             I DON'T JUST CLEAN.<br />
             <span className="text-brand-gold italic font-light">I RESTORE.</span>
-          </h1>
+          </div>
           <p className="max-w-2xl mx-auto text-white/50 text-lg md:text-xl font-light mb-12">
             Real skill. Real results. I provide premium restoration and long-term protection for car owners who value perfection. No "assembly line" cleanings here.
           </p>

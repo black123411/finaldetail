@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, MapPin, Phone, Mail, RefreshCw } from 'lucide-react';
+import { Facebook, Instagram, MapPin, Phone, Mail, RefreshCw, Twitter, Youtube, Linkedin } from 'lucide-react';
 import { ServiceAPI } from '../services/api';
 
 export default function Footer() {
@@ -36,8 +36,11 @@ export default function Footer() {
             Premium auto detailing services based in Bellevue, Nebraska. 10+ years of showroom quality car detailing, interior detailing, and professional paint correction. We bring the ultimate clean to Omaha and Bellevue.
           </p>
           <div className="flex gap-4 pt-2">
-            <a href="#" className="hover:text-zinc-100 transition-colors"><Facebook className="h-5 w-5" /></a>
-            <a href="#" className="hover:text-zinc-100 transition-colors"><Instagram className="h-5 w-5" /></a>
+            <a href="#" aria-label="Facebook" className="hover:text-zinc-100 transition-colors"><Facebook className="h-5 w-5" /></a>
+            <a href="#" aria-label="Instagram" className="hover:text-zinc-100 transition-colors"><Instagram className="h-5 w-5" /></a>
+            <a href="#" aria-label="Twitter" className="hover:text-zinc-100 transition-colors"><Twitter className="h-5 w-5" /></a>
+            <a href="#" aria-label="Youtube" className="hover:text-zinc-100 transition-colors"><Youtube className="h-5 w-5" /></a>
+            <a href="#" aria-label="Linkedin" className="hover:text-zinc-100 transition-colors"><Linkedin className="h-5 w-5" /></a>
           </div>
         </div>
 
@@ -71,6 +74,7 @@ export default function Footer() {
             <li><Link to="/blog" className="block py-1 hover:text-zinc-100 transition-colors">Blog & Tips</Link></li>
             <li><Link to="/gift-cards" className="block py-1 hover:text-zinc-100 transition-colors">Gift Cards</Link></li>
             <li><Link to="/faq" className="block py-1 hover:text-zinc-100 transition-colors">FAQ</Link></li>
+            <li><Link to="/review" className="block py-1 text-emerald-500 hover:text-emerald-400 font-bold transition-colors">Leave a Review</Link></li>
             <li><Link to="/admin" className="block py-1 hover:text-zinc-100 transition-colors font-bold text-zinc-300">Admin Dashboard</Link></li>
           </ul>
         </div>
@@ -80,7 +84,7 @@ export default function Footer() {
           <ul className="space-y-3 text-sm">
             <li className="flex items-start gap-3">
               <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-              <span>Based in Bellevue / Serving Omaha Metro Area</span>
+              <span>1907 Arlington Cir, Bellevue, NE 68123</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 shrink-0" />

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { CheckCircle2, Info, ArrowRight, Calendar as CalendarIcon, Check, Sparkles, AlertCircle, HelpCircle, Loader2, ChevronRight } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '../components/ui/button';
 import { SERVICES, VEHICLE_SIZES, SPECIALTY_SIZES, type Service } from '@/shared/data/services';
 import { ServiceAPI } from '../services/api';
@@ -20,6 +20,7 @@ interface SquareService {
 export default function Services() {
   const [squareServices, setSquareServices] = useState<SquareService[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'paint-ceramic' | 'interior-exterior' | 'specialty' | 'maintenance'>('paint-ceramic');
 
   useEffect(() => {
     async function fetchSquareData() {
@@ -35,13 +36,19 @@ export default function Services() {
     fetchSquareData();
   }, []);
 
-  const fullServices = SERVICES.filter(s => s.categoryId === 'full-detailing');
+  const coreTiers = [
+    SERVICES.find(s => s.id === 'express-detail'),
+    SERVICES.find(s => s.id === 'full-detail-package'),
+    SERVICES.find(s => s.id === 'showroom-package')
+  ].filter(Boolean) as typeof SERVICES;
+
   const interiorServices = SERVICES.filter(s => s.categoryId === 'interior-detailing');
   const exteriorServices = SERVICES.filter(s => s.categoryId === 'exterior-detailing');
   const correctionServices = SERVICES.filter(s => s.categoryId === 'paint-correction');
   const ceramicServices = SERVICES.filter(s => s.categoryId === 'protection');
   const specialtyServices = SERVICES.filter(s => ['rv-boat-detailing', 'tractor-detailing'].includes(s.categoryId));
   const maintenanceServices = SERVICES.filter(s => s.categoryId === 'maintenance');
+  const otherFullServices = SERVICES.filter(s => s.categoryId === 'full-detailing' && !['express-detail', 'full-detail-package', 'showroom-package'].includes(s.id));
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -177,138 +184,165 @@ export default function Services() {
           </motion.p>
         </div>
 
-        {/* Maintenance Section */}
+        {/* Core Tiers Section */}
         <section className="mb-32">
-          <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-3xl font-black tracking-tighter text-zinc-900 italic">Maintenance Detailing</h2>
-            <div className="h-px bg-zinc-200 flex-grow"></div>
+          <div className="text-center mb-16 space-y-4">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 bg-emerald-50 px-4 py-1.5 rounded-full">Core Packages</span>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-zinc-900 leading-none">
+              Choose from Our 3 Core Detailing Tiers
+            </h2>
+            <p className="text-zinc-500 font-medium max-w-xl mx-auto">
+              Simple, transparently priced tiers to make selecting your service easy. Pay when the work is complete.
+            </p>
           </div>
-          
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-          >
-            {maintenanceServices.map((service) => (
-              <ServiceCard key={service.id} service={service} squareServices={squareServices} />
-            ))}
-          </motion.div>
-        </section>
 
-        {/* Full Detailing */}
-        <section className="mb-32">
-          <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-3xl font-black tracking-tighter text-zinc-900 italic">Full Detailing Packages</h2>
-            <div className="h-px bg-zinc-200 flex-grow"></div>
-          </div>
-          
           <motion.div 
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
           >
-            {fullServices.map((service) => (
+            {coreTiers.map((service) => (
               <ServiceCard key={service.id} service={service} squareServices={squareServices} />
             ))}
           </motion.div>
         </section>
 
-        {/* Interior & Exterior */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 mb-32">
-          <section className="space-y-12">
-            <div className="flex items-center gap-4">
-              <h2 className="text-3xl font-black tracking-tighter text-zinc-900 italic">Interior</h2>
-              <div className="h-px bg-zinc-200 flex-grow"></div>
-            </div>
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid gap-8"
-            >
-              {interiorServices.map((service) => (
-                <ServiceCard key={service.id} service={service} squareServices={squareServices} />
-              ))}
-            </motion.div>
-          </section>
-          <section className="space-y-12">
-            <div className="flex items-center gap-4">
-              <h2 className="text-3xl font-black tracking-tighter text-zinc-900 italic">Exterior</h2>
-              <div className="h-px bg-zinc-200 flex-grow"></div>
-            </div>
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid gap-8"
-            >
-              {exteriorServices.map((service) => (
-                <ServiceCard key={service.id} service={service} squareServices={squareServices} />
-              ))}
-            </motion.div>
-          </section>
-        </div>
-
-        {/* Paint Correction & Ceramic */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 mb-32">
-          <section className="space-y-12">
-            <div className="flex items-center gap-4">
-              <h2 className="text-3xl font-black tracking-tighter text-zinc-900 italic">Correction</h2>
-              <div className="h-px bg-zinc-200 flex-grow"></div>
-            </div>
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid gap-8"
-            >
-              {correctionServices.map((service) => (
-                <ServiceCard key={service.id} service={service} squareServices={squareServices} />
-              ))}
-            </motion.div>
-          </section>
-          <section className="space-y-12">
-            <div className="flex items-center gap-4">
-              <h2 className="text-3xl font-black tracking-tighter text-zinc-900 italic">Ceramic</h2>
-              <div className="h-px bg-zinc-200 flex-grow"></div>
-            </div>
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid gap-8"
-            >
-              {ceramicServices.map((service) => (
-                <ServiceCard key={service.id} service={service} squareServices={squareServices} />
-              ))}
-            </motion.div>
-          </section>
-        </div>
-
-        {/* RV, Boat & Tractor Section */}
-        <section className="mb-32">
-          <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-3xl font-black tracking-tighter text-zinc-900 italic">Specialty Vehicles</h2>
-            <div className="h-px bg-zinc-200 flex-grow"></div>
+        {/* Specialized Catalog Section */}
+        <section className="mb-32 border-t border-zinc-200 pt-24">
+          <div className="text-center mb-16 space-y-4">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Advanced Detailing</span>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-zinc-900 leading-none">
+              Specialized & Custom Services
+            </h2>
+            <p className="text-zinc-500 font-medium max-w-xl mx-auto">
+              Need paint correction, ceramic coatings, or RV detailing? Browse our specialized services below.
+            </p>
           </div>
-          
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-          >
-            {specialtyServices.map((service) => (
-              <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+
+          {/* Tabs Navigation */}
+          <div className="flex flex-wrap justify-center gap-2 mb-16 border-b border-zinc-200 pb-8 max-w-4xl mx-auto">
+            {[
+              { id: 'paint-ceramic', label: 'Paint & Ceramic' },
+              { id: 'interior-exterior', label: 'Interior / Exterior' },
+              { id: 'specialty', label: 'Specialty Vehicles' },
+              { id: 'maintenance', label: 'Maintenance plans' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 ${
+                  activeTab === tab.id
+                    ? 'bg-zinc-900 text-white shadow-xl scale-105'
+                    : 'bg-white text-zinc-600 border border-zinc-200 hover:bg-zinc-50 hover:text-zinc-900 hover:border-zinc-300'
+                }`}
+              >
+                {tab.label}
+              </button>
             ))}
-          </motion.div>
+          </div>
+
+          {/* Tab Content */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.2 }}
+            >
+              {activeTab === 'paint-ceramic' && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div className="space-y-8">
+                    <h3 className="text-2xl font-black text-zinc-900 italic border-l-4 border-emerald-500 pl-4 mb-8">Paint Correction</h3>
+                    <div className="grid gap-8">
+                      {correctionServices.map(service => (
+                        <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-8">
+                    <h3 className="text-2xl font-black text-zinc-900 italic border-l-4 border-emerald-500 pl-4 mb-8">Ceramic Coating</h3>
+                    <div className="grid gap-8">
+                      {ceramicServices.map(service => (
+                        <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'interior-exterior' && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div className="space-y-8">
+                    <h3 className="text-2xl font-black text-zinc-900 italic border-l-4 border-emerald-500 pl-4 mb-8">Individual Interior Services</h3>
+                    <div className="grid gap-8">
+                      {interiorServices.map(service => (
+                        <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-8">
+                    <h3 className="text-2xl font-black text-zinc-900 italic border-l-4 border-emerald-500 pl-4 mb-8">Individual Exterior Services</h3>
+                    <div className="grid gap-8">
+                      {exteriorServices.map(service => (
+                        <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+                      ))}
+                    </div>
+                    {otherFullServices.length > 0 && (
+                      <div className="pt-12 space-y-8">
+                        <h3 className="text-2xl font-black text-zinc-900 italic border-l-4 border-emerald-500 pl-4 mb-8">Prep & Specialty Packages</h3>
+                        <div className="grid gap-8">
+                          {otherFullServices.map(service => (
+                            <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'specialty' && (
+                <div className="space-y-8">
+                  <h3 className="text-2xl font-black text-zinc-900 italic border-l-4 border-emerald-500 pl-4 mb-8">RV, Boat & Equipment Detailing</h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {specialtyServices.map(service => (
+                      <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'maintenance' && (
+                <div className="space-y-8">
+                  <h3 className="text-2xl font-black text-zinc-900 italic border-l-4 border-emerald-500 pl-4 mb-8 text-center">Maintenance Detailing Plans</h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    {maintenanceServices.map(service => (
+                      <ServiceCard key={service.id} service={service} squareServices={squareServices} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </section>
+        {/* SEO Content Block */}
+        <section className="py-24 bg-white border-t border-zinc-200 mt-16 rounded-[3rem]">
+          <div className="container mx-auto px-12 max-w-4xl text-center">
+            <h2 className="text-3xl md:text-4xl font-black text-zinc-900 tracking-tight mb-6">
+              The True Value of Professional Auto Detailing
+            </h2>
+            <p className="text-zinc-600 leading-relaxed font-medium mb-4 text-left">
+              Choosing the right auto detailing service in Bellevue and Omaha is crucial for the longevity and aesthetic appeal of your vehicle. Unlike a quick automated car wash that can inflict microscopic scratches on your clear coat, our meticulous hand-washing and decontamination processes ensure your paint remains pristine.
+            </p>
+            <p className="text-zinc-600 leading-relaxed font-medium mb-4 text-left">
+              Whether you require deep interior restoration to remove stubborn stains and allergens, or a comprehensive exterior paint correction to eliminate swirl marks and oxidation, Bryan's Showroom Quality Detailing is equipped to handle the task. Our specialized ceramic coatings offer robust protection against Nebraska's harsh weather, road salt, and UV rays, ensuring your vehicle maintains a mirror-like finish for years to come.
+            </p>
+            <p className="text-zinc-600 leading-relaxed font-medium text-left">
+              We proudly offer transparent pricing and convenient mobile detailing options for our clients in Omaha, Papillion, and Council Bluffs, bringing professional-grade car care directly to your location.
+            </p>
+          </div>
         </section>
       </div>
     </div>

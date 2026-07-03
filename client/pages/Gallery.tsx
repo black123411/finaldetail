@@ -194,6 +194,23 @@ export default function Gallery() {
           </motion.div>
         )}
       </AnimatePresence>
+      {/* SEO Content Block */}
+      <section className="py-24 bg-zinc-950 border-t border-zinc-900 mt-16">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h2 className="text-3xl font-black tracking-tight text-white mb-6 text-center">
+            Our Bellevue & Omaha Detailing Portfolio
+          </h2>
+          <p className="text-zinc-400 leading-relaxed font-medium mb-4">
+            A picture is worth a thousand words, especially in the auto detailing industry. The images in our gallery showcase the transformative power of professional paint correction, ceramic coating, and deep interior cleaning. We take immense pride in every vehicle we service, from daily commuters to luxury sports cars and classic restorations across the Omaha metro area.
+          </p>
+          <p className="text-zinc-400 leading-relaxed font-medium mb-4">
+            Notice the striking difference in the "Before & After" shots, where heavily oxidized, scratched, and faded paint is revived to a brilliant, high-gloss shine. This level of restoration is only achievable through technical multi-stage machine polishing and the application of premium ceramic polymers. 
+          </p>
+          <p className="text-zinc-400 leading-relaxed font-medium">
+            When you book with Bryan's Showroom Quality Detailing, you are investing in proven expertise. We encourage our prospective clients to view these results as a testament to our commitment to absolute perfection and customer satisfaction in Bellevue, NE.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

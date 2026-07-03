@@ -130,8 +130,8 @@ export default function Quote() {
     // Track analytics (Simulated tracking for Admin)
     try {
       await QuoteAPI.logFunnelStep({
-        type: 'quote_completion',
-        data: {
+        step: 'quote_completion',
+        details: {
           services: selectedServices,
           condition,
           expectation,
@@ -449,6 +449,37 @@ export default function Quote() {
                                             <span className="text-[10px] font-black uppercase text-center tracking-tighter">{ex.label}</span>
                                         </button>
                                     ))}
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-1 italic">4. Upload Photos (Optional)</label>
+                                <p className="text-xs text-zinc-500 font-medium pl-1">Show us what we're working with for a more accurate estimate.</p>
+                                <div className="grid grid-cols-1 gap-3">
+                                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-zinc-300 rounded-2xl cursor-pointer bg-zinc-50 hover:bg-zinc-100 transition-colors">
+                                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <Camera className="w-8 h-8 mb-3 text-zinc-400" />
+                                            <p className="mb-2 text-sm text-zinc-500 font-bold"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                            <p className="text-xs text-zinc-400">PNG, JPG, or JPEG (Max 3 files)</p>
+                                        </div>
+                                        <input type="file" multiple accept="image/*" className="hidden" onChange={handleFileChange} />
+                                    </label>
+                                    {selectedFiles.length > 0 && (
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            {selectedFiles.map((file, i) => (
+                                                <div key={i} className="flex items-center gap-2 bg-zinc-900 text-white px-3 py-1.5 rounded-lg text-xs font-medium">
+                                                    <span className="truncate max-w-[150px]">{file.name}</span>
+                                                    <button 
+                                                      aria-label="Remove photo"
+                                                      onClick={() => setSelectedFiles(prev => prev.filter((_, index) => index !== i))}
+                                                      className="text-zinc-400 hover:text-red-400"
+                                                    >
+                                                      <X className="h-3 w-3" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

@@ -28,7 +28,7 @@ export default function CityDetail() {
     "@context": "https://schema.org",
     "@type": "AutoBodyShop",
     "name": `Bryan's Showroom Quality Detailing - ${city.name}`,
-    "image": "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=2000",
+    "image": "/20211009_021727-COLLAGE.jpg",
     "description": city.seo.description,
     "url": `https://bryansdetailingomaha.com/areas/${city.slug}`,
     "telephone": "+17123056313",
@@ -55,7 +55,7 @@ export default function CityDetail() {
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-900 via-transparent to-zinc-900" />
           <img 
-            src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=2000" 
+            src="/20211009_021727-COLLAGE.jpg" 
             alt="Detailing background"
             className="w-full h-full object-cover"
           />

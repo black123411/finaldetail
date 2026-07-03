@@ -8,6 +8,27 @@
     ],
     "rewrites": [
       {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "showroom",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/robots.txt",
+        "run": {
+          "serviceId": "showroom",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/sitemap.xml",
+        "run": {
+          "serviceId": "showroom",
+          "region": "us-central1"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

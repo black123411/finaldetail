@@ -1,10 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import { Shield, Lock, Eye, Server } from 'lucide-react';
 
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-zinc-50 pt-32 pb-24 font-sans">
+      <Helmet>
+        <title>Privacy Policy | Bryan's Showroom Quality Detailing</title>
+        <meta name="description" content="Read the privacy policy for Bryan's Showroom Quality Detailing. Learn how we collect, use, and protect your personal information when booking auto detailing services." />
+      </Helmet>
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

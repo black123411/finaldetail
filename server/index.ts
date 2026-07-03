@@ -6,6 +6,8 @@ import path from "path";
 import multer from "multer";
 import nodemailer from "nodemailer";
 import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, ADD_ONS } from "../shared/data/services.ts";
+import { CITIES } from "../shared/data/cities.ts";
+import { BLOG_POSTS } from "../shared/data/blog.ts";
 import { logToSystem, logSquareError, LogLevel } from "./services/errorLogger.ts";
 
 // Configure multer for memory storage
@@ -40,6 +42,51 @@ async function startServer() {
     typeof value === 'bigint' ? value.toString() : value
   );
 
+  // Redirects and Canonicalization Middleware
+  app.use((req, res, next) => {
+    const host = req.get('host') || '';
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const url = req.originalUrl || req.url;
+    
+    // Skip redirects for local development
+    if (host.includes('localhost') || host.includes('127.0.0.1') || host.includes('0.0.0.0')) {
+      return next();
+    }
+    
+    // Normalize host and protocol
+    const isOldDomain = host.includes('bryansmobiledetailing.com') || host.includes('bryansdetailing.com');
+    const isWww = host.startsWith('www.');
+    const isHttp = protocol === 'http';
+    
+    // If it's old domain, has WWW, or is HTTP, redirect to canonical HTTPS URL
+    if (isOldDomain || isWww || isHttp) {
+      const canonicalHost = 'bryansdetailingomaha.com';
+      console.log(`[SEO Redirect] Redirecting from ${protocol}://${host}${url} to https://${canonicalHost}${url}`);
+      return res.redirect(301, `https://${canonicalHost}${url}`);
+    }
+    
+    // Redirect /home to /
+    const path = req.path.toLowerCase();
+    if (path === '/home' || path === '/home/') {
+      console.log(`[SEO Redirect] Redirecting from /home to /`);
+      return res.redirect(301, '/');
+    }
+    
+    // Redirect /services-1 to /services
+    if (path === '/services-1' || path === '/services-1/') {
+      console.log(`[SEO Redirect] Redirecting from /services-1 to /services`);
+      return res.redirect(301, '/services');
+    }
+    
+    // Redirect legacy appointments routes to /book
+    if (path === '/appointments' || path === '/appointments/' || path === '/s/appointments' || path === '/s/appointments/') {
+      console.log(`[SEO Redirect] Redirecting from appointments route to /book`);
+      return res.redirect(301, '/book');
+    }
+    
+    next();
+  });
+
   // Helper to get Square Client from request headers
   const getClientFromReq = (req: express.Request) => {
     const token = req.headers['x-square-access-token'] as string;
@@ -66,34 +113,64 @@ async function startServer() {
 
   // SEO Routes
   app.get("/robots.txt", (req, res) => {
-    const appUrl = process.env.APP_URL || `https://${req.get('host')}`;
     res.type("text/plain");
-    res.send(`User-agent: *\nAllow: /\nSitemap: ${appUrl}/sitemap.xml`);
+    res.send(`User-agent: *\nAllow: /\nSitemap: https://bryansdetailingomaha.com/sitemap.xml`);
   });
 
   app.get("/sitemap.xml", (req, res) => {
-    const appUrl = process.env.APP_URL || `https://${req.get('host')}`;
-    const categories = [
-      'full-detailing', 
-      'maintenance', 
-      'interior-only', 
-      'exterior-only', 
-      'paint-correction', 
-      'ceramic-coating', 
-      'rv-motorhome'
-    ];
+    const appUrl = 'https://bryansdetailingomaha.com';
     
+    const staticUrls = [
+      '',
+      '/services',
+      '/book',
+      '/gallery',
+      '/ceramic-coating',
+      '/membership',
+      '/faq',
+      '/quote',
+      '/blog'
+    ];
+
+    const serviceUrls = SERVICES.map(s => `/services/${s.id}`);
+    const categoryUrls = CATEGORIES.map(c => `/services/category/${c.slug}`);
+    const cityUrls = CITIES.map(c => `/areas/${c.slug}`);
+    const blogUrls = BLOG_POSTS.map(p => `/blog/${p.slug}`);
+
+    const allUrls = [...staticUrls, ...serviceUrls, ...categoryUrls, ...cityUrls, ...blogUrls];
+
     res.type("application/xml");
-    res.send(`<?xml version="1.0" encoding="UTF-8"?>
+    
+    const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>${appUrl}/</loc><priority>1.0</priority></url>
-  <url><loc>${appUrl}/services</loc><priority>0.8</priority></url>
-  ${categories.map(slug => `<url><loc>${appUrl}/services/${slug}</loc><priority>0.7</priority></url>`).join('\n  ')}
-  <url><loc>${appUrl}/gallery</loc><priority>0.7</priority></url>
-  <url><loc>${appUrl}/membership</loc><priority>0.6</priority></url>
-  <url><loc>${appUrl}/faq</loc><priority>0.5</priority></url>
-  <url><loc>${appUrl}/quote</loc><priority>0.7</priority></url>
-</urlset>`);
+${allUrls.map(path => {
+  let priority = '0.5';
+  let freq = 'monthly';
+  if (path === '') {
+    priority = '1.0';
+    freq = 'weekly';
+  } else if (path === '/services') {
+    priority = '0.9';
+    freq = 'weekly';
+  } else if (path.startsWith('/services/')) {
+    priority = '0.8';
+    freq = 'weekly';
+  } else if (path.startsWith('/areas/')) {
+    priority = '0.8';
+    freq = 'weekly';
+  } else if (path.startsWith('/blog/')) {
+    priority = '0.7';
+    freq = 'weekly';
+  }
+  return `  <url>
+    <loc>${appUrl}${path}</loc>
+    <changefreq>${freq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+}).join('\n')}
+</urlset>`;
+
+    res.send(sitemapContent);
   });
 
   // Square Payment Processing
@@ -459,7 +536,7 @@ async function startServer() {
       const bookingSegments = appointmentSegments.map((segment: any) => ({
         durationMinutes: segment.durationMinutes,
         serviceVariationId: segment.serviceVariationId,
-        serviceVariationVersion: segment.serviceVariationVersion,
+        serviceVariationVersion: segment.serviceVariationVersion ? BigInt(segment.serviceVariationVersion) : undefined,
         teamMemberId: segment.teamMemberId,
         anyTeamMember: segment.anyTeamMember,
         intermissionMinutes: segment.intermissionMinutes,
@@ -552,6 +629,7 @@ async function startServer() {
           await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: customer.email,
+            bcc: process.env.ADMIN_EMAIL || process.env.EMAIL_USER,
             subject: "Booking Confirmed - Bryan's Showroom Quality Detailing",
             html: `
               <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">

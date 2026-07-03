@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 import { RecommendationResult } from '@/shared/types';
 import { SQUARE_BOOKING_URL } from "../constants";
 import { CheckCircle2, ShieldCheck, Zap, ArrowRight, AlertTriangle } from "lucide-react";
@@ -85,15 +86,13 @@ export default function RecommendationDisplay({ result, onReset }: { result: Rec
               </div>
 
               <div className="space-y-4">
-                <a 
-                  href={`${SQUARE_BOOKING_URL}?serviceId=${result.service.squareServiceId}`}
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  to={`${SQUARE_BOOKING_URL}?serviceId=${result.service.squareServiceId}`}
                   className="btn-primary w-full flex items-center justify-center gap-2 py-5 text-lg group"
                 >
                   BOOK THIS SERVICE
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
                 <button 
                   onClick={onReset}
                   className="w-full text-white/40 text-xs font-bold uppercase tracking-widest hover:text-brand-gold transition-colors"

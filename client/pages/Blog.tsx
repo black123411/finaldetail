@@ -174,7 +174,7 @@ export default function Blog() {
                   <div className="bg-white rounded-[2.5rem] border border-zinc-100 shadow-sm overflow-hidden h-full flex flex-col transition-all hover:shadow-xl hover:-translate-y-1">
                     <div className="aspect-[16/10] overflow-hidden relative">
                       <img
-                        src={post.featuredImage || 'https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&q=80&w=800'}
+                        src={post.featuredImage || '/20191020_110329.jpg'}
                         alt={post.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 shadow-inner"
                       />

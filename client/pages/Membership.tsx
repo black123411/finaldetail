@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import { CheckCircle2, Shield, Star, Crown } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { BOOKING_LINK } from '../lib/constants';
@@ -7,6 +8,10 @@ import { BOOKING_LINK } from '../lib/constants';
 export default function Membership() {
   return (
     <div className="min-h-screen bg-zinc-50 py-16">
+      <Helmet>
+        <title>Auto Detailing Membership Plans Bellevue NE | Monthly Car Care Omaha</title>
+        <meta name="description" content="Join Bryan's exclusive auto detailing membership plans in Bellevue and Omaha. Monthly, bi-weekly, and quarterly maintenance packages with priority scheduling and discounted add-ons." />
+      </Helmet>
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Maintenance Detailing</h1>
@@ -157,6 +162,16 @@ export default function Membership() {
           </p>
           <p className="text-zinc-600">
             Memberships are billed automatically to your card on file via Square Payments. You can cancel or pause your membership at any time with 7 days notice before your next billing cycle.
+          </p>
+        </div>
+        {/* SEO Content Block */}
+        <div className="max-w-3xl mx-auto mt-16 bg-zinc-50 p-8 rounded-2xl border border-zinc-200">
+          <h2 className="text-2xl font-black text-zinc-900 mb-4">The Importance of Consistent Car Care</h2>
+          <p className="text-zinc-600 leading-relaxed mb-4">
+            Routine vehicle maintenance extends far beyond oil changes and tire rotations. Maintaining your vehicle's exterior clear coat and interior surfaces is critical for preserving its resale value and driving comfort. Our exclusive auto detailing membership plans in Bellevue and Omaha are designed to provide unparalleled convenience and continuous protection.
+          </p>
+          <p className="text-zinc-600 leading-relaxed">
+            By enrolling in a monthly or bi-weekly maintenance plan, you protect your car against the degrading effects of Nebraska's extreme seasonal shifts—from winter road salt to intense summer UV rays. Our recurring services prevent dirt and contaminants from bonding to the paint, drastically reducing the need for intensive and costly paint correction in the future. Enjoy priority scheduling, discounted premium add-ons, and the peace of mind that comes with driving a flawlessly clean vehicle every single day.
           </p>
         </div>
       </div>

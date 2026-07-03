@@ -133,4 +133,4 @@ export const SERVICES: ServiceDetail[] = [
   }
 ];
 
-export const SQUARE_BOOKING_URL = "https://bryansdetailingomaha.com";
+export const SQUARE_BOOKING_URL = "/book";

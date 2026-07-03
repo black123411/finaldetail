@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 import { SERVICES, SQUARE_BOOKING_URL } from "../constants";
 import { Check, ArrowRight } from "lucide-react";
 
@@ -49,14 +50,13 @@ export default function Services() {
                   <p className="text-[10px] uppercase text-white/30 tracking-widest mb-1">Starts At</p>
                   <p className="text-2xl font-bold text-brand-gold">${service.priceMin}</p>
                 </div>
-                <a 
-                  href={SQUARE_BOOKING_URL} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-gold group-hover:text-brand-charcoal transition-all"
+                <Link
+                  to={SQUARE_BOOKING_URL}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/10 px-4 py-2 text-sm font-semibold text-brand-gold transition-all hover:bg-brand-gold hover:text-brand-charcoal"
                 >
-                  <ArrowRight size={18} />
-                </a>
+                  Book now
+                  <ArrowRight size={16} />
+                </Link>
               </div>
             </motion.div>
           ))}

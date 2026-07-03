@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 import { Gift, Mail, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/button';
 
 export default function GiftCards() {
   return (
     <div className="min-h-screen bg-zinc-50 py-16">
+      <Helmet>
+        <title>Auto Detailing Gift Cards Bellevue NE | Omaha Gift Certificates</title>
+        <meta name="description" content="Give the gift of a showroom shine. Purchase digital auto detailing gift cards for Bryan's Showroom Quality Detailing in Bellevue and Omaha. Instant email delivery, never expires." />
+      </Helmet>
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Digital Gift Cards</h1>
@@ -18,7 +23,7 @@ export default function GiftCards() {
           {/* Image Side */}
           <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
             <img
-              src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800"
+              src="/20191020_062847.jpg"
               alt="Gift card presentation"
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

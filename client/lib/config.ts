@@ -5,13 +5,16 @@
 
 export const getConfig = (key: string, defaultValue: string = ''): string => {
   // Check localStorage for a "SESSION_" override first
-  const sessionValue = localStorage.getItem(`SESSION_${key}`);
-  if (sessionValue) return sessionValue;
+  try {
+    const sessionValue = localStorage.getItem(`SESSION_${key}`);
+    if (sessionValue) return sessionValue;
+  } catch (e) {}
 
-  // Fallback to process.env or import.meta.env
-  // Note: prefixed with VITE_ for client-side exposure if using import.meta.env
-  const envValue = (process.env as any)[key] || (import.meta.env as any)[key] || (import.meta.env as any)[`VITE_${key}`];
-  if (envValue) return envValue;
+  // Explicitly check for known keys since Vite replaces them statically
+  if (key === 'GEMINI_API_KEY') return (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+  if (key === 'VITE_SQUARE_APP_ID') return (import.meta as any).env?.VITE_SQUARE_APP_ID || '';
+  if (key === 'VITE_SQUARE_LOCATION_ID') return (import.meta as any).env?.VITE_SQUARE_LOCATION_ID || '';
+  if (key === 'GOOGLE_MAPS_API_KEY' || key === 'GOOGLE_PLACES_API_KEY') return (import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY || (import.meta as any).env?.VITE_GOOGLE_PLACES_API_KEY || '';
 
   return defaultValue;
 };

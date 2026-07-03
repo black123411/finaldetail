@@ -43,6 +43,47 @@ interface SquareService {
 const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
 const isRealSquareVariationId = (id?: string) => !!id && !id.startsWith('local-') && !id.startsWith('addon-var-') && !id.includes('-var-');
 
+const getSizeLabel = (sizeId: string | null) => {
+  const map: Record<string, string> = {
+    car: 'Sedan / Coupe',
+    suv: 'Small SUV / Crossover',
+    truck: 'Truck / Large SUV',
+    largeSuv: 'XL Vehicle / Van',
+    rv: 'RV / Boat / Trailer',
+    tractor: 'Tractor / Equipment',
+  };
+  return sizeId ? map[sizeId] || sizeId : 'Select size';
+};
+
+const getSizeAliases = (sizeId: string) => {
+  switch (sizeId) {
+    case 'car':
+      return ['car', 'sedan', 'sedancoupe', 'carsedan', 'coupe'];
+    case 'suv':
+      return ['suv', 'smallsuv', 'smallsuvcrossover', 'suvcrossover', 'crossover'];
+    case 'truck':
+      return ['truck', 'trucklargesuv', 'largesuv'];
+    case 'largeSuv':
+      return ['largesuv', 'largeSUV', 'xlvehicle', 'van', 'largesuvvan', 'xlvehiclevan'];
+    case 'rv':
+      return ['rv', 'rvboat', 'rvboattrailer', 'boat', 'trailer'];
+    case 'tractor':
+      return ['tractor', 'equipment', 'tractorfarm', 'tractorfarmequipment'];
+    default:
+      return [sizeId];
+  }
+};
+
+const isMatchingVariation = (variationName: string, sizeId: string) => {
+  const normalizedVariation = normalizeName(variationName);
+  if (!normalizedVariation) return false;
+
+  return getSizeAliases(sizeId).some((alias) => {
+    const normalizedAlias = normalizeName(alias);
+    return normalizedVariation === normalizedAlias || normalizedVariation.includes(normalizedAlias) || normalizedAlias.includes(normalizedVariation);
+  });
+};
+
 const formatDuration = (input: number | string) => {
   // If it's already a human-readable string like "2-3.5 hours" or "45 mins", return it directly
   if (typeof input === 'string' && (input.includes('hour') || input.includes('min') || input.includes('Day'))) {
@@ -141,10 +182,7 @@ export default function Booking() {
         variations: Object.keys(ls.price).map((size) => {
           const sizeLabel = [...VEHICLE_SIZES, ...SPECIALTY_SIZES].find(v => v.id === size)?.name || size;
           const squareMatch = findSquareService(ls.squareName || ls.name);
-          const squareVariation = squareMatch?.variations?.find((variation: any) => {
-            const variationName = normalizeName(variation.name || '');
-            return variationName === normalizeName(sizeLabel) || variationName === normalizeName(size);
-          });
+          const squareVariation = squareMatch?.variations?.find((variation: any) => isMatchingVariation(variation.name || '', size));
 
           return {
             id: squareVariation?.id || `local-${ls.id}-${size}`,
@@ -279,7 +317,7 @@ export default function Booking() {
 
       setPendingBooking(booking);
       
-      setStep('payment');
+      setStep('success');
     } catch (err: any) {
       setError(err.message || 'Booking failed. My schedule might have just filled up. Please refresh or call me.');
     } finally {
@@ -978,7 +1016,7 @@ export default function Booking() {
                   {selectedSize && (
                     <div className="animate-in fade-in slide-in-from-right-4">
                       <p className="text-[10px] font-bold text-zinc-400 uppercase mb-1">Vehicle Size</p>
-                      <p className="text-sm font-bold text-zinc-900">{selectedSize}</p>
+                      <p className="text-sm font-bold text-zinc-900">{getSizeLabel(selectedSize)}</p>
                     </div>
                   )}
                   {selectedAddons.length > 0 && (
@@ -1017,7 +1055,7 @@ export default function Booking() {
                     </div>
                     <p className="text-[10px] text-zinc-400 mt-4 leading-relaxed bg-zinc-50 p-3 rounded-lg border border-zinc-100 flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                        <span>A $50 deposit is required to book. The remaining balance is securely collected upon completion of the service. Final price may vary based on actual vehicle condition. Your satisfaction is 100% guaranteed.</span>
+                        <span>No upfront payment required. The full balance is collected upon completion of the service. Final price may vary based on actual vehicle condition. Your satisfaction is 100% guaranteed.</span>
                     </p>
                     <div className="mt-4 pt-4 border-t border-zinc-100 flex items-center justify-center gap-2">
                       <div className="flex -space-x-2">
