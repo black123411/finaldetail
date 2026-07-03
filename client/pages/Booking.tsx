@@ -424,12 +424,11 @@ export default function Booking() {
         <div className="relative mb-16 max-w-3xl mx-auto px-4">
           <div className="absolute top-1/2 left-0 w-full h-1 bg-zinc-200 -translate-y-1/2 rounded-full hidden sm:block"></div>
           <div className="relative flex justify-between">
-            {['Service', 'Details', 'Payment', 'Success'].map((label, i) => {
-              const steps = ['service', 'details', 'payment', 'success'];
+            {['Service', 'Details', 'Success'].map((label, i) => {
+              const steps = ['service', 'details', 'success'];
               let currentIndex = 0;
-              if (step === 'details') currentIndex = 1;
-              if (step === 'payment') currentIndex = 2;
-              if (step === 'success') currentIndex = 3;
+              if (step === 'details' || step === 'datetime') currentIndex = 1;
+              if (step === 'success') currentIndex = 2;
 
               const isCompleted = currentIndex > i;
               const isCurrent = currentIndex === i;

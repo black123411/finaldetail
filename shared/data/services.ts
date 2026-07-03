@@ -183,7 +183,7 @@ export const SERVICES: Service[] = [
     name: 'Deep Interior Restoration',
     shortDescription: 'Intensive deep cleaning & hot water extraction for heavy dirt, severe stains, and stubborn pet hair.',
     longDescription: 'Turn back the clock on severely neglected interiors. Designed for family haulers and heavily used vehicles in the Omaha metro, the Deep Interior Restoration utilizes advanced hot water extraction and therapeutic steam sanitization to pull out deep-seated stains, eliminate ground-in dirt, and completely remove stubborn pet hair. I permanently transform your cabin, recovering its value and pristine condition.',
-    price: { car: 199, suv: 229, truck: 259, largeSuv: 289 },
+    price: { car: 229, suv: 259, truck: 289, largeSuv: 329 },
     pricingType: 'fixed',
     squareName: 'Deep Interior Restoration',
     seo: {
@@ -213,7 +213,7 @@ export const SERVICES: Service[] = [
     name: 'Premium Wash & Wax',
     shortDescription: 'Meticulous advanced decontamination wash & premium paint sealant for high-gloss protection.',
     longDescription: 'Elevate your vehicle\'s curb appeal far beyond a standard car wash. Nebraska roads bombard your clear coat with iron fallout to brake dust. My Premium Wash & Wax uses a technical chemical decontamination and clay bar treatment to pull embedded grit out of your paint, leaving it smooth-as-glass. I lock in the gloss with a premium hydrophobic silica sealant that protects against harsh weather for up to 6 months.',
-    price: { car: 119, suv: 139, truck: 159, largeSuv: 179 },
+    price: { car: 139, suv: 159, truck: 179, largeSuv: 199 },
     pricingType: 'fixed',
     squareName: 'Premium Wash & Wax',
     seo: {
@@ -242,7 +242,7 @@ export const SERVICES: Service[] = [
     name: 'Paint Enhancement Polish',
     shortDescription: 'Single-stage Rupes machine polish that removes 50–70% of light swirls, restoring a depth of shine you haven\'t seen since the car was new.',
     longDescription: 'If your paint looks dull, hazy, or covered in fine scratches from automatic car washes, this is the fix. Using a Rupes orbital machine polisher and professional-grade finishing compounds, I perform a single-stage correction that cuts through micro-marring, light swirl marks, and oxidation — restoring the wet, deep, reflective clarity your paint had when it was new. Finished with a durable silica sealant to lock in the results for months. A massive upgrade from any hand wax.',
-    price: { car: 279, suv: 329, truck: 369, largeSuv: 419 },
+    price: { car: 299, suv: 349, truck: 399, largeSuv: 449 },
     pricingType: 'fixed',
     squareName: 'Paint Enhancement Polish',
     seo: {
@@ -270,7 +270,7 @@ export const SERVICES: Service[] = [
     name: 'Paint Correction (Level 1)',
     shortDescription: 'Dedicated single-stage machine correction to permanently erase minor defects and haze.',
     longDescription: 'Attain true clarity with my professional Paint Correction. This intensive single-stage abrasive polishing process safely levels the top layer of your clear coat, permanently eradicating 60% to 80% of unsightly car wash scratches, minor swirl marks, and environmental haze. Utilizing premium foam or microfiber pads paired with high-quality, diminishing-abrasive polishes, I effectively remove defects rather than just filling them in. The result is a flawless, mirror-like finish that prepares your paint perfectly for a protective sealant or entry-level ceramic coating.',
-    price: { car: 279, suv: 329, truck: 369, largeSuv: 419 },
+    price: { car: 299, suv: 349, truck: 399, largeSuv: 449 },
     pricingType: 'custom',
     squareName: 'Paint Correction (Level 1)',
     seo: {
@@ -288,7 +288,7 @@ export const SERVICES: Service[] = [
     name: 'Paint Correction (Level 2)',
     shortDescription: 'Advanced two-stage compounding and polishing to remove heavy swirls and scratches.',
     longDescription: 'The ultimate restoration for heavily swirled or scratched paint. My Level 2 Paint Correction utilizes a heavy cutting compound with specialized microfiber cutting pads to aggressively remove up to 85-95% of deep defects. This is followed by an ultra-fine finishing polish with soft foam pads to refine the surface, removing any micro-marring left by the first step and extracting maximum gloss. This intensive process rescues older paint systems, making your vehicle look better than the day it rolled off the showroom floor.',
-    price: { car: 449, suv: 529, truck: 599, largeSuv: 679 },
+    price: { car: 499, suv: 549, truck: 599, largeSuv: 679 },
     pricingType: 'custom',
     squareName: 'Paint Correction (Level 2)',
     seo: {
@@ -310,7 +310,7 @@ export const SERVICES: Service[] = [
     name: '3-Year Ceramic Coating',
     shortDescription: 'Professional 3-year ceramic shield that repels dirt, water, and UV damage.',
     longDescription: 'Stop waxing your car every season. As an authorized System X certified installer, I provide a professional-grade Ceramic Coating that chemically bonds with your vehicle\'s clear coat at a molecular level, forming an ultra-durable, impenetrable layer of protection. This cross-linking process ensures a 3-year lifespan of self-cleaning hydrophobic properties that sheet water instantly, resist harsh road salts, bug splatter, and UV damage. Routine maintenance washes become 80% easier—all while locking in a permanent, wet-look gloss that outlasts any traditional wax or sealant.',
-    price: { car: 599, suv: 679, truck: 749, largeSuv: 849 },
+    price: { car: 699, suv: 799, truck: 899, largeSuv: 999 },
     pricingType: 'custom',
     squareName: '3-Year Ceramic Coating',
     seo: {
@@ -329,7 +329,7 @@ export const SERVICES: Service[] = [
     name: 'Protection Package',
     shortDescription: 'The ultimate exterior bundle: Expert paint correction sealed perfectly under a ceramic coating.',
     longDescription: 'The absolute pinnacle of automotive surface care. As a System X certified installer, I meticulously prepare your vehicle by completely decontaminating the exterior and performing a precision Paint Correction to guarantee the paint is completely flawless. Immediately after, I seal that perfection under a premium, chemically bonded Ceramic Coating. This package guarantees years of extreme durability against UV rays and chemical staining, stunning visual depth, and effortless maintenance.',
-    price: { car: 799, suv: 949, truck: 1099, largeSuv: 1249 },
+    price: { car: 999, suv: 1199, truck: 1299, largeSuv: 1499 },
     pricingType: 'custom',
     squareName: 'Protection Package',
     seo: {
@@ -357,7 +357,7 @@ export const SERVICES: Service[] = [
     name: 'Express Mini Detail',
     shortDescription: 'A thorough hand wash, wheel clean, and interior wipe-down to keep your car looking sharp between full details.',
     longDescription: 'The smartest way to maintain your vehicle\'s appearance between full detail appointments. I foam hand wash the entire exterior, deep clean wheels and tires with a no-sling dressing, vacuum the interior, wipe down all hard surfaces, and leave your glass streak-free inside and out. This is the service I recommend monthly for vehicles that have already been fully detailed — it keeps everything protected and looking its best without ever letting buildup set in.',
-    price: { car: 89, suv: 109, truck: 129, largeSuv: 149 },
+    price: { car: 119, suv: 139, truck: 159, largeSuv: 179 },
     pricingType: 'fixed',
     squareName: 'Express Mini Detail',
     seo: {
@@ -383,7 +383,7 @@ export const SERVICES: Service[] = [
     name: 'Signature Full Detail',
     shortDescription: 'Comprehensive top-to-bottom transformation combining my Elite Interior & Exterior services.',
     longDescription: 'Why settle for half the job? The Signature Full Detail is my highly-rated, comprehensive reset engineered to protect both the inside and outside of your vehicle. By bundling my thorough Signature Interior Detail with the decontamination and gloss enhancement of my Premium Wash & Wax, you achieve a totally rejuvenated, show-ready vehicle while securing exceptional package savings.',
-    price: { car: 229, suv: 259, truck: 289, largeSuv: 329 },
+    price: { car: 249, suv: 279, truck: 309, largeSuv: 349 },
     pricingType: 'fixed',
     squareName: 'Signature Full Detail',
     seo: {
@@ -408,7 +408,7 @@ export const SERVICES: Service[] = [
     name: 'Showroom Package',
     shortDescription: 'My most aggressive restoration package, combining heavy interior extraction and exterior machine polishing.',
     longDescription: 'Maximize your vehicle’s resale value and drastically wind back the clock. The Showroom Package is a heavy-duty overhaul combining my deep-extraction Interior Reset and my gloss-enhancing Paint Enhancement Polish. I brutally assault interior stains and aggressively buff out clear coat haze, restoring the lost aesthetic glory of neglected daily drivers or pre-sale vehicles.',
-    price: { car: 399, suv: 449, truck: 499, largeSuv: 549 },
+    price: { car: 449, suv: 499, truck: 549, largeSuv: 599 },
     pricingType: 'fixed',
     squareName: 'Showroom Package',
     seo: {
@@ -436,7 +436,7 @@ export const SERVICES: Service[] = [
     name: 'Maintenance Plan',
     shortDescription: 'Exclusive monthly routine upkeep reserved for previously detailed and coated vehicles.',
     longDescription: 'Protect your detailing investment with my recurring Maintenance Plan. Tailored exclusively for vehicles that have recently received one of my complete detailing or ceramic coating packages, this service utilizes safe wash methods and rapid interior wipe-downs to ensure your vehicle remains in impeccable condition year-round without inducing new paint defects.',
-    price: { car: 89, suv: 109, truck: 129, largeSuv: 149 },
+    price: { car: 119, suv: 139, truck: 159, largeSuv: 179 },
     pricingType: 'fixed',
     squareName: 'Maintenance Plan',
     seo: {
@@ -541,7 +541,7 @@ export const SERVICES: Service[] = [
     name: 'New Car Detail & Protection',
     shortDescription: 'Protect your new vehicle from day one — dealer contamination removed, paint corrected, and sealed for long-term protection.',
     longDescription: 'New doesn\'t mean perfect. Dealer prep, transport scratches, and contamination from sitting on a lot mean your brand-new vehicle\'s paint likely has light defects already. My New Car Detail removes all of that before it causes long-term damage. I perform a full decontamination wash, a light paint correction to remove any swirls from dealer prep, and apply a professional-grade sealant or ceramic coating to protect your investment from day one. This is the single best thing you can do for a new car.',
-    price: { car: 279, suv: 329, truck: 369, largeSuv: 419 },
+    price: { car: 299, suv: 349, truck: 399, largeSuv: 449 },
     pricingType: 'custom',
     squareName: 'New Car Detail & Protection',
     seo: {
@@ -568,7 +568,7 @@ export const SERVICES: Service[] = [
     name: 'Pre-Sale Detail Package',
     shortDescription: 'Maximize your vehicle\'s selling price with a professional top-to-bottom transformation before you list it.',
     longDescription: 'Buyers make decisions based on first impressions. A professionally detailed vehicle sells faster and for more money — period. My Pre-Sale Detail Package is engineered specifically to maximize perceived value: I deep-clean and shampoo the interior to remove stains and odors, machine polish the exterior to restore gloss and hide light scratches, and dress every surface so the car looks showroom-ready in photos and in-person. Sellers who invest in a pre-sale detail typically recoup 3–5x the cost in their final sale price.',
-    price: { car: 329, suv: 369, truck: 399, largeSuv: 449 },
+    price: { car: 349, suv: 399, truck: 449, largeSuv: 499 },
     pricingType: 'fixed',
     squareName: 'Pre-Sale Detail Package',
     seo: {
@@ -594,7 +594,7 @@ export const SERVICES: Service[] = [
     name: 'Odor Elimination Treatment',
     shortDescription: 'Permanently destroy smoke, pet, mold, and food odors — not just cover them up.',
     longDescription: 'Air fresheners don\'t fix odor problems — they just mask them temporarily. My Odor Elimination Treatment uses an industrial ozone generator to produce O3 molecules that penetrate deep into carpet fibers, seat foam, headliners, and HVAC systems — permanently oxidizing and destroying odor-causing bacteria, mold, and compounds at the source. Paired with a full interior detail and enzyme pre-treatment on problem areas, this is the only truly permanent solution for vehicles with heavy smoke, pet, or mildew odors.',
-    price: { car: 139, suv: 159, truck: 179, largeSuv: 199 },
+    price: { car: 149, suv: 169, truck: 189, largeSuv: 209 },
     pricingType: 'fixed',
     squareName: 'Odor Elimination Treatment',
     seo: {

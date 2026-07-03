@@ -328,7 +328,7 @@ export default function ServiceDetail() {
                   {[
                     "Paint depth checked before polishing",
                     "Machine correction, not filler glaze",
-                    "$50 deposit locks your time",
+                    "100% Satisfaction Guarantee",
                     "Best paired with ceramic protection",
                   ].map((point) => (
                     <div
