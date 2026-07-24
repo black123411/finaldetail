@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
 import { 
   Calendar, 
   Clock, 
@@ -11,10 +10,8 @@ import {
   MessageCircle
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 import { Button } from '../components/ui/button';
-import { BLOG_POSTS } from '@/shared/data/blog';
+import { BlogAPI } from '../services/api';
 
 interface BlogPost {
   id: string;
@@ -39,50 +36,13 @@ export default function Blog() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const blogRef = collection(db, 'blog');
-        const q = query(
-          blogRef, 
-          where('published', '==', true),
-          orderBy('createdAt', 'desc')
-        );
-        const querySnapshot = await getDocs(q);
-        const fbPosts = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        })) as BlogPost[];
-
-        // Merge static posts with Firebase posts (Firebase takes priority if slug matches)
-        const fbSlugs = new Set(fbPosts.map(p => p.slug));
-        const staticAsFbFormat = BLOG_POSTS
-          .filter(p => !fbSlugs.has(p.slug))
-          .map(p => ({
-            id: p.slug,
-            title: p.title,
-            slug: p.slug,
-            excerpt: p.excerpt,
-            author: 'Bryan',
-            category: p.category,
-            featuredImage: p.image,
-            createdAt: { toDate: () => new Date(p.date) },
-            published: true,
-          })) as BlogPost[];
-
-        setPosts([...staticAsFbFormat, ...fbPosts]);
+        const storedPosts = await BlogAPI.getPosts() as BlogPost[];
+        setPosts(storedPosts.sort((a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        ));
       } catch (error) {
         console.error('Error fetching posts:', error);
-        // Fall back to static posts only
-        const staticAsFbFormat = BLOG_POSTS.map(p => ({
-          id: p.slug,
-          title: p.title,
-          slug: p.slug,
-          excerpt: p.excerpt,
-          author: 'Bryan',
-          category: p.category,
-          featuredImage: p.image,
-          createdAt: { toDate: () => new Date(p.date) },
-          published: true,
-        })) as BlogPost[];
-        setPosts(staticAsFbFormat);
+        setPosts([]);
       } finally {
         setLoading(false);
       }
@@ -100,10 +60,6 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-zinc-50 pt-32 pb-24">
-      <Helmet>
-        <title>Auto Detailing Blog | Bryan's Showroom Quality</title>
-        <meta name="description" content="Pro auto detailing tips, maintenance guides, and inside looks at the world of showroom-quality detailing. Serving Bellevue and Omaha, NE." />
-      </Helmet>
       {/* Hero Section */}
       <section className="container mx-auto px-4 mb-20">
         <div className="max-w-4xl">
@@ -144,6 +100,7 @@ export default function Blog() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-400" />
             <input
               type="text"
+              aria-label="Search detailing articles"
               placeholder="Search articles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -188,7 +145,7 @@ export default function Blog() {
                       <div className="flex items-center gap-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4">
                         <span className="flex items-center gap-1.5">
                           <Calendar className="h-3 w-3" />
-                          {post.createdAt?.toDate ? post.createdAt.toDate().toLocaleDateString() : 'Recent'}
+                          {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Recent'}
                         </span>
                         <span className="flex items-center gap-1.5">
                           <Clock className="h-3 w-3" />
@@ -234,7 +191,7 @@ export default function Blog() {
         )}
       </section>
 
-      {/* Newsletter Section */}
+      {/* Help choosing a service */}
       <section className="container mx-auto px-4 mt-24">
         <div className="bg-zinc-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500 opacity-10 blur-[100px]" />
@@ -242,24 +199,19 @@ export default function Blog() {
           
           <div className="max-w-2xl relative z-10">
             <h2 className="text-4xl md:text-5xl font-black text-white italic tracking-tighter mb-6 leading-none">
-              Never Miss a <span className="text-emerald-500 underline decoration-4 underline-offset-8">Sparkle.</span>
+              Not Sure What Your Vehicle <span className="text-emerald-500 underline decoration-4 underline-offset-8">Needs?</span>
             </h2>
             <p className="text-zinc-400 text-lg mb-10 font-medium leading-relaxed">
-              Join 500+ car enthusiasts getting weekly detailing secrets and exclusive Bellevue / Omaha member deals.
+              Send a few photos and a short description. Bryan can recommend the right service before you schedule.
             </p>
-            <form className="flex flex-col sm:flex-row gap-4" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="detailing-pro@example.com"
-                className="flex-grow px-8 py-4 bg-zinc-800 border-none rounded-2xl text-white font-medium focus:ring-2 focus:ring-emerald-500 transition-all placeholder:text-zinc-600"
-              />
-              <Button className="h-14 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black italic tracking-tight shadow-xl shadow-emerald-500/20 transition-all">
-                Join the Club
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <Button className="h-14 rounded-2xl bg-emerald-500 px-10 font-black text-white hover:bg-emerald-600" asChild>
+                <Link to="/quote">Request a Recommendation</Link>
               </Button>
-            </form>
-            <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest mt-6">
-              NO SPAM. JUST QUALITY CONTENT. UNSUBSCRIBE ANYTIME.
-            </p>
+              <Button variant="outline" className="h-14 rounded-2xl border-zinc-700 bg-transparent px-10 font-black text-white hover:bg-zinc-800 hover:text-white" asChild>
+                <Link to="/services">Compare Services</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

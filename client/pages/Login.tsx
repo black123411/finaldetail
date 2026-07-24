@@ -20,9 +20,9 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    const success = await login(password);
-    if (!success) {
-      setError('Invalid administrator password');
+    const result = await login(password);
+    if (!result.ok) {
+      setError(result.error || 'Administrator login failed');
     }
   };
 
@@ -39,7 +39,7 @@ export default function Login() {
           IQ
         </div>
         
-        <h1 className="text-3xl font-black text-zinc-900 italic tracking-tighter mb-2">Revenue Intelligence</h1>
+        <h1 className="text-3xl font-black text-zinc-900 italic tracking-tighter mb-2">Admin Login</h1>
         <p className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-8">Secure Administrator Portal</p>
 
         {error && (
@@ -54,7 +54,9 @@ export default function Login() {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
+          <label htmlFor="admin-password" className="sr-only">Administrator password</label>
           <input
+            id="admin-password"
             type="password"
             placeholder="Administrator Password"
             value={password}
@@ -74,7 +76,7 @@ export default function Login() {
         <div className="mt-12 pt-8 border-t border-zinc-50">
           <div className="flex items-center justify-center gap-2 text-zinc-300">
             <ShieldCheck className="h-4 w-4" />
-            <p className="text-[10px] font-black uppercase tracking-widest leading-none">Standard Military Encryption Active</p>
+            <p className="text-[10px] font-black uppercase tracking-widest leading-none">Protected admin access</p>
           </div>
         </div>
       </motion.div>

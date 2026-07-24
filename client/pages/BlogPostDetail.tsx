@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import { getBlogSeoDescription, getBlogSeoTitle } from '@/shared/data/seo';
 import { 
   Calendar, 
   Clock, 
@@ -15,11 +16,10 @@ import {
   Twitter,
   Facebook
 } from 'lucide-react';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Button } from '../components/ui/button';
-import { BLOG_POSTS } from '@/shared/data/blog';
+import { BlogAPI } from '../services/api';
 
 interface BlogPost {
   id: string;
@@ -34,6 +34,15 @@ interface BlogPost {
   published: boolean;
 }
 
+function estimateReadTime(content: string) {
+  const wordCount = content
+    .replace(/[#_*`>\[\]()|~-]/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+  return Math.max(1, Math.ceil(wordCount / 220));
+}
+
 export default function BlogPostDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -45,69 +54,15 @@ export default function BlogPostDetail() {
     async function fetchPost() {
       if (!slug) return;
       try {
-        const blogRef = collection(db, 'blog');
-        const q = query(blogRef, where('slug', '==', slug), limit(1));
-        const querySnapshot = await getDocs(q);
-        
-        if (!querySnapshot.empty) {
-          const postData = {
-            id: querySnapshot.docs[0].id,
-            ...querySnapshot.docs[0].data()
-          } as BlogPost;
-          setPost(postData);
-
-          // Fetch related posts from Firebase
-          const relatedQ = query(
-            blogRef, 
-            where('category', '==', postData.category),
-            where('slug', '!=', slug),
-            where('published', '==', true),
-            limit(3)
-          );
-          const relatedSnapshot = await getDocs(relatedQ);
-          setRelatedPosts(relatedSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as BlogPost[]);
-        } else {
-          // Fall back to static post
-          const staticPost = BLOG_POSTS.find(p => p.slug === slug);
-          if (staticPost) {
-            setPost({
-              id: staticPost.slug,
-              title: staticPost.title,
-              slug: staticPost.slug,
-              excerpt: staticPost.excerpt,
-              content: staticPost.content,
-              author: 'Bryan',
-              category: staticPost.category,
-              featuredImage: staticPost.image,
-              createdAt: { toDate: () => new Date(staticPost.date) },
-              published: true,
-            });
-            // Related static posts
-            const related = BLOG_POSTS
-              .filter(p => p.slug !== slug && p.category === staticPost.category)
-              .slice(0, 3)
-              .map(p => ({
-                id: p.slug, title: p.title, slug: p.slug, excerpt: p.excerpt,
-                content: p.content, author: 'Bryan', category: p.category,
-                featuredImage: p.image, createdAt: { toDate: () => new Date(p.date) }, published: true,
-              }));
-            setRelatedPosts(related as BlogPost[]);
-          } else {
-            navigate('/blog');
-          }
-        }
+        const [postData, storedPosts] = await Promise.all([
+          BlogAPI.getPost(slug) as Promise<BlogPost>,
+          BlogAPI.getPosts() as Promise<BlogPost[]>,
+        ]);
+        setPost(postData);
+        setRelatedPosts(storedPosts.filter(item => item.slug !== slug && item.category === postData.category).slice(0, 3));
       } catch (error) {
         console.error('Error fetching post:', error);
-        // Try static fallback
-        const staticPost = BLOG_POSTS.find(p => p.slug === slug);
-        if (staticPost) {
-          setPost({
-            id: staticPost.slug, title: staticPost.title, slug: staticPost.slug,
-            excerpt: staticPost.excerpt, content: staticPost.content, author: 'Bryan',
-            category: staticPost.category, featuredImage: staticPost.image,
-            createdAt: { toDate: () => new Date(staticPost.date) }, published: true,
-          });
-        }
+        navigate('/blog');
       } finally {
         setLoading(false);
       }
@@ -131,30 +86,47 @@ export default function BlogPostDetail() {
 
   if (!post) return null;
 
+  const readTime = estimateReadTime(post.content);
+  const articleUrl = `https://bryansdetailingomaha.com/blog/${post.slug}`;
+  const socialImage = post.featuredImage || 'https://bryansdetailingomaha.com/20211009_025807-COLLAGE.jpg';
+  const seoTitle = getBlogSeoTitle(post.slug, post.title);
+  const seoDescription = getBlogSeoDescription(post.slug, post.excerpt);
+
   return (
     <div className="min-h-screen bg-zinc-50 pt-32 pb-24">
       <Helmet>
-        <title>{post.title} | Bryan's Showroom Quality Detailing</title>
-        <meta name="description" content={post.excerpt} />
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <link rel="canonical" href={articleUrl} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={articleUrl} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:image" content={socialImage} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={articleUrl} />
+        <meta property="twitter:title" content={seoTitle} />
+        <meta property="twitter:description" content={seoDescription} />
+        <meta property="twitter:image" content={socialImage} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
             "headline": post.title,
-            "image": post.featuredImage,
+            "image": socialImage,
             "author": {
               "@type": "Person",
               "name": post.author
             },
             "publisher": {
               "@type": "Organization",
-              "name": "Bryan's Showroom Quality Detailing",
+              "name": "Bryan's Showroom Quality Mobile Detailing",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://bryansdetailing.com/logo.png"
+                "url": "https://bryansdetailingomaha.com/20211009_025807-COLLAGE.jpg"
               }
             },
-            "datePublished": post.createdAt?.toDate ? post.createdAt.toDate().toISOString() : new Date().toISOString()
+            "datePublished": post.createdAt ? new Date(post.createdAt).toISOString() : new Date().toISOString()
           })}
         </script>
       </Helmet>
@@ -195,14 +167,14 @@ export default function BlogPostDetail() {
                 <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">Date</p>
                 <p className="text-sm font-black text-zinc-900 flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-emerald-500" />
-                  {post.createdAt?.toDate ? post.createdAt.toDate().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'}
+                  {post.createdAt ? new Date(post.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'}
                 </p>
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">Read Time</p>
                 <p className="text-sm font-black text-zinc-900 flex items-center gap-2">
                   <Clock className="h-4 w-4 text-emerald-500" />
-                  8 min
+                  {readTime} min
                 </p>
               </div>
             </div>
@@ -232,8 +204,8 @@ export default function BlogPostDetail() {
         <article className="lg:col-span-8">
           <div className="bg-white rounded-[3rem] p-8 md:p-16 border border-zinc-100 shadow-sm">
             <div className="prose prose-zinc prose-lg max-w-none prose-headings:italic prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-zinc-900 prose-p:text-zinc-600 prose-p:font-medium prose-p:leading-relaxed prose-strong:text-zinc-900 prose-strong:font-black prose-a:text-emerald-500 prose-a:font-black hover:prose-a:text-emerald-600 prose-img:rounded-[2rem] prose-table:text-sm prose-th:font-black prose-th:text-zinc-900 prose-td:text-zinc-600">
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
-              </div>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+            </div>
             
             <div className="mt-16 pt-12 border-t border-zinc-50 flex flex-wrap items-center justify-between gap-8">
               <div className="flex items-center gap-4">
@@ -297,7 +269,7 @@ export default function BlogPostDetail() {
             <div className="relative z-10">
               <h3 className="text-2xl font-black italic tracking-tight mb-4">Ready for a Transformation?</h3>
               <p className="text-emerald-100 text-sm font-medium mb-8 leading-relaxed">
-                Bring back that showroom feel to your interior. Omaha's #1 rated deep clean.
+                Bring back that showroom feel with professional interior detailing for Bellevue and Omaha.
               </p>
               <Button asChild className="w-full h-14 bg-zinc-900 hover:bg-black text-white rounded-2xl font-black italic tracking-tight shadow-xl">
                 <Link to="/book">Book Now</Link>

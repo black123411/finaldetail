@@ -1,77 +1,146 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
-import { Quote, Sparkles, MapPin, Calendar, CheckCircle2, ArrowRight, Star, ShieldCheck, Clock, Plus, MessageSquare } from 'lucide-react';
+import { Sparkles, Calendar, ArrowRight, ShieldCheck, MessageSquare } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { BOOKING_LINK } from '../lib/constants';
-import DetailingQuiz from '../components/DetailingQuiz';
 import ServiceMap from '../components/ServiceMap';
 import Testimonials from '../components/Testimonials';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 import { SERVICES } from '@/shared/data/services';
 import { BEFORE_AFTERS } from '@/shared/data/photos';
+
+const HOME_BEFORE_AFTER_IDS = new Set([1, 2, 6, 7]);
+const HOME_BEFORE_AFTERS = BEFORE_AFTERS.filter(({ id }) => HOME_BEFORE_AFTER_IDS.has(id));
 import { CITIES } from '@/shared/data/cities';
+import { trackEvent } from '../lib/analytics';
+
+const HOME_CONVERSION_PATHS = [
+  {
+    eyebrow: 'Stains, pet hair, spills, or odors',
+    title: 'Clean my interior',
+    description: 'Compare everyday interior cleaning, deeper restoration, and odor-treatment options.',
+    primaryLabel: 'View Interior Details',
+    primaryPath: '/services/category/interior-detailing',
+  },
+  {
+    eyebrow: 'Inside and outside care',
+    title: 'Detail my entire vehicle',
+    description: 'Choose a complete detail for a daily driver, neglected vehicle, new car, or pre-sale reset.',
+    primaryLabel: 'View Full Details',
+    primaryPath: '/services/category/full-detailing',
+  },
+  {
+    eyebrow: 'Swirls, oxidation, gloss, or protection',
+    title: 'Restore or protect my paint',
+    description: 'Compare correction for visible defects with ceramic protection for easier long-term care.',
+    primaryLabel: 'Explore Paint Correction',
+    primaryPath: '/services/category/paint-correction',
+    secondaryLabel: 'View Ceramic Coating',
+    secondaryPath: '/services/category/ceramic-coating',
+  },
+] as const;
 
 export default function Home() {
-  const featuredServices = [
-    SERVICES.find(s => s.id === 'express-detail'),
-    SERVICES.find(s => s.id === 'full-detail-package'),
-    SERVICES.find(s => s.id === 'showroom-package')
-  ].filter(Boolean) as typeof SERVICES;
+  const trustPoints = [
+    { label: 'Customer Feedback', value: 'Google Reviews', detail: 'Read current ratings and customer experiences' },
+    { label: 'Certified Protection', value: 'System X', detail: 'Professional ceramic installer' },
+    { label: 'Service Options', value: 'Mobile + Drop-off', detail: 'Bellevue base, Omaha metro service' },
+    { label: 'Quality Control', value: 'Owner-Operated', detail: 'Clear scope before additional work' },
+  ];
+
+  const packageRows = [
+    {
+      service: SERVICES.find(s => s.id === 'interior-detail'),
+      label: 'Signature Interior Detail',
+      bestFor: 'Daily drivers with normal buildup, dust, and light stains',
+      outcome: 'Cabin deep clean, plastics sanitized, mats and glass reset'
+    },
+    {
+      service: SERVICES.find(s => s.id === 'full-detail-package'),
+      label: 'Signature Full Detail',
+      bestFor: 'The best all-around inside-and-out detail',
+      outcome: 'Interior detail plus exterior decon, wash, wax, wheels, tires'
+    },
+    {
+      service: SERVICES.find(s => s.id === 'showroom-package'),
+      label: 'Showroom Package',
+      bestFor: 'Pre-sale vehicles or neglected family cars',
+      outcome: 'Deep extraction plus machine polish for resale-ready results'
+    },
+    {
+      service: SERVICES.find(s => s.id === 'system-x-pro-plus'),
+      label: 'System X Pro+ Signature',
+      bestFor: 'Long-term gloss and easier washing',
+      outcome: 'Paint enhancement plus certified System X Pro+ and Glass+ protection'
+    }
+  ].filter(row => row.service);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Helmet>
-        <title>Premium Auto Detailing in Bellevue & Omaha | Bryan's</title>
-        <meta name="description" content="Top-rated auto detailing in Bellevue and Omaha, NE. Specializing in professional ceramic coating, paint correction, and interior detailing. Book today." />
-      </Helmet>
-      
       {/* Hero Section */}
       <section className="relative min-h-[90vh] bg-zinc-950 text-white overflow-hidden flex items-center">
         <div className="absolute inset-0 z-0">
-          <img
-            src="/hero-detailing.png"
-            alt="Professional auto detailing and paint correction"
-            className="w-full h-full object-cover opacity-50 scale-105"
-          />
+          <picture className="block h-full w-full">
+            <source srcSet="/hero-detailing-optimized.webp" type="image/webp" />
+            <img
+              src="/hero-detailing-optimized.jpg"
+              alt="Professional auto detailing and paint correction"
+              width="1024"
+              height="1024"
+              loading="eager"
+              decoding="async"
+              sizes="100vw"
+              className="w-full h-full object-cover opacity-50 scale-105"
+            />
+          </picture>
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/80 via-transparent to-transparent" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10 py-24">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-4xl space-y-10"
           >
             <div className="inline-flex items-center gap-3 px-4 py-2 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl text-xs font-black uppercase tracking-[0.2em] text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_12px_rgba(16,185,129,0.5)]" />
-              <span>Omaha Metro Mobile Auto Detailing Expert</span>
+              <span>Mobile + Bellevue Drop-Off Detailing</span>
             </div>
 
-            <h1 className="text-6xl md:text-[5.5rem] font-black tracking-tight leading-[0.85] uppercase">
-              Premium <span className="text-zinc-500 italic block font-normal normal-case">Auto Detailing</span> in Omaha & Bellevue.
+            <h1 className="text-5xl sm:text-6xl md:text-[5.25rem] font-black tracking-tight leading-[0.92] uppercase">
+              Auto Detailing <span className="text-zinc-400 italic block font-normal normal-case">in Bellevue & Omaha.</span>
             </h1>
 
-          <p className="text-xl md:text-2xl text-zinc-300 max-w-2xl leading-relaxed font-medium mt-6">
-            10+ years of professional <strong className="font-bold">mobile car detailing</strong>, <strong className="font-bold">paint correction</strong>, and <strong className="font-bold">ceramic coating</strong>. I specialize in precision interior detailing and industrial-grade paint protection for residents across <strong className="font-bold">Omaha, Bellevue, Papillion, La Vista, and Council Bluffs.</strong>
+          <p className="text-lg md:text-2xl text-zinc-300 max-w-2xl leading-relaxed font-medium mt-6">
+            Owner-operated interior detailing, full details, paint correction, and ceramic coating—with clear package scopes, condition-based recommendations, and mobile or Bellevue drop-off options.
           </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-6">
               <Button size="lg" className="h-16 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-black uppercase tracking-widest text-sm shadow-2xl shadow-emerald-500/20" asChild>
-                <Link to="/book" className="flex items-center gap-3">
+                <Link
+                  to="/book"
+                  onClick={() => trackEvent('begin_booking', { location: 'home_hero' })}
+                  className="flex items-center gap-3"
+                >
                   <Calendar className="h-5 w-5" />
                   Book Now
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-zinc-700 bg-white/5 backdrop-blur-md text-white hover:bg-white hover:text-zinc-950 font-black uppercase tracking-widest text-sm" asChild>
-                <Link to="/services">
-                  See Prices
+                <Link
+                  to="/services"
+                  onClick={() => trackEvent('view_pricing', { location: 'home_hero' })}
+                >
+                  View Packages & Pricing
                 </Link>
               </Button>
               <Button size="lg" className="h-16 px-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-zinc-950 font-black uppercase tracking-widest text-sm shadow-xl" asChild>
-                <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I'd%20like%20a%20detailing%20quote%20for%20my%20car.%20Here%20are%20some%20photos%3A" className="flex items-center gap-3">
+                <a
+                  href="sms:+17123056313?body=Hi%20Bryan%2C%20I'd%20like%20a%20detailing%20quote%20for%20my%20car.%20Here%20are%20some%20photos%3A"
+                  onClick={() => trackEvent('click_text_quote', { location: 'home_hero' })}
+                  className="flex items-center gap-3"
+                >
                   <MessageSquare className="h-5 w-5" />
                   Text Photos for Quote
                 </a>
@@ -83,93 +152,154 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Detailing Quiz Section */}
-      <section className="py-32 bg-zinc-50 overflow-hidden border-b border-zinc-200">
+      {/* Trust + Price Clarity Section */}
+      <section className="bg-white border-b border-zinc-200">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-16 space-y-6">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Service Finder</span>
-            <h2 className="text-5xl md:text-7xl font-black text-zinc-900 tracking-tight leading-none uppercase">
-              Find Your <span className="text-emerald-500 italic font-medium tracking-tight normal-case block md:inline">Perfect Package.</span>
-            </h2>
-            <p className="text-xl text-zinc-600 leading-relaxed font-medium max-w-2xl mx-auto">
-              Not sure which auto detailing service is right for you? Answer a few quick questions and I'll recommend the ideal solution for your vehicle's condition.
-            </p>
-          </div>
-          <DetailingQuiz />
-        </div>
-      </section>
-
-      {/* Popular Services - Data Driven */}
-      <section className="py-32 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row justify-between items-end mb-20 gap-8">
-            <div className="max-w-3xl space-y-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 italic">Catalog Highlights</span>
-              <h2 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-none">
-                Technical <span className="italic text-zinc-400 font-normal">Detailing</span> Packages.
-              </h2>
-            </div>
-            <Button variant="outline" asChild className="h-14 px-8 rounded-xl font-black uppercase tracking-widest text-xs border-zinc-200 hover:bg-zinc-50">
-              <Link to="/services" className="gap-2">
-                All Services <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {featuredServices.map((service, idx) => (
-              <motion.div 
-                key={service.id} 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className={`rounded-[2.5rem] p-10 shadow-xl border flex flex-col relative group overflow-hidden ${
-                  idx === 1 
-                    ? 'bg-zinc-900 text-white border-zinc-800 shadow-zinc-900/20 transform lg:-translate-y-6 scale-[1.03]' 
-                    : 'bg-white text-zinc-900 border-zinc-100 shadow-zinc-200/50 hover:border-zinc-300 hover:-translate-y-2'
-                } transition-all duration-500`}
-              >
-                {idx === 1 && (
-                  <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                     <Sparkles className="h-48 w-48" />
-                  </div>
-                )}
-                
-                {idx === 1 && (
-                  <div className="absolute top-6 right-10 bg-emerald-500 text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase shadow-lg shadow-emerald-500/20">
-                    Best Value
-                  </div>
-                )}
-                
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-6 block">Level {idx + 1}</span>
-                <h3 className="text-3xl font-black tracking-tighter mb-4">{service.name}</h3>
-                <p className={`text-base mb-8 flex-grow font-medium leading-relaxed ${idx === 1 ? 'text-zinc-400' : 'text-zinc-500'}`}>
-                  {service.shortDescription}
-                </p>
-                <div className="space-y-4 mb-10">
-                  {service.features.slice(0, 4).map((f, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm font-bold">
-                      <div className={`w-1.5 h-1.5 rounded-full ${idx === 1 ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]' : 'bg-zinc-900'}`} />
-                      <span className={idx === 1 ? 'text-zinc-300' : 'text-zinc-700'}>{f}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className={`pt-10 border-t mt-auto ${idx === 1 ? 'border-zinc-800' : 'border-zinc-100'}`}>
-                  <p className={`text-[10px] font-black uppercase tracking-widest mb-4 ${idx === 1 ? 'text-zinc-500' : 'text-zinc-400'}`}>
-                    Starting at <span className={`text-2xl font-black ml-2 ${idx === 1 ? 'text-white' : 'text-zinc-900'}`}>${service.price.car || service.price.rv || service.price.suv}</span>
-                  </p>
-                  <div className="grid grid-cols-1 gap-3">
-                    <Button className={`h-14 rounded-xl font-black uppercase tracking-widest text-xs ${idx === 1 ? 'bg-white text-zinc-900 hover:bg-zinc-200' : 'bg-zinc-900 hover:bg-zinc-800'}`} asChild>
-                      <Link to="/book" className="flex items-center gap-2">Book Now <ArrowUpRight className="h-4 w-4" /></Link>
-                    </Button>
-                    <Button variant="ghost" className={`h-12 text-[10px] font-black uppercase tracking-widest transition-colors ${idx === 1 ? 'text-zinc-400 hover:text-white hover:bg-zinc-800' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900'}`} asChild>
-                      <Link to={`/services/${service.id}`}>Detailed Scope</Link>
-                    </Button>
-                  </div>
-                </div>
-              </motion.div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border-x border-zinc-200">
+            {trustPoints.map((point) => (
+              <div key={point.label} className="bg-white px-5 py-7 md:px-8 md:py-9">
+                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-600 mb-2">{point.label}</p>
+                <p className="text-2xl md:text-3xl font-black tracking-tight text-zinc-900">{point.value}</p>
+                <p className="text-sm text-zinc-500 font-medium mt-2 leading-snug">{point.detail}</p>
+              </div>
             ))}
+          </div>
+
+          <div className="py-24 lg:py-28 border-b border-zinc-200">
+            <div className="max-w-3xl mb-12 space-y-4">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-700">Choose Your Starting Point</span>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight text-zinc-900 leading-none">
+                What does your vehicle need?
+              </h2>
+              <p className="text-lg text-zinc-600 font-medium leading-relaxed">
+                Start with one clear path. Each page explains the right package, current pricing, and what to expect before you book.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+              {HOME_CONVERSION_PATHS.map((path, index) => (
+                <article
+                  key={path.title}
+                  className={`rounded-[2rem] border p-7 md:p-8 flex flex-col min-h-[340px] ${index === 1 ? 'bg-zinc-950 border-zinc-950 text-white' : 'bg-zinc-50 border-zinc-200 text-zinc-900'}`}
+                >
+                  <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-sm font-black ${index === 1 ? 'bg-emerald-500 text-zinc-950' : 'bg-white border border-zinc-200 text-zinc-500'}`}>
+                    {index + 1}
+                  </div>
+                  <p className={`mt-8 text-[10px] font-black uppercase tracking-[0.22em] ${index === 1 ? 'text-emerald-400' : 'text-emerald-700'}`}>
+                    {path.eyebrow}
+                  </p>
+                  <h3 className="mt-3 text-3xl font-black tracking-tight">{path.title}</h3>
+                  <p className={`mt-4 font-medium leading-relaxed ${index === 1 ? 'text-zinc-400' : 'text-zinc-600'}`}>
+                    {path.description}
+                  </p>
+                  <div className="mt-auto pt-8 flex flex-col gap-3">
+                    <Link
+                      to={path.primaryPath}
+                      onClick={() => trackEvent('view_service_category', { location: 'home_conversion_path', category: path.primaryPath })}
+                      className={`inline-flex min-h-12 items-center justify-between gap-3 rounded-xl px-5 py-3 text-xs font-black uppercase tracking-widest transition-colors ${index === 1 ? 'bg-white text-zinc-950 hover:bg-zinc-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}
+                    >
+                      {path.primaryLabel}
+                      <ArrowRight className="h-4 w-4 shrink-0" />
+                    </Link>
+                    {'secondaryPath' in path ? (
+                      <Link
+                        to={path.secondaryPath}
+                        onClick={() => trackEvent('view_service_category', { location: 'home_conversion_path', category: path.secondaryPath })}
+                        className="inline-flex min-h-11 items-center justify-between gap-3 px-2 py-2 text-xs font-black uppercase tracking-widest text-zinc-600 hover:text-zinc-950 transition-colors"
+                      >
+                        {path.secondaryLabel}
+                        <ArrowRight className="h-4 w-4 shrink-0" />
+                      </Link>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="py-24 lg:py-28">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-16 items-start">
+              <div className="space-y-6 lg:sticky lg:top-24">
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-700">Package Clarity</span>
+                <h2 className="text-4xl md:text-6xl font-black tracking-tight text-zinc-900 leading-none">
+                  Compare popular packages.
+                </h2>
+                <p className="text-lg text-zinc-600 font-medium leading-relaxed">
+                  Most customers only need one of these four packages. Compare the starting price and choose the result that matches your vehicle.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <Button className="h-14 px-8 rounded-xl bg-zinc-900 hover:bg-zinc-800 font-black uppercase tracking-widest text-xs" asChild>
+                    <Link
+                      to="/book"
+                      onClick={() => trackEvent('begin_booking', { location: 'package_matrix' })}
+                    >
+                      Book Online
+                    </Link>
+                  </Button>
+                  <Button variant="outline" className="h-14 px-8 rounded-xl font-black uppercase tracking-widest text-xs border-zinc-200" asChild>
+                    <a
+                      href="sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detailing%20package.%20Here%20are%20photos%20of%20my%20vehicle%3A"
+                      onClick={() => trackEvent('click_text_quote', { location: 'package_matrix' })}
+                    >
+                      Text Photos
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+              <div className="bg-zinc-950 rounded-[2rem] overflow-hidden border border-zinc-800 shadow-2xl">
+                <div className="hidden md:grid grid-cols-[1.2fr_0.85fr_1.35fr_0.65fr] gap-4 px-6 py-4 bg-zinc-900 text-[10px] font-black uppercase tracking-[0.24em] text-zinc-400">
+                  <span>Package</span>
+                  <span>Starts At</span>
+                  <span>Best For</span>
+                  <span>Action</span>
+                </div>
+                <div className="divide-y divide-zinc-800">
+                  {packageRows.map((row, index) => {
+                    const service = row.service!;
+                    const startingPrice = service.price.car || service.price.suv || service.price.rv || Object.values(service.price)[0];
+
+                    return (
+                      <div key={service.id} className="grid grid-cols-1 md:grid-cols-[1.2fr_0.85fr_1.35fr_0.65fr] gap-4 px-6 py-6 md:items-center">
+                        <div>
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className={`h-8 w-8 rounded-xl flex items-center justify-center text-xs font-black ${index === 1 ? 'bg-emerald-500 text-zinc-950' : 'bg-white/5 text-zinc-400 border border-white/10'}`}>
+                              {index + 1}
+                            </span>
+                            <h3 className="text-xl font-black text-white tracking-tight">{row.label}</h3>
+                          </div>
+                          <p className="text-sm text-zinc-300 font-medium leading-relaxed md:hidden">{row.outcome}</p>
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-300 md:hidden mb-1">Starts At</p>
+                          <p className="text-2xl font-black text-white">${startingPrice}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-zinc-300 font-bold leading-relaxed">{row.bestFor}</p>
+                          <p className="text-xs text-zinc-500 font-medium leading-relaxed mt-1 hidden md:block">{row.outcome}</p>
+                        </div>
+                        <Button size="sm" className="h-11 rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 font-black uppercase tracking-widest text-[10px]" asChild>
+                          <Link
+                            to={`/book?serviceId=${service.id}`}
+                            onClick={() => trackEvent('begin_booking', { location: 'package_matrix_row', service_id: service.id })}
+                          >
+                            Book
+                          </Link>
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="px-6 py-5 bg-zinc-900/80 border-t border-zinc-800">
+                  <p className="text-xs text-zinc-300 font-medium leading-relaxed">
+                    Final price depends on vehicle size, condition, pet hair, odor, and add-ons. You will see package pricing before confirming.
+                  </p>
+                  <p className="mt-3 text-xs text-zinc-400 font-medium leading-relaxed">
+                    Already detailed or ceramic coated? <Link to="/services/maintenance-detail" className="font-bold text-emerald-400 hover:text-emerald-300">Maintenance plans start at $119</Link> and are reserved for returning or recently detailed vehicles.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -188,13 +318,13 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            {BEFORE_AFTERS.map((t) => (
+            {HOME_BEFORE_AFTERS.map((t) => (
               <div key={t.id} className="space-y-4">
                 <div className="rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl relative">
                   <BeforeAfterSlider beforeImage={t.before} afterImage={t.after} />
                 </div>
                 <div className="text-center">
-                  <h4 className="font-black text-white text-lg tracking-tight">{t.label}</h4>
+                  <h3 className="font-black text-white text-lg tracking-tight">{t.label}</h3>
                   <p className="text-sm text-zinc-400 mt-1">{t.description}</p>
                 </div>
               </div>
@@ -218,10 +348,10 @@ export default function Home() {
               <div className="space-y-6">
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">My Methodology</span>
                 <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none uppercase">
-                   Meticulous <span className="text-zinc-500 italic block font-normal normal-case">Preservation.</span>
+                   Owner-Operated. <span className="text-zinc-500 italic block font-normal normal-case">Detail-Driven.</span>
                 </h2>
                 <p className="text-xl text-zinc-400 font-medium leading-relaxed max-w-xl">
-                  Bryan's Detailing isn't a quick wash. I focus on technical precision and heavy chemical decontamination to ensure every vehicle leaves with a durable, high-gloss finish.
+                  Your vehicle is inspected first, matched to the work it actually needs, and completed with a clear scope. If condition changes the price or process, you approve it before additional work begins.
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -229,15 +359,15 @@ export default function Home() {
                     <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
                        <ShieldCheck className="h-6 w-6 text-emerald-400" />
                     </div>
-                    <h4 className="text-xl font-bold">Flexible Options</h4>
+                    <h3 className="text-xl font-bold">Flexible Options</h3>
                     <p className="text-sm text-zinc-500 leading-relaxed font-medium">I offer both fully mobile detailing at your location, and convenient drop-off at my home location in Bellevue.</p>
                  </div>
                  <div className="space-y-4">
                     <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
                        <Sparkles className="h-6 w-6 text-emerald-400" />
                     </div>
-                    <h4 className="text-xl font-bold">Industrial Grade</h4>
-                    <p className="text-sm text-zinc-500 leading-relaxed font-medium">I use pH-balanced chemicals and ceramic polymers that outlive standard wax by months.</p>
+                    <h3 className="text-xl font-bold">Material-Safe Process</h3>
+                    <p className="text-sm text-zinc-500 leading-relaxed font-medium">Products and tools are selected for the paint, fabric, leather, plastics, and trim being cleaned.</p>
                  </div>
               </div>
 
@@ -264,11 +394,11 @@ export default function Home() {
                 />
               </div>
               
-              <div className="absolute -bottom-10 -right-10 bg-white p-10 rounded-[2.5rem] shadow-2xl z-20 border border-zinc-100 text-zinc-950 group">
+              <div className="absolute bottom-4 right-4 md:-bottom-10 md:-right-10 bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl z-20 border border-zinc-100 text-zinc-950 group">
                 <div className="flex items-center gap-6">
-                  <div className="text-6xl font-black tracking-tighter">10+</div>
+                  <div className="text-5xl font-black tracking-tighter">2019</div>
                   <div className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400 leading-tight">
-                    Years of Solo<br />Excellence in<br />Midwest NE
+                    Serving Bellevue<br />and the Omaha<br />Metro Since
                   </div>
                 </div>
               </div>
@@ -281,9 +411,9 @@ export default function Home() {
       <section className="py-32 bg-white overflow-hidden">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto space-y-6 mb-24">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 italic">Social Proof</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 italic">Social Proof</span>
             <h2 className="text-5xl md:text-7xl font-black text-zinc-900 tracking-tight leading-none uppercase">
-               The <span className="text-emerald-500 italic font-medium tracking-tight normal-case">Verified</span> Verdict.
+               The <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Verified</span> Verdict.
             </h2>
           </div>
           <Testimonials />
@@ -294,25 +424,25 @@ export default function Home() {
       <section className="py-32 bg-white overflow-hidden border-t border-zinc-200">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500 mb-6 block">Professional Auto Detailing Bellevue & Omaha</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-700 mb-6 block">Professional Auto Detailing Bellevue & Omaha</span>
             <h2 className="text-4xl md:text-5xl font-black text-zinc-900 tracking-tight mb-8">
-              Why Choose Bryan's Showroom Quality Detailing?
+              Why Choose Bryan's Showroom Quality Mobile Detailing?
             </h2>
             <div className="prose prose-lg prose-zinc max-w-none space-y-6 text-zinc-600 font-medium">
               <p>
-                When it comes to <strong>auto detailing in Bellevue and Omaha</strong>, you need a professional who understands the science behind paint preservation and interior restoration. Bryan's Showroom Quality Detailing goes beyond the standard car wash. We provide meticulous, multi-stage detailing services designed to protect your investment and restore your vehicle to its factory-fresh condition.
+                When it comes to <strong>auto detailing in Bellevue and Omaha</strong>, the right service depends on the vehicle condition. Bryan's Showroom Quality Mobile Detailing provides interior car detailing, hot water extraction, exterior hand washing, clay bar treatment, paint correction, ceramic coating, and maintenance detailing for daily drivers and specialty vehicles.
               </p>
               <h3 className="text-2xl font-bold text-zinc-900 mt-12 mb-4">Advanced Ceramic Coating and Paint Correction</h3>
               <p>
-                The Midwest weather can be brutal on your vehicle's clear coat. Our specialized <strong>ceramic coating</strong> applications create a semi-permanent bond with your car's paint, offering years of protection against UV rays, road salt, bird droppings, and chemical stains. Before applying any protective layer, we perform rigorous <strong>paint correction</strong> to remove swirl marks, light scratches, and oxidation. This ensures the surface is absolutely flawless, sealing in a mirror-like gloss that outlasts traditional carnauba wax by magnitudes.
+                Midwest weather is hard on clear coat. A professional <strong>ceramic coating</strong> can add water beading, UV resistance, gloss, and easier maintenance washing. Before applying long-term protection, Bryan can perform <strong>paint correction</strong> to reduce swirl marks, light scratches, wash haze, and oxidation.
               </p>
               <h3 className="text-2xl font-bold text-zinc-900 mt-12 mb-4">Deep Interior Detailing and Odor Removal</h3>
               <p>
-                A clean interior is essential for a comfortable driving experience. Our <strong>interior detailing</strong> services tackle everything from pet hair and tough carpet stains to embedded odors. We utilize hot water extraction, steam cleaning, and pH-balanced cleaners to sanitize every surface, crevice, and fabric in your vehicle. Whether it's reviving leather seats or resetting a heavily soiled family SUV, our goal is to achieve true showroom quality.
+                A clean interior is essential for a comfortable driving experience. <strong>Interior detailing</strong> services can include vacuuming, compressed-air blowout, pet hair removal, stain treatment, hot water extraction, steam cleaning where safe, glass cleaning, mat cleaning, and odor source cleaning.
               </p>
               <h3 className="text-2xl font-bold text-zinc-900 mt-12 mb-4">Flexible Mobile & Drop-Off Options</h3>
               <p>
-                We understand your time is valuable. That's why we offer convenient drop-off at my home location in Bellevue for intensive work like ceramic coatings, as well as <strong>mobile auto detailing</strong> throughout the Omaha metro area. Whether you are in Papillion, La Vista, Elkhorn, or Council Bluffs, we can bring the ultimate detailing experience directly to your driveway or workplace.
+                We offer Bellevue drop-off for services that need controlled conditions, like ceramic coating and paint correction, as well as <strong>mobile auto detailing</strong> throughout the Omaha metro area when the service, weather, space, and vehicle condition are a good fit.
               </p>
             </div>
           </div>
@@ -323,9 +453,9 @@ export default function Home() {
       <section className="py-32 bg-zinc-50 border-t border-zinc-200">
          <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto space-y-6 mb-16 text-center">
-               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 italic">Local Operations</span>
+               <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 italic">Local Operations</span>
                <h2 className="text-5xl md:text-6xl font-black text-zinc-900 tracking-tight leading-none uppercase">
-                  Service <span className="text-emerald-500 italic font-medium tracking-tight normal-case">Radius.</span>
+                  Service <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Radius.</span>
                </h2>
                <p className="text-lg text-zinc-600 max-w-2xl mx-auto font-medium">Located in Bellevue for convenient drop-offs, and serving the entire Omaha metro with mobile options.</p>
             </div>
@@ -337,9 +467,9 @@ export default function Home() {
       <section className="py-32 bg-zinc-50 overflow-hidden border-t border-zinc-200">
         <div className="container mx-auto px-4 max-w-4xl">
            <div className="text-center space-y-6 mb-16">
-             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400">Common Questions</span>
+             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600">Common Questions</span>
              <h2 className="text-4xl md:text-6xl font-black text-zinc-900 tracking-tight leading-none uppercase">
-                Trust The <span className="text-emerald-500 italic font-medium tracking-tight normal-case">Process.</span>
+                Trust The <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Process.</span>
              </h2>
            </div>
            
@@ -348,10 +478,10 @@ export default function Home() {
                   { q: "How long does a Full Detail take?", a: "Typically 4-6 hours. It depends on vehicle size and soil level. I prefer to not rush, ensuring every crack and crevice meets the showroom standard." },
                   { q: "Do you come to me or do I drop it off?", a: "Both! I offer convenient drop-off at my home location in Bellevue, which is great for intensive work like Paint Correction and Ceramic Coatings. I also offer fully mobile services where I bring the professional equipment directly to your driveway." },
                   { q: "What's the difference between Wax and Ceramic Coating?", a: "Wax lasts 1-3 months and sits on top of the paint as a temporary sacrificial layer. Ceramic coatings chemically bond to the clear coat, lasting years, repelling dirt, and making washing significantly easier." },
-                  { q: "Can you guarantee the removal of all interior stains?", a: "I utilize hot water extraction and professional stain lifters that remove 95% of standard stains. Some materials permanently alter or dye, but I guarantee I will achieve the absolute best result technically possible." },
+                  { q: "Can every interior stain be removed?", a: "Not always. Hot-water extraction and professional stain treatment can improve many stains, but permanent dye transfer, material damage, or old chemical reactions may remain. Bryan explains realistic expectations after inspecting the vehicle." },
               ].map((faq, i) => (
                  <div key={i} className="bg-white p-8 rounded-3xl border border-zinc-100 shadow-sm transition-all hover:shadow-md">
-                    <h4 className="text-lg font-black text-zinc-900 mb-3">{faq.q}</h4>
+                    <h3 className="text-lg font-black text-zinc-900 mb-3">{faq.q}</h3>
                     <p className="text-zinc-500 font-medium leading-relaxed">{faq.a}</p>
                  </div>
               ))}
@@ -368,15 +498,24 @@ export default function Home() {
           <div className="space-y-6">
              <h2 className="text-5xl md:text-[5rem] font-black tracking-tighter leading-none uppercase">Ready for <span className="text-zinc-500 italic block font-normal normal-case">Showroom</span> Quality?</h2>
              <p className="text-xl text-zinc-400 font-medium max-w-2xl mx-auto">
-               Secure your appointment instantly. I professionalize the scheduling experience, ensuring your vehicle receives the dedicated time it deserves.
+               Choose a service and request an available appointment time online. Bryan confirms the booking details through Square.
              </p>
           </div>
           <div className="flex flex-col sm:flex-row justify-center gap-6 pt-6">
             <Button size="lg" className="h-16 px-12 bg-white text-zinc-950 hover:bg-zinc-200 rounded-2xl font-black uppercase tracking-widest text-xs" asChild>
-              <Link to="/book">Secure My Spot</Link>
+              <Link
+                to="/book"
+                onClick={() => trackEvent('begin_booking', { location: 'home_footer_cta' })}
+              >
+                View Availability
+              </Link>
             </Button>
             <Button size="lg" variant="outline" className="h-16 px-12 border-zinc-700 text-white hover:bg-zinc-800 rounded-2xl font-black uppercase tracking-widest text-xs" asChild>
-              <a href="tel:712-305-6313" className="flex items-center gap-3">
+              <a
+                href="tel:712-305-6313"
+                className="flex items-center gap-3"
+                onClick={() => trackEvent('click_call', { location: 'home_footer_cta' })}
+              >
                  Call (712) 305-6313
               </a>
             </Button>
@@ -387,21 +526,3 @@ export default function Home() {
     </div>
   );
 }
-
-const ArrowUpRight = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    width="24" 
-    height="24" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="3" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-  >
-    <line x1="7" y1="17" x2="17" y2="7"></line>
-    <polyline points="7 7 17 7 17 17"></polyline>
-  </svg>
-);

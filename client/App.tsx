@@ -1,39 +1,61 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Services from './pages/Services';
-import Membership from './pages/Membership';
-import GiftCards from './pages/GiftCards';
-import Gallery from './pages/Gallery';
-import Quote from './pages/Quote';
-import FAQ from './pages/FAQ';
-import FAQManager from './pages/FAQManager';
-import Booking from './pages/Booking';
-import Admin from './pages/Admin';
-import AdminServiceManager from './pages/AdminServiceManager';
-import Blog from './pages/Blog';
-import BlogPostDetail from './pages/BlogPostDetail';
-import BlogManager from './pages/BlogManager';
-import Login from './pages/Login';
-import Sitemap from './pages/Sitemap';
-import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
-import { FirebaseProvider } from './components/FirebaseProvider';
 import { AdminGuard } from './components/AdminGuard';
-import TermsOfService from './pages/TermsOfService';
-import PrivacyPolicy from './pages/PrivacyPolicy';
-import CategoryDetail from './pages/CategoryDetail';
-import ServiceDetail from './pages/ServiceDetail';
-import CityDetail from './pages/CityDetail';
-import CeramicCoating from './pages/CeramicCoating';
-import ReviewPage from './pages/ReviewPage';
 import ChatAssistant from './components/ChatAssistant';
 import StickyBookingBar from './components/StickyBookingBar';
 import { CATEGORIES, SERVICES } from '@/shared/data/services';
 import { CITIES } from '@/shared/data/cities';
+import {
+  DEFAULT_SOCIAL_IMAGE,
+  NOT_FOUND_SEO,
+  SITE_ORIGIN,
+  STATIC_PAGE_SEO,
+  type SeoRoute,
+} from '@/shared/data/seo';
+import { trackEvent } from './lib/analytics';
+
+const Services = lazy(() => import('./pages/Services'));
+const Membership = lazy(() => import('./pages/Membership'));
+const GiftCards = lazy(() => import('./pages/GiftCards'));
+const Gallery = lazy(() => import('./pages/Gallery'));
+const Quote = lazy(() => import('./pages/Quote'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const FAQManager = lazy(() => import('./pages/FAQManager'));
+const Booking = lazy(() => import('./pages/Booking'));
+const Admin = lazy(() => import('./pages/Admin'));
+const AdminServiceManager = lazy(() => import('./pages/AdminServiceManager'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPostDetail = lazy(() => import('./pages/BlogPostDetail'));
+const BlogManager = lazy(() => import('./pages/BlogManager'));
+const Login = lazy(() => import('./pages/Login'));
+const Sitemap = lazy(() => import('./pages/Sitemap'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const CategoryDetail = lazy(() => import('./pages/CategoryDetail'));
+const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
+const CityDetail = lazy(() => import('./pages/CityDetail'));
+const CeramicCoating = lazy(() => import('./pages/CeramicCoating'));
+const ReviewPage = lazy(() => import('./pages/ReviewPage'));
+
+function ScrollToTop() {
+  const { pathname, search } = useLocation();
+
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname, search]);
+
+  useEffect(() => {
+    trackEvent('route_view', { page_path: `${pathname}${search}` });
+  }, [pathname, search]);
+
+  return null;
+}
 
 function SEO() {
   const { pathname } = useLocation();
@@ -45,15 +67,17 @@ function SEO() {
   const serviceMatch = pathname.match(/^\/services\/([a-z0-9-]+)$/);
   const categoryMatch = pathname.match(/^\/services\/category\/([a-z-]+)$/);
   const cityMatch = pathname.match(/^\/areas\/([a-z-]+)$/);
-  let pageSeo = null;
+  let pageSeo: SeoRoute | null = null;
   
   if (categoryMatch) {
     const slug = categoryMatch[1];
     const category = CATEGORIES.find(c => c.slug === slug);
     if (category) {
       pageSeo = {
-        title: category.seo?.title || `${category.name} | Bryan's Showroom Quality Detailing`,
-        description: category.seo?.description || category.description
+        title: category.seo?.title || `${category.name} | Bryan's Showroom Quality Mobile Detailing`,
+        description: category.seo?.description || category.description,
+        canonicalPath: `/services/category/${category.slug}`,
+        imagePath: category.image,
       };
     }
   }
@@ -64,7 +88,9 @@ function SEO() {
     if (service) {
       pageSeo = {
         title: service.seo.title,
-        description: service.seo.description
+        description: service.seo.description,
+        canonicalPath: `/services/${service.id}`,
+        imagePath: service.image,
       };
     }
   }
@@ -75,59 +101,30 @@ function SEO() {
     if (city) {
       pageSeo = {
         title: city.seo.title,
-        description: city.seo.description
+        description: city.seo.description,
+        canonicalPath: `/areas/${city.slug}`,
       };
     }
   }
 
-  const seoData: Record<string, { title: string; description: string }> = {
-    '/': {
-      title: "Bryan's Showroom Quality Detailing | Omaha & Bellevue Auto Detailing",
-      description: "Premium auto detailing services in Bellevue and Omaha. Mobile and drop-off detailing, paint correction, ceramic coatings, and interior restoration."
-    },
-    '/services': {
-      title: "Detailing Services | Paint Correction & Ceramic Coating Omaha",
-      description: "Premium car detailing in Bellevue and Omaha. We offer comprehensive auto detailing services including interior detailing, exterior washes, multi-stage paint correction, and long-lasting ceramic coating."
-    },
-    '/book': {
-      title: "Book Your Detail | Professional Auto Detailing Bellevue",
-      description: "Schedule your professional car detail online. Instant availability for Bellevue and Omaha. Secure your spot with a deposit."
-    },
-    '/booking': {
-      title: "Book Your Detail | Professional Auto Detailing Bellevue",
-      description: "Schedule your professional car detail online. Instant availability for Bellevue and Omaha. Secure your spot with a deposit."
-    },
-    '/gallery': {
-      title: "Before & After Gallery | Paint Correction & Ceramic Coating Omaha NE",
-      description: "Real before & after photos from Bryan's Showroom Quality Detailing in Bellevue and Omaha. See paint correction, ceramic coating, and interior restoration results."
-    },
-    '/ceramic-coating': {
-      title: 'Ceramic Coating Omaha & Bellevue NE | System X Certified Installer',
-      description: 'Professional ceramic coating in Omaha and Bellevue NE. Bryan is a System X certified installer offering 3-year paint protection starting at $700.',
-    },
-    '/membership': {
-      title: "Maintenance Detailing | Keep Your Car Showroom Ready",
-      description: "Join our exclusive maintenance club for bi-weekly or monthly detailing at discounted rates. Keep your vehicle protected year-round."
-    },
+  const current = pageSeo || STATIC_PAGE_SEO[pathname] || {
+    ...NOT_FOUND_SEO,
+    canonicalPath: pathname,
   };
 
-  const current = pageSeo || seoData[pathname] || {
-    title: "Bryan's Showroom Quality Detailing",
-    description: "Premium professional auto detailing services in Bellevue and Omaha, Nebraska."
-  };
-
-  const domain = "https://bryansdetailingomaha.com";
-  const url = `${domain}${pathname}`;
-  const image = `${domain}/20211009_025807-COLLAGE.jpg`;
+  const domain = SITE_ORIGIN;
+  const url = `${domain}${current.canonicalPath || pathname}`;
+  const image = `${domain}${current.imagePath || DEFAULT_SOCIAL_IMAGE}`;
 
   const schema = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "AutomotiveBusiness"],
-    "name": "Bryan's Showroom Quality Detailing",
+    "name": "Bryan's Showroom Quality Mobile Detailing",
     "image": image,
-    "@id": domain,
-    "url": domain,
-    "telephone": "+17123056313",
+    "@id": `${domain}/#business`,
+    "url": `${domain}/`,
+    "telephone": "+1-712-305-6313",
+    "email": "bryansmobiledetailing@gmail.com",
     "priceRange": "$$",
     "address": {
       "@type": "PostalAddress",
@@ -166,6 +163,7 @@ function SEO() {
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": [
+        "Sunday",
         "Monday",
         "Tuesday",
         "Wednesday",
@@ -173,13 +171,9 @@ function SEO() {
         "Friday",
         "Saturday"
       ],
-      "opens": "08:00",
-      "closes": "18:00"
+      "opens": "07:00",
+      "closes": "19:00"
     },
-    "sameAs": [
-      "https://www.facebook.com/bryansdetailing",
-      "https://www.instagram.com/bryansdetailing"
-    ]
   };
 
   return (
@@ -187,6 +181,7 @@ function SEO() {
       <title>{current.title}</title>
       <meta name="description" content={current.description} />
       <link rel="canonical" href={url} />
+      {current.robots && <meta name="robots" content={current.robots} />}
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
@@ -213,16 +208,19 @@ function SEO() {
 export default function App() {
   return (
     <HelmetProvider>
-      <FirebaseProvider>
-        <AuthProvider>
-          <Router>
+      <AuthProvider>
+          <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <ScrollToTop />
           <SEO />
           <div className="min-h-screen flex flex-col bg-zinc-50 text-zinc-900 font-sans">
             <Navbar />
             <main className="flex-grow">
+              <Suspense fallback={<div className="flex min-h-[50vh] items-center justify-center" role="status" aria-label="Loading page"><div className="h-10 w-10 animate-spin rounded-full border-4 border-zinc-200 border-t-zinc-900" /></div>}>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/services" element={<Services />} />
+                <Route path="/services/ceramic-3yr" element={<Navigate replace to="/services/system-x-crystal-plus" />} />
+                <Route path="/services/protection-package" element={<Navigate replace to="/services/system-x-pro-plus" />} />
                 <Route path="/services/:serviceId" element={<ServiceDetail />} />
                 <Route path="/services/category/:slug" element={<CategoryDetail />} />
                 <Route path="/areas/:slug" element={<CityDetail />} />
@@ -275,6 +273,7 @@ export default function App() {
                 <Route path="/review" element={<ReviewPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
+              </Suspense>
             </main>
             <ChatAssistant />
             <StickyBookingBar />
@@ -282,7 +281,6 @@ export default function App() {
           </div>
         </Router>
       </AuthProvider>
-      </FirebaseProvider>
     </HelmetProvider>
   );
 }

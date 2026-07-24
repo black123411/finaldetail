@@ -17,12 +17,9 @@ import {
   Send,
   FileText
 } from 'lucide-react';
-import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, orderBy, Timestamp, where } from 'firebase/firestore';
-import { db } from '../lib/firebase';
 import { Button } from '../components/ui/button';
 import { Link } from 'react-router-dom';
-import { Sparkles } from 'lucide-react';
-import { SEO_BLOG_POSTS } from '@/shared/data/seoBlogPosts';
+import { BlogAPI } from '../services/api';
 
 interface BlogPost {
   id: string;
@@ -44,52 +41,23 @@ export default function BlogManager() {
   const [currentPost, setCurrentPost] = useState<Partial<BlogPost> | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [status, setStatus] = useState<{ success?: boolean; message?: string } | null>(null);
-  const [seedLoading, setSeedLoading] = useState(false);
+  const [storageLabel, setStorageLabel] = useState('Checking storage...');
+  const [postPendingDelete, setPostPendingDelete] = useState<BlogPost | null>(null);
 
   useEffect(() => {
     fetchPosts();
+    BlogAPI.getAdminStorage()
+      .then((result) => setStorageLabel(result.persistent ? 'Cloud Storage connected' : 'Local development storage'))
+      .catch(() => setStorageLabel('Storage status unavailable'));
   }, []);
 
-  const handleSeed = async () => {
-    if (!confirm('This will add 3 pre-written, SEO-optimized articles to your blog. Continue?')) return;
-    setSeedLoading(true);
-    try {
-      const blogRef = collection(db, 'blog');
-      for (const post of SEO_BLOG_POSTS) {
-        // Check if slug already exists to prevent duplicates
-        const q = query(blogRef, where('slug', '==', post.slug));
-        const snap = await getDocs(q);
-        if (snap.empty) {
-          await addDoc(blogRef, {
-            ...post,
-            author: 'Bryan', // Force Bryan as author
-            createdAt: Timestamp.now(),
-            updatedAt: Timestamp.now()
-          });
-        }
-      }
-      setStatus({ success: true, message: 'Articles seeded successfully!' });
-      fetchPosts();
-    } catch (err) {
-      console.error(err);
-      setStatus({ success: false, message: 'Failed to seed articles.' });
-    } finally {
-      setSeedLoading(false);
-    }
-  };
-
   async function fetchPosts() {
+    setLoading(true);
     try {
-      const blogRef = collection(db, 'blog');
-      const q = query(blogRef, orderBy('createdAt', 'desc'));
-      const querySnapshot = await getDocs(q);
-      const postsData = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as BlogPost[];
-      setPosts(postsData);
+      setPosts(await BlogAPI.getAdminPosts());
     } catch (error) {
       console.error('Error fetching posts:', error);
+      setStatus({ success: false, message: 'Unable to load articles from the admin server.' });
     } finally {
       setLoading(false);
     }
@@ -114,11 +82,12 @@ export default function BlogManager() {
     setIsEditorOpen(true);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this post?')) return;
+  const handleDelete = async () => {
+    if (!postPendingDelete) return;
     try {
-      await deleteDoc(doc(db, 'blog', id));
+      await BlogAPI.deletePost(postPendingDelete.id);
       setStatus({ success: true, message: 'Post deleted successfully!' });
+      setPostPendingDelete(null);
       fetchPosts();
     } catch (error) {
       setStatus({ success: false, message: 'Failed to delete post.' });
@@ -132,17 +101,13 @@ export default function BlogManager() {
     try {
       const postData = {
         ...currentPost,
-        updatedAt: Timestamp.now(),
-        slug: currentPost.slug || currentPost.title?.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
+        slug: currentPost.slug || currentPost.title?.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]+/g, '')
       };
 
       if (currentPost.id) {
-        await updateDoc(doc(db, 'blog', currentPost.id), postData);
+        await BlogAPI.updatePost(currentPost.id, postData);
       } else {
-        await addDoc(collection(db, 'blog'), {
-          ...postData,
-          createdAt: Timestamp.now()
-        });
+        await BlogAPI.createPost(postData);
       }
 
       setStatus({ success: true, message: 'Post saved successfully!' });
@@ -168,19 +133,10 @@ export default function BlogManager() {
             </Link>
             <div>
               <h1 className="text-3xl font-black text-zinc-900 tracking-tighter italic">Blog Manager</h1>
-              <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Create & refine showroom-quality content</p>
+              <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">Create & refine showroom-quality content · {storageLabel}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Button 
-              onClick={handleSeed}
-              disabled={seedLoading}
-              variant="outline"
-              className="h-14 px-8 rounded-2xl border-emerald-100 bg-emerald-50 text-emerald-600 font-black italic hover:bg-emerald-100 transition-all flex items-center gap-2"
-            >
-              <Sparkles className={`h-5 w-5 ${seedLoading ? 'animate-pulse' : ''}`} /> 
-              {seedLoading ? 'Seeding...' : 'Seed SEO Posts'}
-            </Button>
             <Button 
               onClick={handleCreateNew}
               className="h-14 px-8 rounded-2xl bg-zinc-900 border-0 text-white font-black italic shadow-xl shadow-zinc-200 hover:bg-zinc-800 transition-all flex items-center gap-2"
@@ -244,7 +200,13 @@ export default function BlogManager() {
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-xl bg-zinc-100 overflow-hidden shrink-0 border border-zinc-100">
-                           <img src={post.featuredImage || 'https://via.placeholder.com/150'} alt="" className="w-full h-full object-cover" />
+                          {post.featuredImage ? (
+                            <img src={post.featuredImage} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center text-zinc-300" aria-hidden="true">
+                              <ImageIcon className="h-5 w-5" />
+                            </div>
+                          )}
                         </div>
                         <div>
                           <p className="text-sm font-black text-zinc-900 group-hover:text-emerald-500 transition-colors">{post.title}</p>
@@ -262,7 +224,7 @@ export default function BlogManager() {
                     <td className="px-8 py-6">
                       <p className="text-[10px] font-black text-zinc-400 uppercase tracking-widest flex items-center gap-2">
                         <Clock className="h-3 w-3" />
-                        {post.createdAt?.toDate ? post.createdAt.toDate().toLocaleDateString() : 'N/A'}
+                        {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'N/A'}
                       </p>
                     </td>
                     <td className="px-8 py-6 text-right">
@@ -273,13 +235,20 @@ export default function BlogManager() {
                             className="rounded-xl hover:bg-zinc-100"
                             asChild
                           >
-                            <Link to={`/blog/${post.slug}`} target="_blank"><Eye className="h-4 w-4" /></Link>
+                            <Link
+                              to={`/blog/${post.slug}`}
+                              target="_blank"
+                              aria-label={`Preview ${post.title}`}
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Link>
                           </Button>
                           <Button 
                             variant="ghost" 
                             size="icon" 
                             className="rounded-xl hover:bg-zinc-100"
                             onClick={() => handleEdit(post)}
+                            aria-label={`Edit ${post.title}`}
                           >
                             <Edit3 className="h-4 w-4" />
                           </Button>
@@ -287,7 +256,8 @@ export default function BlogManager() {
                             variant="ghost" 
                             size="icon" 
                             className="rounded-xl hover:bg-red-50 text-red-500"
-                            onClick={() => handleDelete(post.id)}
+                            onClick={() => setPostPendingDelete(post)}
+                            aria-label={`Delete ${post.title}`}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -308,6 +278,55 @@ export default function BlogManager() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {postPendingDelete && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+            <motion.button
+              type="button"
+              aria-label="Cancel article deletion"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setPostPendingDelete(null)}
+              className="absolute inset-0 bg-zinc-950/60 backdrop-blur-sm"
+            />
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="delete-article-title"
+              initial={{ opacity: 0, scale: 0.95, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 12 }}
+              className="relative w-full max-w-md rounded-[2rem] bg-white p-8 shadow-2xl"
+            >
+              <h2 id="delete-article-title" className="text-2xl font-black italic tracking-tight text-zinc-950">
+                Delete this article?
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-zinc-600">
+                “{postPendingDelete.title}” will be removed from blog storage. This cannot be undone.
+              </p>
+              <div className="mt-8 flex justify-end gap-3">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setPostPendingDelete(null)}
+                  className="rounded-xl font-black italic"
+                >
+                  Keep Article
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleDelete}
+                  className="rounded-xl bg-red-600 font-black italic text-white hover:bg-red-700"
+                >
+                  Delete Article
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Editor Modal */}
       <AnimatePresence>
@@ -434,6 +453,8 @@ export default function BlogManager() {
                           <option>Ceramic Coating</option>
                           <option>Industry News</option>
                           <option>Paint Correction</option>
+                          <option>New Car Tips</option>
+                          <option>Tips &amp; Guides</option>
                         </select>
                       </div>
 

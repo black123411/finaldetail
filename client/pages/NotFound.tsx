@@ -1,17 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { Home, Calendar, Sparkles, HelpCircle, Image, Compass, ChevronRight } from 'lucide-react';
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col justify-center items-center py-20 px-4 relative overflow-hidden">
-      <Helmet>
-        <title>Page Not Found | Bryan's Showroom Quality Detailing</title>
-        <meta name="description" content="The page you are looking for could not be found. Return to the showroom for premium auto detailing, paint correction, and ceramic coatings." />
-        <meta name="robots" content="noindex, follow" />
-      </Helmet>
-
       {/* Decorative Glow Elements */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-[300px] h-[300px] bg-emerald-600/5 rounded-full blur-[100px] pointer-events-none" />

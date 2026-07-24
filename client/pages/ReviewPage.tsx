@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 import { motion } from 'motion/react';
 import { Star, ExternalLink, MessageSquare, Share2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
@@ -14,32 +13,9 @@ const REVIEW_STEPS = [
   { step: '3', label: 'Share your experience', desc: 'Even a sentence or two helps other customers find us.' },
 ];
 
-const schemaData = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: "Bryan's Showroom Quality Detailing",
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '43',
-    bestRating: '5',
-  },
-};
-
 export default function ReviewPage() {
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center py-24 px-4">
-      <Helmet>
-        <title>Leave a Google Review | Bryan's Showroom Quality Detailing</title>
-        <meta
-          name="description"
-          content="Love your detail? Leave Bryan's Showroom Quality Detailing a Google review. Your feedback helps other Omaha and Bellevue drivers find professional auto detailing."
-        />
-        <link rel="canonical" href="https://bryansdetailingomaha.com/review" />
-        <meta name="robots" content="noindex" />
-        <script type="application/ld+json">{JSON.stringify(schemaData)}</script>
-      </Helmet>
-
       <div className="max-w-lg w-full text-center space-y-10">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
@@ -96,7 +72,7 @@ export default function ReviewPage() {
           </Button>
 
           {/* Social share */}
-          <div className="flex gap-3">
+          <div className="grid gap-3 sm:grid-cols-2">
             <Button
               asChild
               variant="outline"
@@ -117,7 +93,7 @@ export default function ReviewPage() {
               variant="outline"
               className="flex-1 h-12 rounded-2xl border-zinc-700 text-zinc-400 hover:text-white hover:bg-zinc-800 font-black text-xs uppercase tracking-widest"
             >
-              <a href="sms:?body=Check out Bryan's Showroom Quality Detailing in Bellevue — 4.9 stars and the best detail in Omaha: https://bryansdetailingomaha.com" className="flex items-center justify-center gap-2">
+              <a href="sms:?body=Check%20out%20Bryan%27s%20Showroom%20Quality%20Detailing%20in%20Bellevue%3A%20https%3A%2F%2Fbryansdetailingomaha.com" className="flex items-center justify-center gap-2">
                 <MessageSquare className="h-3.5 w-3.5" />
                 Text a Friend
               </a>
@@ -125,15 +101,6 @@ export default function ReviewPage() {
           </div>
         </motion.div>
 
-        {/* Current rating display */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-zinc-600 text-xs font-bold"
-        >
-          Currently 4.9★ across 43 Google reviews. Thank you to every customer who has shared their experience.
-        </motion.p>
       </div>
     </div>
   );

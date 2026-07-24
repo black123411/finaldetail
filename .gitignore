@@ -2,7 +2,11 @@ node_modules/
 build/
 dist/
 coverage/
+.firebase/
+.playwright-cli/
 .DS_Store
 *.log
+data/blog-posts.json
+data/blog-posts.json.tmp
 .env*
 !.env.example

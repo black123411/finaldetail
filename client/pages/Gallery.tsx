@@ -10,7 +10,6 @@ const CATEGORIES = [
   { id: 'interior', label: 'Interior' },
   { id: 'exterior', label: 'Exterior' },
   { id: 'paint', label: 'Paint Correction' },
-  { id: 'ceramic', label: 'Ceramic Coating' },
   { id: 'specialty', label: 'Specialty' },
 ];
 
@@ -26,15 +25,7 @@ export default function Gallery() {
   return (
     <div className="min-h-screen bg-zinc-950 py-16">
       <Helmet>
-        <title>Before & After Auto Detailing Gallery | Bryan's Detailing Omaha & Bellevue NE</title>
-        <meta
-          name="description"
-          content="See real before & after results from Bryan's Showroom Quality Detailing in Bellevue and Omaha. Paint correction, ceramic coating, and interior restoration photo gallery."
-        />
-        <link rel="canonical" href="https://bryansdetailingomaha.com/gallery" />
-        <meta property="og:title" content="Auto Detailing Gallery – Bryan's Showroom Quality Detailing" />
-        <meta property="og:description" content="Real before & after results: paint correction, ceramic coating, and interior restoration in Bellevue & Omaha NE." />
-        <meta property="og:image" content="https://lh3.googleusercontent.com/p/AF1QipNBh1JPkPPvuM9a6ZAEqUVD-q_ngfoeYPE03bev=w1200-h630-k-no" />
+        <meta property="og:image" content="https://bryansdetailingomaha.com/gallery/takeout/20260502_192636.webp" />
       </Helmet>
 
       {/* Hero */}
@@ -76,10 +67,10 @@ export default function Gallery() {
           >
             <div className="flex items-center gap-2">
               <Award className="h-4 w-4 text-yellow-400" />
-              <span>4.9★ Google Rating</span>
+              <span>Customer Reviews on Google</span>
             </div>
             <div className="w-px h-4 bg-zinc-700" />
-            <span>43+ Reviews</span>
+            <span>Owner-Operated</span>
             <div className="w-px h-4 bg-zinc-700" />
             <span>System X Certified</span>
           </motion.div>
@@ -141,7 +132,7 @@ export default function Gallery() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer"
+                className="relative aspect-[4/3] rounded-lg overflow-hidden group cursor-pointer"
                 onClick={() => setLightbox(img.src)}
               >
                 <img
@@ -151,10 +142,10 @@ export default function Gallery() {
                   referrerPolicy="no-referrer"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 md:p-4">
                   <p className="text-white font-black text-sm tracking-tight">{img.label}</p>
                 </div>
-                <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-3 right-3 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                   <span className="bg-black/60 text-white text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded-full capitalize">
                     {img.category}
                   </span>
@@ -180,7 +171,7 @@ export default function Gallery() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               src={lightbox}
-              alt="Auto detailing result Bryan's Showroom Quality Detailing Omaha Bellevue NE"
+              alt="Auto detailing result Bryan's Showroom Quality Mobile Detailing Omaha Bellevue NE"
               className="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl"
               referrerPolicy="no-referrer"
               onClick={(e) => e.stopPropagation()}
@@ -201,13 +192,13 @@ export default function Gallery() {
             Our Bellevue & Omaha Detailing Portfolio
           </h2>
           <p className="text-zinc-400 leading-relaxed font-medium mb-4">
-            A picture is worth a thousand words, especially in the auto detailing industry. The images in our gallery showcase the transformative power of professional paint correction, ceramic coating, and deep interior cleaning. We take immense pride in every vehicle we service, from daily commuters to luxury sports cars and classic restorations across the Omaha metro area.
+            These are real customer vehicles from interior detailing, exterior detailing, paint correction, headlight restoration, boat, motorcycle, classic car, and specialty jobs around Bellevue and Omaha. Each photo is labeled by what is actually visible in the image.
           </p>
           <p className="text-zinc-400 leading-relaxed font-medium mb-4">
-            Notice the striking difference in the "Before & After" shots, where heavily oxidized, scratched, and faded paint is revived to a brilliant, high-gloss shine. This level of restoration is only achievable through technical multi-stage machine polishing and the application of premium ceramic polymers. 
+            The before-and-after section uses matching photos from the same vehicle and work area. The main gallery separates interior, exterior, paint correction, and specialty vehicle results.
           </p>
           <p className="text-zinc-400 leading-relaxed font-medium">
-            When you book with Bryan's Showroom Quality Detailing, you are investing in proven expertise. We encourage our prospective clients to view these results as a testament to our commitment to absolute perfection and customer satisfaction in Bellevue, NE.
+            When you book with Bryan's Showroom Quality Mobile Detailing, the goal is clear service matching: interior cleaning for dirty cabins, paint correction for swirl marks, ceramic coating for protection, and mobile detailing where the job is a good fit.
           </p>
         </div>
       </section>

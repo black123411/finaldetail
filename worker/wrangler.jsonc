@@ -1,0 +1,23 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "bryans-detailing-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-15",
+  "workers_dev": true,
+  "vars": {
+    "SQUARE_ENVIRONMENT": "production",
+    "ALLOWED_ORIGINS": "https://bryansdetailingomaha.com,https://www.bryansdetailingomaha.com,http://localhost:5173"
+  },
+  "d1_databases": [
+    {
+      "binding": "CONTENT_DB",
+      "database_name": "bryans-detailing-content",
+      "database_id": "48c548ef-002b-464f-ae06-0d810a6100d1",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

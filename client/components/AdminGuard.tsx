@@ -18,9 +18,7 @@ export const AdminGuard: React.FC<{ children: React.ReactNode }> = ({ children }
     );
   }
 
-  const isEmergencyAdmin = localStorage.getItem('EMERGENCY_ADMIN_OVERRIDE') === 'true';
-
-  if (!isEmergencyAdmin && (!user || !isAdmin)) {
+  if (!user || !isAdmin) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

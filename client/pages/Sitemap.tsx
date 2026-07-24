@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Map, ChevronRight } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
 import { CITIES } from '@/shared/data/cities';
-import { BLOG_POSTS } from '@/shared/data/blog';
+import { BlogAPI } from '../services/api';
+
+interface SitemapBlogPost {
+  id: string;
+  title: string;
+  slug: string;
+}
 
 const STATIC_SECTIONS = [
   {
@@ -32,12 +37,16 @@ const STATIC_SECTIONS = [
 ];
 
 export default function Sitemap() {
+  const [blogPosts, setBlogPosts] = useState<SitemapBlogPost[]>([]);
+
+  useEffect(() => {
+    BlogAPI.getPosts()
+      .then(posts => setBlogPosts(posts as SitemapBlogPost[]))
+      .catch(error => console.error('Error fetching sitemap blog posts:', error));
+  }, []);
+
   return (
     <div className="min-h-screen bg-zinc-50 py-16 pt-32">
-      <Helmet>
-        <title>Sitemap | Bryan's Showroom Quality Detailing</title>
-        <meta name="description" content="Full sitemap for Bryan's Showroom Quality Detailing — auto detailing in Omaha, Bellevue, and surrounding Sarpy County areas." />
-      </Helmet>
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="text-center mb-16 space-y-4">
           <div className="mx-auto w-16 h-16 bg-zinc-900 text-white rounded-full flex items-center justify-center mb-6">
@@ -45,7 +54,7 @@ export default function Sitemap() {
           </div>
           <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-zinc-900 italic">Sitemap</h1>
           <p className="text-lg text-zinc-500 font-medium">
-            Every page on Bryan's Showroom Quality Detailing — Bellevue & Omaha, NE.
+            Every page on Bryan's Showroom Quality Mobile Detailing — Bellevue & Omaha, NE.
           </p>
         </div>
 
@@ -98,8 +107,8 @@ export default function Sitemap() {
               Blog Posts
             </h2>
             <ul className="space-y-3">
-              {BLOG_POSTS.map((post) => (
-                <li key={post.slug}>
+              {blogPosts.map((post) => (
+                <li key={post.id}>
                   <Link
                     to={`/blog/${post.slug}`}
                     className="group flex items-center gap-2 text-zinc-600 hover:text-emerald-600 transition-colors font-medium text-sm"

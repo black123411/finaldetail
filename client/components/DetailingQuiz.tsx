@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, ChevronRight, ArrowLeft, Sparkles, Car, Shield, Droplets, Wind, Trash2, Zap, User, Users, Camera } from 'lucide-react';
+import { CheckCircle2, ChevronRight, ArrowLeft, Sparkles, Car, Shield, Droplets, Wind, Trash2, Zap, User, Users } from 'lucide-react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
-import { BOOKING_LINK } from '../lib/constants';
 
 const QUESTIONS = [
   {
@@ -76,7 +75,7 @@ export default function DetailingQuiz() {
         desc: "RVs and Boats require specialized industrial-grade decontamination and gelcoat protection to combat oxidation.",
         package: "RV & Boat Wash & Wax",
         id: "rv-boat-wash-wax",
-        priceRange: "$299+",
+        priceRange: "$10/ft+",
         highTicket: true
       };
     }
@@ -86,9 +85,9 @@ export default function DetailingQuiz() {
       return {
         title: "Extreme Protection Armor",
         desc: "To achieve permanent gloss and protection, I recommend my Ceramic Coating package paired with precision paint correction.",
-        package: "3-Year Ceramic Coating",
-        id: "ceramic-3yr",
-        priceRange: "$599 - $849",
+        package: "System X Pro+ Signature",
+        id: "system-x-pro-plus",
+        priceRange: "$1,099 - $1,549",
         highTicket: true
       };
     }
@@ -99,7 +98,7 @@ export default function DetailingQuiz() {
         desc: "Your vehicle needs a deep technical decontamination and interior restoration to bring back that new-car feeling.",
         package: "Showroom Package",
         id: "showroom-package",
-        priceRange: "$399 - $549",
+        priceRange: "$499 - $649",
         highTicket: false
       };
     }
@@ -110,7 +109,7 @@ export default function DetailingQuiz() {
         desc: "Your vehicle is well-maintained! Keep it that way with my premium maintenance plan to prevent long-term wear.",
         package: "Maintenance Detail",
         id: "maintenance-detail",
-        priceRange: "$89 - $149",
+        priceRange: "$119 - $179",
         highTicket: false
       };
     }
@@ -120,7 +119,7 @@ export default function DetailingQuiz() {
       desc: "A thorough seasonal reset to remove light grime, deep clean the interior, and protect your investment.",
       package: "Signature Full Detail",
       id: "full-detail-package",
-      priceRange: "$229 - $329",
+      priceRange: "$279 - $399",
       highTicket: false
     };
   };
@@ -142,7 +141,7 @@ export default function DetailingQuiz() {
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-5 w-5 text-emerald-500" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 italic">Restoration AI Quiz</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-600 italic">Service Finder</span>
                 </div>
                 <div className="h-1 flex-grow mx-8 bg-zinc-100 rounded-full overflow-hidden">
                     <motion.div 
@@ -212,7 +211,7 @@ export default function DetailingQuiz() {
               <div className="flex flex-col gap-3">
                 <Button className="w-full h-16 text-lg font-bold shadow-xl shadow-emerald-100 bg-zinc-900 hover:bg-zinc-800" asChild>
                   <Link to={`/book?serviceId=${recommendation.id}`}>
-                    Secure This Estimate Now
+                    View Booking Options
                     <ChevronRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>

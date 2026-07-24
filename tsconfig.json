@@ -23,5 +23,13 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "exclude": ["dist", "scripts", "public"]
+  "exclude": [
+    "dist",
+    "scripts",
+    "public",
+    "scratch",
+    "worker",
+    "test-*.ts",
+    "check-*.ts"
+  ]
 }

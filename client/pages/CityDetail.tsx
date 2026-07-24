@@ -27,7 +27,7 @@ export default function CityDetail() {
   const citySchema = {
     "@context": "https://schema.org",
     "@type": "AutoBodyShop",
-    "name": `Bryan's Showroom Quality Detailing - ${city.name}`,
+    "name": `Bryan's Showroom Quality Mobile Detailing - ${city.name}`,
     "image": "/20211009_021727-COLLAGE.jpg",
     "description": city.seo.description,
     "url": `https://bryansdetailingomaha.com/areas/${city.slug}`,
@@ -43,8 +43,6 @@ export default function CityDetail() {
   return (
     <div className="bg-white min-h-screen">
       <Helmet>
-        <title>{city.seo.title}</title>
-        <meta name="description" content={city.seo.description} />
         <script type="application/ld+json">
           {JSON.stringify(citySchema)}
         </script>

@@ -7,6 +7,7 @@ import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
 import { LogOut } from 'lucide-react';
 import { BOOKING_LINK } from '../lib/constants';
+import { trackEvent } from '../lib/analytics';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,12 +31,12 @@ export default function Navbar() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <span className="font-bold text-xl tracking-tight text-zinc-900">
-            Bryan's Showroom Quality Detailing
+            Bryan's Showroom Quality Mobile Detailing
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden xl:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -58,13 +59,21 @@ export default function Navbar() {
           ))}
           <div className="flex items-center gap-4 ml-4">
             <Button variant="outline" className="border-zinc-200 hover:bg-zinc-50" asChild>
-              <a href="tel:712-305-6313" className="flex items-center gap-2 text-sm font-bold text-zinc-900 transition-colors">
+              <a
+                href="tel:712-305-6313"
+                onClick={() => trackEvent('click_call', { location: 'desktop_nav' })}
+                className="flex items-center gap-2 text-sm font-bold text-zinc-900 transition-colors"
+              >
                 <Phone className="h-4 w-4" />
                 <span>(712) 305-6313</span>
               </a>
             </Button>
             <Button asChild>
-              <Link to="/book" className="gap-2">
+              <Link
+                to="/book"
+                onClick={() => trackEvent('begin_booking', { location: 'desktop_nav' })}
+                className="gap-2"
+              >
                 <Calendar className="h-4 w-4" />
                 Book Now
               </Link>
@@ -74,7 +83,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden p-3 -mr-3 text-zinc-600 flex items-center justify-center"
+          className="xl:hidden p-3 -mr-3 text-zinc-600 flex items-center justify-center"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -90,7 +99,7 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="md:hidden border-t border-zinc-200 bg-white overflow-hidden"
+            className="xl:hidden border-t border-zinc-200 bg-white overflow-hidden"
           >
             <div className="px-4 py-6 space-y-2">
               {navLinks.map((link) => (
@@ -115,13 +124,23 @@ export default function Navbar() {
               ))}
               <div className="pt-6 border-t border-zinc-100 flex flex-col gap-3">
                 <Button variant="outline" asChild className="w-full h-12 justify-start text-base">
-                  <a href="tel:712-305-6313">
+                  <a
+                    href="tel:712-305-6313"
+                    onClick={() => trackEvent('click_call', { location: 'mobile_nav' })}
+                  >
                     <Phone className="h-5 w-5 mr-3" />
                     Call Us
                   </a>
                 </Button>
                 <Button asChild className="w-full h-14 text-lg shadow-lg shadow-zinc-200">
-                  <Link to="/book" onClick={() => setIsOpen(false)} className="gap-3">
+                  <Link
+                    to="/book"
+                    onClick={() => {
+                      trackEvent('begin_booking', { location: 'mobile_nav' });
+                      setIsOpen(false);
+                    }}
+                    className="gap-3"
+                  >
                     <Calendar className="h-6 w-6" />
                     Book Now
                   </Link>

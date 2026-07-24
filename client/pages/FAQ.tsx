@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { ChevronDown, HelpCircle, Loader2 } from 'lucide-react';
-import { db } from '../lib/firebase';
-import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { FAQAPI } from '../services/api';
 
 const DEFAULT_FAQS = [
   {
@@ -38,14 +37,8 @@ export default function FAQ() {
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
-        const q = query(collection(db, 'faqs'), orderBy('order'));
-        const snapshot = await getDocs(q);
-        if (snapshot.empty) {
-            setFaqs(DEFAULT_FAQS);
-        } else {
-            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as FaqItem[];
-            setFaqs(data);
-        }
+        const data = await FAQAPI.getFaqs();
+        setFaqs(Array.isArray(data) && data.length > 0 ? data : DEFAULT_FAQS);
       } catch (error) {
         console.error("Error fetching FAQs:", error);
         setFaqs(DEFAULT_FAQS);
@@ -81,8 +74,6 @@ export default function FAQ() {
   return (
     <div className="min-h-screen bg-zinc-50 py-16">
       <Helmet>
-        <title>Frequently Asked Questions | Auto Detailing Bellevue & Omaha</title>
-        <meta name="description" content="Find answers to common questions about my auto detailing services, mobile car detailing, ceramic coating, and paint correction processes." />
         {faqs.length > 0 && (
           <script type="application/ld+json">
             {JSON.stringify(faqSchema)}

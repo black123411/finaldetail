@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useSearchParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { 
   Calendar, 
   ChevronRight, 
@@ -13,19 +12,17 @@ import {
   Mail,
   User,
   Info,
-  CreditCard as CardIcon,
   Star,
   Flame
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { VEHICLE_SIZES, SPECIALTY_SIZES, SERVICES, CATEGORIES, ADD_ONS } from '@/shared/data/services';
 import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfToday, parseISO } from 'date-fns';
-import { getSquareAppId, getSquareLocationId } from '../lib/config';
 import { BookingAPI, ServiceAPI } from '../services/api';
-import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
+import { trackEvent } from '../lib/analytics';
 
-type Step = 'service' | 'size' | 'addons' | 'datetime' | 'details' | 'payment' | 'success';
+type Step = 'service' | 'size' | 'addons' | 'datetime' | 'details' | 'success';
 
 interface SquareService {
   id: string;
@@ -41,6 +38,10 @@ interface SquareService {
 }
 
 const normalizeName = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+const LEGACY_SERVICE_IDS: Record<string, string> = {
+  'ceramic-3yr': 'system-x-crystal-plus',
+  'protection-package': 'system-x-pro-plus',
+};
 const isRealSquareVariationId = (id?: string) => !!id && !id.startsWith('local-') && !id.startsWith('addon-var-') && !id.includes('-var-');
 
 const getSizeLabel = (sizeId: string | null) => {
@@ -84,6 +85,11 @@ const isMatchingVariation = (variationName: string, sizeId: string) => {
   });
 };
 
+const getAddonVariation = (addon: SquareService | undefined, sizeId: string | null) => {
+  if (!addon?.variations?.length) return undefined;
+  return (sizeId ? addon.variations.find(variation => variation.name === sizeId) : undefined) || addon.variations[0];
+};
+
 const formatDuration = (input: number | string) => {
   // If it's already a human-readable string like "2-3.5 hours" or "45 mins", return it directly
   if (typeof input === 'string' && (input.includes('hour') || input.includes('min') || input.includes('Day'))) {
@@ -106,9 +112,43 @@ const formatDuration = (input: number | string) => {
   return `${mins}m`;
 };
 
+const getServiceDisplayDuration = (service: SquareService) => {
+  const squareDuration = service.variations?.[0]?.duration;
+  const numericDuration = Number(squareDuration);
+  const squareMinutes = Number.isFinite(numericDuration) ? numericDuration / 60000 : Number.POSITIVE_INFINITY;
+  if (squareDuration && squareMinutes >= 15) return formatDuration(squareDuration);
+
+  const local = SERVICES.find(candidate =>
+    normalizeName(candidate.squareName || candidate.name) === normalizeName(service.name)
+  );
+  if (!local) return squareDuration ? formatDuration(squareDuration) : 'Contact for timing';
+  const duration = typeof local.duration === 'string' ? local.duration : Object.values(local.duration)[0];
+  return duration || 'Contact for timing';
+};
+
+const getServicePriceLabel = (service: SquareService) => {
+  const prices = service.variations.map(variation => variation.price).filter(price => Number.isFinite(price));
+  const minimum = prices.length ? Math.min(...prices) : 0;
+  const local = SERVICES.find(candidate =>
+    normalizeName(candidate.squareName || candidate.name) === normalizeName(service.name)
+  );
+  if (local?.pricingType === 'custom') return 'Custom quote';
+  if (minimum <= 0 && local) {
+    const localPrices = Object.values(local.price).filter(price => price > 0);
+    const localMinimum = localPrices.length ? Math.min(...localPrices) : 0;
+    if (!localMinimum) return 'Custom quote';
+    return local.pricingType === 'variable' ? `From $${localMinimum}/ft` : `From $${localMinimum}`;
+  }
+  if (minimum <= 0) return 'Custom quote';
+  if (local?.pricingType === 'variable') return `From $${minimum}/ft`;
+  return `From $${minimum}`;
+};
+
 export default function Booking() {
   const [searchParams] = useSearchParams();
-  const preSelectedServiceId = searchParams.get('serviceId');
+  const requestedServiceId = searchParams.get('serviceId');
+  const preSelectedServiceId = requestedServiceId ? LEGACY_SERVICE_IDS[requestedServiceId] || requestedServiceId : null;
+  const preSelectedAddonId = searchParams.get('addonId');
 
   const [step, setStep] = useState<Step>('service');
   const [services, setServices] = useState<SquareService[]>([]);
@@ -134,8 +174,7 @@ export default function Booking() {
     address: ''
   });
   const [bookingLoading, setBookingLoading] = useState(false);
-  const [paymentLoading, setPaymentLoading] = useState(false);
-  const [pendingBooking, setPendingBooking] = useState<any>(null);
+  const trackedSteps = useRef<Set<Step>>(new Set());
 
   // Calendar state
   const [viewDate, setViewDate] = useState(new Date());
@@ -145,6 +184,25 @@ export default function Booking() {
   useEffect(() => {
     fetchServices();
   }, []);
+
+  useEffect(() => {
+    if (trackedSteps.current.has(step)) return;
+
+    trackedSteps.current.add(step);
+    trackEvent('booking_step_view', {
+      step,
+      selected_service_count: selectedServices.length,
+      total: priceBreakdown.total
+    });
+
+    if (step === 'details') {
+      trackEvent('form_start', {
+        form_name: 'booking',
+        selected_service_count: selectedServices.length,
+        total: priceBreakdown.total
+      });
+    }
+  }, [step]);
 
   useEffect(() => {
     if (services.length > 0 && preSelectedServiceId && selectedServices.length === 0) {
@@ -160,6 +218,11 @@ export default function Booking() {
       }
     }
   }, [services, preSelectedServiceId, selectedServices]);
+
+  useEffect(() => {
+    if (!preSelectedAddonId || !ADD_ONS.some(addon => addon.id === preSelectedAddonId)) return;
+    setSelectedAddons(current => current.includes(preSelectedAddonId) ? current : [...current, preSelectedAddonId]);
+  }, [preSelectedAddonId]);
 
   const fetchServices = async () => {
     try {
@@ -195,18 +258,31 @@ export default function Booking() {
 
       const localFormattedAddons = ADD_ONS.map((addon) => {
         const squareMatch = findSquareService(addon.name);
+        const variations = addon.priceBySize
+          ? VEHICLE_SIZES
+              .filter((size) => addon.priceBySize?.[size.id as keyof typeof addon.priceBySize] !== undefined)
+              .map((size) => {
+                const squareVariation = squareMatch?.variations?.find((variation: any) => isMatchingVariation(variation.name || '', size.id));
+                return {
+                  id: squareVariation?.id || `local-addon-${addon.id}-${size.id}`,
+                  name: size.id,
+                  duration: squareVariation?.duration || addon.duration,
+                  price: squareVariation?.price ?? addon.priceBySize![size.id as keyof typeof addon.priceBySize]!
+                };
+              })
+          : [{
+              id: squareMatch?.variations?.[0]?.id || `local-addon-${addon.id}`,
+              name: 'Regular',
+              duration: squareMatch?.variations?.[0]?.duration || addon.duration,
+              price: squareMatch?.variations?.[0]?.price ?? addon.price
+            }];
         return {
-        id: addon.id,
-        name: addon.name,
-        description: addon.description,
-        categoryId: 'add-ons',
-        variations: [{
-          id: squareMatch?.variations?.[0]?.id || `local-addon-${addon.id}`,
-          name: 'Regular',
-          duration: squareMatch?.variations?.[0]?.duration || addon.duration,
-          price: squareMatch?.variations?.[0]?.price ?? addon.price
-        }]
-      };
+          id: addon.id,
+          name: addon.name,
+          description: addon.description,
+          categoryId: 'add-ons',
+          variations
+        };
       });
       
       setServices([...localFormattedServices, ...localFormattedAddons]);
@@ -252,8 +328,9 @@ export default function Booking() {
       });
       selectedAddons.forEach(id => {
         const addon = availableAddons.find(a => a.id === id);
-        if (addon && addon.variations.length > 0) {
-          serviceVariationIds.push(addon.variations[0].id);
+        const variation = getAddonVariation(addon, selectedSize);
+        if (variation) {
+          serviceVariationIds.push(variation.id);
         }
       });
       
@@ -270,6 +347,11 @@ export default function Booking() {
       setSlots(Array.isArray(data) ? data : []);
     } catch (err: any) {
       console.error(err);
+      trackEvent('form_error', {
+        form_name: 'booking',
+        step: 'availability',
+        message: err.message || 'Error checking availability'
+      });
       setError(err.message || 'Error checking availability. Please try another date.');
     } finally {
       setSlotsLoading(false);
@@ -295,8 +377,9 @@ export default function Booking() {
       });
       selectedAddons.forEach(id => {
         const addon = availableAddons.find(a => a.id === id);
-        if (addon && addon.variations.length > 0) {
-          serviceVariationIds.push(addon.variations[0].id);
+        const variation = getAddonVariation(addon, selectedSize);
+        if (variation) {
+          serviceVariationIds.push(variation.id);
         }
       });
 
@@ -315,41 +398,44 @@ export default function Booking() {
         addons: selectedAddons.map(id => availableAddons.find(a => a.id === id)?.name).filter(Boolean)
       });
 
-      setPendingBooking(booking);
+      trackEvent('booking_confirmed', {
+        selected_service_count: selectedServices.length,
+        location_type: customerInfo.locationType,
+        total: priceBreakdown.total
+      });
       
       setStep('success');
     } catch (err: any) {
+      trackEvent('form_error', {
+        form_name: 'booking',
+        step: 'confirm_booking',
+        message: err.message || 'Booking failed'
+      });
       setError(err.message || 'Booking failed. My schedule might have just filled up. Please refresh or call me.');
     } finally {
       setBookingLoading(false);
     }
   };
 
-  const handlePayment = async (token: any) => {
-    if (!pendingBooking) return;
-    setPaymentLoading(true);
-    setError(null);
-
-    try {
-      await BookingAPI.createPayment({
-        sourceId: token.token,
-        amount: 5000, // $50.00 in cents
-        customerId: pendingBooking.customerId,
-        bookingId: pendingBooking.id
-      });
-
-      setStep('success');
-    } catch (err: any) {
-      setError(err.message || 'Payment failed. Please try another card or contact me.');
-    } finally {
-      setPaymentLoading(false);
-    }
-  };
-
   const nextStep = () => {
-    if (step === 'service') setStep('size');
-    else if (step === 'size') setStep('addons');
-    else if (step === 'addons') setStep('datetime');
+    if (step === 'service') {
+      trackEvent('begin_booking', {
+        location: 'booking_wizard',
+        selected_service_count: selectedServices.length
+      });
+      setStep('size');
+    }
+    else if (step === 'size') {
+      trackEvent('booking_select_size', { vehicle_size: selectedSize });
+      setStep('addons');
+    }
+    else if (step === 'addons') {
+      trackEvent('booking_addons_complete', {
+        addon_count: selectedAddons.length,
+        total: priceBreakdown.total
+      });
+      setStep('datetime');
+    }
     else if (step === 'datetime') setStep('details');
   };
 
@@ -371,9 +457,10 @@ export default function Booking() {
     
     const selectedAddonList = selectedAddons.map(id => {
       const addon = availableAddons.find(a => a.id === id);
+      const variation = getAddonVariation(addon, selectedSize);
       return {
         name: addon?.name || 'Add-on',
-        price: addon?.variations?.[0]?.price || 0
+        price: variation?.price || 0
       };
     });
     
@@ -401,22 +488,30 @@ export default function Booking() {
 
   return (
     <div className="min-h-screen bg-zinc-50 pt-24 pb-20">
-      <Helmet>
-        <title>Book Auto Detailing in Bellevue & Omaha | Fast & Easy Scheduling</title>
-        <meta name="description" content="Book your auto detailing, paint correction, or ceramic coating appointment online. Fast scheduling for Bellevue and Omaha car detailing." />
-      </Helmet>
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}
         <div className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-black text-zinc-900 mb-3 tracking-tighter italic">Secure Your Spot</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-zinc-900 mb-3 tracking-tighter italic">Book Your Detail</h1>
           <p className="text-zinc-500 font-medium max-w-xl mx-auto">Select your service, choose a convenient time, and lock in your appointment.</p>
         </div>
 
         {/* Trust Banner */}
         <div className="max-w-3xl mx-auto mb-8 px-4">
-          <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm animate-in fade-in zoom-in duration-500 mb-6">
-            <CheckCircle2 className="w-5 h-5" />
-            100% Satisfaction Guarantee • Licensed & Insured
+          <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm animate-in fade-in zoom-in duration-500 mb-4">
+            <CheckCircle2 className="w-5 h-5 shrink-0" />
+            Current customer reviews are available on Google • Mobile and Bellevue drop-off options
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+            {[
+              { title: '1. Pick package', copy: 'Choose the service and vehicle size that match your condition.' },
+              { title: '2. See pricing', copy: 'Add-ons and the running total stay visible before confirmation.' },
+              { title: '3. Confirm time', copy: 'Bryan reviews the booking and sends appointment details.' },
+            ].map((item) => (
+              <div key={item.title} className="bg-white border border-zinc-100 rounded-2xl p-4 shadow-sm">
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-900">{item.title}</p>
+                <p className="text-xs text-zinc-500 font-medium leading-relaxed mt-2">{item.copy}</p>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -527,13 +622,13 @@ export default function Booking() {
                                   <h3 className="font-bold text-zinc-900 text-lg group-hover:text-zinc-700 transition-colors">{s.name}</h3>
                                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-zinc-400 mt-1">
                                     <Clock className="h-3 w-3" />
-                                    <span>Est. {s.variations?.[0] ? formatDuration(s.variations[0].duration) : 'N/A'}</span>
+                                    <span>Est. {getServiceDisplayDuration(s)}</span>
                                   </div>
                                 </div>
                                 {s.variations?.[0] && (
                                   <div className="text-right">
                                     <span className="text-zinc-900 font-bold bg-zinc-50 px-3 py-1 rounded-full text-sm">
-                                      From ${Math.min(...s.variations.map(v => v.price))}
+                                      {getServicePriceLabel(s)}
                                     </span>
                                   </div>
                                 )}
@@ -614,8 +709,9 @@ export default function Booking() {
                   <div className="grid gap-3">
                     {availableAddons.map(a => {
                       const isSelected = selectedAddons.includes(a.id);
-                      const price = a.variations?.[0]?.price || 0;
-                      const duration = a.variations?.[0]?.duration ? formatDuration(a.variations[0].duration) : '';
+                      const variation = getAddonVariation(a, selectedSize);
+                      const price = variation?.price || 0;
+                      const duration = variation?.duration ? formatDuration(variation.duration) : '';
                       
                       return (
                         <button
@@ -758,7 +854,14 @@ export default function Booking() {
                               return (
                                 <button
                                   key={idx}
-                                  onClick={() => setSelectedSlot(slot)}
+                                  onClick={() => {
+                                    setSelectedSlot(slot);
+                                    trackEvent('booking_select_time', {
+                                      date: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '',
+                                      time,
+                                      total: priceBreakdown.total
+                                    });
+                                  }}
                                   className={`py-2 px-3 rounded-lg border text-xs font-bold transition-all ${
                                     isSelected 
                                       ? 'bg-zinc-900 border-zinc-900 text-white' 
@@ -931,47 +1034,6 @@ export default function Booking() {
                 </motion.div>
               )}
 
-              {step === 'payment' && pendingBooking && (
-                <motion.div
-                  key="payment"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="bg-white rounded-3xl p-8 shadow-xl border border-zinc-100"
-                >
-                  <h2 className="text-2xl font-bold text-zinc-900 mb-4 flex items-center gap-2">
-                    <CardIcon className="h-6 w-6 text-zinc-900" />
-                    Deposit Required
-                  </h2>
-                  <p className="text-zinc-500 mb-8">
-                    A $50 non-refundable deposit is required to secure your appointment. This amount will be applied to your final total.
-                  </p>
-                  
-                  {paymentLoading ? (
-                    <div className="flex flex-col items-center justify-center py-12">
-                      <Loader2 className="h-10 w-10 text-zinc-900 animate-spin mb-4" />
-                      <p className="text-zinc-600 font-medium">Processing payment...</p>
-                    </div>
-                  ) : (
-                    <div className="max-w-md mx-auto">
-                      <PaymentForm
-                        applicationId={getSquareAppId()}
-                        locationId={getSquareLocationId()}
-                        cardTokenizeResponseReceived={handlePayment}
-                      >
-                        <CreditCard />
-                      </PaymentForm>
-                    </div>
-                  )}
-                  
-                  {error && (
-                    <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-lg text-sm font-medium border border-red-100">
-                      {error}
-                    </div>
-                  )}
-                </motion.div>
-              )}
-
               {step === 'success' && (
                 <motion.div
                   key="success"
@@ -1054,7 +1116,7 @@ export default function Booking() {
                     </div>
                     <p className="text-[10px] text-zinc-400 mt-4 leading-relaxed bg-zinc-50 p-3 rounded-lg border border-zinc-100 flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                        <span>No upfront payment required. The full balance is collected upon completion of the service. Final price may vary based on actual vehicle condition. Your satisfaction is 100% guaranteed.</span>
+                        <span>No upfront payment is required online. Final price may vary with vehicle size, condition, and approved add-ons. Bryan will confirm any changes before work begins.</span>
                     </p>
                     <div className="mt-4 pt-4 border-t border-zinc-100 flex items-center justify-center gap-2">
                       <div className="flex -space-x-2">
@@ -1066,18 +1128,6 @@ export default function Booking() {
                 </div>
               </div>
 
-              <div className="bg-emerald-50 rounded-2xl p-6 border border-emerald-100 hidden lg:block sticky top-[480px]">
-                <div className="flex items-center gap-1 mb-3">
-                  {[1,2,3,4,5].map(i => <Star key={i} className="h-4 w-4 text-emerald-500 fill-emerald-500" />)}
-                </div>
-                <p className="text-sm font-medium text-emerald-900 leading-relaxed italic mb-4">
-                  "Bryan is a wizard. My truck looked like it had been through a mud bog and an inside tornado. It looks better than when I bought it off the lot."
-                </p>
-                <div className="flex items-center gap-3">
-                   <div className="w-8 h-8 bg-emerald-200 rounded-full flex items-center justify-center font-black text-emerald-800 text-xs text-center">M</div>
-                   <p className="text-[10px] font-black uppercase tracking-widest text-emerald-700">Mark T. (Bellevue)</p>
-                </div>
-              </div>
             </div>
           )}
         </div>
@@ -1085,4 +1135,3 @@ export default function Booking() {
     </div>
   );
 }
-

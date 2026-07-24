@@ -1,33 +1,110 @@
 {
   "hosting": {
     "public": "dist",
+    "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [
+      {
+        "source": "/home",
+        "destination": "/",
+        "type": 301
+      },
+      {
+        "source": "/services-1",
+        "destination": "/services",
+        "type": 301
+      },
+      {
+        "source": "/s/appointments",
+        "destination": "/book",
+        "type": 301
+      },
+      {
+        "source": "/appointments",
+        "destination": "/book",
+        "type": 301
+      },
+      {
+        "source": "/booking",
+        "destination": "/book",
+        "type": 301
+      },
+      {
+        "source": "/exterior-wash-and-wax",
+        "destination": "/services/exterior-enhancement",
+        "type": 301
+      },
+      {
+        "source": "/s/gift-cards",
+        "destination": "/gift-cards",
+        "type": 301
+      },
+      {
+        "source": "/tractor-ceramic-coating",
+        "destination": "/services/tractor-detailing-service",
+        "type": 301
+      },
+      {
+        "source": "/services/ceramic-coating",
+        "destination": "/services/category/ceramic-coating",
+        "type": 301
+      },
+      {
+        "source": "/services/interior-detailing",
+        "destination": "/services/category/interior-detailing",
+        "type": 301
+      },
+      {
+        "source": "/services/full-detail",
+        "destination": "/services/category/full-detailing",
+        "type": 301
+      },
+      {
+        "source": "/services/paint-correction",
+        "destination": "/services/category/paint-correction",
+        "type": 301
+      },
+      {
+        "source": "/services/exterior-only",
+        "destination": "/services/exterior-enhancement",
+        "type": 301
+      },
+      {
+        "source": "/services/full-detailing",
+        "destination": "/services/category/full-detailing",
+        "type": 301
+      },
+      {
+        "source": "/services/interior-only",
+        "destination": "/services/interior-detail",
+        "type": 301
+      },
+      {
+        "source": "/services/maintenance",
+        "destination": "/services/maintenance-detail",
+        "type": 301
+      },
+      {
+        "source": "/product/paint-correction/DTJ56SKDJJZLKX6VFWEHTTSQ",
+        "destination": "/services/category/paint-correction",
+        "type": 301
+      },
+      {
+        "source": "/product/exterior-protection/ZTFV36FT57EJXI3H2HXLH4HU",
+        "destination": "/services/category/exterior-detailing",
+        "type": 301
+      },
+      {
+        "source": "/shop/rv-detailing-services/DA32PNIIISVJWK7D5IUDZ4JW",
+        "destination": "/services/category/rv-boat-detailing",
+        "type": 301
+      }
+    ],
     "rewrites": [
-      {
-        "source": "/api/**",
-        "run": {
-          "serviceId": "showroom",
-          "region": "us-central1"
-        }
-      },
-      {
-        "source": "/robots.txt",
-        "run": {
-          "serviceId": "showroom",
-          "region": "us-central1"
-        }
-      },
-      {
-        "source": "/sitemap.xml",
-        "run": {
-          "serviceId": "showroom",
-          "region": "us-central1"
-        }
-      },
       {
         "source": "**",
         "destination": "/index.html"
@@ -39,7 +116,32 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=31536000"
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=(), microphone=(), geolocation=()"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://bryans-detailing-api.bryansmobiledetailing.workers.dev https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.google-analytics.com https://analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://api.open-meteo.com https://*.squareup.com https://*.squarecdn.com; frame-src https://www.google.com https://www.googletagmanager.com https://*.squareup.com https://*.squarecdn.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
           }
         ]
       }

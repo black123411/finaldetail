@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
 import { CheckCircle2, ArrowLeft, Calendar, ShieldCheck, Sparkles, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { SERVICES, CATEGORIES } from '@/shared/data/services';
@@ -28,10 +27,6 @@ export default function CategoryDetail() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>{category.seo?.title || `${category.name} in Bellevue & Omaha | Auto Detailing Services`}</title>
-        <meta name="description" content={category.seo?.description || `${category.description} Professional detailing serving Bellevue, Omaha, Papillion, and La Vista.`} />
-      </Helmet>
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -72,7 +67,7 @@ export default function CategoryDetail() {
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <Sparkles className="h-5 w-5 text-emerald-400" />
-                Technical Restoration
+                Service-Specific Cleaning
               </div>
             </div>
           </motion.div>
@@ -206,8 +201,8 @@ export default function CategoryDetail() {
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-zinc-100">
                 <ShieldCheck className="h-6 w-6 text-zinc-900" />
               </div>
-              <h4 className="font-bold text-zinc-900">Insured & Certified</h4>
-              <p className="text-xs text-zinc-500">10+ Years Exp.</p>
+              <h4 className="font-bold text-zinc-900">Owner-Operated</h4>
+              <p className="text-xs text-zinc-500">Direct quality control</p>
             </div>
             <div className="text-center space-y-2">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-zinc-100">

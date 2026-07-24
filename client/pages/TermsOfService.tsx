@@ -1,15 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
 import { Shield, FileText, Scale, AlertCircle } from 'lucide-react';
 
 export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-zinc-50 pt-32 pb-24 font-sans">
-      <Helmet>
-        <title>Terms of Service | Bryan's Showroom Quality Detailing</title>
-        <meta name="description" content="Read the terms of service and operating policies for Bryan's Showroom Quality Detailing, including deposit, cancellation, and weather policies." />
-      </Helmet>
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -34,7 +29,7 @@ export default function TermsOfService() {
                 1. Service Agreement
               </h2>
               <p className="text-zinc-600 font-medium">
-                By booking a service with Bryan's Showroom Quality Detailing, you agree to my standard operating procedures. Please ensure all personal belongings are removed from the vehicle prior to your appointment time.
+                By booking a service with Bryan's Showroom Quality Mobile Detailing, you agree to my standard operating procedures. Please ensure all personal belongings are removed from the vehicle prior to your appointment time.
               </p>
             </section>
 
@@ -69,7 +64,7 @@ export default function TermsOfService() {
                 4. Liability & Inspection
               </h2>
               <p className="text-zinc-600 font-medium">
-                I perform a pre-service inspection of each vehicle. Any pre-existing damage (mechanical or cosmetic) will be documented. Bryan's Showroom Quality Detailing is not responsible for damage resulting from pre-existing conditions, such as oxidized clear coat failure, loose trim pieces, or electrical issues unrelated to the detailing process.
+                I perform a pre-service inspection of each vehicle. Any pre-existing damage (mechanical or cosmetic) will be documented. Bryan's Showroom Quality Mobile Detailing is not responsible for damage resulting from pre-existing conditions, such as oxidized clear coat failure, loose trim pieces, or electrical issues unrelated to the detailing process.
               </p>
             </section>
 

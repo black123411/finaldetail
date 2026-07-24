@@ -1,4 +1,4 @@
-import { getSquareHeaders } from "./config";
+import { ADMIN_SESSION_KEY } from './apiBase';
 
 class ApiError extends Error {
   status: number;
@@ -16,9 +16,13 @@ async function fetchWrapper<T>(url: string, options: RequestInit = {}): Promise<
   
   // Merge default headers with custom options
   const headers: any = {
-    ...getSquareHeaders(),
     ...options.headers,
   };
+
+  const adminToken = sessionStorage.getItem(ADMIN_SESSION_KEY);
+  if (adminToken && !headers.Authorization) {
+    headers.Authorization = `Bearer ${adminToken}`;
+  }
 
   if (!isFormData) {
     headers["Content-Type"] = "application/json";

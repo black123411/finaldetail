@@ -72,24 +72,10 @@ export const SERVICES: ServiceDetail[] = [
   },
 
   // Ceramic Coating
-  {
-    id: "ceramic-3yr",
-    name: "3-Year Ceramic Coating",
-    description: "Professional-grade ceramic protection with incredible hydrophobic properties.",
-    priceMin: 800,
-    priceMax: 1000,
-    squareId: "ceramic-3y",
-    category: "Ceramic"
-  },
-  {
-    id: "ceramic-5yr",
-    name: "5-Year Ceramic Coating",
-    description: "Long-term protection with self-cleaning properties and intensified gloss.",
-    priceMin: 1100,
-    priceMax: 1300,
-    squareId: "ceramic-5y",
-    category: "Ceramic"
-  },
+  { id: "system-x-crystal-plus", name: "System X Crystal+ Essential", description: "Certified entry System X protection with a 2-year warranty.", priceMin: 699, priceMax: 999, squareId: "system-x-crystal-plus", category: "Ceramic" },
+  { id: "system-x-pro-plus", name: "System X Pro+ Signature", description: "Paint enhancement, Pro+, and Glass+ with up to 6 years of protection.", priceMin: 1099, priceMax: 1549, squareId: "system-x-pro-plus", category: "Ceramic", popular: true },
+  { id: "system-x-max-g-plus", name: "System X MAX G+ Ultimate", description: "Lifetime-warranty eligible coating with correction, Wheel+, and Glass+.", priceMin: 1599, priceMax: 2099, squareId: "system-x-max-g-plus", category: "Ceramic" },
+  { id: "system-x-phantom-2k", name: "System X Phantom 2K Bespoke", description: "Flagship two-part coating with a vehicle-specific correction plan.", priceMin: 1999, priceMax: 2599, squareId: "system-x-phantom-2k", category: "Ceramic" },
 
   // Packages
   {
@@ -110,15 +96,6 @@ export const SERVICES: ServiceDetail[] = [
     squareId: "showroom-package",
     category: "Package",
     popular: true
-  },
-  {
-    id: "pkg-protection",
-    name: "Ultimate Protection Package",
-    description: "Correction plus Ceramic. The ultimate way to preserve your investment.",
-    priceMin: 1200,
-    priceMax: 1500,
-    squareId: "protection-package",
-    category: "Package"
   },
 
   // Maintenance

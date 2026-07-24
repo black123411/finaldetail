@@ -63,27 +63,6 @@ export default function BookingCalendar({ onSelect, selectedDate, selectedTime, 
     return slots.filter(slot => isSameDay(parseISO(slot.startAt), day));
   };
 
-  const getUrgencyMessage = () => {
-    const today = new Date().getDay(); // 0 (Sun) to 6 (Sat)
-    let nextAvailable = "Tomorrow at 8:00 AM";
-    let scarcity = "Only 3 spots left this week";
-
-    if (today >= 5 || today === 0) { // Fri, Sat, Sun
-      nextAvailable = "Monday Morning at 8:00 AM";
-      scarcity = "Weekend fully booked. 2 slots left for Monday.";
-    } else if (today >= 3) { // Wed, Thu
-      nextAvailable = "Friday Afternoon at 1:00 PM";
-      scarcity = "Mid-week rush: only 4 openings remaining.";
-    } else { // Mon, Tue
-      nextAvailable = "Wednesday Morning at 9:00 AM";
-      scarcity = "Early week filling fast. 5 spots left.";
-    }
-    
-    return { nextAvailable, scarcity };
-  };
-
-  const { nextAvailable, scarcity } = getUrgencyMessage();
-
   return (
     <div className="space-y-6">
       <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
@@ -92,20 +71,20 @@ export default function BookingCalendar({ onSelect, selectedDate, selectedTime, 
             <Clock className="h-7 w-7" />
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 mb-1 italic">Real-Time Availability</p>
-            <p className="text-lg font-black text-zinc-900 tracking-tight leading-none">{nextAvailable}</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 mb-1 italic">Square Availability</p>
+            <p className="text-lg font-black text-zinc-900 tracking-tight leading-none">Choose an available appointment</p>
           </div>
         </div>
         <div className="text-left sm:text-right w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-emerald-100/50">
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 bg-white px-3 py-1.5 rounded-full border border-emerald-200 inline-block rotate-[-2deg]">
-            High Demand
+            Live Schedule
           </p>
           <p className="text-xs font-bold text-zinc-500 mt-3 flex items-center sm:justify-end gap-2">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            {scarcity}
+            Times below come directly from the booking calendar
           </p>
         </div>
       </div>

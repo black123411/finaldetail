@@ -1,626 +1,345 @@
-import React, { useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
-import { Helmet } from "react-helmet-async";
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import {
-  CheckCircle2,
-  ArrowLeft,
-  Calendar,
-  ShieldCheck,
-  Sparkles,
-  Clock,
-  MapPin,
-  ChevronRight,
-  ChevronDown,
-  ArrowRight,
-  Car,
-  Info,
   AlertTriangle,
-  Lightbulb,
-  Plus,
-  ArrowUpRight,
-} from "lucide-react";
-import { Button } from "../components/ui/button";
-import {
-  SERVICES,
-  CATEGORIES,
-  VEHICLE_SIZES,
-  SPECIALTY_SIZES,
-  ADD_ONS,
-  type Service,
-} from '@/shared/data/services';
-import { BOOKING_LINK } from "../lib/constants";
-import BeforeAfterSlider from "../components/BeforeAfterSlider";
-import { BEFORE_AFTERS, GALLERY_IMAGES } from "@/shared/data/photos";
+  ArrowLeft,
+  ArrowRight,
+  Calendar,
+  Check,
+  ChevronDown,
+  CircleDollarSign,
+  Clock,
+  Info,
+  MapPin,
+  MessageSquare,
+  ShieldCheck,
+} from 'lucide-react';
+import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, type Service } from '@/shared/data/services';
+import { SERVICE_PAGE_CONTENT } from '@/shared/data/servicePageContent';
+import { BEFORE_AFTERS } from '@/shared/data/photos';
+import BeforeAfterSlider from '../components/BeforeAfterSlider';
+import { Button } from '../components/ui/button';
+
+const PROOF_BY_SERVICE: Record<string, number> = {
+  'interior-detail': 1,
+  'interior-reset': 2,
+  'full-detail-package': 1,
+  'showroom-package': 2,
+  'pre-sale-detail': 3,
+  'paint-enhancement-polish': 6,
+  'paint-correction-l1': 6,
+  'paint-correction-l2': 8,
+  'system-x-crystal-plus': 8,
+  'system-x-pro-plus': 8,
+  'system-x-max-g-plus': 8,
+  'system-x-phantom-2k': 8,
+};
+
+function getStartingPrice(service: Service) {
+  const price = service.price.car || service.price.suv || service.price.rv || Object.values(service.price)[0];
+  if (!price) return 'Custom quote';
+  return service.pricingType === 'variable' ? `$${price}/ft` : `$${price}`;
+}
+
+function getDuration(service: Service) {
+  if (typeof service.duration === 'string') return service.duration;
+  return service.duration.car || service.duration.rv || Object.values(service.duration)[0];
+}
+
+function getPriceRows(service: Service) {
+  const sizes = service.isSpecialty ? SPECIALTY_SIZES : VEHICLE_SIZES;
+  return sizes
+    .map((size) => ({ size, price: service.price[size.id] }))
+    .filter((row) => row.price !== undefined);
+}
+
+function getServiceAvailability(service: Service) {
+  if (service.id === 'ppf-inquiry') return 'Custom consultation required';
+  if (service.isSpecialty) return 'Mobile service by quote';
+  if (service.categoryId === 'paint-correction' || service.categoryId === 'protection') {
+    return 'Bellevue drop-off recommended';
+  }
+  return 'Mobile or Bellevue drop-off';
+}
 
 export default function ServiceDetail() {
   const { serviceId } = useParams<{ serviceId: string }>();
-  const service = SERVICES.find((s) => s.id === serviceId);
-  const category = service
-    ? CATEGORIES.find((c) => c.id === service.categoryId)
-    : null;
+  const service = SERVICES.find((item) => item.id === serviceId);
+  const category = service ? CATEGORIES.find((item) => item.id === service.categoryId) : undefined;
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  }, [service]);
-
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-
-  const allSizes = [...VEHICLE_SIZES, ...SPECIALTY_SIZES];
+  }, [serviceId]);
 
   if (!service || !category) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center bg-white p-12 rounded-[2.5rem] shadow-xl border border-zinc-100 max-w-md w-full">
-          <div className="w-20 h-20 bg-zinc-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
-            <AlertTriangle className="h-10 w-10 text-zinc-300" />
-          </div>
-          <h1 className="text-3xl font-black text-zinc-900 mb-4 tracking-tight">
-            Service Not Found
-          </h1>
-          <p className="text-zinc-500 mb-8 font-medium">
-            The service you're looking for might have been moved or renamed.
-          </p>
-          <Button
-            asChild
-            className="w-full h-14 rounded-2xl text-base font-black uppercase tracking-widest bg-zinc-900"
-          >
-            <Link to="/services">View All Services</Link>
+      <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
+        <div className="max-w-md text-center">
+          <AlertTriangle className="mx-auto h-10 w-10 text-zinc-400" />
+          <h1 className="mt-5 text-3xl font-black">Service not found</h1>
+          <p className="mt-3 text-zinc-600">This service may have been moved or renamed.</p>
+          <Button asChild className="mt-7 h-12 rounded-md bg-zinc-950 px-6">
+            <Link to="/services">View all services</Link>
           </Button>
         </div>
-      </div>
+      </main>
     );
   }
 
-  // Get suggested add-ons (first 3)
-  const suggestedAddOns = ADD_ONS.slice(0, 3);
-  const isInteriorService =
-    service.categoryId === "interior-only" ||
-    service.id?.includes("interior") ||
-    service.id === "odor-elimination";
-  const isFullOrMaintenance =
-    service.categoryId === "full-detailing" ||
-    service.categoryId === "maintenance" ||
-    service.id?.includes("full") ||
-    service.id?.includes("showroom") ||
-    service.id?.includes("maintenance") ||
-    service.id?.includes("pre-sale");
+  const guide = SERVICE_PAGE_CONTENT[service.id];
+  const proofId = PROOF_BY_SERVICE[service.id];
+  const visualProof = proofId ? BEFORE_AFTERS.find((item) => item.id === proofId) : undefined;
+  const relatedServices = (guide?.internalServiceIds || [])
+    .map((id) => SERVICES.find((item) => item.id === id))
+    .filter((item): item is Service => Boolean(item))
+    .slice(0, 3);
+  const priceRows = getPriceRows(service);
+  const faqItems = guide?.faq || [];
+  const isInquiryOnly = service.id === 'ppf-inquiry';
+  const primaryTarget = isInquiryOnly ? '/quote' : `/book?serviceId=${service.id}`;
+  const primaryLabel = isInquiryOnly ? 'Request a PPF quote' : 'Check availability';
+  const textMessage = encodeURIComponent(`Hi Bryan, I have a question about ${service.name}. Here are photos of my vehicle:`);
 
-  const isPaintService =
-    service.categoryId === "paint-correction" ||
-    service.id?.includes("paint") ||
-    service.id?.includes("polish") ||
-    service.id?.includes("ceramic");
-  const paintProofImages = GALLERY_IMAGES.filter(
-    (image) => image.category === "paint",
-  ).slice(0, 3);
-  const visualProof =
-    (isPaintService && BEFORE_AFTERS.find((item) => item.category === "paint")) ||
-    ((isInteriorService || isFullOrMaintenance) &&
-      BEFORE_AFTERS.find((item) => item.category === "interior")) ||
-    BEFORE_AFTERS[0];
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.name,
+    description: service.longDescription,
+    ...(service.image ? { image: `https://bryansdetailingomaha.com${service.image}` } : {}),
+    url: `https://bryansdetailingomaha.com/services/${service.id}`,
+    provider: {
+      '@type': 'AutomotiveBusiness',
+      name: "Bryan's Showroom Quality Mobile Detailing",
+      telephone: '+17123056313',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Bellevue',
+        addressRegion: 'NE',
+      },
+    },
+  };
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <main className="min-h-screen bg-white pb-20 text-zinc-950 md:pb-0">
       <Helmet>
-        <title>{service.seo.title}</title>
-        <meta name="description" content={service.seo.description} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": service.name,
-            "description": service.longDescription,
-            "provider": {
-              "@type": "AutoBodyShop",
-              "name": "Bryan's Showroom Quality Detailing",
-              "image": "/20211009_025807-COLLAGE.jpg"
-            },
-            "url": `https://bryansdetailing.com/services/${service.id}`
-          })}
-        </script>
-        {service.faqs && service.faqs.length > 0 && (
+        {service.image && <meta property="og:image" content={`https://bryansdetailingomaha.com${service.image}`} />}
+        <script type="application/ld+json">{JSON.stringify(schema)}</script>
+        {faqItems.length > 0 && (
           <script type="application/ld+json">
             {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": service.faqs.map(faq => ({
-                "@type": "Question",
-                "name": faq.question,
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": faq.answer
-                }
-              }))
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: faqItems.map((item) => ({
+                '@type': 'Question',
+                name: item.question,
+                acceptedAnswer: { '@type': 'Answer', text: item.answer },
+              })),
             })}
           </script>
         )}
       </Helmet>
-      
-      {/* Dynamic Header */}
-      <div className="bg-white border-b border-zinc-200">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.2em] text-zinc-400">
-            <Link
-              to="/services"
-              className="hover:text-zinc-900 transition-colors"
-            >
-              Services
-            </Link>
-            <ChevronRight className="h-3 w-3" />
-            <Link
-              to={`/services/category/${category.slug}`}
-              className="hover:text-zinc-900 transition-colors"
-            >
-              {category.name}
-            </Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-zinc-900">
-              {service.name.split(" (")[0].split(" -")[0]}
-            </span>
-          </div>
-        </div>
-      </div>
 
-      {/* Hero Section */}
-      <section className="relative py-24 lg:py-32 overflow-hidden bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="space-y-8"
-            >
-              <div className="space-y-4">
-                {service.badge && (
-                  <span
-                    className={`inline-block px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase ${
-                      ["Most Popular", "Best Value", "Popular Choice"].includes(service.badge)
-                        ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
-                        : service.badge === "Top Choice" || service.badge === "Deep Restoration"
-                          ? "bg-amber-400 text-black shadow-lg shadow-amber-400/20"
-                          : "bg-zinc-100 text-zinc-800 border border-zinc-200"
-                    }`}
-                  >
-                    {service.badge}
-                  </span>
-                )}
-                <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.9]">
-                  {service.name}
-                </h1>
-                <p className="text-xl text-zinc-500 font-medium leading-relaxed max-w-xl">
-                  {service.longDescription}
-                </p>
+      <section className="relative min-h-[620px] overflow-hidden bg-zinc-950 text-white">
+        {service.image && (
+          <img
+            src={service.image}
+            alt={`${service.name} in Bellevue and Omaha`}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/20" />
+        <div className="container relative mx-auto flex min-h-[620px] items-end px-4 pb-14 pt-32 md:pb-20">
+          <div className="max-w-3xl">
+            <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-200">
+              <Link to="/services" className="inline-flex items-center gap-2 hover:text-white">
+                <ArrowLeft className="h-4 w-4" /> All services
+              </Link>
+              <span className="text-zinc-600">/</span>
+              <Link to={`/services/category/${category.slug}`} className="hover:text-white">{category.name}</Link>
+            </div>
+            {service.badge && (
+              <p className="mt-7 inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-300">
+                {service.badge}
+              </p>
+            )}
+            <h1 className="mt-6 text-5xl font-black leading-[0.95] md:text-7xl">{service.name}</h1>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-200 md:text-xl">{service.shortDescription}</p>
+            <div className="mt-8 grid max-w-3xl gap-3 sm:grid-cols-3">
+              <div className="border-l-2 border-emerald-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Typical Time</p>
+                <p className="mt-1 font-bold text-white">{getDuration(service)}</p>
               </div>
-
-              <div className="flex flex-wrap gap-8 py-4">
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">
-                    Duration
-                  </span>
-                  <div className="flex items-center gap-3 text-zinc-900 font-black">
-                    <div className="w-8 h-8 bg-zinc-50 rounded-xl flex items-center justify-center border border-zinc-100">
-                      <Clock className="h-4 w-4" />
-                    </div>
-                    {typeof service.duration === "string"
-                      ? service.duration
-                      : `${service.duration.car || service.duration.rv || Object.values(service.duration)[0]} (varies)`}
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2">
-                    Standards
-                  </span>
-                  <div className="flex items-center gap-3 text-zinc-900 font-black">
-                    <div className="w-8 h-8 bg-zinc-50 rounded-xl flex items-center justify-center border border-zinc-100">
-                      <ShieldCheck className="h-4 w-4 text-emerald-500" />
-                    </div>
-                    Showroom Quality
-                  </div>
-                </div>
+              <div className="border-l-2 border-emerald-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Pricing</p>
+                <p className="mt-1 font-bold text-white">{getStartingPrice(service) === 'Custom quote' ? 'Custom quote' : `Starts at ${getStartingPrice(service)}`}</p>
               </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button
-                  size="lg"
-                  className="h-16 px-12 text-lg font-black uppercase tracking-widest rounded-2xl bg-zinc-900 text-white shadow-xl shadow-zinc-200 hover:scale-[1.02] active:scale-[0.98] transition-all"
-                  asChild
-                >
-                  <Link
-                    to={`/book?serviceId=${service.id}`}
-                    className="flex items-center gap-3"
-                  >
-                    <Calendar className="h-5 w-5" />
-                    Configure & Book
-                  </Link>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-16 px-12 text-lg font-black uppercase tracking-widest rounded-2xl border-zinc-200 hover:bg-zinc-50 transition-all font-bold"
-                  asChild
-                >
-                  <Link to="/quote">Custom Quote</Link>
-                </Button>
+              <div className="border-l-2 border-emerald-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
+                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Service Option</p>
+                <p className="mt-1 font-bold text-white">{getServiceAvailability(service)}</p>
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="relative"
-            >
-              <div className="aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl relative z-10 border-[12px] border-white group">
-                <img
-                  src={service.image || category.image}
-                  alt={service.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-10">
-                   <p className="text-white font-bold tracking-tight italic">Professional {service.name} in Bellevue, NE.</p>
-                </div>
-              </div>
-              {/* Abstract decorative elements */}
-              <div className="absolute -top-12 -right-12 w-64 h-64 bg-emerald-100/50 rounded-full filter blur-3xl opacity-60 mix-blend-multiply" />
-              <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-zinc-200/50 rounded-full filter blur-3xl opacity-60 mix-blend-multiply" />
-            </motion.div>
+            </div>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Link
+                to={primaryTarget}
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-emerald-500 px-7 font-black text-zinc-950 hover:bg-emerald-400"
+              >
+                <Calendar className="h-5 w-5" /> {primaryLabel}
+              </Link>
+              <a
+                href={`sms:+17123056313?body=${textMessage}`}
+                className="inline-flex h-14 items-center justify-center rounded-md border border-white/40 bg-black/20 px-7 font-bold text-white hover:bg-white hover:text-zinc-950"
+              >
+                <MessageSquare className="mr-2 h-5 w-5" /> Text photos to Bryan
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Visual Proof Section */}
-      <section className="py-24 bg-zinc-900 overflow-hidden">
-        <div className="container mx-auto px-4">
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-              <div className="space-y-8">
-                 <div className="space-y-4">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Visual Results</span>
-                    <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white leading-none">The <span className="italic text-zinc-500 font-normal">Showroom</span> Standard.</h2>
-                 </div>
-                 <p className="text-zinc-400 text-lg font-medium leading-relaxed max-w-md">
-                    No magic tricks. Just technical cleaning, proper machine polishing, and industrial-grade protection. Slide to see the difference for yourself.
-                 </p>
-                 <div className="grid grid-cols-2 gap-8 pt-8">
-                    <div className="space-y-2">
-                       <p className="text-3xl font-black text-white tracking-tighter">100%</p>
-                       <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Satisfaction Rate</p>
-                    </div>
-                    <div className="space-y-2">
-                       <p className="text-3xl font-black text-white tracking-tighter">5.0</p>
-                       <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Google Rating</p>
-                    </div>
-                 </div>
-              </div>
-              <div className="relative">
-                 <BeforeAfterSlider
-                    beforeImage={visualProof.before}
-                    afterImage={visualProof.after}
-                 />
-                 <div className="absolute -bottom-6 -right-6 bg-emerald-500 text-white p-6 rounded-3xl shadow-xl shadow-emerald-500/20 z-20">
-                    <Sparkles className="h-6 w-6" />
-                 </div>
-              </div>
-           </div>
+      <section className="border-b border-zinc-200 bg-zinc-950 text-white">
+        <div className="container mx-auto grid gap-px bg-zinc-800 md:grid-cols-3">
+          <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
+            <ShieldCheck className="h-6 w-6 shrink-0 text-emerald-400" />
+            <div><p className="font-black">Owner-operated</p><p className="mt-1 text-sm text-zinc-400">Bryan handles the appointment and quality check.</p></div>
+          </div>
+          <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
+            <CircleDollarSign className="h-6 w-6 shrink-0 text-emerald-400" />
+            <div><p className="font-black">Condition-based pricing</p><p className="mt-1 text-sm text-zinc-400">Additional work is explained before it is added.</p></div>
+          </div>
+          <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
+            <MapPin className="h-6 w-6 shrink-0 text-emerald-400" />
+            <div><p className="font-black">Omaha metro service</p><p className="mt-1 text-sm text-zinc-400">Mobile options plus Bellevue drop-off.</p></div>
+          </div>
         </div>
       </section>
 
-      {isPaintService && (
-        <section className="py-24 bg-white border-b border-zinc-100">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-14 lg:gap-20 items-start">
-              <div className="space-y-7 lg:sticky lg:top-28">
-                <div className="space-y-4">
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600">
-                    Paint Correction Proof
-                  </span>
-                  <h2 className="text-4xl md:text-5xl font-black tracking-tight text-zinc-900 leading-none">
-                    Real gloss from Bryan's Google photos.
-                  </h2>
-                </div>
-                <p className="text-lg text-zinc-500 font-medium leading-relaxed">
-                  Paint correction is all about clarity under light. These shots
-                  show the kind of swirl removal, depth, and reflection clients
-                  are booking for across Bellevue and Omaha.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {[
-                    "Paint depth checked before polishing",
-                    "Machine correction, not filler glaze",
-                    "100% Satisfaction Guarantee",
-                    "Best paired with ceramic protection",
-                  ].map((point) => (
-                    <div
-                      key={point}
-                      className="flex items-center gap-3 rounded-2xl bg-zinc-50 border border-zinc-100 px-4 py-3"
-                    >
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
-                      <span className="text-xs font-black uppercase tracking-wider text-zinc-700">
-                        {point}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <Button
-                  size="lg"
-                  className="h-14 px-8 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black uppercase tracking-widest text-xs"
-                  asChild
-                >
-                  <Link
-                    to={`/book?serviceId=${service.id}`}
-                    className="flex items-center gap-2"
-                  >
-                    Book Paint Assessment
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {paintProofImages.map((image, index) => (
-                  <motion.figure
-                    key={image.id}
-                    initial={{ opacity: 0, y: 18 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ delay: index * 0.08 }}
-                    className={`group overflow-hidden rounded-[2rem] bg-zinc-950 shadow-xl shadow-zinc-200/60 ${
-                      index === 0 ? "md:col-span-2" : ""
-                    }`}
-                  >
-                    <div
-                      className={`relative overflow-hidden ${
-                        index === 0 ? "aspect-[16/9]" : "aspect-[4/3]"
-                      }`}
-                    >
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6">
-                        <figcaption className="text-sm font-black uppercase tracking-widest text-white">
-                          {image.label}
-                        </figcaption>
-                      </div>
-                    </div>
-                  </motion.figure>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Pricing & Selection Section */}
-      <section className="py-24 bg-zinc-50">
+      <section className="border-b border-zinc-200 py-20 md:py-28">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-16">
-            <div className="lg:w-2/3 space-y-20">
-              <div className="space-y-8">
-                <div className="flex items-center gap-4">
-                  <h2 className="text-3xl font-black tracking-tight text-zinc-900 italic uppercase">Pricing Matrix</h2>
-                  <div className="h-px flex-grow bg-zinc-200" />
+          <div className="mb-14 grid gap-6 border-y border-zinc-200 py-8 md:grid-cols-[220px_1fr] md:items-start">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">Best fit for</p>
+            <p className="text-xl font-bold leading-relaxed text-zinc-800">{service.bestFor || guide?.headline || service.shortDescription}</p>
+          </div>
+          <div className="grid gap-14 lg:grid-cols-[1.25fr_0.75fr]">
+            <div>
+            <h2 className="text-4xl font-black tracking-tight md:text-5xl">{guide?.headline || service.name}</h2>
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-600">{guide?.intro || service.longDescription}</p>
+            <div className="mt-12 grid gap-10 md:grid-cols-3">
+              {(guide?.sections || []).map((section) => (
+                <div key={section.title}>
+                  <h3 className="text-xl font-black tracking-tight">{section.title}</h3>
+                  <p className="mt-3 leading-relaxed text-zinc-600">{section.body}</p>
                 </div>
-
-                <div className="overflow-hidden rounded-[2.5rem] border border-zinc-200 bg-white shadow-xl shadow-zinc-200/50 overflow-x-auto">
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="bg-zinc-50 border-b border-zinc-100">
-                        <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-zinc-400">
-                          Vehicle Size
-                        </th>
-                        <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-zinc-400">
-                          Est. Duration
-                        </th>
-                        <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-zinc-400 text-right">
-                          Base Investment
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-50">
-                      {Object.entries(service.price).map(([slug, price]) => {
-                        const sizeInfo = allSizes.find((s) => s.id === slug);
-                        if (!sizeInfo) return null;
-
-                        return (
-                          <tr
-                            key={slug}
-                            className="group hover:bg-zinc-50/50 transition-all duration-300"
-                          >
-                            <td className="px-8 py-6">
-                              <div className="flex items-center gap-4">
-                                <span className="text-3xl grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all leading-none duration-500">
-                                  {sizeInfo.icon}
-                                </span>
-                                <span className="text-base font-black text-zinc-900">
-                                  {sizeInfo.name}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="px-8 py-6">
-                              <div className="flex items-center gap-3 text-sm font-bold text-zinc-500">
-                                <Clock className="h-4 w-4 text-zinc-300" />
-                                {typeof service.duration === "string" 
-                                  ? service.duration 
-                                  : service.duration[slug] || 'Custom'}
-                              </div>
-                            </td>
-                            <td className="px-8 py-6 text-right">
-                              <span className="text-2xl font-black text-zinc-900">
-                                ${price}{service.pricingType === 'variable' && <span className="text-xs font-medium text-zinc-400">/ft</span>}
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                  <div className="bg-zinc-50 p-6 border-t border-zinc-100 flex items-center justify-between">
-                     <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
-                        <Info className="h-4 w-4" />
-                        Final quote provided upon on-site inspection
-                     </p>
-                     <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Secure Booking Active</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-12">
-                <div className="flex items-center gap-4">
-                  <h2 className="text-3xl font-black tracking-tight text-zinc-900 italic uppercase">The Process</h2>
-                  <div className="h-px flex-grow bg-zinc-200" />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-                  {service.features.map((feature, i) => (
-                    <motion.div 
-                      key={i} 
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                      className="flex gap-4 group"
-                    >
-                      <div className="w-8 h-8 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 group-hover:border-emerald-500 transition-all duration-300">
-                        <CheckCircle2 className="h-4 w-4 text-emerald-600 group-hover:text-white transition-colors" />
-                      </div>
-                      <span className="text-base font-bold text-zinc-700 leading-tight group-hover:text-zinc-950 transition-colors pt-1">
-                        {feature}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-
-              {/* suggested add-ons (Cross-sell) */}
-              <div className="space-y-12 pt-12 border-t border-zinc-200">
-                 <div className="flex items-center gap-4">
-                    <h2 className="text-3xl font-black tracking-tight text-zinc-900 italic uppercase">Recommended Upgrades</h2>
-                    <div className="h-px flex-grow bg-zinc-200" />
-                 </div>
-                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {suggestedAddOns.map((addon) => (
-                       <div key={addon.id} className="p-6 rounded-[2rem] bg-white border border-zinc-100 shadow-sm hover:shadow-xl hover:translate-y-[-4px] transition-all duration-300 group">
-                          <div className="flex justify-between items-start mb-4">
-                             <div className="w-10 h-10 rounded-xl bg-zinc-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
-                                <Plus className="h-5 w-5 text-zinc-400 group-hover:text-emerald-500" />
-                             </div>
-                             <span className="text-xl font-black text-zinc-900">${addon.price}</span>
-                          </div>
-                          <h4 className="font-black text-zinc-900 mb-2 truncate">{addon.name}</h4>
-                          <p className="text-xs text-zinc-500 font-medium leading-relaxed mb-4 line-clamp-2">{addon.description}</p>
-                          <Link to="/book" className="text-[10px] font-black uppercase tracking-widest text-emerald-600 flex items-center gap-1 group-hover:gap-2 transition-all">
-                             Add in Booking
-                             <ArrowRight className="h-3 w-3" />
-                          </Link>
-                       </div>
-                    ))}
-                 </div>
-              </div>
+              ))}
+            </div>
             </div>
 
-            <aside className="lg:w-1/3 space-y-8">
-              <div className="bg-zinc-900 p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group sticky top-32">
-                <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-                   <ShieldCheck className="h-48 w-48" />
-                </div>
-                
-                <div className="flex items-center gap-3 mb-8 relative z-10">
-                  <ShieldCheck className="h-6 w-6 text-emerald-400" />
-                  <h3 className="text-xl font-black tracking-tight uppercase italic">
-                    The Promise
-                  </h3>
-                </div>
-
-                <div className="space-y-6 relative z-10">
-                  <div className="space-y-3">
-                    {[
-                      "Technical Decontamination Included",
-                      "pH-Neutral Chemical Selection",
-                      "Industrial Grade UV Protection",
-                      "100% Satisfaction Guarantee",
-                      "Fully Insured Professional Service"
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-4 text-xs font-bold text-zinc-300 bg-white/5 p-4 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.5)]" />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="pt-8 border-t border-white/10">
-                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-6 leading-relaxed">
-                      * Most standard condition vehicles fit these price points. Heavy dirt or specialty needs may require adjusted quotes.
-                    </p>
-                    <Button className="w-full h-14 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs" asChild>
-                       <Link to="/book" className="flex items-center gap-2">
-                          Start Reservation
-                          <ArrowUpRight className="h-4 w-4" />
-                       </Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              {service.bestFor && (
-                <div className="p-8 rounded-[2.5rem] bg-amber-50 border border-amber-100 shadow-sm">
-                   <p className="text-[10px] font-black uppercase tracking-widest text-amber-600 mb-4 flex items-center gap-2">
-                       <Sparkles className="h-3 w-3" />
-                       Who it's for
-                   </p>
-                   <p className="text-lg font-black italic tracking-tighter text-amber-900 leading-tight">
-                       {service.bestFor}
-                   </p>
-                </div>
-              )}
+            <aside className="border-l-4 border-emerald-500 bg-zinc-50 p-7 md:p-9">
+            <h2 className="text-2xl font-black">What is included</h2>
+            <ul className="mt-6 space-y-4">
+              {service.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-3 leading-relaxed text-zinc-700">
+                  <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-600" />
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
             </aside>
           </div>
         </div>
       </section>
 
-      {/* Service Specific FAQs */}
-      {service.faqs && service.faqs.length > 0 && (
-        <section className="py-24 bg-white border-t border-zinc-100">
-          <div className="container mx-auto px-4 max-w-3xl">
-            <div className="text-center mb-16 space-y-4">
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-none">
-                Frequently Asked <span className="italic text-zinc-400 font-normal">Questions</span>
-              </h2>
+      <section className="bg-zinc-50 py-20 md:py-28">
+        <div className="container mx-auto grid gap-14 px-4 lg:grid-cols-2">
+          <div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">Pricing by vehicle size</h2>
+            <div className="mt-7 divide-y divide-zinc-200 border-y border-zinc-200 bg-white">
+              {priceRows.map(({ size, price }) => (
+                <div key={size.id} className="flex items-center justify-between gap-6 px-5 py-4">
+                  <span className="font-bold text-zinc-700">{size.name}</span>
+                  <span className="text-lg font-black">
+                    {price ? `$${price}${service.pricingType === 'variable' ? '/ft' : ''}` : 'Custom quote'}
+                  </span>
+                </div>
+              ))}
             </div>
-            <div className="space-y-4">
-              {service.faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="bg-white border border-zinc-200 rounded-2xl overflow-hidden shadow-sm"
-                >
-                  <button
-                    onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                    className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
-                  >
-                    <span className="text-lg font-bold text-zinc-900 pr-8">{faq.question}</span>
-                    <ChevronDown
-                      className={`h-5 w-5 text-zinc-500 shrink-0 transition-transform duration-300 ${
-                        openFaqIndex === index ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </button>
+            <p className="mt-4 text-sm leading-relaxed text-zinc-500">
+              Final price depends on vehicle condition, selected add-ons, access, and any additional restoration work approved before the service begins.
+            </p>
+            <Link to={primaryTarget} className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-zinc-950 px-6 font-black text-white hover:bg-zinc-800">
+              {primaryLabel} <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
 
-                  <AnimatePresence>
-                    {openFaqIndex === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div className="p-6 pt-0 text-zinc-600 font-medium leading-relaxed border-t border-zinc-100 mt-2">
-                          {faq.answer}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+          <div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">{guide?.processTitle || 'How the service is completed'}</h2>
+            <ul className="mt-7 space-y-5">
+              {(guide?.process || []).map((item) => (
+                <li key={item} className="flex items-start gap-4 border-b border-zinc-200 pb-5">
+                  <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-emerald-600" />
+                  <span className="leading-relaxed text-zinc-700">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {(guide?.buyerNotes || []).length > 0 && (
+        <section className="border-b border-zinc-200 py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-8 md:grid-cols-[240px_1fr]">
+              <div>
+                <Info className="h-6 w-6 text-emerald-600" />
+                <h2 className="mt-3 text-2xl font-black">Before your appointment</h2>
+              </div>
+              <ul className="grid gap-4 md:grid-cols-3">
+                {guide.buyerNotes.map((note) => (
+                  <li key={note} className="border-l border-zinc-300 pl-5 leading-relaxed text-zinc-600">{note}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {visualProof && (
+        <section className="bg-zinc-950 py-20 text-white md:py-28">
+          <div className="container mx-auto grid items-center gap-12 px-4 lg:grid-cols-[0.8fr_1.2fr]">
+            <div>
+              <h2 className="text-4xl font-black tracking-tight md:text-5xl">Real results from this type of work</h2>
+              <p className="mt-5 text-lg leading-relaxed text-zinc-300">{visualProof.description}</p>
+              <Link to="/gallery" className="mt-7 inline-flex items-center gap-2 font-black text-emerald-400 hover:text-emerald-300">
+                View the full gallery <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="overflow-hidden rounded-lg border border-white/10">
+              <BeforeAfterSlider beforeImage={visualProof.before} afterImage={visualProof.after} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {faqItems.length > 0 && (
+        <section className="py-20 md:py-28">
+          <div className="container mx-auto grid gap-12 px-4 lg:grid-cols-[0.65fr_1.35fr]">
+            <div>
+              <h2 className="text-4xl font-black tracking-tight">Questions about {service.name}</h2>
+              <p className="mt-4 leading-relaxed text-zinc-600">Answers about condition, timing, mobile service, preparation, and expected results.</p>
+            </div>
+            <div className="divide-y divide-zinc-200 border-y border-zinc-200">
+              {faqItems.map((item, index) => (
+                <div key={item.question}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="flex w-full items-center justify-between gap-6 py-6 text-left"
+                  >
+                    <span className="text-lg font-black">{item.question}</span>
+                    <ChevronDown className={`h-5 w-5 shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
+                  </button>
+                  {openFaq === index && <p className="pb-6 pr-10 leading-relaxed text-zinc-600">{item.answer}</p>}
                 </div>
               ))}
             </div>
@@ -628,72 +347,48 @@ export default function ServiceDetail() {
         </section>
       )}
 
-      {/* Related Services */}
-      <section className="py-24 bg-white border-t border-zinc-100">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-16">
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-none">
-              Explore <span className="italic text-zinc-400 font-normal">Other</span> Packages
-            </h2>
-            <Button variant="ghost" asChild className="gap-2 font-bold uppercase tracking-widest text-xs">
-              <Link to="/services">
-                View Catalog <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {SERVICES.filter(
-              (s) => s.categoryId === service.categoryId && s.id !== service.id,
-            )
-              .slice(0, 3)
-              .map((relService) => (
-                <Link
-                  key={relService.id}
-                  to={`/services/${relService.id}`}
-                  className="group bg-white p-10 rounded-[2.5rem] border border-zinc-100 shadow-xl shadow-zinc-200/20 hover:shadow-2xl hover:translate-y-[-8px] transition-all duration-500 flex flex-col"
-                >
-                  <div className="flex justify-between items-start mb-6">
-                    <div>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-2 block">{category.name}</span>
-                        <h3 className="text-2xl font-black tracking-tighter text-zinc-900 group-hover:text-emerald-600 transition-colors">
-                        {relService.name.split(" (")[0].split(" -")[0]}
-                        </h3>
-                    </div>
-                    <div className="w-10 h-10 rounded-full bg-zinc-50 flex items-center justify-center group-hover:bg-zinc-900 group-hover:text-white transition-all duration-500">
-                        <ArrowRight className="h-5 w-5" />
-                    </div>
-                  </div>
-                  <p className="text-sm text-zinc-500 font-medium leading-relaxed mb-8 line-clamp-2">
-                    {relService.shortDescription}
-                  </p>
-                  <div className="mt-auto pt-8 border-t border-zinc-50 flex justify-between items-center">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">
-                      Starting at
-                    </span>
-                    <span className="text-2xl font-black text-zinc-900">
-                      $
-                      {relService.isSpecialty
-                        ? relService.price.rv
-                        : relService.price.car}
-                    </span>
+      {relatedServices.length > 0 && (
+        <section className="border-t border-zinc-200 bg-zinc-50 py-20 md:py-24">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <h2 className="text-3xl font-black tracking-tight md:text-4xl">Related detailing services</h2>
+                <p className="mt-3 text-zinc-600">Compare services that solve a similar problem or work well together.</p>
+              </div>
+              <Link to="/services" className="inline-flex items-center gap-2 font-black">All services <ArrowRight className="h-4 w-4" /></Link>
+            </div>
+            <div className="mt-9 grid gap-6 md:grid-cols-3">
+              {relatedServices.map((related) => (
+                <Link key={related.id} to={`/services/${related.id}`} className="group overflow-hidden rounded-lg border border-zinc-200 bg-white">
+                  {related.image ? (
+                    <img src={related.image} alt={related.name} className="aspect-[16/9] w-full object-cover" loading="lazy" />
+                  ) : (
+                    <div className="flex aspect-[16/9] items-end bg-zinc-900 p-5 font-black text-white">{related.name}</div>
+                  )}
+                  <div className="p-5">
+                    <h3 className="text-xl font-black group-hover:text-emerald-700">{related.name}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-600">{related.shortDescription}</p>
+                    {related.bestFor && <p className="mt-3 text-xs font-bold leading-relaxed text-zinc-500">Best for: {related.bestFor}</p>}
                   </div>
                 </Link>
               ))}
+            </div>
           </div>
+        </section>
+      )}
+
+      <section className="bg-emerald-500 py-16 text-zinc-950">
+        <div className="container mx-auto flex flex-col items-start justify-between gap-7 px-4 md:flex-row md:items-center">
+          <div>
+            <h2 className="text-3xl font-black tracking-tight md:text-4xl">{isInquiryOnly ? `Want a quote for ${service.name}?` : `Ready to book ${service.name}?`}</h2>
+            <p className="mt-3 max-w-2xl font-semibold">{isInquiryOnly ? 'Send vehicle details and the coverage areas you want protected.' : 'Choose your vehicle size, available add-ons, and appointment time online.'}</p>
+          </div>
+          <Link to={primaryTarget} className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-zinc-950 px-7 font-black text-white hover:bg-zinc-800">
+            {primaryLabel} <ArrowRight className="h-5 w-5" />
+          </Link>
         </div>
       </section>
 
-      {/* Sticky Bottom Booking Bar for Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-lg border-t border-zinc-200 z-50 lg:hidden flex items-center justify-between gap-4">
-         <div>
-            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Total Refresh</p>
-            <p className="text-xl font-black text-zinc-900">${service.price.car || Object.values(service.price)[0]}</p>
-         </div>
-         <Button className="h-12 px-8 rounded-xl font-black uppercase tracking-widest text-xs bg-zinc-900 text-white shrink-0" asChild>
-            <Link to={`/book?serviceId=${service.id}`}>Book Now</Link>
-         </Button>
-      </div>
-    </div>
+    </main>
   );
 }

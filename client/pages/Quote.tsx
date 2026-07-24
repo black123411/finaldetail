@@ -1,21 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Helmet } from 'react-helmet-async';
-import { Droplets, Zap, Shield, ChevronRight, Calendar, AlertCircle, Sparkles, Info, Plus, X, Loader2, CheckCircle2, Send, Camera } from 'lucide-react';
+import { Droplets, Zap, Shield, ChevronRight, Calendar, AlertCircle, Sparkles, Info, Loader2, CheckCircle2, Send, Camera } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Link } from 'react-router-dom';
 import { SERVICES, VEHICLE_SIZES, SPECIALTY_SIZES, ADD_ONS, type VehicleSize } from '@/shared/data/services';
-import { BOOKING_LINK } from '../lib/constants';
-import { db, handleFirestoreError, OperationType } from '../lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { QuoteAPI } from '../services/api';
+import { trackEvent } from '../lib/analytics';
 
 export default function Quote() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Core Quote State
   const [vehicleSize, setVehicleSize] = useState<VehicleSize | ''>('');
@@ -46,12 +41,6 @@ export default function Quote() {
     setRedFlags(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setSelectedFiles(prev => [...prev, ...Array.from(e.target.files!)]);
-    }
-  };
-
   const calculateEstimate = () => {
     if (!vehicleSize || selectedServices.length === 0) return { min: 0, max: 0, anchor: 0 };
     
@@ -77,43 +66,12 @@ export default function Quote() {
       if (addOn) addOnTotal += addOn.price;
     });
 
-    // Hidden Modifier Layer (Dynamic Margins)
-    let hiddenSurcharge = 0;
-    if (redFlags.petHair) hiddenSurcharge += 25; // Silent labor fee
-    if (redFlags.odor) hiddenSurcharge += 35; // Silent chemical fee
-    if (redFlags.biohazard) hiddenSurcharge += 75; // Handling fee
-
-    // Triggers for "Severe" indicators
-    if (condition === 'poor' || condition === 'fair') {
-        hiddenSurcharge += 50; // Complexity fee
-    }
-
-    // Expectation Modifier
-    let expectationMultiplier = 1;
-    if (expectation === 'perfection') expectationMultiplier = 1.15; // Higher target for precision
-    if (expectation === 'efficiency') expectationMultiplier = 0.95; // Lower target for quick turn
-
-    // Bad Customer Filter: If severe condition + cheapest package selected
-    const isBasicPackage = selectedServices.every(id => id.includes('basic') || id.includes('maintenance'));
-    if ((condition === 'poor' || condition === 'fair') && isBasicPackage) {
-        hiddenSurcharge += 40; // Steering them towards higher tier via pricing
-    }
-
-    // Condition Multipliers
-    const multipliers: Record<string, number> = {
-      excellent: 0.95,
-      good: 1.0,
-      fair: 1.15,
-      poor: 1.4,
-    };
-
-    const multiplier = multipliers[condition] || 1;
-    const subtotal = ((base * multiplier) + addOnTotal + hiddenSurcharge) * expectationMultiplier;
+    const subtotal = base + addOnTotal;
 
     return {
       min: Math.floor(subtotal),
-      max: Math.ceil(subtotal * 1.2), // Slightly wider range 20%
-      anchor: Math.round(subtotal * 1.08)
+      max: Math.ceil(subtotal * 1.2),
+      anchor: Math.round(subtotal * 1.1)
     };
   };
 
@@ -126,21 +84,6 @@ export default function Quote() {
     if (e) e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-
-    // Track analytics (Simulated tracking for Admin)
-    try {
-      await QuoteAPI.logFunnelStep({
-        step: 'quote_completion',
-        details: {
-          services: selectedServices,
-          condition,
-          expectation,
-          vehicleSize,
-          vehicleYear,
-          anchor
-        }
-      });
-    } catch (e) { /* silent fail for tracking */ }
 
     const formData = new FormData();
     formData.append('name', contactInfo.name);
@@ -155,40 +98,17 @@ export default function Quote() {
     formData.append('redFlags', JSON.stringify(redFlags));
     formData.append('estimatedRange', `${min}-${max}`);
 
-    selectedFiles.forEach(file => {
-      formData.append('photos', file);
-    });
-
     try {
       const data = await QuoteAPI.submitQuote(formData);
 
       if (data.success) {
-        // Save to Firestore as well for lead tracking
-        try {
-          await addDoc(collection(db, 'quotes'), {
-            name: contactInfo.name,
-            email: contactInfo.email,
-            phone: contactInfo.phone,
-            vehicle: {
-              size: vehicleSize,
-              year: vehicleYear,
-              condition: condition
-            },
-            services: selectedServices,
-            addons: selectedAddOns,
-            redFlags: redFlags,
-            estimate: {
-              min,
-              max,
-              anchor
-            },
-            status: 'new',
-            createdAt: serverTimestamp()
-          });
-        } catch (fsErr) {
-          console.error("Firestore Quote Backup Error:", fsErr);
-          // Don't fail the whole submission if Firestore fails, as email/server worked
-        }
+        trackEvent('generate_lead', {
+          form_name: 'quote',
+          selected_service_count: selectedServices.length,
+          vehicle_size: vehicleSize,
+          estimate: anchor
+        });
+
         setSubmitted(true);
       } else {
         throw new Error(data.error || 'Failed to submit quote request');
@@ -200,10 +120,7 @@ export default function Quote() {
     }
   };
 
-  const isHighTicket = selectedServices.some(id => id.includes('paint') || id.includes('ceramic'));
-
   if (submitted) {
-    const depositAmount = anchor > 300 ? Math.round(anchor * 0.35) : 50;
     return (
       <div className="min-h-screen bg-zinc-50 py-24 flex flex-col items-center justify-center">
         <motion.div 
@@ -220,48 +137,18 @@ export default function Quote() {
               <CheckCircle2 className="h-12 w-12" />
             </div>
 
-            {isHighTicket ? (
-                <div className="space-y-6">
-                    <h2 className="text-4xl md:text-5xl font-black text-white italic tracking-tighter leading-none mb-4">You've Qualified for a Premium Restoration.</h2>
-                    <p className="text-zinc-400 mb-8 text-lg leading-relaxed">
-                        Based on your requirements, this project requires a specialized multi-step process. A <strong className="text-white">${anchor}</strong> estimate has been prioritized for my review.
-                    </p>
-                    <div className="bg-zinc-800/50 p-6 rounded-2xl border border-zinc-700/50 text-left mb-10">
-                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 mb-4 italic">The Premium Standard</h4>
-                        <ul className="space-y-3">
-                            <li className="flex items-center gap-3 text-sm text-zinc-300">
-                                <Plus className="h-4 w-4 text-emerald-500" /> Multi-stage decontamination chemical treatment
-                            </li>
-                            <li className="flex items-center gap-3 text-sm text-zinc-300">
-                                <Plus className="h-4 w-4 text-emerald-500" /> Dedicated 4-8 hour labor window
-                            </li>
-                            <li className="flex items-center gap-3 text-sm text-zinc-300">
-                                <Plus className="h-4 w-4 text-emerald-500" /> Premium protection curing process
-                            </li>
-                        </ul>
-                    </div>
-                    <Button asChild className="w-full h-20 text-2xl font-black bg-emerald-500 text-zinc-950 shadow-2xl shadow-emerald-900 animate-pulse">
-                        <Link to="/book">
-                            Secure Consultation Path (${depositAmount})
-                        </Link>
-                    </Button>
-                </div>
-            ) : (
-                <>
-                    <h2 className="text-4xl font-black text-white italic tracking-tighter mb-4">Spot Secured!</h2>
-                    <p className="text-zinc-400 mb-8 leading-relaxed max-w-sm mx-auto">
-                        This looks like a <strong className="text-white">${min} - ${max}</strong> job. Your estimate is locked in. Let's get you on the schedule.
-                    </p>
-                    <div className="flex flex-col gap-3">
-                        <Button asChild className="w-full h-16 text-xl font-bold bg-white text-zinc-950 shadow-xl shadow-zinc-800/40">
-                        <Link to="/book">
-                            Reserve for ${depositAmount} Deposit
-                        </Link>
-                        </Button>
-                         <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-2">Applied toward your service total</p>
-                    </div>
-                </>
-            )}
+            <h2 className="text-4xl font-black text-white italic tracking-tighter mb-4">Quote Request Received</h2>
+            <p className="text-zinc-400 mb-8 leading-relaxed max-w-md mx-auto">
+              Your preliminary range is <strong className="text-white">${min} - ${max}</strong>. The request is saved in Square for Bryan to review and follow up with the recommended service and final price.
+            </p>
+            <Button asChild variant="outline" className="mb-4 h-14 w-full border-zinc-700 bg-transparent text-white hover:bg-zinc-800 hover:text-white">
+              <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%20just%20submitted%20a%20website%20quote.%20Here%20are%20photos%20of%20my%20vehicle%3A">
+                <Camera className="mr-2 h-5 w-5" /> Text Vehicle Photos
+              </a>
+            </Button>
+            <Button asChild className="w-full h-16 text-xl font-bold bg-white text-zinc-950 shadow-xl shadow-zinc-800/40">
+              <Link to="/book">View Online Availability</Link>
+            </Button>
 
             <Button variant="ghost" asChild className="text-zinc-500 hover:text-white mt-8">
               <Link to="/">Return to Home</Link>
@@ -274,10 +161,6 @@ export default function Quote() {
 
   return (
     <div className="min-h-screen bg-zinc-50 pt-32 pb-24 font-sans">
-      <Helmet>
-        <title>Get an Auto Detailing Quote | Bellevue & Omaha</title>
-        <meta name="description" content="Request a personalized estimate for professional auto detailing, paint correction, interior detailing, and ceramic coating in Bellevue and Omaha." />
-      </Helmet>
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
@@ -286,7 +169,7 @@ export default function Quote() {
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-[0.2em]">
                 <Sparkles className="h-3 w-3" />
-                <span>Smart Restoration Funnel 2.0</span>
+                <span>Personalized Detailing Quote</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-zinc-900">
                 Transparent <span className="text-zinc-400 italic">Results.</span>
@@ -296,7 +179,7 @@ export default function Quote() {
                       <div key={s} className="flex flex-col gap-2 flex-grow">
                           <div className={`h-1.5 rounded-full transition-all duration-500 ${step >= s ? 'bg-zinc-900' : 'bg-zinc-200'}`} />
                           <span className={`text-[8px] font-black uppercase tracking-widest ${step >= s ? 'text-zinc-900' : 'text-zinc-400'}`}>
-                              {s === 1 ? 'Contact' : s === 2 ? 'Vehicle' : s === 3 ? 'Services' : 'Review'}
+                              {s === 1 ? 'Vehicle' : s === 2 ? 'Services' : s === 3 ? 'Contact' : 'Review'}
                           </span>
                       </div>
                   ))}
@@ -305,7 +188,7 @@ export default function Quote() {
 
             <div className="bg-white rounded-[3rem] shadow-2xl border border-zinc-100 p-8 md:p-12 min-h-[500px] flex flex-col">
               <AnimatePresence mode="wait">
-                {step === 1 && (
+                {step === 3 && (
                     <motion.div
                         key="step1"
                         initial={{ opacity: 0, x: 20 }}
@@ -315,12 +198,13 @@ export default function Quote() {
                     >
                         <div className="space-y-4">
                             <h2 className="text-4xl font-black tracking-tighter italic">Who am I working with?</h2>
-                            <p className="text-zinc-500 font-medium">I'll send your priority estimate to these details. I respect your privacy (No spam, just detailing).</p>
+                            <p className="text-zinc-500 font-medium">Bryan will use these details only to follow up about your quote request.</p>
                         </div>
                         <div className="grid gap-4">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-2">Full Name</label>
+                                <label htmlFor="quote-full-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-2">Full Name</label>
                                 <input 
+                                    id="quote-full-name"
                                     type="text" 
                                     placeholder="e.g. John Wick"
                                     value={contactInfo.name}
@@ -330,8 +214,9 @@ export default function Quote() {
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-2">Mobile Number</label>
+                                    <label htmlFor="quote-phone" className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-2">Mobile Number</label>
                                     <input 
+                                        id="quote-phone"
                                         type="tel" 
                                         placeholder="(712) 305-6313"
                                         value={contactInfo.phone}
@@ -340,8 +225,9 @@ export default function Quote() {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-2">Email Address</label>
+                                    <label htmlFor="quote-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-2">Email Address</label>
                                     <input 
+                                        id="quote-email"
                                         type="email" 
                                         placeholder="your@email.com"
                                         value={contactInfo.email}
@@ -351,15 +237,16 @@ export default function Quote() {
                                 </div>
                             </div>
                         </div>
-                        <div className="pt-6">
-                            <Button className="w-full h-20 text-xl font-black rounded-2xl gap-2" onClick={handleNext} disabled={!contactInfo.name || !contactInfo.phone}>
-                                Unlock Estimated Pricing <ChevronRight className="h-6 w-6" />
+                        <div className="pt-6 flex gap-4">
+                            <Button variant="ghost" className="h-20 px-8 rounded-2xl" onClick={handleBack}>Back</Button>
+                            <Button className="flex-grow h-20 text-xl font-black rounded-2xl gap-2" onClick={handleNext} disabled={!contactInfo.name || !contactInfo.phone}>
+                                Continue to Vehicle Details <ChevronRight className="h-6 w-6" />
                             </Button>
                         </div>
                     </motion.div>
                 )}
 
-                {step === 2 && (
+                {step === 1 && (
                     <motion.div
                         key="step2"
                         initial={{ opacity: 0, x: 20 }}
@@ -377,8 +264,9 @@ export default function Quote() {
                                 <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-1 italic">Vitals</label>
                                 <div className="grid grid-cols-1 gap-4">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 pl-2">Vehicle Year</label>
+                                        <label htmlFor="quote-vehicle-year" className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 pl-2">Vehicle Year</label>
                                         <input 
+                                            id="quote-vehicle-year"
                                             type="number" 
                                             placeholder="e.g. 2024"
                                             value={vehicleYear}
@@ -453,39 +341,17 @@ export default function Quote() {
                             </div>
 
                             <div className="space-y-4">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-1 italic">4. Upload Photos (Optional)</label>
-                                <p className="text-xs text-zinc-500 font-medium pl-1">Show us what we're working with for a more accurate estimate.</p>
-                                <div className="grid grid-cols-1 gap-3">
-                                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-zinc-300 rounded-2xl cursor-pointer bg-zinc-50 hover:bg-zinc-100 transition-colors">
-                                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <Camera className="w-8 h-8 mb-3 text-zinc-400" />
-                                            <p className="mb-2 text-sm text-zinc-500 font-bold"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                                            <p className="text-xs text-zinc-400">PNG, JPG, or JPEG (Max 3 files)</p>
-                                        </div>
-                                        <input type="file" multiple accept="image/*" className="hidden" onChange={handleFileChange} />
-                                    </label>
-                                    {selectedFiles.length > 0 && (
-                                        <div className="flex flex-wrap gap-2 mt-2">
-                                            {selectedFiles.map((file, i) => (
-                                                <div key={i} className="flex items-center gap-2 bg-zinc-900 text-white px-3 py-1.5 rounded-lg text-xs font-medium">
-                                                    <span className="truncate max-w-[150px]">{file.name}</span>
-                                                    <button 
-                                                      aria-label="Remove photo"
-                                                      onClick={() => setSelectedFiles(prev => prev.filter((_, index) => index !== i))}
-                                                      className="text-zinc-400 hover:text-red-400"
-                                                    >
-                                                      <X className="h-3 w-3" />
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 pl-1 italic">4. Vehicle Photos (Optional)</label>
+                                <p className="text-xs text-zinc-500 font-medium pl-1">Submit the quote first, then text photos directly to Bryan so they arrive with full image quality.</p>
+                                <Button asChild variant="outline" className="h-14 w-full rounded-2xl border-zinc-200 font-bold">
+                                    <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%27m%20working%20on%20a%20website%20quote.%20Here%20are%20photos%20of%20my%20vehicle%3A">
+                                        <Camera className="mr-2 h-5 w-5" /> Text Photos to Bryan
+                                    </a>
+                                </Button>
                             </div>
                         </div>
 
                         <div className="flex gap-4 pt-4 mt-auto">
-                            <Button variant="ghost" className="h-16 px-8 rounded-2xl" onClick={handleBack}>Back</Button>
                             <Button className="flex-grow h-16 text-lg font-black rounded-2xl gap-2" onClick={handleNext} disabled={!vehicleSize}>
                                 Analyze Labor Requirements <ChevronRight className="h-6 w-6" />
                             </Button>
@@ -493,7 +359,7 @@ export default function Quote() {
                     </motion.div>
                 )}
 
-                {step === 3 && (
+                {step === 2 && (
                      <motion.div
                         key="step3"
                         initial={{ opacity: 0, x: 20 }}
@@ -560,7 +426,7 @@ export default function Quote() {
                     >
                          <div className="space-y-4">
                             <h2 className="text-4xl font-black tracking-tighter italic">Ready to finalize?</h2>
-                            <p className="text-zinc-500 font-medium">Verify your selection for a high-priority technician review.</p>
+                            <p className="text-zinc-500 font-medium">Review your selection before sending it to Bryan.</p>
                         </div>
 
                         <div className="bg-zinc-50 rounded-[2rem] p-8 border border-zinc-100 flex flex-col gap-6">
@@ -627,18 +493,18 @@ export default function Quote() {
                     <Shield className="h-32 w-32 text-zinc-800 -mr-16 -mt-16" />
                   </div>
                   <div className="relative z-10 space-y-6">
-                    <h3 className="text-2xl font-black italic leading-tight italic">Why I don't give "Guesstimates" by phone.</h3>
+                    <h3 className="text-2xl font-black italic leading-tight italic">Why condition details matter.</h3>
                     <p className="text-sm text-zinc-400 leading-relaxed font-medium">
-                        Standard car washes use cheap silicone to "hide" damage. I build custom chemical restoration paths. This system ensures my labor is focused on what your car actually needs to reach showroom-level.
+                        Vehicle size, paint condition, stains, pet hair, odor, and oxidation all affect the right service and the final price. A short quote form helps Bryan recommend the correct interior detail, paint correction, ceramic coating, or specialty detail without guessing.
                     </p>
                     <div className="space-y-3 pt-6 border-t border-zinc-800">
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">Expert Bellevue Service</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest">Bellevue and Omaha Detailing</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">Master Color Chemist</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest">Clear Service Recommendations</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50" />
@@ -648,24 +514,6 @@ export default function Quote() {
                   </div>
               </div>
 
-               {/* Smart Behavior: Time-Based Bundle Offer */}
-               <motion.div 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="p-8 rounded-[2rem] bg-emerald-50 border-2 border-emerald-100 flex flex-col gap-4 shadow-xl"
-                >
-                    <div className="flex items-center gap-2">
-                        <Zap className="h-5 w-5 text-emerald-600" />
-                        <span className="text-[10px] font-black uppercase tracking-widest text-emerald-600 italic">Limited Session Discount</span>
-                    </div>
-                    <h4 className="text-xl font-black italic tracking-tighter leading-none">Add Seat Extraction Protection Today?</h4>
-                    <p className="text-xs font-semibold text-emerald-800 leading-relaxed opacity-75">Book within the next 15 minutes and save <span className="font-bold underline">$15</span> on my spill-proof fabric protection.</p>
-                    <Button variant="outline" className="h-10 text-[10px] uppercase font-black tracking-widest border-emerald-200 bg-white" onClick={() => {
-                        if (!selectedAddOns.includes('protection')) toggleAddOn('protection');
-                    }}>
-                        {selectedAddOns.includes('protection') ? 'Bundle Applied ✅' : 'Claim $15 Bundle'}
-                    </Button>
-                </motion.div>
           </div>
         </div>
       </div>

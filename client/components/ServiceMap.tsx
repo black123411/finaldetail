@@ -24,7 +24,7 @@ export default function ServiceMap() {
                 <MapPin className="h-4 w-4 text-emerald-400" />
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-1">Primary Zones</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-300 mb-1">Primary Zones</p>
                 <p className="text-sm font-medium">Bellevue, Omaha, Papillion, La Vista</p>
               </div>
             </div>
@@ -33,8 +33,8 @@ export default function ServiceMap() {
                 <Clock className="h-4 w-4 text-emerald-400" />
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-1">Operating Hours</p>
-                <p className="text-sm font-medium">Mon - Sat: 8:00 AM - 6:00 PM</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-300 mb-1">Operating Hours</p>
+                <p className="text-sm font-medium">Daily: 7:00 AM - 7:00 PM</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -42,7 +42,7 @@ export default function ServiceMap() {
                 <Phone className="h-4 w-4 text-emerald-400" />
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-1">Contact</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-300 mb-1">Contact</p>
                 <p className="text-sm font-medium">(712) 305-6313</p>
               </div>
             </div>
@@ -50,13 +50,14 @@ export default function ServiceMap() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-zinc-800">
-          <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-[0.2em]">Showroom Quality Guaranteed</p>
+          <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-[0.2em]">Showroom Quality Guaranteed</p>
         </div>
       </div>
 
       {/* Map Embed */}
       <div className="lg:w-2/3 relative bg-zinc-100 min-h-[400px] overflow-hidden">
         <iframe
+          title="Bryan's detailing service area around Bellevue and Omaha"
           width="100%"
           height="100%"
           style={{ border: 0 }}

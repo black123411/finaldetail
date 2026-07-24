@@ -34,6 +34,13 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
     if (isDragging) handleMove(e.touches[0].clientX);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const direction = event.key === 'ArrowRight' ? 1 : -1;
+    setSliderPosition(position => Math.max(0, Math.min(100, position + direction * 5)));
+  };
+
   useEffect(() => {
     const handleUp = () => setIsDragging(false);
     window.addEventListener('mouseup', handleUp);
@@ -47,6 +54,13 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
   return (
     <div 
       ref={containerRef}
+      role="slider"
+      tabIndex={0}
+      aria-label="Compare before and after detailing photos"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(sliderPosition)}
+      onKeyDown={handleKeyDown}
       className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden cursor-ew-resize select-none"
       onMouseDown={() => setIsDragging(true)}
       onTouchStart={() => setIsDragging(true)}
