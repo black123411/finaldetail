@@ -27,6 +27,31 @@ function listMarkup(items) {
   return `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`;
 }
 
+const VEHICLE_SIZE_LABELS = {
+  car: 'Sedan / coupe',
+  suv: 'SUV / crossover',
+  truck: 'Truck / large SUV',
+  largeSuv: 'XL vehicle / van',
+  rv: 'RV / boat',
+  tractor: 'Tractor / equipment',
+};
+
+const formatPrice = (price) => new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+}).format(price);
+
+function priceMarkup(service) {
+  const entries = Object.entries(service.price || {}).filter(([, price]) => Number.isFinite(price) && price > 0);
+  if (!entries.length) {
+    return service.pricingType === 'custom' ? '<p><strong>Pricing:</strong> Quote after photos and condition review.</p>' : '';
+  }
+  const suffix = service.pricingType === 'variable' ? '/ft' : '';
+  const qualifier = service.pricingType === 'custom' ? 'Starting prices:' : 'Current pricing:';
+  return `<p><strong>${qualifier}</strong> ${entries.map(([size, price]) => `${escapeHtml(VEHICLE_SIZE_LABELS[size] || size)} ${formatPrice(price)}${suffix}`).join(' · ')}. Final scope is confirmed after photos and condition review.</p>`;
+}
+
 function linkListMarkup(items) {
   if (!items?.length) return '';
   return `<ul>${items.map((item) => (
@@ -47,11 +72,11 @@ function fallbackMarkup({ heading, description, details = '', links = [] }) {
 
 function staticHeading(path, title) {
   const headings = {
-    '/': 'Auto Detailing in Bellevue & Omaha',
-    '/services': 'Auto Detailing Services & Pricing',
+    '/': 'Mobile Car Detailing in Bellevue & Omaha',
+    '/services': 'Auto Detailing Services and Pricing',
     '/book': 'Book Your Auto Detail',
     '/gallery': 'Auto Detailing Before & After Gallery',
-    '/ceramic-coating': 'Professional Ceramic Coating in Omaha & Bellevue',
+    '/ceramic-coating': 'System X Ceramic Coating in Bellevue & Omaha',
     '/membership': 'Car Care Membership Plans',
     '/gift-cards': 'Auto Detailing Gift Cards',
     '/faq': 'Auto Detailing Frequently Asked Questions',
@@ -73,7 +98,13 @@ function buildStaticRoutes() {
     let links = [];
 
     if (path === '/' || path === '/services') {
-      details = `<h2>Detailing services</h2>${linkListMarkup(categoryLinks)}`;
+      const featuredServices = SERVICES
+        .filter((service) => ['interior-detail', 'interior-reset', 'full-detail-package', 'showroom-package', 'system-x-pro-plus'].includes(service.id))
+        .map((service) => ({
+          href: `/services/${service.id}`,
+          label: `${service.name} — ${service.pricingType === 'custom' ? 'quote' : `from ${formatPrice(Math.min(...Object.values(service.price).filter((price) => Number.isFinite(price) && price > 0)))}`}`,
+        }));
+      details = `<h2>Detailing services and starting prices</h2>${linkListMarkup(featuredServices)}<h2>Service categories</h2>${linkListMarkup(categoryLinks)}`;
       links = CITIES.filter((city) => city.type === 'primary').map((city) => ({
         href: `/areas/${city.slug}`,
         label: `Auto detailing in ${city.name}`,
@@ -132,9 +163,11 @@ function buildStaticRoutes() {
   for (const service of SERVICES) {
     const path = `/services/${service.id}`;
     const prices = Object.values(service.price).filter((price) => Number.isFinite(price) && price > 0);
-    const priceText = service.pricingType === 'custom' || prices.length === 0
+    const priceText = prices.length === 0
       ? 'Custom quote based on vehicle size and condition.'
-      : `Pricing starts at $${Math.min(...prices)}.`;
+      : service.pricingType === 'custom'
+        ? `Starting prices are ${formatPrice(Math.min(...prices))}; final scope is confirmed after photos and condition review.`
+        : `Pricing starts at ${formatPrice(Math.min(...prices))}.`;
     routes.set(path, {
       path,
       title: service.seo.title,
@@ -145,6 +178,7 @@ function buildStaticRoutes() {
         description: service.longDescription,
         details: [
           `<p>${escapeHtml(priceText)}</p>`,
+          priceMarkup(service),
           service.bestFor ? `<p><strong>Best for:</strong> ${escapeHtml(service.bestFor)}</p>` : '',
           `<h2>What is included</h2>${listMarkup(service.features)}`,
         ].filter(Boolean).join(''),
@@ -314,7 +348,9 @@ if (missingRoutes.length) {
 const noindexPaths = [...routes.values()]
   .filter((route) => route.robots?.includes('noindex'))
   .map((route) => route.path);
-const renderedPaths = new Set([...sitemapPaths, ...noindexPaths]);
+const supplementalPaths = [...routes.keys()]
+  .filter((path) => !path.startsWith('/admin') && path !== '/login');
+const renderedPaths = new Set([...sitemapPaths, ...noindexPaths, ...supplementalPaths]);
 
 for (const path of renderedPaths) {
   const route = routes.get(path);

@@ -21,6 +21,7 @@ import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameD
 import { BookingAPI, ServiceAPI } from '../services/api';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 import { trackEvent } from '../lib/analytics';
+import { formatCurrency } from '../lib/utils';
 
 type Step = 'service' | 'size' | 'addons' | 'datetime' | 'details' | 'success';
 
@@ -606,6 +607,11 @@ export default function Booking() {
                               } else {
                                 setSelectedServices([...selectedServices, s]);
                               }
+                              trackEvent('booking_select_service', {
+                                service_id: s.id,
+                                service_name: s.name,
+                                selected: !isSelected,
+                              });
                             }}
                             className={`p-5 rounded-2xl border-2 text-left transition-all flex items-start gap-4 group ${
                               isSelected 
@@ -716,13 +722,18 @@ export default function Booking() {
                       return (
                         <button
                           key={a.id}
-                          onClick={() => {
-                            if (isSelected) {
-                              setSelectedAddons(selectedAddons.filter(id => id !== a.id));
-                            } else {
-                              setSelectedAddons([...selectedAddons, a.id]);
-                            }
-                          }}
+                        onClick={() => {
+                          if (isSelected) {
+                            setSelectedAddons(selectedAddons.filter(id => id !== a.id));
+                          } else {
+                            setSelectedAddons([...selectedAddons, a.id]);
+                          }
+                          trackEvent('booking_select_addon', {
+                            addon_id: a.id,
+                            addon_name: a.name,
+                            selected: !isSelected,
+                          });
+                        }}
                           className={`p-5 rounded-2xl border-2 text-left transition-all flex items-start gap-4 ${
                             isSelected 
                               ? 'border-zinc-900 bg-white shadow-md' 
@@ -735,7 +746,7 @@ export default function Booking() {
                           <div className="flex-1">
                             <div className="flex justify-between items-start mb-1">
                               <h3 className="font-bold text-zinc-900 text-sm tracking-tight">{a.name}</h3>
-                              <span className="font-bold text-zinc-900 text-sm">+${price}</span>
+                              <span className="font-bold text-zinc-900 text-sm">+{formatCurrency(price)}</span>
                             </div>
                             <p className="text-[10px] text-zinc-500 line-clamp-1 mb-2">{a.description}</p>
                             {duration && (
@@ -823,7 +834,10 @@ export default function Booking() {
                           <button
                             key={date.toString()}
                             disabled={isPast}
-                            onClick={() => setSelectedDate(date)}
+                            onClick={() => {
+                              setSelectedDate(date);
+                              trackEvent('booking_select_date', { date: format(date, 'yyyy-MM-dd') });
+                            }}
                             className={`h-10 w-full rounded-lg text-xs font-bold transition-all relative ${
                               isSelected ? 'bg-zinc-900 text-white z-10' : 
                               isPast ? 'text-zinc-200 cursor-not-allowed' : 'text-zinc-600 hover:bg-zinc-100'
@@ -942,7 +956,10 @@ export default function Booking() {
                         <div className="grid grid-cols-2 gap-3">
                           <button
                             type="button"
-                            onClick={() => setCustomerInfo({...customerInfo, locationType: 'drop-off'})}
+                            onClick={() => {
+                              setCustomerInfo({...customerInfo, locationType: 'drop-off'});
+                              trackEvent('booking_select_location_type', { location_type: 'drop-off' });
+                            }}
                             className={`p-3 text-sm font-bold rounded-lg border-2 transition-all ${
                               customerInfo.locationType === 'drop-off'
                                 ? 'bg-zinc-900 border-zinc-900 text-white'
@@ -953,7 +970,10 @@ export default function Booking() {
                           </button>
                           <button
                             type="button"
-                            onClick={() => setCustomerInfo({...customerInfo, locationType: 'mobile'})}
+                            onClick={() => {
+                              setCustomerInfo({...customerInfo, locationType: 'mobile'});
+                              trackEvent('booking_select_location_type', { location_type: 'mobile' });
+                            }}
                             className={`p-3 text-sm font-bold rounded-lg border-2 transition-all ${
                               customerInfo.locationType === 'mobile'
                                 ? 'bg-zinc-900 border-zinc-900 text-white'
@@ -982,7 +1002,8 @@ export default function Booking() {
                           <div className="mt-3 p-3 bg-zinc-50 rounded-lg border border-zinc-100">
                             <p className="text-xs text-zinc-600">
                               <span className="font-bold">Drop-off Location:</span><br/>
-                              1907 Arlington Cir, Bellevue NE 68123
+                              1907 Arlington Cir, Bellevue NE 68123<br/>
+                              <span className="text-[10px]">Appointment-only drop-off; this is not an open public storefront.</span>
                             </p>
                           </div>
                         )}
@@ -1027,8 +1048,8 @@ export default function Booking() {
                   
                   <div className="mt-4 text-center">
                     <p className="text-[10px] text-zinc-400 font-medium">
-                      By confirming your booking, you agree to our 24-hour cancellation policy. <br/>
-                      A secure connection is used to process your request.
+                      By confirming, you are requesting the selected Square appointment time. <br/>
+                      A secure connection is used to send your booking request.
                     </p>
                   </div>
                 </motion.div>
@@ -1102,17 +1123,17 @@ export default function Booking() {
                   <div className="pt-6 border-t border-zinc-100 mt-6 space-y-2">
                     <div className="flex items-center justify-between">
                         <span className="text-xs text-zinc-500">Base Service & Size</span>
-                        <span className="text-xs font-bold text-zinc-900">${priceBreakdown.base}</span>
+                        <span className="text-xs font-bold text-zinc-900">{formatCurrency(priceBreakdown.base)}</span>
                     </div>
                     {priceBreakdown.addons.map((a, i) => (
                       <div key={i} className="flex items-center justify-between animate-in fade-in slide-in-from-right-4">
                         <span className="text-xs text-zinc-400 italic">+ {a.name}</span>
-                        <span className="text-xs font-bold text-zinc-900">${a.price}</span>
+                        <span className="text-xs font-bold text-zinc-900">{formatCurrency(a.price)}</span>
                       </div>
                     ))}
                     <div className="flex items-center justify-between pt-4 border-t border-zinc-50 mt-2">
                         <span className="text-sm font-bold text-zinc-900">Estimated Total</span>
-                        <span className="text-lg font-black text-zinc-900">${priceBreakdown.total}</span>
+                        <span className="text-lg font-black text-zinc-900">{formatCurrency(priceBreakdown.total)}</span>
                     </div>
                     <p className="text-[10px] text-zinc-400 mt-4 leading-relaxed bg-zinc-50 p-3 rounded-lg border border-zinc-100 flex items-start gap-2">
                         <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />

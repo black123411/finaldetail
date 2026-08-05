@@ -189,7 +189,7 @@ export default function Gallery() {
       <section className="py-24 bg-zinc-950 border-t border-zinc-900 mt-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl font-black tracking-tight text-white mb-6 text-center">
-            Our Bellevue & Omaha Detailing Portfolio
+            Bryan's Bellevue & Omaha Detailing Portfolio
           </h2>
           <p className="text-zinc-400 leading-relaxed font-medium mb-4">
             These are real customer vehicles from interior detailing, exterior detailing, paint correction, headlight restoration, boat, motorcycle, classic car, and specialty jobs around Bellevue and Omaha. Each photo is labeled by what is actually visible in the image.

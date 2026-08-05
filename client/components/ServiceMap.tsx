@@ -15,7 +15,7 @@ export default function ServiceMap() {
           </div>
           
           <p className="text-zinc-400 text-sm mb-8 leading-relaxed">
-            We provide premium detailing based in Bellevue, serving the entire Omaha metro area. Pick-up and drop-off available!
+            Bryan's Showroom Quality Mobile Detailing is based in Bellevue and serves the Omaha metro with mobile appointments plus Bellevue drop-off and pickup options.
           </p>
 
           <div className="space-y-6">
@@ -50,7 +50,7 @@ export default function ServiceMap() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-zinc-800">
-          <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-[0.2em]">Showroom Quality Guaranteed</p>
+          <p className="text-[10px] text-zinc-300 font-bold uppercase tracking-[0.2em]">Owner-operated service</p>
         </div>
       </div>
 

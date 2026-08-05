@@ -151,14 +151,25 @@ function SEO() {
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Auto Detailing Services",
-      "itemListElement": SERVICES.map(s => ({
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": s.name,
-          "description": s.shortDescription
-        }
-      }))
+      "itemListElement": SERVICES.map(s => {
+        const prices = Object.values(s.price).filter((price) => Number.isFinite(price) && price > 0);
+        return {
+          "@type": "Offer",
+          ...(s.pricingType === 'fixed' && prices.length > 0 ? {
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "priceCurrency": "USD",
+              "minPrice": Math.min(...prices),
+              "maxPrice": Math.max(...prices)
+            }
+          } : {}),
+          "itemOffered": {
+            "@type": "Service",
+            "name": s.name,
+            "description": s.shortDescription
+          }
+        };
+      })
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
@@ -221,6 +232,7 @@ export default function App() {
                 <Route path="/services" element={<Services />} />
                 <Route path="/services/ceramic-3yr" element={<Navigate replace to="/services/system-x-crystal-plus" />} />
                 <Route path="/services/protection-package" element={<Navigate replace to="/services/system-x-pro-plus" />} />
+                <Route path="/services/maintenance-interior" element={<Navigate replace to="/services/maintenance-detail" />} />
                 <Route path="/services/:serviceId" element={<ServiceDetail />} />
                 <Route path="/services/category/:slug" element={<CategoryDetail />} />
                 <Route path="/areas/:slug" element={<CityDetail />} />

@@ -15,7 +15,7 @@ export default function CityDetail() {
       <div className="min-h-screen flex items-center justify-center p-8">
         <div className="text-center">
           <h1 className="text-4xl font-black italic tracking-tighter mb-4 text-zinc-900">City Not Found</h1>
-          <p className="text-zinc-500 mb-8 font-black uppercase text-xs tracking-widest">We may not serve this area yet.</p>
+          <p className="text-zinc-500 mb-8 font-black uppercase text-xs tracking-widest">Service availability for this area is not yet listed.</p>
           <Link to="/">
             <Button variant="default">Back to Home</Button>
           </Link>
@@ -26,7 +26,7 @@ export default function CityDetail() {
 
   const citySchema = {
     "@context": "https://schema.org",
-    "@type": "AutoBodyShop",
+    "@type": "ProfessionalService",
     "name": `Bryan's Showroom Quality Mobile Detailing - ${city.name}`,
     "image": "/20211009_021727-COLLAGE.jpg",
     "description": city.seo.description,
@@ -83,7 +83,7 @@ export default function CityDetail() {
               </Link>
               <Link to="/services">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto h-16 px-10 text-xs font-black uppercase tracking-widest border-white/30 text-white hover:bg-white/10 hover:border-white/60">
-                  View Our Services
+                  View Bryan's Services
                 </Button>
               </Link>
             </div>
@@ -147,7 +147,7 @@ export default function CityDetail() {
                 ))}
               </div>
               
-              <div className="mt-12 p-8 bg-white rounded-3xl border border-zinc-100 shadow-sm">
+              {city.slug === 'papillion-ne' && <div className="mt-12 p-8 bg-white rounded-3xl border border-zinc-100 shadow-sm">
                 <div className="flex items-center gap-3 mb-4">
                   <Star className="h-5 w-5 text-yellow-500 fill-current" />
                   <span className="text-xs font-black uppercase tracking-widest text-zinc-900">Local Area Favorites</span>
@@ -156,7 +156,7 @@ export default function CityDetail() {
                   "Bryan did an amazing job on my car in Papillion. The interior looks brand new and he was so professional. Highly recommend his mobile services!"
                 </p>
                 <span className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">— Local Customer Review</span>
-              </div>
+              </div>}
             </div>
 
             <div className="bg-zinc-900 rounded-[3rem] p-12 text-white relative overflow-hidden">
@@ -175,8 +175,8 @@ export default function CityDetail() {
                <div className="mt-12 flex items-center gap-4 p-6 bg-zinc-800/50 rounded-2xl border border-zinc-800">
                  <ShieldCheck className="h-6 w-6 text-emerald-500" />
                  <div>
-                   <p className="text-xs font-black uppercase tracking-widest text-zinc-200">Fully Licensed & Insured</p>
-                   <p className="text-[10px] text-zinc-500 font-medium">Protecting your vehicle in all Nebraska service areas.</p>
+                   <p className="text-xs font-black uppercase tracking-widest text-zinc-200">Condition-aware service</p>
+                   <p className="text-[10px] text-zinc-500 font-medium">Vehicle condition and service scope are reviewed before work begins.</p>
                  </div>
                </div>
             </div>

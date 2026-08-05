@@ -12,6 +12,7 @@ const HOME_BEFORE_AFTER_IDS = new Set([1, 2, 6, 7]);
 const HOME_BEFORE_AFTERS = BEFORE_AFTERS.filter(({ id }) => HOME_BEFORE_AFTER_IDS.has(id));
 import { CITIES } from '@/shared/data/cities';
 import { trackEvent } from '../lib/analytics';
+import { formatCurrency } from '../lib/utils';
 
 const HOME_CONVERSION_PATHS = [
   {
@@ -51,25 +52,25 @@ export default function Home() {
     {
       service: SERVICES.find(s => s.id === 'interior-detail'),
       label: 'Signature Interior Detail',
-      bestFor: 'Daily drivers with normal buildup, dust, and light stains',
-      outcome: 'Cabin deep clean, plastics sanitized, mats and glass reset'
+      bestFor: 'Vehicles with normal dirt, dust, crumbs, and light staining',
+      outcome: 'Vacuuming, compressed-air blowout, interior surfaces, mats, cupholders, dashboard, console, doors, plastics, glass, and light spot treatment'
     },
     {
       service: SERVICES.find(s => s.id === 'full-detail-package'),
       label: 'Signature Full Detail',
-      bestFor: 'The best all-around inside-and-out detail',
-      outcome: 'Interior detail plus exterior decon, wash, wax, wheels, tires'
+      bestFor: 'Seasonal cleanups, daily drivers, family vehicles, and routine professional care',
+      outcome: 'Interior detailing plus exterior hand washing, wheels, tires, paint decontamination, and protective finishing'
     },
     {
       service: SERVICES.find(s => s.id === 'showroom-package'),
       label: 'Showroom Package',
-      bestFor: 'Pre-sale vehicles or neglected family cars',
-      outcome: 'Deep extraction plus machine polish for resale-ready results'
+      bestFor: 'Neglected, pre-sale, trade-in, or recently purchased vehicles',
+      outcome: 'Interior restoration plus exterior decontamination and machine polishing to improve gloss and presentation'
     },
     {
       service: SERVICES.find(s => s.id === 'system-x-pro-plus'),
       label: 'System X Pro+ Signature',
-      bestFor: 'Long-term gloss and easier washing',
+      bestFor: 'Daily drivers seeking durable protection and easier maintenance washing',
       outcome: 'Paint enhancement plus certified System X Pro+ and Glass+ protection'
     }
   ].filter(row => row.service);
@@ -109,11 +110,12 @@ export default function Home() {
             </div>
 
             <h1 className="text-5xl sm:text-6xl md:text-[5.25rem] font-black tracking-tight leading-[0.92] uppercase">
-              Auto Detailing <span className="text-zinc-400 italic block font-normal normal-case">in Bellevue & Omaha.</span>
+              Mobile Car Detailing <span className="text-zinc-400 italic block font-normal normal-case">in Bellevue & Omaha.</span>
             </h1>
 
           <p className="text-lg md:text-2xl text-zinc-300 max-w-2xl leading-relaxed font-medium mt-6">
-            Owner-operated interior detailing, full details, paint correction, and ceramic coating—with clear package scopes, condition-based recommendations, and mobile or Bellevue drop-off options.
+            Professional interior detailing, complete inside-and-out details, paint correction, and ceramic coatings for cars, trucks, and SUVs.
+            <span className="block mt-3">I provide mobile detailing throughout Bellevue and the Omaha metro when the service, weather, and location are a good fit. Bellevue drop-off and pickup options are also available for services that benefit from controlled working conditions.</span>
           </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-6">
@@ -124,7 +126,7 @@ export default function Home() {
                   className="flex items-center gap-3"
                 >
                   <Calendar className="h-5 w-5" />
-                  Book Now
+                  View Current Availability
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl border-zinc-700 bg-white/5 backdrop-blur-md text-white hover:bg-white hover:text-zinc-950 font-black uppercase tracking-widest text-sm" asChild>
@@ -132,7 +134,7 @@ export default function Home() {
                   to="/services"
                   onClick={() => trackEvent('view_pricing', { location: 'home_hero' })}
                 >
-                  View Packages & Pricing
+                  View Services & Pricing
                 </Link>
               </Button>
               <Button size="lg" className="h-16 px-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500 hover:text-zinc-950 font-black uppercase tracking-widest text-sm shadow-xl" asChild>
@@ -142,7 +144,7 @@ export default function Home() {
                   className="flex items-center gap-3"
                 >
                   <MessageSquare className="h-5 w-5" />
-                  Text Photos for Quote
+                  Text Photos to Bryan
                 </a>
               </Button>
             </div>
@@ -272,7 +274,7 @@ export default function Home() {
                         </div>
                         <div>
                           <p className="text-[10px] font-black uppercase tracking-widest text-zinc-300 md:hidden mb-1">Starts At</p>
-                          <p className="text-2xl font-black text-white">${startingPrice}</p>
+                            <p className="text-2xl font-black text-white">{formatCurrency(startingPrice)}</p>
                         </div>
                         <div>
                           <p className="text-sm text-zinc-300 font-bold leading-relaxed">{row.bestFor}</p>
@@ -308,12 +310,12 @@ export default function Home() {
       <section className="py-32 bg-zinc-900 text-white overflow-hidden relative border-t border-b border-zinc-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-20 space-y-6">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Visual Proof</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Before-and-After Results</span>
             <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none uppercase">
-              The <span className="text-emerald-400 italic font-normal">Transformation</span> Results.
+              Real <span className="text-emerald-400 italic font-normal">Detailing</span> Results.
             </h2>
             <p className="text-xl text-zinc-400 font-medium max-w-2xl mx-auto leading-relaxed">
-              Hover or slide to see the actual results of our premium paint correction and deep interior restoration services. Real Bellevue and Omaha client vehicles.
+              Hover or slide to see results from paint correction and interior restoration services on Bellevue and Omaha client vehicles.
             </p>
           </div>
 
@@ -346,12 +348,18 @@ export default function Home() {
               className="space-y-12"
             >
               <div className="space-y-6">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">My Methodology</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Owner-Operated Auto Detailing</span>
                 <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none uppercase">
-                   Owner-Operated. <span className="text-zinc-500 italic block font-normal normal-case">Detail-Driven.</span>
+                   Clear Scope. <span className="text-zinc-500 italic block font-normal normal-case">Careful Work.</span>
                 </h2>
                 <p className="text-xl text-zinc-400 font-medium leading-relaxed max-w-xl">
-                  Your vehicle is inspected first, matched to the work it actually needs, and completed with a clear scope. If condition changes the price or process, you approve it before additional work begins.
+                  Every vehicle is inspected before work begins and matched with the service it actually needs. I do not rush vehicles through an assembly-line process or recommend unnecessary upgrades.
+                </p>
+                <p className="text-xl text-zinc-400 font-medium leading-relaxed max-w-xl">
+                  Bryan's Showroom Quality Detailing has served Bellevue and the Omaha metro since 2017. I bring years of professional detailing and paint-preparation experience to every job, from daily-driver interiors to paint correction and certified ceramic coatings.
+                </p>
+                <p className="text-xl text-zinc-400 font-medium leading-relaxed max-w-xl">
+                  If the vehicle's condition changes the expected price or service, I explain it before additional work begins.
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -360,7 +368,7 @@ export default function Home() {
                        <ShieldCheck className="h-6 w-6 text-emerald-400" />
                     </div>
                     <h3 className="text-xl font-bold">Flexible Options</h3>
-                    <p className="text-sm text-zinc-500 leading-relaxed font-medium">I offer both fully mobile detailing at your location, and convenient drop-off at my home location in Bellevue.</p>
+                    <p className="text-sm text-zinc-500 leading-relaxed font-medium">I offer mobile detailing when the location and service are a good fit, plus Bellevue drop-off and pickup by appointment for controlled-condition work.</p>
                  </div>
                  <div className="space-y-4">
                     <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
@@ -373,7 +381,7 @@ export default function Home() {
 
               <div className="pt-8">
                 <Button size="lg" className="h-16 px-12 rounded-2xl bg-white text-zinc-950 font-black uppercase tracking-widest text-xs hover:bg-zinc-200" asChild>
-                  <Link to="/services">Explore My Standards</Link>
+                  <Link to="/services">View Services & Pricing</Link>
                 </Button>
               </div>
             </motion.div>
@@ -396,9 +404,9 @@ export default function Home() {
               
               <div className="absolute bottom-4 right-4 md:-bottom-10 md:-right-10 bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl z-20 border border-zinc-100 text-zinc-950 group">
                 <div className="flex items-center gap-6">
-                  <div className="text-5xl font-black tracking-tighter">2019</div>
+                  <div className="text-5xl font-black tracking-tighter">2017</div>
                   <div className="text-xs font-black uppercase tracking-[0.2em] text-zinc-400 leading-tight">
-                    Serving Bellevue<br />and the Omaha<br />Metro Since
+                    Serving Bellevue and the Omaha metro since
                   </div>
                 </div>
               </div>
@@ -411,9 +419,9 @@ export default function Home() {
       <section className="py-32 bg-white overflow-hidden">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto space-y-6 mb-24">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 italic">Social Proof</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600 italic">Customer Reviews</span>
             <h2 className="text-5xl md:text-7xl font-black text-zinc-900 tracking-tight leading-none uppercase">
-               The <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Verified</span> Verdict.
+               What <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Customers</span> Say.
             </h2>
           </div>
           <Testimonials />
@@ -436,13 +444,13 @@ export default function Home() {
               <p>
                 Midwest weather is hard on clear coat. A professional <strong>ceramic coating</strong> can add water beading, UV resistance, gloss, and easier maintenance washing. Before applying long-term protection, Bryan can perform <strong>paint correction</strong> to reduce swirl marks, light scratches, wash haze, and oxidation.
               </p>
-              <h3 className="text-2xl font-bold text-zinc-900 mt-12 mb-4">Deep Interior Detailing and Odor Removal</h3>
+              <h3 className="text-2xl font-bold text-zinc-900 mt-12 mb-4">Interior Restoration and Odor Removal</h3>
               <p>
                 A clean interior is essential for a comfortable driving experience. <strong>Interior detailing</strong> services can include vacuuming, compressed-air blowout, pet hair removal, stain treatment, hot water extraction, steam cleaning where safe, glass cleaning, mat cleaning, and odor source cleaning.
               </p>
               <h3 className="text-2xl font-bold text-zinc-900 mt-12 mb-4">Flexible Mobile & Drop-Off Options</h3>
               <p>
-                We offer Bellevue drop-off for services that need controlled conditions, like ceramic coating and paint correction, as well as <strong>mobile auto detailing</strong> throughout the Omaha metro area when the service, weather, space, and vehicle condition are a good fit.
+                I offer Bellevue drop-off for services that need controlled conditions, like ceramic coating and paint correction, as well as <strong>mobile auto detailing</strong> throughout the Omaha metro area when the service, weather, space, and vehicle condition are a good fit.
               </p>
             </div>
           </div>
@@ -457,7 +465,7 @@ export default function Home() {
                <h2 className="text-5xl md:text-6xl font-black text-zinc-900 tracking-tight leading-none uppercase">
                   Service <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Radius.</span>
                </h2>
-               <p className="text-lg text-zinc-600 max-w-2xl mx-auto font-medium">Located in Bellevue for convenient drop-offs, and serving the entire Omaha metro with mobile options.</p>
+            <p className="text-lg text-zinc-600 max-w-2xl mx-auto font-medium">Based in Bellevue with drop-off and pickup by appointment, plus mobile options throughout the Omaha metro when conditions allow.</p>
             </div>
             <ServiceMap />
          </div>
@@ -469,15 +477,15 @@ export default function Home() {
            <div className="text-center space-y-6 mb-16">
              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-600">Common Questions</span>
              <h2 className="text-4xl md:text-6xl font-black text-zinc-900 tracking-tight leading-none uppercase">
-                Trust The <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Process.</span>
+                Common <span className="text-emerald-700 italic font-medium tracking-tight normal-case">Questions.</span>
              </h2>
            </div>
            
            <div className="space-y-4">
               {[
-                  { q: "How long does a Full Detail take?", a: "Typically 4-6 hours. It depends on vehicle size and soil level. I prefer to not rush, ensuring every crack and crevice meets the showroom standard." },
-                  { q: "Do you come to me or do I drop it off?", a: "Both! I offer convenient drop-off at my home location in Bellevue, which is great for intensive work like Paint Correction and Ceramic Coatings. I also offer fully mobile services where I bring the professional equipment directly to your driveway." },
-                  { q: "What's the difference between Wax and Ceramic Coating?", a: "Wax lasts 1-3 months and sits on top of the paint as a temporary sacrificial layer. Ceramic coatings chemically bond to the clear coat, lasting years, repelling dirt, and making washing significantly easier." },
+                  { q: "How long does a Full Detail take?", a: "Most full details require several hours. Exact timing depends on vehicle size, condition, package selection, and any additional treatment required." },
+                  { q: "Do you come to me or do I drop it off?", a: "Both options are available. I offer mobile service when the location and conditions are suitable, plus Bellevue drop-off and pickup by appointment for intensive work such as paint correction and ceramic coating." },
+                  { q: "What's the difference between Wax and Ceramic Coating?", a: "Wax is a temporary protective layer. A professional ceramic coating is applied to properly prepared paint and can provide more durable gloss, chemical resistance, water behavior, and easier maintenance washing. Neither replaces safe washing or prevents every defect." },
                   { q: "Can every interior stain be removed?", a: "Not always. Hot-water extraction and professional stain treatment can improve many stains, but permanent dye transfer, material damage, or old chemical reactions may remain. Bryan explains realistic expectations after inspecting the vehicle." },
               ].map((faq, i) => (
                  <div key={i} className="bg-white p-8 rounded-3xl border border-zinc-100 shadow-sm transition-all hover:shadow-md">
@@ -496,7 +504,7 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4 max-w-4xl relative z-10 space-y-12">
           <div className="space-y-6">
-             <h2 className="text-5xl md:text-[5rem] font-black tracking-tighter leading-none uppercase">Ready for <span className="text-zinc-500 italic block font-normal normal-case">Showroom</span> Quality?</h2>
+             <h2 className="text-5xl md:text-[5rem] font-black tracking-tighter leading-none uppercase">Ready to get your <span className="text-zinc-500 italic block font-normal normal-case">vehicle back in shape?</span></h2>
              <p className="text-xl text-zinc-400 font-medium max-w-2xl mx-auto">
                Choose a service and request an available appointment time online. Bryan confirms the booking details through Square.
              </p>

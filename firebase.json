@@ -89,6 +89,21 @@
         "type": 301
       },
       {
+        "source": "/services/maintenance-interior",
+        "destination": "/services/maintenance-detail",
+        "type": 301
+      },
+      {
+        "source": "/services/ceramic-3yr",
+        "destination": "/services/system-x-crystal-plus",
+        "type": 301
+      },
+      {
+        "source": "/services/protection-package",
+        "destination": "/services/system-x-pro-plus",
+        "type": 301
+      },
+      {
         "source": "/product/paint-correction/DTJ56SKDJJZLKX6VFWEHTTSQ",
         "destination": "/services/category/paint-correction",
         "type": 301
@@ -102,12 +117,11 @@
         "source": "/shop/rv-detailing-services/DA32PNIIISVJWK7D5IUDZ4JW",
         "destination": "/services/category/rv-boat-detailing",
         "type": 301
-      }
-    ],
-    "rewrites": [
+      },
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "/blog/best-car-detailing-bellevue-ne",
+        "destination": "/areas/bellevue-ne",
+        "type": 301
       }
     ],
     "headers": [

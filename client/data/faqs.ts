@@ -9,25 +9,25 @@ export const FAQS: FAQ[] = [
   {
     id: '1',
     question: 'How long does a full detail take?',
-    answer: 'A full interior and exterior detail typically takes between 4 to 6 hours depending on the condition and size of the vehicle. We take our time to ensure every crack and crevice is pristine.',
+    answer: 'A full interior and exterior detail typically takes 4 to 6 hours, depending on vehicle size and condition. I confirm the expected scope and timing before the appointment.',
     order: 1
   },
   {
     id: '2',
     question: 'Do you need access to water and power?',
-    answer: 'No! We are a fully self-contained mobile detailing unit. We bring our own spot-free water supply and super-quiet generators, so we can detail your car at your home, apartment, or office without needing anything from you.',
+    answer: 'For most mobile appointments, I bring the equipment and water needed for the service. The vehicle must be parked in a safe, accessible location. Bellevue drop-off and pickup are available when controlled conditions are needed.',
     order: 2
   },
   {
     id: '3',
     question: 'What is a ceramic coating?',
-    answer: 'A ceramic coating is a liquid polymer that chemically bonds to your vehicles factory paint. It creates a semi-permanent layer of protection that is much harder and longer-lasting than traditional wax, offering incredible gloss and protection against UV rays, chemicals, and minor scratches.',
+    answer: 'A ceramic coating is a liquid protection product applied to prepared paint. It adds gloss, water behavior, and resistance to routine contamination and UV exposure. It does not make paint scratch-proof, and the result depends on preparation and maintenance.',
     order: 3
   },
   {
     id: '4',
     question: 'Do I need to be present while you detail my car?',
-    answer: 'Not at all. As long as we have the keys to access the interior (if you booked an interior service) and the vehicle is parked in an accessible location, you can go about your day. We will text you when the job is complete.',
+    answer: 'You do not need to stay for the appointment. Please provide access to the vehicle when needed and leave it in an accessible location. I will text you when the service is complete.',
     order: 4
   }
 ];

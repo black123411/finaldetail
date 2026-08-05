@@ -20,6 +20,7 @@ import { SERVICE_PAGE_CONTENT } from '@/shared/data/servicePageContent';
 import { BEFORE_AFTERS } from '@/shared/data/photos';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 import { Button } from '../components/ui/button';
+import { formatCurrency } from '../lib/utils';
 
 const PROOF_BY_SERVICE: Record<string, number> = {
   'interior-detail': 1,
@@ -39,7 +40,7 @@ const PROOF_BY_SERVICE: Record<string, number> = {
 function getStartingPrice(service: Service) {
   const price = service.price.car || service.price.suv || service.price.rv || Object.values(service.price)[0];
   if (!price) return 'Custom quote';
-  return service.pricingType === 'variable' ? `$${price}/ft` : `$${price}`;
+  return service.pricingType === 'variable' ? formatCurrency(price) + '/ft' : formatCurrency(price);
 }
 
 function getDuration(service: Service) {
@@ -96,6 +97,9 @@ export default function ServiceDetail() {
     .filter((item): item is Service => Boolean(item))
     .slice(0, 3);
   const priceRows = getPriceRows(service);
+  const numericPrices = priceRows
+    .map(({ price }) => price)
+    .filter((price): price is number => typeof price === 'number' && price > 0);
   const faqItems = guide?.faq || [];
   const isInquiryOnly = service.id === 'ppf-inquiry';
   const primaryTarget = isInquiryOnly ? '/quote' : `/book?serviceId=${service.id}`;
@@ -119,6 +123,15 @@ export default function ServiceDetail() {
         addressRegion: 'NE',
       },
     },
+    ...(service.pricingType === 'fixed' && numericPrices.length > 0 ? {
+      offers: {
+        '@type': 'AggregateOffer',
+        lowPrice: Math.min(...numericPrices),
+        highPrice: Math.max(...numericPrices),
+        priceCurrency: 'USD',
+        offerCount: numericPrices.length,
+      },
+    } : {}),
   };
 
   return (
@@ -259,7 +272,7 @@ export default function ServiceDetail() {
                 <div key={size.id} className="flex items-center justify-between gap-6 px-5 py-4">
                   <span className="font-bold text-zinc-700">{size.name}</span>
                   <span className="text-lg font-black">
-                    {price ? `$${price}${service.pricingType === 'variable' ? '/ft' : ''}` : 'Custom quote'}
+                    {price ? formatCurrency(price) + (service.pricingType === 'variable' ? '/ft' : '') : 'Custom quote'}
                   </span>
                 </div>
               ))}

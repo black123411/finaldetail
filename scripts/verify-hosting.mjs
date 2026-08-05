@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 const ORIGIN = process.env.HOSTING_ORIGIN || 'http://localhost:5000';
 
 const cases = [
-  { path: '/', status: 200, canonical: 'https://bryansdetailingomaha.com/', h1: 'Auto Detailing in Bellevue &amp; Omaha' },
-  { path: '/book', status: 200, canonical: 'https://bryansdetailingomaha.com/book', h1: 'Book Your Detail' },
-  { path: '/areas/omaha-ne', status: 200, canonical: 'https://bryansdetailingomaha.com/areas/omaha-ne', h1: 'Auto Detailing in Omaha, NE' },
+  { path: '/', status: 200, canonical: 'https://bryansdetailingomaha.com/', h1: 'Mobile Car Detailing in Bellevue &amp; Omaha' },
+  { path: '/book', status: 200, canonical: 'https://bryansdetailingomaha.com/book', h1: 'Book Your Auto Detail' },
+  { path: '/areas/omaha-ne', status: 200, canonical: 'https://bryansdetailingomaha.com/areas/omaha-ne', h1: 'Mobile Car Detailing in Omaha, Nebraska' },
   { path: '/services/interior-detail', status: 200, canonical: 'https://bryansdetailingomaha.com/services/interior-detail', h1: 'Signature Interior Detail' },
   { path: '/app/cms', status: 404, noindex: true, h1: 'Page Not Found' },
   { path: '/definitely-not-a-real-page', status: 404, noindex: true, h1: 'Page Not Found' },

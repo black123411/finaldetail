@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Star, ExternalLink, MessageSquare, Share2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { PHOTOS } from '@/shared/data/photos';
+import { trackEvent } from '../lib/analytics';
 
 // Direct link to Bryan's Google review form
 const GOOGLE_REVIEW_URL =
@@ -10,7 +11,7 @@ const GOOGLE_REVIEW_URL =
 const REVIEW_STEPS = [
   { step: '1', label: 'Click the button below', desc: "It opens Google's review form directly." },
   { step: '2', label: 'Select your star rating', desc: '5 stars goes a long way — thank you!' },
-  { step: '3', label: 'Share your experience', desc: 'Even a sentence or two helps other customers find us.' },
+  { step: '3', label: 'Share your experience', desc: 'Even a sentence or two helps other customers find Bryan’s service.' },
 ];
 
 export default function ReviewPage() {
@@ -28,7 +29,7 @@ export default function ReviewPage() {
             Enjoyed your detail?
           </h1>
           <p className="text-zinc-400 font-medium text-lg leading-relaxed">
-            Your Google review helps other Bellevue and Omaha drivers discover our service — and means the world to a small local business.
+            Your Google review helps other Bellevue and Omaha drivers find Bryan's service — and means a lot to this small local business.
           </p>
         </motion.div>
 
@@ -64,7 +65,7 @@ export default function ReviewPage() {
             asChild
             className="w-full h-16 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-base uppercase tracking-widest shadow-xl shadow-emerald-500/30"
           >
-            <a href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3">
+            <a href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackEvent('click_google_reviews', { location: 'review_page' })} className="flex items-center justify-center gap-3">
               <Star className="h-5 w-5 fill-black" />
               Leave a Google Review
               <ExternalLink className="h-4 w-4" />

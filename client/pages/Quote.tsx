@@ -324,7 +324,7 @@ export default function Quote() {
                                     {[
                                         { id: 'efficiency', label: 'Budget/Speed', icon: <Zap className="h-4 w-4" /> },
                                         { id: 'value', label: 'Balance/Value', icon: <Droplets className="h-4 w-4" /> },
-                                        { id: 'perfection', label: 'Perfection/Gloss', icon: <Sparkles className="h-4 w-4" /> }
+                                        { id: 'perfection', label: 'Highest gloss target', icon: <Sparkles className="h-4 w-4" /> }
                                     ].map(ex => (
                                         <button
                                             key={ex.id}

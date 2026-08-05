@@ -11,7 +11,7 @@ export default function Membership() {
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Maintenance Detailing</h1>
           <p className="text-lg text-zinc-600">
-            Keep your vehicle in showroom condition year-round. Our maintenance plans offer priority booking, discounted add-ons, and consistent protection.
+            Maintenance plans start at $119 and are reserved for returning or recently detailed vehicles. Bryan confirms eligibility, scope, scheduling, and billing before enrollment.
           </p>
         </div>
 
@@ -28,12 +28,12 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">Perfect for daily drivers that need consistent care to maintain their appearance and value.</p>
+            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For daily drivers that need consistent care after a full detail.</p>
             
             <div className="mb-8 p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-zinc-900">$129</span>
-                <span className="text-zinc-500 text-sm font-medium">/mo</span>
+                <span className="text-3xl font-black text-zinc-900">$119</span>
+                <span className="text-zinc-500 text-sm font-medium">starting price</span>
               </div>
               <p className="text-[10px] text-zinc-400 mt-1 uppercase font-bold tracking-tighter">Billed Monthly</p>
             </div>
@@ -41,9 +41,9 @@ export default function Membership() {
             <div className="space-y-4 mb-8 flex-grow">
               {[
                 "1 Maintenance Detail / mo",
-                "Priority Scheduling",
-                "10% Off All Add-ons",
-                "Text Reminders"
+                "Repeat-service scheduling",
+                "Add-ons discussed before work",
+                "Text-based appointment updates"
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-700">
                   <CheckCircle2 className="h-4 w-4 text-zinc-900" />
@@ -72,12 +72,11 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For drivers who want regular interior upkeep and safe exterior washing twice per month.</p>
+            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For drivers who want regular interior upkeep and safe exterior washing. Scope and frequency are confirmed before enrollment.</p>
             
             <div className="mb-8 p-4 bg-zinc-800/50 rounded-2xl border border-zinc-700">
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-white">$239</span>
-                <span className="text-zinc-400 text-sm font-medium">/mo</span>
+                <span className="text-3xl font-black text-white">Custom plan</span>
               </div>
               <p className="text-[10px] text-zinc-500 mt-1 uppercase font-bold tracking-tighter">Bi-weekly service</p>
             </div>
@@ -85,10 +84,10 @@ export default function Membership() {
             <div className="space-y-4 mb-8 flex-grow">
               {[
                 "2 Maintenance Details / mo (Bi-Weekly)",
-                "Priority Scheduling",
-                "25% Off All Add-ons",
-                "Complimentary Engine Detail",
-                "Pick-up & Drop-off Available"
+                "Repeat-service scheduling",
+                "Condition-based scope",
+                "Add-ons discussed before work",
+                "Mobile or Bellevue drop-off when suitable"
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-300">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -114,12 +113,11 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">Ideal for premium vehicles that need seasonal restoration and protection refreshes.</p>
+            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For vehicles that need seasonal restoration and protection refreshes after a qualifying detail.</p>
             
             <div className="mb-8 p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
               <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-black text-zinc-900">$249</span>
-                <span className="text-zinc-500 text-sm font-medium">/quarter</span>
+                <span className="text-3xl font-black text-zinc-900">Custom plan</span>
               </div>
               <p className="text-[10px] text-zinc-400 mt-1 uppercase font-bold tracking-tighter">Billed Quarterly</p>
             </div>
@@ -128,8 +126,8 @@ export default function Membership() {
               {[
                 "1 Full Detail Refresh / Quarter",
                 "Seasonal Sealant Refresh",
-                "15% Off All Add-ons",
-                "Premium Protection Plan"
+                "Condition-based service scope",
+                "Protection refresh when appropriate"
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-700">
                   <CheckCircle2 className="h-4 w-4 text-zinc-900" />
@@ -151,7 +149,7 @@ export default function Membership() {
             <h3 className="text-xl font-bold text-zinc-900">Membership Requirements</h3>
           </div>
           <p className="text-zinc-600 mb-4">
-            To qualify for our maintenance plans, your vehicle must first undergo a Full Detail Package or higher to establish a baseline of cleanliness and protection.
+            To qualify for a maintenance plan, your vehicle must first undergo a Full Detail Package or higher to establish a baseline of cleanliness and protection.
           </p>
           <p className="text-zinc-600">
             Bryan will confirm plan availability, vehicle eligibility, scheduling, cancellation terms, and Square billing details with you before enrollment.

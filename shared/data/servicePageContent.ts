@@ -21,8 +21,8 @@ export type ServicePageContent = {
 
 export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
   "interior-detail": {
-    headline: "Signature Interior Detail for daily drivers that need a true reset",
-    intro: "This page is for Bellevue and Omaha drivers whose vehicle is not destroyed, but no longer feels clean. The Signature Interior Detail focuses on the touch points, cracks, plastics, mats, glass, light stains, and everyday buildup that make a cabin feel tired.",
+    headline: "Signature Interior Detail for maintained daily drivers",
+    intro: "The Signature Interior Detail is for Bellevue and Omaha drivers with normal dirt, crumbs, dust, fingerprints, light staining, and everyday interior buildup. It focuses on the touch points, cracks, plastics, mats, glass, and surfaces that need a professional cleanup without full extraction.",
     sections: [
       {
         title: "What this service solves",
@@ -30,7 +30,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "What makes it different",
-        body: "Bryan works through the cabin by zone instead of doing a quick vacuum and wipe. Air purging, detail brushes, safe interior cleaners, mat cleaning, and UV dressing help the interior look cleaner and stay easier to maintain."
+        body: "Bryan works through the cabin by zone instead of doing only a quick vacuum and wipe. Air purging, detail brushes, material-appropriate cleaners, mat cleaning, and interior dressing are used where appropriate."
       },
       {
         title: "Best time to book",
@@ -45,18 +45,18 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       "Treat light stains, apply interior protection where appropriate, and do a final detail check."
     ],
     buyerNotes: [
-      "Choose Deep Interior Restoration instead if you have heavy pet hair, major spills, or severe stains.",
+      "Choose Interior Restoration instead if you have heavy pet hair, major spills, or severe stains.",
       "Remove personal items before the appointment so Bryan can clean storage pockets and compartments.",
       "Light stains are treated, but dyed or permanently damaged fabric may not fully return to new."
     ],
     faq: [
       {
         question: "Is Signature Interior Detail enough for a family vehicle?",
-        answer: "Yes if the vehicle has normal daily buildup, crumbs, dust, dirty mats, and light stains. If the vehicle has heavy food spills, pet hair, smoke odor, or deep fabric staining, Deep Interior Restoration is the better choice."
+        answer: "Yes if the vehicle has normal daily buildup, crumbs, dust, dirty mats, and light stains. If the vehicle has heavy food spills, pet hair, smoke odor, or deep fabric staining, Interior Restoration is the better choice."
       },
       {
         question: "Does this include shampooing every seat and carpet?",
-        answer: "This service includes spot treatment for high-traffic staining. Full hot water extraction and intensive shampooing are part of Deep Interior Restoration or can be quoted as an add-on when needed."
+        answer: "This service includes spot treatment for high-traffic staining. Full hot-water extraction and intensive shampooing are part of Interior Restoration or can be quoted separately when needed."
       },
       {
         question: "Can you clean leather safely?",
@@ -74,8 +74,8 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     internalServiceIds: ["interior-reset", "odor-elimination", "full-detail-package", "maintenance-detail"]
   },
   "interior-reset": {
-    headline: "Deep Interior Restoration for stains, pet hair, spills, and neglected cabins",
-    intro: "Deep Interior Restoration is for interiors that need more than a tidy-up. It is built for family vehicles, used-car purchases, pet vehicles, work vehicles, and cabins with embedded dirt, heavy staining, odor sources, or years of buildup.",
+    headline: "Interior Restoration for stains, pet hair, spills, and neglected cabins",
+    intro: "Interior Restoration is for interiors that need more than a tidy-up. It is built for family vehicles, used-car purchases, pet vehicles, work vehicles, and cabins with embedded dirt, heavy staining, odor sources, or years of buildup.",
     sections: [
       {
         title: "What this service solves",
@@ -117,7 +117,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Is this safe for older interiors?",
-        answer: "Yes, but older fabric, weak headliners, peeling coatings, and brittle trim are handled carefully. Bryan will point out risky areas before aggressive cleaning."
+        answer: "Yes, but older fabric, weak headliners, peeling coatings, and brittle trim are handled carefully. Bryan will point out risky areas before stronger cleaning begins."
       },
       {
         question: "Should I book this before selling my car?",
@@ -272,7 +272,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Will the paint be perfect?",
-        answer: "Not always. The goal is safe, visible correction while preserving clear coat. Perfection may require Level 2 correction or may not be safe on every vehicle."
+        answer: "Not always. The goal is safe, visible correction while preserving clear coat. A flawless result may require Level 2 correction or may not be safe on every vehicle."
       },
       {
         question: "Should I add ceramic coating?",
@@ -287,7 +287,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
   },
   "paint-correction-l2": {
     headline: "Level 2 Paint Correction for heavy swirls, deeper scratches, and serious gloss recovery",
-    intro: "Level 2 Paint Correction is for paint that needs an aggressive restoration approach. It combines a cutting step and a finishing step to reduce heavier defects while bringing back clarity, depth, and gloss.",
+    intro: "Level 2 Paint Correction is for paint that needs a more intensive restoration process. It combines a cutting step and a finishing step to reduce heavier defects while bringing back clarity, depth, and gloss.",
     sections: [
       {
         title: "What this service solves",
@@ -304,7 +304,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     ],
     processTitle: "Level 2 correction process",
     process: [
-      "Fully wash, decontaminate, clay, inspect, and test the paint before correction starts.",
+      "Wash, decontaminate, clay, inspect, and test the paint before correction starts.",
       "Compound the paint with a controlled cutting step to reduce heavier defects.",
       "Refine the finish with a second polishing step to restore depth and clarity.",
       "Panel wipe, inspect under lighting, and protect the corrected surface."
@@ -484,7 +484,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Does it include shampooing?",
-        answer: "It includes the Signature Interior Detail level of cleaning. Heavy fabric shampooing and extraction are part of Deep Interior Restoration or Showroom Package."
+        answer: "It includes the Signature Interior Detail level of cleaning. Heavy fabric shampooing and extraction are part of Interior Restoration or Showroom Package."
       },
       {
         question: "How often should I book it?",
@@ -506,8 +506,8 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "It combines deep interior restoration with machine paint enhancement, making it ideal for neglected daily drivers, used-car purchases, and vehicles being prepared for sale."
       },
       {
-        title: "Why it feels different",
-        body: "The cabin gets deeper cleaning, the paint gets gloss correction, and the vehicle presents better from every angle. It is built for impact."
+        title: "What the package adds",
+        body: "The cabin gets deeper cleaning, the paint gets gloss correction, and the vehicle is prepared for a stronger overall presentation."
       },
       {
         title: "Best time to book",
@@ -598,7 +598,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "What happens if my car gets too dirty?",
-        answer: "Bryan may recommend Signature Full Detail, Deep Interior Restoration, or another reset before returning to maintenance pricing."
+        answer: "Bryan may recommend Signature Full Detail, Interior Restoration, or another reset before returning to maintenance pricing."
       }
     ],
     internalServiceIds: ["full-detail-package", "system-x-crystal-plus", "system-x-pro-plus", "interior-detail"]
@@ -735,7 +735,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     ],
     buyerNotes: [
       "Heavy grease, mud, and access issues can change the quote.",
-      "Sensitive components are handled carefully and discussed before aggressive cleaning.",
+      "Sensitive components are handled carefully and discussed before stronger cleaning.",
       "Photos help estimate time before scheduling."
     ],
     faq: [
@@ -763,7 +763,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     internalServiceIds: ["rv-boat-wash-wax", "exterior-enhancement", "interior-detail", "pre-sale-detail"]
   },
   "new-car-detail": {
-    headline: "New Car Detail and Protection before dealer prep damage becomes permanent",
+    headline: "New Car Detail and Protection for a clean, protected start",
     intro: "New vehicles often arrive with transport contamination, light dealer wash swirls, adhesive residue, and unprotected paint. New Car Detail and Protection gives the vehicle a cleaner start before daily driving adds wear.",
     sections: [
       {

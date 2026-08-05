@@ -4,27 +4,28 @@ import { motion } from 'motion/react';
 import { Shield, Droplets, Sun, Zap, Star, CheckCircle2, ArrowRight, Award, Clock } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { PHOTOS } from '@/shared/data/photos';
+import { formatCurrency } from '../lib/utils';
 
 const BENEFITS = [
   {
     icon: Droplets,
     title: 'Hydrophobic Water Beading',
-    desc: 'Water sheets off instantly. Rain, mud, and road spray bead up and roll away — keeping your car cleaner longer.',
+    desc: 'Water beads and releases more readily, helping rain, mud, and road spray wash away more easily between maintenance washes.',
   },
   {
     icon: Sun,
     title: 'UV & Oxidation Protection',
-    desc: "Nebraska sun is brutal. Ceramic coating blocks UV rays that fade and oxidize clear coat, preserving your paint's depth and color.",
+    desc: "Nebraska sun is hard on paint. Ceramic coating helps reduce the effects of UV exposure and supports gloss retention when the vehicle is maintained.",
   },
   {
     icon: Shield,
     title: 'Chemical Resistance',
-    desc: 'Bird droppings, tree sap, bug splatter, road salt — all repelled by the ceramic layer before they can etch your paint.',
+    desc: 'The coating helps reduce how strongly bird droppings, tree sap, bug splatter, and road salt cling to prepared paint. Prompt removal is still important.',
   },
   {
     icon: Zap,
     title: 'Easier Maintenance Washing',
-    desc: 'Contaminants have no grip on the ceramic surface. Your car stays cleaner between washes and washes faster when it needs one.',
+    desc: 'Contaminants are less likely to cling to the coated surface, which can make routine washing easier when the vehicle is maintained correctly.',
   },
 ];
 
@@ -190,7 +191,7 @@ const FAQS = [
   },
   {
     q: 'How do I maintain a ceramic-coated vehicle?',
-    a: "Avoid automatic car washes — the brushes and harsh chemicals degrade the coating. Hand washing or touchless car washes are safe. We offer a monthly Maintenance Plan ($119+) that uses coating-safe wash methods to preserve and refresh your investment.",
+    a: "Avoid automatic car washes — brushes and harsh chemicals can shorten coating life. Hand washing or a touchless wash is safer. A maintenance plan from $119 uses coating-safe wash methods to help keep the vehicle clean and the protection performing as expected.",
   },
   {
     q: 'Are you a certified ceramic coating installer?',
@@ -224,17 +225,17 @@ const schemaData = {
       name: 'System X Crystal+ Essential',
       priceCurrency: 'USD',
       price: '699',
-      availability: 'https://schema.org/InStock',
+      availability: 'https://schema.org/PreOrder',
     },
     {
       '@type': 'Offer',
       name: 'System X Pro+ Signature',
       priceCurrency: 'USD',
       price: '1099',
-      availability: 'https://schema.org/InStock',
+      availability: 'https://schema.org/PreOrder',
     },
-    { '@type': 'Offer', name: 'System X MAX G+ Ultimate', priceCurrency: 'USD', price: '1599', availability: 'https://schema.org/InStock' },
-    { '@type': 'Offer', name: 'System X Phantom 2K Bespoke', priceCurrency: 'USD', price: '1999', availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', name: 'System X MAX G+ Ultimate', priceCurrency: 'USD', price: '1599', availability: 'https://schema.org/PreOrder' },
+    { '@type': 'Offer', name: 'System X Phantom 2K Bespoke', priceCurrency: 'USD', price: '1999', availability: 'https://schema.org/PreOrder' },
   ],
   areaServed: ['Bellevue, NE', 'Omaha, NE', 'Papillion, NE'],
   hasOfferCatalog: {
@@ -282,8 +283,7 @@ export default function CeramicCoating() {
               transition={{ delay: 0.15 }}
               className="text-xl text-zinc-300 font-medium leading-relaxed max-w-xl"
             >
-              Professional-grade ceramic protection that repels water, resists UV damage, and keeps
-              your car looking showroom-new for years — not weeks.
+              System X ceramic protection that improves water behavior, helps resist routine contamination and UV exposure, and makes regular washing easier when it is maintained correctly.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -413,7 +413,7 @@ export default function CeramicCoating() {
                 <div className="mb-8">
                   <h3 className="text-2xl font-black text-white tracking-tight mb-2">{pkg.name}</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-black text-white">${pkg.price.car}</span>
+                    <span className="text-5xl font-black text-white">{formatCurrency(pkg.price.car)}</span>
                     <span className="text-zinc-400 font-medium">sedan</span>
                   </div>
                   <div className="flex items-center gap-2 mt-2 text-zinc-500 text-sm font-medium">
@@ -625,8 +625,8 @@ export default function CeramicCoating() {
             <span className="text-emerald-400 italic font-normal">your investment?</span>
           </h2>
           <p className="text-zinc-400 font-medium mb-10 text-lg">
-            Book a free ceramic coating assessment. I'll inspect your paint, answer your questions, and
-            recommend the right package for your vehicle and budget.
+            Request a ceramic-coating inspection. I'll review your paint, answer your questions, and
+            recommend the preparation and System X package that fits your vehicle.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="h-16 px-12 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-base uppercase tracking-widest rounded-2xl shadow-xl shadow-emerald-500/30">
@@ -646,13 +646,13 @@ export default function CeramicCoating() {
             The Science Behind System X Ceramic Coatings
           </h2>
           <p className="text-zinc-400 leading-relaxed font-medium mb-4 text-left">
-            Many vehicle owners confuse traditional carnauba waxes and synthetic sealants with true ceramic coatings. While waxes sit on top of the paint as a temporary sacrificial layer that melts away in the Omaha heat, a professional ceramic coating utilizes nanotechnology to interlock with your vehicle's clear coat at a microscopic level. 
+            Wax and synthetic sealants provide shorter-term protection. A professional ceramic coating is applied to properly prepared paint to create a more durable protective layer with different maintenance and aftercare requirements.
           </p>
           <p className="text-zinc-400 leading-relaxed font-medium mb-4 text-left">
             As a certified System X installer in Bellevue, Nebraska, Bryan's Showroom Quality Mobile Detailing can match the current System X product line to automotive paint, marine surfaces, wheels, glass, trim, leather, vinyl, plastic, carpet, and fabric. Each surface receives the preparation and product intended for that application instead of a one-size-fits-all spray.
           </p>
           <p className="text-zinc-400 leading-relaxed font-medium text-left">
-            Investing in a professional ceramic coating package not only amplifies the gloss and depth of your car's finish but also makes routine washing incredibly fast and effortless. It is the ultimate protective measure for any vehicle owner looking to maintain a flawless aesthetic for years.
+            A professional ceramic coating can improve gloss, water behavior, chemical resistance, and routine maintenance when the paint is properly prepared. It does not replace safe washing, prevent every defect, or guarantee a flawless finish.
           </p>
         </div>
       </section>

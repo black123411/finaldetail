@@ -5,6 +5,7 @@ import { CheckCircle2, ArrowLeft, Calendar, ShieldCheck, Sparkles, Clock, MapPin
 import { Button } from '../components/ui/button';
 import { SERVICES, CATEGORIES } from '@/shared/data/services';
 import { BOOKING_LINK } from '../lib/constants';
+import { formatCurrency } from '../lib/utils';
 
 export default function CategoryDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -54,7 +55,7 @@ export default function CategoryDetail() {
             <h1 className="text-5xl md:text-7xl font-black tracking-tight">
               {category.name}
               <span className="block text-2xl md:text-4xl text-zinc-500 font-medium italic mt-2">
-                Showroom Quality in Nebraska
+                Owner-operated detailing in Bellevue & Omaha
               </span>
             </h1>
             <p className="text-xl text-zinc-300 leading-relaxed">
@@ -63,11 +64,11 @@ export default function CategoryDetail() {
             <div className="flex flex-wrap gap-4 pt-2">
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <ShieldCheck className="h-5 w-5 text-emerald-400" />
-                Showroom Standards
+                Clear service scope
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <Sparkles className="h-5 w-5 text-emerald-400" />
-                Service-Specific Cleaning
+                Condition-based service
               </div>
             </div>
           </motion.div>
@@ -114,7 +115,9 @@ export default function CategoryDetail() {
                       <div className="flex flex-col">
                         <span className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-1">Starting Price</span>
                         <span className="text-3xl font-black text-zinc-900">
-                          ${service.isSpecialty ? service.price.rv : service.price.car}
+                          {(service.isSpecialty ? service.price.rv : service.price.car)
+                            ? `From ${formatCurrency(service.isSpecialty ? service.price.rv : service.price.car)}`
+                            : 'Custom quote'}
                         </span>
                       </div>
                       <div className="flex flex-col">
@@ -149,8 +152,8 @@ export default function CategoryDetail() {
                         </h4>
                         <ul className="space-y-2 text-xs text-zinc-700 font-medium">
                           <li>• Vehicles with {category.name.toLowerCase()} concerns</li>
-                          <li>• Owners wanting maximum {category.name.includes("Ceramic") ? "protection" : "restoration"}</li>
-                          <li>• Preparing a vehicle for sale or lease return</li>
+                          <li>• Drivers looking for this specific result</li>
+                          <li>• Vehicles whose condition matches the listed scope</li>
                         </ul>
                       </div>
                       <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100">
@@ -158,9 +161,9 @@ export default function CategoryDetail() {
                           <ArrowRight className="h-3 w-3" /> Consider a different package if
                         </h4>
                         <ul className="space-y-2 text-xs text-zinc-500 font-medium">
-                          <li>• You're looking for a quick maintenance wash</li>
-                          <li>• Surface issues requires body shop repair</li>
-                          <li>• You need a same-day emergency appointment</li>
+                          <li>• Your vehicle only needs routine maintenance cleaning</li>
+                          <li>• Surface damage requires a body-shop repair</li>
+                          <li>• The condition needs a custom inspection before booking</li>
                         </ul>
                       </div>
                     </div>
@@ -195,7 +198,7 @@ export default function CategoryDetail() {
                 <MapPin className="h-6 w-6 text-zinc-900" />
               </div>
               <h4 className="font-bold text-zinc-900">Flexible Service</h4>
-              <p className="text-xs text-zinc-500">Pick-up & Drop-off</p>
+              <p className="text-xs text-zinc-500">Mobile or Bellevue drop-off</p>
             </div>
             <div className="text-center space-y-2">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-zinc-100">
@@ -209,14 +212,14 @@ export default function CategoryDetail() {
                 <Calendar className="h-6 w-6 text-zinc-900" />
               </div>
               <h4 className="font-bold text-zinc-900">Easy Booking</h4>
-              <p className="text-xs text-zinc-500">Instant Confirmation</p>
+              <p className="text-xs text-zinc-500">View current Square availability</p>
             </div>
             <div className="text-center space-y-2">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-zinc-100">
                 <Sparkles className="h-6 w-6 text-zinc-900" />
               </div>
               <h4 className="font-bold text-zinc-900">Premium Products</h4>
-              <p className="text-xs text-zinc-500">No Harsh Chemicals</p>
+              <p className="text-xs text-zinc-500">Products matched to each material</p>
             </div>
           </div>
         </div>
@@ -225,10 +228,9 @@ export default function CategoryDetail() {
       {/* Closing CTA */}
       <section className="py-24 bg-zinc-900 text-white text-center">
         <div className="container mx-auto px-4 max-w-3xl space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to Restore Your Vehicle?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to choose the right service?</h2>
           <p className="text-xl text-zinc-400">
-            Secure your appointment today and experience the Showroom Quality difference. 
-            Professional detailing with drop-off at our Bellevue location.
+            Compare the service scope, then view current appointment availability. Bryan provides owner-operated detailing with mobile service and Bellevue drop-off options.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="h-14 px-10 text-lg bg-white text-zinc-950 hover:bg-zinc-200" asChild>

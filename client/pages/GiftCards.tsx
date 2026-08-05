@@ -8,7 +8,7 @@ export default function GiftCards() {
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Detailing Gift Cards</h1>
           <p className="text-lg text-zinc-600">
-            Give the gift of a showroom shine. Perfect for birthdays, holidays, or just because.
+                Give the gift of a professional vehicle reset for birthdays, holidays, or any occasion.
           </p>
         </div>
 

@@ -51,15 +51,15 @@ export const CATEGORIES: Category[] = [
     description: 'Interior car detailing in Bellevue and Omaha for dust, crumbs, stains, pet hair, and odor. Services include vacuuming, steam cleaning, upholstery shampoo, hot water extraction, glass cleaning, and interior wipe down.',
     image: '/gallery/takeout/20210629_204424.webp',
     seo: {
-      title: 'Interior Car Detailing | Omaha & Bellevue NE',
-      description: 'Compare interior detailing for everyday buildup, deep stains, pet hair, spills, and odors in Bellevue and the Omaha metro.'
+      title: 'Interior Car Detailing Bellevue & Omaha | Prices From $179',
+      description: 'Professional interior car detailing in Bellevue and Omaha. Vacuuming, compressed-air cleaning, shampoo, extraction, stain treatment, and pet-hair options.'
     }
   },
   { 
     id: 'exterior-detailing', 
     slug: 'exterior-detailing',
     name: 'Exterior Detailing', 
-    description: 'Erase road grime and environmental contamination that dulls your clear coat. My exterior car detailing service safely restores a brilliant gloss while laying down durable paint protection to defend your vehicle.',
+    description: 'Professional exterior cleaning for road film, bugs, wheels, bonded contamination, and paint that feels rough after normal washing. The process cleans and protects the finish without promising correction that requires machine polishing.',
     image: '/gallery/takeout/20220520_195826.webp',
     seo: {
       title: 'Exterior Car Detailing | Omaha & Bellevue NE',
@@ -73,30 +73,30 @@ export const CATEGORIES: Category[] = [
     description: 'Complete car detailing packages for Bellevue and Omaha drivers who need interior cleaning and exterior detailing in one appointment. Choose full detail, pre-sale detail, new car protection, or paint enhancement.',
     image: '/gallery/takeout/20230507_162319.webp',
     seo: {
-      title: 'Full Car Detailing Packages | Omaha & Bellevue NE',
-      description: 'Compare complete interior-and-exterior detailing packages for daily drivers, neglected vehicles, new cars, and pre-sale preparation.'
+      title: 'Full Car Detailing Bellevue & Omaha | Inside and Out',
+      description: 'Complete inside-and-out car detailing in Bellevue and Omaha. Interior cleaning, exterior hand wash, decontamination, wheels, tires, and protection.'
     }
   },
   { 
     id: 'paint-correction', 
     slug: 'paint-correction',
     name: 'Paint Correction', 
-    description: 'Permanently remove swirl marks, scratches, and oxidation. My multi-stage machine polishing and paint correction restores true mirror-like clarity and depth to your clear coat—not just a temporary shine.',
+    description: 'Controlled machine polishing that permanently reduces or removes eligible swirl marks, oxidation, wash haze, and light scratches depending on paint depth and defect severity. The process restores clarity and depth to the clear coat without promising unsafe or impossible results.',
     image: '/gallery/takeout/20260502_192636.webp',
     seo: {
-      title: 'Paint Correction Services | Omaha & Bellevue NE',
-      description: 'Compare machine-polishing and paint-correction services for swirl marks, wash haze, oxidation, scratches, clarity, and restored gloss.'
+      title: 'Paint Correction Omaha & Bellevue | Swirl Mark Removal',
+      description: 'Professional paint correction in Bellevue and Omaha for eligible swirl marks, oxidation, haze, and light scratches. Paint inspection required.'
     }
   },
   { 
     id: 'protection', 
     slug: 'ceramic-coating',
     name: 'Ceramic Coating', 
-    description: 'Professional ceramic coating in Bellevue and Omaha for long-term paint protection, water beading, easier washing, UV resistance, and gloss. Paint prep and machine polishing are available before coating.',
+    description: 'Certified System X ceramic coating in Bellevue and Omaha for durable gloss, chemical resistance, UV resistance, water behavior, and easier maintenance washing. Paint preparation is matched to the condition of the vehicle.',
     image: '/gallery/takeout/20230513_182328.webp',
     seo: {
-      title: 'Ceramic Coating Services | Omaha & Bellevue NE',
-      description: 'Compare ceramic-coating packages with professional paint preparation, water beading, easier washing, UV resistance, and lasting gloss.'
+      title: 'Ceramic Coating Omaha & Bellevue | System X Certified',
+      description: 'Certified System X ceramic coating installation in Bellevue for Omaha-area vehicles. Paint preparation, correction, coating, and aftercare included.'
     }
   },
   { 
@@ -180,7 +180,7 @@ export const ADD_ONS: AddOn[] = [
     price: 199,
     priceBySize: { car: 199, suv: 229, truck: 249, largeSuv: 279 },
     duration: '1.5 hours',
-    description: 'Restores faded unpainted exterior plastic and trim, then adds permanent UV and hydrophobic protection with System X Revive.'
+    description: 'Restores faded unpainted exterior plastic and trim, then adds durable UV and hydrophobic protection with System X Revive.'
   },
 ];
 
@@ -192,12 +192,12 @@ export const SERVICES: Service[] = [
     name: 'Signature Interior Detail',
     shortDescription: 'Interior car detailing for dust, crumbs, light stains, dirty mats, glass, plastics, cupholders, and everyday buildup.',
     longDescription: 'Signature Interior Detail is an interior car detailing service for Bellevue and Omaha drivers who want the cabin cleaned properly. The service includes a thorough vacuum, compressed-air blowout, interior wipe down, plastic and vinyl cleaning, mat cleaning, glass cleaning, cupholder cleaning, door panel cleaning, light stain treatment, and door jamb wipe down.',
-    price: { car: 179, suv: 199, truck: 219, largeSuv: 249 },
+    price: { car: 179, suv: 199, truck: 209, largeSuv: 229 },
     pricingType: 'fixed',
     squareName: 'Signature Interior Detail',
     seo: {
-      title: 'Interior Detailing Bellevue NE | Car Cleaning Omaha',
-      description: 'Interior detailing for daily-driver dust, crumbs, light stains, mats, glass, cupholders, panels, and plastics in Bellevue and Omaha.'
+      title: 'Interior Car Detailing Bellevue & Omaha | Prices From $179',
+      description: 'Professional interior car detailing in Bellevue and Omaha. Vacuuming, compressed-air cleaning, light stain treatment, and pet-hair options.'
     },
     features: [
       'Interior and trunk vacuum',
@@ -219,18 +219,18 @@ export const SERVICES: Service[] = [
   {
     id: 'interior-reset',
     categoryId: 'interior-detailing',
-    name: 'Deep Interior Restoration',
+    name: 'Interior Restoration',
     shortDescription: 'Deep interior cleaning with hot water extraction for heavy dirt, fabric stains, pet hair, spills, and odor sources.',
-    longDescription: 'Deep Interior Restoration is for neglected interiors, family vehicles, work vehicles, used cars, and pet vehicles around Bellevue and Omaha. The service includes dry debris removal, pet hair removal, steam cleaning where appropriate, upholstery shampoo, hot water extraction, seat track cleaning, mat cleaning, plastic cleaning, glass cleaning, and odor source cleaning.',
-    price: { car: 249, suv: 279, truck: 309, largeSuv: 349 },
+    longDescription: 'Interior Restoration is for neglected interiors, family vehicles, work vehicles, used cars, and pet vehicles around Bellevue and Omaha. The service includes dry debris removal, pet hair removal, steam cleaning where appropriate, upholstery shampoo, hot-water extraction, seat track cleaning, mat cleaning, plastic cleaning, glass cleaning, and odor-source cleaning.',
+    price: { car: 249, suv: 279, truck: 289, largeSuv: 309 },
     pricingType: 'fixed',
     squareName: 'Deep Interior Restoration',
     seo: {
-      title: 'Deep Interior Cleaning Bellevue NE | Pet Hair & Stains',
-      description: 'Deep interior restoration in Bellevue and Omaha with hot-water extraction, heavy stain treatment, pet-hair removal, and odor-source cleaning.'
+      title: 'Interior Restoration Bellevue & Omaha | From $249',
+      description: 'Interior restoration in Bellevue and Omaha with shampooing, hot-water extraction, heavy stain treatment, pet-hair removal, and odor-source cleaning.'
     },
     features: [
-      'Everything in Interior Detail',
+      'Everything in Signature Interior Detail',
       'Hot water extraction for fabric and carpet',
       'Steam cleaning where safe for the material',
       'Upholstery shampoo',
@@ -365,7 +365,7 @@ export const SERVICES: Service[] = [
       'Panel prep and coating aftercare guide'
     ],
     duration: '1 Day',
-    bestFor: 'First-time coating buyers, newer daily drivers, lease vehicles, and owners who want professional protection near the price of the old generic package.',
+    bestFor: 'First-time coating buyers, newer daily drivers, lease vehicles, and owners who want a straightforward entry-level System X package.',
     badge: 'Best Entry Value',
     image: '/gallery/takeout/20230513_182328.webp'
   },
@@ -379,8 +379,8 @@ export const SERVICES: Service[] = [
     pricingType: 'fixed',
     squareName: 'System X Pro+ Signature',
     seo: {
-      title: 'System X Pro+ Ceramic Coating | Omaha & Bellevue',
-      description: 'Certified System X Pro+ ceramic coating with paint enhancement, Glass+ windshield protection, CARFAX registration, and up to 6 years of protection.'
+      title: 'System X Pro+ Ceramic Coating Bellevue & Omaha | From $1,099',
+      description: 'Certified System X Pro+ ceramic coating in Bellevue for Omaha-area vehicles with paint preparation, correction, Glass+, coating, and aftercare.'
     },
     features: [
       'System X Pro+ on painted surfaces',
@@ -460,8 +460,8 @@ export const SERVICES: Service[] = [
     pricingType: 'fixed',
     squareName: 'Signature Full Detail',
     seo: {
-      title: 'Full Car Detailing | Bellevue & Omaha NE',
-      description: 'Full car detailing in Bellevue and Omaha with interior cleaning, exterior hand washing, paint decontamination, clay treatment, and sealant.'
+      title: 'Full Car Detailing Bellevue & Omaha | From $279',
+      description: 'Complete inside-and-out car detailing in Bellevue and Omaha with interior cleaning, exterior hand wash, decontamination, wheels, tires, and protection.'
     },
     features: [
       'Signature Interior Detail',
@@ -480,16 +480,16 @@ export const SERVICES: Service[] = [
     categoryId: 'full-detailing',
     name: 'Showroom Package',
     shortDescription: 'Interior restoration and exterior machine polishing for neglected vehicles, used cars, and pre-sale prep.',
-    longDescription: 'The Showroom Package combines Deep Interior Restoration with Paint Enhancement Polish. It is built for vehicles that need hot water extraction, stain treatment, pet hair removal, odor source cleaning, exterior decontamination, and single-stage machine polishing before sale or regular use.',
+    longDescription: 'The Showroom Package combines Interior Restoration with Paint Enhancement Polish. It is built for vehicles that need hot-water extraction, stain treatment, pet-hair removal, odor-source cleaning, exterior decontamination, and single-stage machine polishing before sale or regular use.',
     price: { car: 499, suv: 549, truck: 599, largeSuv: 649 },
     pricingType: 'fixed',
     squareName: 'Showroom Package',
     seo: {
-      title: 'Showroom Detail Package | Bellevue & Omaha NE',
-      description: 'A restoration-focused detail with hot-water extraction, interior deep cleaning, exterior decontamination, and machine polishing in Bellevue and Omaha.'
+      title: 'Showroom Detail Package Bellevue & Omaha | From $499',
+      description: 'A major interior and exterior improvement package in Bellevue and Omaha with interior restoration, decontamination, and machine polishing.'
     },
     features: [
-      'Deep Interior Restoration',
+      'Interior Restoration',
       'Machine Paint Enhancement Polish',
       'Improves paint gloss and clarity',
       'Engine bay cleaning',
@@ -616,7 +616,7 @@ export const SERVICES: Service[] = [
     categoryId: 'full-detailing',
     name: 'New Car Detail & Protection',
     shortDescription: 'New vehicle detail with paint decontamination, light polishing, and sealant or ceramic coating protection.',
-    longDescription: 'New doesn\'t mean perfect. Dealer prep, transport scratches, and contamination from sitting on a lot mean your brand-new vehicle\'s paint likely has light defects already. My New Car Detail removes all of that before it causes long-term damage. I perform a full decontamination wash, a light paint correction to remove any swirls from dealer prep, and apply a professional-grade sealant or ceramic coating to protect your investment from day one. This is the single best thing you can do for a new car.',
+    longDescription: 'New does not always mean perfect. Dealer prep, transport scratches, and contamination from sitting on a lot can leave light defects on a new vehicle. My New Car Detail addresses that buildup with a full decontamination wash, light paint correction where appropriate, and a professional sealant or ceramic coating for added protection. Final prep is based on the vehicle\'s condition.',
     price: { car: 349, suv: 399, truck: 449, largeSuv: 499 },
     pricingType: 'custom',
     squareName: 'New Car Detail & Protection',
@@ -705,10 +705,10 @@ export const SERVICES: Service[] = [
     },
     features: [
       'Self-healing urethane film technology',
-      'Stops rock chips & road debris',
-      'Virtually invisible on paint surface',
-      'Minor scratches disappear in sunlight',
-      'Pairs perfectly with ceramic coating',
+      'Helps reduce exposure to rock chips and road debris',
+      'Clear film designed to remain discreet when properly installed',
+      'Self-healing behavior depends on the film and conditions',
+      'Can be paired with ceramic coating for easier maintenance',
       'Custom quote based on coverage area'
     ],
     duration: '1-3 Days',

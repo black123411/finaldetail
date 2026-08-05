@@ -338,6 +338,7 @@ async function startServer() {
       '/services/full-detailing': '/services/category/full-detailing',
       '/services/interior-only': '/services/interior-detail',
       '/services/maintenance': '/services/maintenance-detail',
+      '/services/maintenance-interior': '/services/maintenance-detail',
       '/product/paint-correction/dtj56skdjjzlkx6vfwehttsq': '/services/category/paint-correction',
       '/product/exterior-protection/ztfv36ft57ejxi3h2hxlh4hu': '/services/category/exterior-detailing',
       '/shop/rv-detailing-services/da32pniiisvjwk7d5iudz4jw': '/services/category/rv-boat-detailing'
@@ -1176,7 +1177,7 @@ ${allUrls.map(path => {
               <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
                 <h2 style="color: #111;">Booking Confirmed!</h2>
                 <p>Hi ${customer.firstName},</p>
-                <p>We've received your booking for <strong>${formattedDate}</strong>.</p>
+                <p>I've received your booking for <strong>${formattedDate}</strong>.</p>
                 <p>Payment will be collected upon completion of the service.</p>
                 <p><strong>Appointment Details:</strong></p>
                 <ul>
@@ -1219,11 +1220,11 @@ ${allUrls.map(path => {
       await transporter.sendMail({
         from: `Bryan's Detailing <${process.env.EMAIL_USER}>`,
         to: email,
-        subject: `How did we do? — Bryan's Showroom Quality Mobile Detailing`,
+        subject: `How did I do? — Bryan's Showroom Quality Mobile Detailing`,
         html: `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 560px; margin: 0 auto; background: #0a0a0a; color: #fff; border-radius: 16px; overflow: hidden;">
             <div style="background: #18c972; padding: 32px 40px;">
-              <h1 style="margin: 0; font-size: 28px; font-weight: 900; color: #000; letter-spacing: -0.04em;">How did we do?</h1>
+              <h1 style="margin: 0; font-size: 28px; font-weight: 900; color: #000; letter-spacing: -0.04em;">How did I do?</h1>
               <p style="margin: 8px 0 0; color: #000; opacity: 0.7; font-weight: 600;">Bryan's Showroom Quality Mobile Detailing</p>
             </div>
             <div style="padding: 40px;">
@@ -1282,7 +1283,7 @@ ${allUrls.map(path => {
                 Hi ${firstName || 'there'},
               </p>
               <p style="font-size: 16px; color: #e4e4e7; margin: 0 0 8px; line-height: 1.6;">
-                You started a quote for your ${vehicleType || 'vehicle'} — I just wanted to check in. My schedule fills up fast, especially on weekends.
+              You started a quote for your ${vehicleType || 'vehicle'} — I wanted to follow up in case you still have questions about the service or next steps.
               </p>
               ${services?.length ? `<p style="font-size: 14px; color: #a1a1aa; margin: 0 0 24px;">Services you were interested in: <strong style="color: #fff;">${services.join(', ')}</strong></p>` : ''}
               <a href="https://bryansdetailingomaha.com/book" style="display: inline-block; background: #18c972; color: #000; font-weight: 900; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 16px 32px; border-radius: 12px;">

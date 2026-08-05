@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Shield, FileText, Scale, AlertCircle } from 'lucide-react';
+import { Scale } from 'lucide-react';
 
 export default function TermsOfService() {
   return (
@@ -36,32 +36,17 @@ export default function TermsOfService() {
             <section className="space-y-4">
               <h2 className="text-2xl font-black italic tracking-tight flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                2. Deposit & Cancellation
-              </h2>
-              <div className="bg-zinc-50 p-8 rounded-3xl border border-zinc-100 space-y-4">
-                <p className="text-sm font-bold text-zinc-900 uppercase tracking-widest flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4 text-emerald-500" /> Important Deposit Policy
-                </p>
-                <p className="text-zinc-600 italic">
-                  A non-refundable deposit ($50 for standard services, $100 for high-ticket restoration) is required to secure your appointment time. This deposit is applied towards your final balance. Cancellations made with less than 24 hours' notice will forfeit the deposit. One reschedule is permitted per deposit if requested at least 24 hours in advance.
-                </p>
-              </div>
-            </section>
-
-            <section className="space-y-4">
-              <h2 className="text-2xl font-black italic tracking-tight flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                3. Weather Policy
+                2. Weather Policy
               </h2>
               <p className="text-zinc-600 font-medium">
-                If weather conditions prevent me from working safely at your location, I reserve the right to reschedule. Services performed at my Bellevue location are unaffected by weather conditions.
+                If weather conditions prevent me from working safely at your location, I may need to reschedule. Bellevue drop-off appointments can proceed when controlled working conditions are available.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-black italic tracking-tight flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                4. Liability & Inspection
+                3. Liability & Inspection
               </h2>
               <p className="text-zinc-600 font-medium">
                 I perform a pre-service inspection of each vehicle. Any pre-existing damage (mechanical or cosmetic) will be documented. Bryan's Showroom Quality Mobile Detailing is not responsible for damage resulting from pre-existing conditions, such as oxidized clear coat failure, loose trim pieces, or electrical issues unrelated to the detailing process.
@@ -71,10 +56,10 @@ export default function TermsOfService() {
             <section className="space-y-4">
               <h2 className="text-2xl font-black italic tracking-tight flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                5. Satisfaction Guarantee
+                4. Final Walkthrough
               </h2>
               <p className="text-zinc-600 font-medium">
-                I stand behind my work. Any concerns must be reported at the time of final walkthrough upon completion. I will make every reasonable effort to correct any discrepancies before leaving the job site.
+                I review the completed work with you at pickup or before leaving the mobile appointment. Please raise any concerns during that walkthrough so I can address reasonable discrepancies before the appointment is closed.
               </p>
             </section>
 

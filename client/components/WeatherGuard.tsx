@@ -37,23 +37,23 @@ const WeatherGuard: React.FC<WeatherGuardProps> = ({ date }) => {
 
           let condition = "Clear";
           let recType: 'success' | 'warning' | 'alert' = 'success';
-          let recText = "Perfect weather! Great for your scheduled restoration in Bellevue.";
+          let recText = "The forecast looks workable for the selected Bellevue appointment.";
 
           if (code >= 1 && code <= 3) {
             condition = "Partly Cloudy";
           } else if (code >= 45 && code <= 48) {
             condition = "Foggy";
             recType = 'success';
-            recText = "Foggy outside, but our climate-controlled location ensures perfect results regardless.";
+            recText = "Foggy outside. Bellevue drop-off keeps controlled-condition services protected from the weather.";
           } else if (code >= 51 && code <= 67 || code >= 80) {
             condition = "Rainy";
             recType = 'warning';
-            recText = "Rain predicted. On-site services may be affected, but our indoor Bellevue location keeps your vehicle dry and protected.";
+            recText = "Rain is in the forecast. Mobile work may need to move, while Bellevue drop-off remains available for services that require controlled conditions.";
           }
 
           if (precip > 30 && recType === 'success') {
             recType = 'success';
-            recText = "Rain chance outside. We can handle your detail in our dry, professional Bellevue location!";
+            recText = "Rain is possible. Bellevue drop-off is an option for services that require controlled conditions; mobile availability depends on the location and weather.";
           }
 
           setWeather({

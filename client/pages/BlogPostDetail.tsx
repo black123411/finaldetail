@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { getBlogSeoDescription, getBlogSeoTitle } from '@/shared/data/seo';
@@ -20,6 +20,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Button } from '../components/ui/button';
 import { BlogAPI } from '../services/api';
+import NotFound from './NotFound';
 
 interface BlogPost {
   id: string;
@@ -45,7 +46,6 @@ function estimateReadTime(content: string) {
 
 export default function BlogPostDetail() {
   const { slug } = useParams();
-  const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -60,16 +60,17 @@ export default function BlogPostDetail() {
         ]);
         setPost(postData);
         setRelatedPosts(storedPosts.filter(item => item.slug !== slug && item.category === postData.category).slice(0, 3));
-      } catch (error) {
-        console.error('Error fetching post:', error);
-        navigate('/blog');
+      } catch {
+        // A missing or unpublished slug should remain a real 404 route rather than
+        // silently redirecting visitors to the blog index.
+        setPost(null);
       } finally {
         setLoading(false);
       }
     }
 
     fetchPost();
-  }, [slug, navigate]);
+  }, [slug]);
 
   if (loading) {
     return (
@@ -84,7 +85,7 @@ export default function BlogPostDetail() {
     );
   }
 
-  if (!post) return null;
+  if (!post) return <NotFound />;
 
   const readTime = estimateReadTime(post.content);
   const articleUrl = `https://bryansdetailingomaha.com/blog/${post.slug}`;

@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Calendar, Check, Clock } from 'lucide-react';
 import { SERVICES, type Service } from '@/shared/data/services';
 import { ServiceAPI } from '../services/api';
+import { formatCurrency } from '../lib/utils';
 
 interface SquareService {
   id: string;
@@ -46,7 +47,7 @@ function getStartingPrice(service: Service, squareServices: SquareService[]) {
   const squarePrices = squareMatch?.variations.map((variation) => variation.price).filter((price) => price > 0) || [];
   const price = squarePrices.length ? Math.min(...squarePrices) : localPrice;
   if (!price) return 'Custom quote';
-  return service.pricingType === 'variable' ? `From $${price}/ft` : `From $${price}`;
+  return service.pricingType === 'variable' ? 'From ' + formatCurrency(price) + '/ft' : 'From ' + formatCurrency(price);
 }
 
 function getDuration(service: Service) {
@@ -90,23 +91,23 @@ export default function Services() {
         <div className="container relative mx-auto px-4 pb-16 pt-32 md:pb-24">
           <div className="max-w-3xl text-white">
             <h1 className="text-5xl font-black leading-[0.95] md:text-7xl">
-              Auto Detailing Services in Bellevue and Omaha
+              Auto Detailing Services and Pricing
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-zinc-200 md:text-xl">
-              Interior detailing, full details, paint correction, ceramic coating, and specialty vehicle care with clear package details and online pricing.
+              Choose the service based on the result your vehicle needs—not simply the cheapest package. The prices below are starting prices for standard-condition vehicles. Vehicle size, excessive pet hair, staining, mud, bodily fluids, smoke, severe odors, oxidation, and neglected condition may affect the final price. Any condition adjustment is explained before additional work begins.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
                 to="/book"
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-emerald-500 px-7 font-black text-zinc-950 transition-colors hover:bg-emerald-400"
               >
-                <Calendar className="h-5 w-5" /> Book a Detail
+                <Calendar className="h-5 w-5" /> View Current Availability
               </Link>
               <Link
                 to="/quote"
                 className="inline-flex h-14 items-center justify-center rounded-md border border-white/40 bg-black/20 px-7 font-bold text-white transition-colors hover:bg-white hover:text-zinc-950"
               >
-                Request a Quote
+                Text Photos for a Recommendation
               </Link>
             </div>
           </div>
@@ -125,7 +126,7 @@ export default function Services() {
         <div className="max-w-3xl">
           <h2 className="text-4xl font-black tracking-tight md:text-5xl">Choose the result your vehicle needs</h2>
           <p className="mt-5 text-lg leading-relaxed text-zinc-600">
-            Start with interior care, a complete vehicle detail, or paint restoration and protection. Specialty vehicle work is listed last.
+            Compare interior detailing, complete inside-and-out packages, paint correction, ceramic coating, and specialty vehicle services. Each service page explains what is included, what is not included, and when a condition-based quote is needed.
           </p>
         </div>
 
@@ -196,14 +197,14 @@ export default function Services() {
           <div className="max-w-2xl">
             <h2 className="text-4xl font-black tracking-tight">Not sure which service fits?</h2>
             <p className="mt-4 text-lg leading-relaxed text-zinc-300">
-              Send photos and a short description of the vehicle condition. Bryan can recommend the correct package before scheduling.
+              Send clear photos and a short description of the vehicle condition. I can recommend the appropriate package before scheduling.
             </p>
           </div>
           <Link
             to="/quote"
             className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-md bg-white px-7 font-black text-zinc-950 hover:bg-zinc-200"
           >
-            Send Vehicle Photos <ArrowRight className="h-5 w-5" />
+            Text Photos for a Recommendation <ArrowRight className="h-5 w-5" />
           </Link>
         </div>
       </section>

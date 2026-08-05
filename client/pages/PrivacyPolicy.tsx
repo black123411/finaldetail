@@ -77,7 +77,7 @@ export default function PrivacyPolicy() {
 
           <div className="text-center">
             <p className="text-xs text-zinc-400 font-bold uppercase tracking-widest">
-              Security is my priority. <span className="text-zinc-900">Showroom Quality standards applied to your data.</span>
+              I use reasonable safeguards to protect the information needed to schedule and provide your service.
             </p>
           </div>
         </motion.div>

@@ -12,11 +12,11 @@ export type SeoRoute = {
 export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
   '/': {
     title: "Mobile Car Detailing Omaha & Bellevue | Bryan's Detailing",
-    description: 'Mobile and Bellevue drop-off car detailing for Omaha, Bellevue, and Papillion. View interior, full-detail, paint-correction, and System X ceramic packages.',
+    description: 'Owner-operated mobile and drop-off car detailing in Bellevue and Omaha. Interior details from $179, full details, paint correction, and ceramic coatings.',
   },
   '/services': {
-    title: 'Auto Detailing Services & Pricing | Omaha & Bellevue',
-    description: 'Compare clear pricing and inclusions for interior detailing, full details, paint correction, ceramic coating, maintenance, RVs, boats, and equipment.',
+    title: 'Auto Detailing Services & Prices | Bellevue and Omaha',
+    description: "Compare interior detailing, full details, paint correction, and ceramic coating prices from Bryan's Detailing in Bellevue and the Omaha metro.",
   },
   '/book': {
     title: 'Book Auto Detailing Online | Omaha & Bellevue NE',
@@ -38,8 +38,8 @@ export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
     description: 'See real Bellevue and Omaha results from interior restoration, full details, paint correction, ceramic coating, and specialty-vehicle detailing.',
   },
   '/ceramic-coating': {
-    title: 'Ceramic Coating Omaha & Bellevue | System X Installer',
-    description: 'Professional System X ceramic coating with paint preparation, gloss, water beading, and long-term protection for Omaha and Bellevue vehicles.',
+    title: 'Ceramic Coating Omaha & Bellevue | System X Certified',
+    description: 'Certified System X ceramic coating installation in Bellevue for Omaha-area vehicles. Paint preparation, correction, coating, and aftercare included.',
   },
   '/membership': {
     title: 'Car Care Membership | Omaha & Bellevue NE',

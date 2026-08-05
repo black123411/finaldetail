@@ -7,17 +7,17 @@ import { FAQAPI } from '../services/api';
 const DEFAULT_FAQS = [
   {
     question: 'How long does auto detailing take?',
-    answer: 'The time required depends on the auto detailing service package and the condition of your vehicle. An Essential Interior Detail typically takes 1.5 - 2.5 hours, while a Full Car Detailing Package can take 4 - 6 hours. Paint Correction and Ceramic Coating services may require your vehicle for 1 to 3 days to ensure proper curing and perfection.',
+    answer: 'Timing depends on the service package, vehicle size, and condition. Interior services commonly take 2 to 6 hours, full details commonly take 4 to 6 hours, and paint correction or ceramic coating may require the vehicle for one to three days when preparation and curing time are needed.',
     order: 1
   },
   {
     question: 'What is your rain or weather policy for mobile detailing?',
-    answer: 'For mobile car detailing, your appointment is weather-dependent. If rain, snow, or extreme temperatures are forecasted, I will contact you at least 24 hours in advance to reschedule. If you have a garage or covered area, I can often still perform interior detailing or minor exterior car wash services.',
+    answer: 'For mobile car detailing, your appointment is weather-dependent. If rain, snow, or extreme temperatures are forecasted, I will contact you to reschedule. Interior or limited exterior work may still be possible when suitable covered conditions are available. Bellevue drop-off is available for services that need controlled conditions.',
     order: 2
   },
   {
     question: 'Do I need to provide water or electricity for mobile detailing?',
-    answer: 'No! For my mobile auto detailing, I am fully self-contained. I bring my own professional-grade spot-free water and silent power generators. As long as I have enough space to park my van near your vehicle, I don\'t need to plug into your home to complete your car detailing service.',
+    answer: 'For most mobile appointments, I bring the equipment and water needed for the service. The vehicle must be parked in a safe, accessible location. Bellevue drop-off and pickup are available when controlled conditions are needed.',
     order: 3
   }
 ];

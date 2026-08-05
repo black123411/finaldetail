@@ -20,17 +20,17 @@ export default function NotFound() {
           {/* Dashboard Redline Graphic */}
           <div className="absolute bottom-6 flex flex-col items-center space-y-1">
             <span className="text-xs font-black uppercase tracking-[0.25em] text-red-500 bg-red-950/50 px-3 py-1 rounded-full border border-red-500/20 backdrop-blur-sm animate-pulse">
-              Engine Redlined
+              Page Not Found
             </span>
           </div>
         </div>
 
         <div className="space-y-4">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white italic">
-            Looks Like You've Gone Off-Route
+            We couldn't find that page
           </h1>
           <p className="text-zinc-400 max-w-md mx-auto text-base sm:text-lg">
-            The page you're searching for has been detailed out of existence or moved to another garage. Let's redirect you back to the main track.
+            The page you requested may have moved or the address may be incorrect. Use one of the options below to continue.
           </p>
         </div>
 
@@ -41,7 +41,7 @@ export default function NotFound() {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase tracking-wider text-xs px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-emerald-500/20"
           >
             <Home className="w-4 h-4 shrink-0" />
-            Reset Course (Home)
+            Return Home
           </Link>
           <Link
             to="/book"
@@ -52,10 +52,10 @@ export default function NotFound() {
           </Link>
         </div>
 
-        {/* Quick Links / Showroom Index */}
+        {/* Quick Links */}
         <div className="pt-10 border-t border-zinc-900 mt-10">
           <p className="text-xs font-black uppercase tracking-widest text-zinc-500 mb-6 flex items-center justify-center gap-2">
-            <Compass className="w-3.5 h-3.5 text-emerald-500" /> Explore Showroom Garages
+            <Compass className="w-3.5 h-3.5 text-emerald-500" /> Explore Services and Resources
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-lg mx-auto">
             <Link
@@ -67,7 +67,7 @@ export default function NotFound() {
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-zinc-200 group-hover:text-white transition-colors">Our Services</h3>
+                  <h3 className="text-sm font-bold text-zinc-200 group-hover:text-white transition-colors">Bryan's Services</h3>
                   <p className="text-xs text-zinc-500">Paint correction & ceramic coating</p>
                 </div>
               </div>
@@ -84,7 +84,7 @@ export default function NotFound() {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-zinc-200 group-hover:text-white transition-colors">Before & Afters</h3>
-                  <p className="text-xs text-zinc-500">See our showroom quality work</p>
+                  <p className="text-xs text-zinc-500">See detailing results</p>
                 </div>
               </div>
               <ChevronRight className="w-4 h-4 text-zinc-700 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
