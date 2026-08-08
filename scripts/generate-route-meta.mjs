@@ -74,6 +74,7 @@ function staticHeading(path, title) {
   const headings = {
     '/': 'Mobile Car Detailing in Omaha & Bellevue, NE',
     '/services': 'Auto Detailing Services and Pricing',
+    '/about': 'Meet Bryan, Your Local Auto Detailer',
     '/book': 'Book Your Auto Detail',
     '/gallery': 'Auto Detailing Before & After Gallery',
     '/ceramic-coating': 'System X Ceramic Coating in Bellevue & Omaha',

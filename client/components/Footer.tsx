@@ -51,6 +51,7 @@ export default function Footer() {
         <div className="space-y-4">
           <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Company</h4>
           <ul className="space-y-2 text-sm">
+            <li><Link to="/about" className="block py-1 hover:text-zinc-100 transition-colors">Meet Bryan</Link></li>
             <li><Link to="/membership" className="block py-1 hover:text-zinc-100 transition-colors">Membership Plans</Link></li>
             <li><Link to="/blog" className="block py-1 hover:text-zinc-100 transition-colors">Blog & Tips</Link></li>
             <li><Link to="/gift-cards" className="block py-1 hover:text-zinc-100 transition-colors">Gift Cards</Link></li>

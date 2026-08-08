@@ -10,8 +10,8 @@ const GOOGLE_REVIEW_URL =
 
 const REVIEW_STEPS = [
   { step: '1', label: 'Click the button below', desc: "It opens Google's review form directly." },
-  { step: '2', label: 'Select your star rating', desc: '5 stars goes a long way — thank you!' },
-  { step: '3', label: 'Share your experience', desc: 'Even a sentence or two helps other customers find Bryan’s service.' },
+  { step: '2', label: 'Choose your rating', desc: 'Select the rating that honestly reflects your experience.' },
+  { step: '3', label: 'Share what was helpful', desc: 'A sentence or two about the service helps other customers make an informed choice.' },
 ];
 
 export default function ReviewPage() {
@@ -29,7 +29,7 @@ export default function ReviewPage() {
             Enjoyed your detail?
           </h1>
           <p className="text-zinc-400 font-medium text-lg leading-relaxed">
-            Your Google review helps other Bellevue and Omaha drivers find Bryan's service — and means a lot to this small local business.
+            Your honest Google review helps other Bellevue and Omaha drivers make an informed choice—and helps this small local business improve.
           </p>
         </motion.div>
 
@@ -83,6 +83,7 @@ export default function ReviewPage() {
                 href="https://www.facebook.com/sharer/sharer.php?u=https://bryansdetailingomaha.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent('share_business', { channel: 'facebook', location: 'review_page' })}
                 className="flex items-center justify-center gap-2"
               >
                 <Share2 className="h-3.5 w-3.5" />
@@ -94,7 +95,7 @@ export default function ReviewPage() {
               variant="outline"
               className="flex-1 h-12 rounded-2xl border-zinc-700 text-zinc-400 hover:text-white hover:bg-zinc-800 font-black text-xs uppercase tracking-widest"
             >
-              <a href="sms:?body=Check%20out%20Bryan%27s%20Showroom%20Quality%20Detailing%20in%20Bellevue%3A%20https%3A%2F%2Fbryansdetailingomaha.com" className="flex items-center justify-center gap-2">
+              <a href="sms:?body=Check%20out%20Bryan%27s%20Showroom%20Quality%20Detailing%20in%20Bellevue%3A%20https%3A%2F%2Fbryansdetailingomaha.com" onClick={() => trackEvent('share_business', { channel: 'sms', location: 'review_page' })} className="flex items-center justify-center gap-2">
                 <MessageSquare className="h-3.5 w-3.5" />
                 Text a Friend
               </a>

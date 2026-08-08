@@ -16,6 +16,7 @@ const STATIC_SECTIONS = [
     items: [
       { name: 'Home', path: '/' },
       { name: 'Services', path: '/services' },
+      { name: 'Meet Bryan', path: '/about' },
       { name: 'Gallery', path: '/gallery' },
       { name: 'Blog', path: '/blog' },
       { name: 'FAQ', path: '/faq' },

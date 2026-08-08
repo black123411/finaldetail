@@ -5,7 +5,8 @@ const ORIGIN = process.env.HOSTING_ORIGIN || 'http://localhost:5000';
 const cases = [
   { path: '/', status: 200, canonical: 'https://bryansdetailingomaha.com/', h1: 'Mobile Car Detailing in Omaha &amp; Bellevue, NE.' },
   { path: '/book', status: 200, canonical: 'https://bryansdetailingomaha.com/book', h1: 'Book Your Auto Detail' },
-  { path: '/areas/omaha-ne', status: 200, canonical: 'https://bryansdetailingomaha.com/areas/omaha-ne', h1: 'Mobile Car Detailing in Omaha, Nebraska' },
+  { path: '/about', status: 200, canonical: 'https://bryansdetailingomaha.com/about', h1: 'Meet Bryan, Your Local Auto Detailer' },
+  { path: '/areas/omaha-ne', status: 200, canonical: 'https://bryansdetailingomaha.com/areas/omaha-ne', h1: 'Mobile Car Detailing in Omaha, NE' },
   { path: '/services/interior-detail', status: 200, canonical: 'https://bryansdetailingomaha.com/services/interior-detail', h1: 'Signature Interior Detail' },
   { path: '/app/cms', status: 404, noindex: true, h1: 'Page Not Found' },
   { path: '/definitely-not-a-real-page', status: 404, noindex: true, h1: 'Page Not Found' },

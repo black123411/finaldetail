@@ -447,7 +447,10 @@ export default function Home() {
                  </div>
               </div>
 
-              <div className="pt-8">
+              <div className="flex flex-wrap gap-3 pt-8">
+                <Button size="lg" variant="outline" className="h-16 rounded-2xl border-zinc-700 bg-white/5 px-10 text-xs font-black uppercase tracking-widest text-white hover:bg-white hover:text-zinc-950" asChild>
+                  <Link to="/about" onClick={() => trackEvent('view_about', { location: 'home_owner_section' })}>Meet Bryan</Link>
+                </Button>
                 <Button size="lg" className="h-16 px-12 rounded-2xl bg-white text-zinc-950 font-black uppercase tracking-widest text-xs hover:bg-zinc-200" asChild>
                   <Link to="/services">View Services & Pricing</Link>
                 </Button>

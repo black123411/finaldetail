@@ -43,6 +43,7 @@ const ServiceDetail = lazy(() => import('./pages/ServiceDetail'));
 const CityDetail = lazy(() => import('./pages/CityDetail'));
 const CeramicCoating = lazy(() => import('./pages/CeramicCoating'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
+const About = lazy(() => import('./pages/About'));
 
 function ScrollToTop() {
   const { pathname, search } = useLocation();
@@ -210,6 +211,7 @@ export default function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/services" element={<Services />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/services/ceramic-3yr" element={<Navigate replace to="/services/system-x-crystal-plus" />} />
                 <Route path="/services/protection-package" element={<Navigate replace to="/services/system-x-pro-plus" />} />
                 <Route path="/services/maintenance-interior" element={<Navigate replace to="/services/maintenance-detail" />} />

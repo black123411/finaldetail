@@ -21,12 +21,12 @@ export const CITIES: CityPage[] = [
     name: 'Omaha, NE',
     type: 'primary',
     seo: {
-      title: 'Mobile Car Detailing Omaha, NE | Bryan\'s Detailing',
+      title: 'Car Detailing Omaha, NE | Mobile Auto Detailing | Bryan\'s',
       description: 'Professional mobile car detailing in Omaha. Interior detailing, complete details, paint correction, and Bellevue drop-off ceramic coating options.'
     },
     content: {
       featuredServiceIds: ['maintenance-detail', 'interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'pre-sale-detail'],
-      title: 'Mobile Car Detailing in Omaha, Nebraska',
+      title: 'Mobile Car Detailing in Omaha, NE',
       intro: "Bryan's Showroom Quality Detailing provides owner-operated mobile auto detailing throughout Omaha and the surrounding metro. Services include interior detailing, complete inside-and-out details, paint enhancement, paint correction, and ceramic coating preparation. Mobile availability depends on the service, weather, workspace, access, distance, and vehicle condition. Bellevue drop-off and pickup options are available for services that require controlled conditions or extended working time.",
       servicesLabel: 'Auto Detailing Services Available in Omaha:',
       whyLabel: "Why Omaha drivers choose Bryan's:",

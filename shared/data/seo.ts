@@ -48,6 +48,10 @@ export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
     title: 'Auto Detailing Services & Prices | Bellevue and Omaha',
     description: "Compare interior detailing, full details, paint correction, and ceramic coating prices from Bryan's Detailing in Bellevue and the Omaha metro.",
   },
+  '/about': {
+    title: "Meet Bryan | Owner of Bryan's Detailing in Bellevue, NE",
+    description: "Meet Bryan, the owner and detailer behind Bryan's Showroom Quality Mobile Detailing. Serving Bellevue and the Omaha metro since 2017.",
+  },
   '/book': {
     title: 'Book Auto Detailing Online | Omaha & Bellevue NE',
     description: 'Choose a detailing service, vehicle size, add-ons, and appointment time online for Bryan\'s Detailing in Bellevue and the Omaha metro.',
