@@ -15,10 +15,12 @@ import {
   MessageSquare,
   ShieldCheck,
 } from 'lucide-react';
+import { trackEvent } from '../lib/analytics';
 import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, type Service } from '@/shared/data/services';
 import { SERVICE_PAGE_CONTENT } from '@/shared/data/servicePageContent';
 import { BEFORE_AFTERS } from '@/shared/data/photos';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
+import RelatedGuides, { guideTopicForCategory } from '../components/RelatedGuides';
 import { Button } from '../components/ui/button';
 import { formatCurrency } from '../lib/utils';
 
@@ -154,7 +156,7 @@ export default function ServiceDetail() {
         )}
       </Helmet>
 
-      <section className="relative min-h-[620px] overflow-hidden bg-zinc-950 text-white">
+      <section className="relative min-h-155 overflow-hidden bg-zinc-950 text-white">
         {service.image && (
           <img
             src={service.image}
@@ -162,8 +164,8 @@ export default function ServiceDetail() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/20" />
-        <div className="container relative mx-auto flex min-h-[620px] items-end px-4 pb-14 pt-32 md:pb-20">
+        <div className="absolute inset-0 bg-linear-to-r from-black/95 via-black/70 to-black/20" />
+        <div className="container relative mx-auto flex min-h-155 items-end px-4 pb-14 pt-32 md:pb-20">
           <div className="max-w-3xl">
             <div className="flex flex-wrap items-center gap-3 text-sm font-bold text-zinc-200">
               <Link to="/services" className="inline-flex items-center gap-2 hover:text-white">
@@ -196,17 +198,28 @@ export default function ServiceDetail() {
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
                 to={primaryTarget}
+                onClick={() => trackEvent('begin_booking', { location: 'service_detail', service_id: service.id })}
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-emerald-500 px-7 font-black text-zinc-950 hover:bg-emerald-400"
               >
                 <Calendar className="h-5 w-5" /> {primaryLabel}
               </Link>
               <a
                 href={`sms:+17123056313?body=${textMessage}`}
+                onClick={() => trackEvent('click_text_quote', { location: 'service_detail', service_id: service.id })}
                 className="inline-flex h-14 items-center justify-center rounded-md border border-white/40 bg-black/20 px-7 font-bold text-white hover:bg-white hover:text-zinc-950"
               >
                 <MessageSquare className="mr-2 h-5 w-5" /> Text photos to Bryan
               </a>
             </div>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
+              Live availability updates during booking. Reserve your preferred date and time now—Saturday and evening appointments often fill up first.
+            </p>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
+              Bryan confirms the exact scope and any vehicle-specific needs before the service begins. Book online now to secure the best available slot.
+            </p>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
+              Prefer a quick answer? <a href="tel:712-305-6313" onClick={() => trackEvent('click_call', { location: 'service_detail', service_id: service.id })} className="font-bold underline">Call Bryan</a> for availability and package advice.
+            </p>
           </div>
         </div>
       </section>
@@ -246,6 +259,38 @@ export default function ServiceDetail() {
                 </div>
               ))}
             </div>
+
+            {(service.id === 'interior-detail' || service.id === 'interior-reset') && (
+              <section className="mt-16 overflow-hidden rounded-4xl border border-zinc-200 bg-white shadow-sm">
+                <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px bg-zinc-200 text-xs uppercase tracking-[0.24em] text-zinc-500">
+                  <div className="bg-zinc-950 px-5 py-4 text-white">Compare</div>
+                  <div className="bg-zinc-950 px-5 py-4 text-white">Signature Interior Detail</div>
+                  <div className="bg-zinc-950 px-5 py-4 text-white">Deep Interior Restoration</div>
+                </div>
+                <div className="bg-zinc-50">
+                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700">
+                    <div className="px-5 py-5 font-bold">Best for</div>
+                    <div className="px-5 py-5">Normal daily buildup, light stains, and a refreshed cabin.</div>
+                    <div className="px-5 py-5">Heavy pet hair, embedded stains, smoke, and neglected interiors.</div>
+                  </div>
+                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700 bg-white">
+                    <div className="px-5 py-5 font-bold">Stain + odor care</div>
+                    <div className="px-5 py-5">Spot treatment and cabin refresh; fresher smell for lighter contamination.</div>
+                    <div className="px-5 py-5">Intensive stain treatment, odor-source cleaning, and deeper fabric extraction.</div>
+                  </div>
+                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700">
+                    <div className="px-5 py-5 font-bold">Cleaning method</div>
+                    <div className="px-5 py-5">Thorough vacuuming, interior wipe-downs, glass and trim detailing.</div>
+                    <div className="px-5 py-5">Hot water extraction, steam cleaning, shampooing, and repeated debris removal.</div>
+                  </div>
+                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700 bg-white">
+                    <div className="px-5 py-5 font-bold">Result</div>
+                    <div className="px-5 py-5">A cleaner cabin with refreshed surfaces and improved everyday appearance.</div>
+                    <div className="px-5 py-5">A deep restored interior with heavier contamination under control.</div>
+                  </div>
+                </div>
+              </section>
+            )}
             </div>
 
             <aside className="border-l-4 border-emerald-500 bg-zinc-50 p-7 md:p-9">
@@ -279,6 +324,9 @@ export default function ServiceDetail() {
             </div>
             <p className="mt-4 text-sm leading-relaxed text-zinc-500">
               Final price depends on vehicle condition, selected add-ons, access, and any additional restoration work approved before the service begins.
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+              Preferred time slots are limited. Book online now to reserve the best available appointment.
             </p>
             <Link to={primaryTarget} className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-zinc-950 px-6 font-black text-white hover:bg-zinc-800">
               {primaryLabel} <ArrowRight className="h-4 w-4" />
@@ -360,6 +408,12 @@ export default function ServiceDetail() {
         </section>
       )}
 
+      <RelatedGuides
+        topic={guideTopicForCategory(service.categoryId)}
+        heading={`Learn more before choosing ${service.name}`}
+        intro="Review the process, upkeep, and local driving considerations that can affect the best service choice for your vehicle."
+      />
+
       {relatedServices.length > 0 && (
         <section className="border-t border-zinc-200 bg-zinc-50 py-20 md:py-24">
           <div className="container mx-auto px-4">
@@ -374,9 +428,9 @@ export default function ServiceDetail() {
               {relatedServices.map((related) => (
                 <Link key={related.id} to={`/services/${related.id}`} className="group overflow-hidden rounded-lg border border-zinc-200 bg-white">
                   {related.image ? (
-                    <img src={related.image} alt={related.name} className="aspect-[16/9] w-full object-cover" loading="lazy" />
+                    <img src={related.image} alt={related.name} className="aspect-video w-full object-cover" loading="lazy" />
                   ) : (
-                    <div className="flex aspect-[16/9] items-end bg-zinc-900 p-5 font-black text-white">{related.name}</div>
+                    <div className="flex aspect-video items-end bg-zinc-900 p-5 font-black text-white">{related.name}</div>
                   )}
                   <div className="p-5">
                     <h3 className="text-xl font-black group-hover:text-emerald-700">{related.name}</h3>

@@ -6,6 +6,8 @@ import { Button } from '../components/ui/button';
 import { SERVICES, CATEGORIES } from '@/shared/data/services';
 import { BOOKING_LINK } from '../lib/constants';
 import { formatCurrency } from '../lib/utils';
+import { trackEvent } from '../lib/analytics';
+import RelatedGuides, { guideTopicForCategory } from '../components/RelatedGuides';
 
 export default function CategoryDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -25,6 +27,20 @@ export default function CategoryDetail() {
   }
 
   const categoryServices = SERVICES.filter(s => s.categoryId === category.id);
+  const maintenanceService = SERVICES.find(s => s.id === 'maintenance-interior');
+
+  const localHeadingByCategory: Record<string, string> = {
+    'interior-detailing': 'Interior Car Detailing in Omaha & Bellevue',
+    'exterior-detailing': 'Exterior Car Detailing in Omaha & Bellevue',
+    'full-detailing': 'Full Car Detailing in Omaha & Bellevue',
+    'paint-correction': 'Paint Correction in Omaha & Bellevue',
+    'ceramic-coating': 'Ceramic Coating in Omaha & Bellevue',
+    'maintenance-plans': 'Maintenance Car Detailing in Omaha & Bellevue',
+    'rv-boat-detailing': 'RV & Boat Detailing in Omaha & Bellevue',
+    'tractor-farm-equipment': 'Specialty Vehicle Detailing in Omaha & Bellevue',
+  };
+
+  const localHeading = localHeadingByCategory[category.slug] || `${category.name} in Omaha & Bellevue`;
 
   return (
     <div className="min-h-screen bg-white">
@@ -37,7 +53,7 @@ export default function CategoryDetail() {
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/60 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-r from-zinc-950 via-zinc-950/60 to-transparent" />
         </div>
         
         <div className="container mx-auto px-4 relative z-10 text-white">
@@ -61,6 +77,25 @@ export default function CategoryDetail() {
             <p className="text-xl text-zinc-300 leading-relaxed">
               {category.description}
             </p>
+            {category.slug === 'interior-detailing' ? (
+              <div className="mt-6 rounded-3xl border border-emerald-500/20 bg-emerald-500/5 p-6 text-emerald-100">
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-300 mb-2">New Lower Entry Option</p>
+                <p className="text-lg font-semibold text-white leading-relaxed">
+                  Maintenance Interior starts at <strong>${maintenanceService?.price.car ?? 139}</strong> for well-kept vehicles that need a light cabin refresh before stepping up to Signature Interior Detail or Deep Interior Restoration.
+                </p>
+              </div>
+            ) : null}
+            <div className="mt-6 rounded-3xl border border-zinc-800 bg-zinc-950/75 p-6 text-zinc-200">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-zinc-400 mb-2">Check current availability</p>
+              <p className="text-lg font-semibold leading-relaxed">
+                Online availability is updated live. Select the open date and time that works for your vehicle and schedule.
+              </p>
+              <div className="mt-5">
+                <Button asChild className="inline-flex h-14 items-center justify-center rounded-md bg-emerald-500 px-7 font-black text-zinc-950 hover:bg-emerald-400">
+                  <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'category_hero', category: category.slug })}>Book a Detail</Link>
+                </Button>
+              </div>
+            </div>
             <div className="flex flex-wrap gap-4 pt-2">
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <ShieldCheck className="h-5 w-5 text-emerald-400" />
@@ -72,6 +107,32 @@ export default function CategoryDetail() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="border-y border-zinc-200 bg-zinc-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] items-center">
+            <div className="max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Local service guide</p>
+              <h2 className="mt-3 text-3xl md:text-4xl font-black tracking-tight text-zinc-950">
+                {category.name} for Omaha and Bellevue drivers
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-zinc-600">
+                Compare the options below by vehicle condition, desired result, starting price, and time.
+                Mobile service is available for suitable jobs around the metro; Bellevue drop-off is recommended
+                for intensive paint correction, ceramic coating, and other controlled-setting work.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+              <Button asChild className="h-12 rounded-xl bg-zinc-950 px-6 font-black uppercase tracking-widest text-xs">
+                <Link to="/areas/omaha-ne">Omaha Detailing</Link>
+              </Button>
+              <Button asChild variant="outline" className="h-12 rounded-xl px-6 font-black uppercase tracking-widest text-xs">
+                <Link to="/areas/bellevue-ne">Bellevue Detailing</Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -131,7 +192,7 @@ export default function CategoryDetail() {
 
                     <div className="pt-4 flex flex-col sm:flex-row gap-4">
                       <Button size="lg" className="h-14 px-10 text-lg flex gap-2" asChild>
-                        <Link to={`/book?serviceId=${service.id}`}>
+                        <Link to={`/book?serviceId=${service.id}`} onClick={() => trackEvent('begin_booking', { location: 'category_card', service_id: service.id, category: category.slug })}>
                           <Calendar className="h-5 w-5" />
                           Book This Service
                         </Link>
@@ -171,7 +232,7 @@ export default function CategoryDetail() {
                 </div>
 
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl relative z-10">
+                  <div className="aspect-4/3 rounded-[2.5rem] overflow-hidden shadow-2xl relative z-10">
                     <img 
                       src={service.image || category.image} 
                       alt={service.name} 
@@ -188,6 +249,12 @@ export default function CategoryDetail() {
           </div>
         </div>
       </section>
+
+      <RelatedGuides
+        topic={guideTopicForCategory(category.id)}
+        heading={`${category.name} guides and comparisons`}
+        intro="Understand the process, expected results, and maintenance considerations before selecting a package."
+      />
 
       {/* Trust Bar */}
       <section className="py-20 bg-zinc-50 border-t border-zinc-100">
@@ -234,7 +301,7 @@ export default function CategoryDetail() {
           </p>
           <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="h-14 px-10 text-lg bg-white text-zinc-950 hover:bg-zinc-200" asChild>
-              <Link to="/book">Book Appointment Now</Link>
+              <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'category_footer', category: category.slug })}>Book Appointment Now</Link>
             </Button>
             <Button size="lg" variant="outline" className="h-14 px-10 text-lg border-zinc-700 hover:bg-zinc-800" asChild>
               <Link to="/services">Explore More Services</Link>

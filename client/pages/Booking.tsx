@@ -45,6 +45,8 @@ const LEGACY_SERVICE_IDS: Record<string, string> = {
 };
 const isRealSquareVariationId = (id?: string) => !!id && !id.startsWith('local-') && !id.startsWith('addon-var-') && !id.includes('-var-');
 
+const GOOGLE_REVIEWS_URL = "https://www.google.com/search?q=Bryan%27s+Showroom+Quality+Mobile+Detailing#lrd=0x879389b489395555:0x82615171e79faed,1,,,";
+
 const getSizeLabel = (sizeId: string | null) => {
   const map: Record<string, string> = {
     car: 'Sedan / Coupe',
@@ -427,7 +429,6 @@ export default function Booking() {
       setStep('size');
     }
     else if (step === 'size') {
-      trackEvent('booking_select_size', { vehicle_size: selectedSize });
       setStep('addons');
     }
     else if (step === 'addons') {
@@ -498,9 +499,20 @@ export default function Booking() {
 
         {/* Trust Banner */}
         <div className="max-w-3xl mx-auto mb-8 px-4">
-          <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-bold text-sm shadow-sm animate-in fade-in zoom-in duration-500 mb-4">
-            <CheckCircle2 className="w-5 h-5 shrink-0" />
-            Current customer reviews are available on Google • Mobile and Bellevue drop-off options
+          <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 py-3 px-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2 font-bold text-sm shadow-sm animate-in fade-in zoom-in duration-500 mb-4">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 shrink-0" />
+              Current customer reviews are available on Google • Mobile and Bellevue drop-off options
+            </div>
+            <a
+              href={GOOGLE_REVIEWS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent('click_google_reviews', { location: 'booking_page' })}
+              className="text-emerald-900 underline font-bold"
+            >
+              Read reviews
+            </a>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
             {[
@@ -604,14 +616,17 @@ export default function Booking() {
                             onClick={() => {
                               if (isSelected) {
                                 setSelectedServices(selectedServices.filter(ss => ss.id !== s.id));
+                                trackEvent('booking_select_service', {
+                                  service_id: s.id,
+                                  action: 'removed',
+                                });
                               } else {
                                 setSelectedServices([...selectedServices, s]);
+                                trackEvent('booking_select_service', {
+                                  service_id: s.id,
+                                  action: 'selected',
+                                });
                               }
-                              trackEvent('booking_select_service', {
-                                service_id: s.id,
-                                service_name: s.name,
-                                selected: !isSelected,
-                              });
                             }}
                             className={`p-5 rounded-2xl border-2 text-left transition-all flex items-start gap-4 group ${
                               isSelected 
@@ -680,6 +695,10 @@ export default function Booking() {
                         key={v.id}
                         onClick={() => {
                           setSelectedSize(v.id);
+                          trackEvent('booking_select_size', {
+                            vehicle_size: v.id,
+                            location: 'booking_wizard',
+                          });
                           nextStep();
                         }}
                         className={`p-6 rounded-2xl border-2 text-center transition-all ${
@@ -797,7 +816,7 @@ export default function Booking() {
                         >
                           <ChevronLeft className="h-4 w-4" />
                         </Button>
-                        <span className="text-sm font-bold min-w-[100px] text-center">
+                        <span className="text-sm font-bold min-w-25 text-center">
                           {format(viewDate, 'MMMM yyyy')}
                         </span>
                         <Button 
@@ -870,6 +889,12 @@ export default function Booking() {
                                   key={idx}
                                   onClick={() => {
                                     setSelectedSlot(slot);
+                                    if (selectedDate) {
+                                      trackEvent('booking_select_date', {
+                                        date: format(selectedDate, 'yyyy-MM-dd'),
+                                        location: 'booking_wizard',
+                                      });
+                                    }
                                     trackEvent('booking_select_time', {
                                       date: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : '',
                                       time,
@@ -888,8 +913,14 @@ export default function Booking() {
                             })}
                           </div>
                         ) : (
-                          <div className="p-4 bg-zinc-50 rounded-xl text-center">
-                            <p className="text-xs text-zinc-500">No availability for this date. Please try another.</p>
+                          <div className="space-y-4">
+                            <div className="p-4 bg-zinc-50 rounded-xl text-center">
+                              <p className="text-xs text-zinc-500">No availability for this date. Please try another.</p>
+                            </div>
+                            <div className="rounded-2xl border border-amber-100 bg-amber-50 p-4 text-amber-900 text-sm">
+                              <p className="font-bold">Need help finding a time?</p>
+                              <p className="mt-1">Call Bryan at <a href="tel:712-305-6313" className="underline font-semibold" onClick={() => trackEvent('click_call', { location: 'booking_no_slots' })}>712-305-6313</a> and we’ll help you lock in the next available appointment.</p>
+                            </div>
                           </div>
                         )}
                       </div>

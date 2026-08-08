@@ -5,7 +5,7 @@ import { trackEvent } from '../lib/analytics';
 export default function Footer() {
   return (
     <footer className="bg-zinc-950 text-zinc-400 py-12 border-t border-zinc-800">
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-8">
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-zinc-100">Bryan's Showroom Quality Mobile Detailing</h3>
           <p className="text-sm leading-relaxed">
@@ -33,6 +33,18 @@ export default function Footer() {
             <li><Link to="/areas/papillion-ne" className="block py-1 hover:text-zinc-100 transition-colors">Papillion, NE</Link></li>
             <li><Link to="/areas/la-vista-ne" className="block py-1 hover:text-zinc-100 transition-colors">La Vista, NE</Link></li>
             <li><Link to="/areas/council-bluffs-ia" className="block py-1 hover:text-zinc-100 transition-colors">Council Bluffs, IA</Link></li>
+          </ul>
+        </div>
+
+        <div className="space-y-4">
+          <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Helpful Guides</h4>
+          <ul className="space-y-2 text-sm">
+            <li><Link to="/blog/what-does-interior-car-detailing-include-omaha-bellevue" className="block py-1 hover:text-zinc-100 transition-colors">Interior Detailing Guide</Link></li>
+            <li><Link to="/blog/paint-correction-swirl-marks-scratches-omaha" className="block py-1 hover:text-zinc-100 transition-colors">Paint Correction Guide</Link></li>
+            <li><Link to="/blog/ceramic-coating-vs-wax-nebraska" className="block py-1 hover:text-zinc-100 transition-colors">Ceramic vs. Wax</Link></li>
+            <li><Link to="/blog/winter-road-salt-car-care-omaha-nebraska" className="block py-1 hover:text-zinc-100 transition-colors">Winter Car Care</Link></li>
+            <li><Link to="/blog/mobile-vs-drop-off-car-detailing-omaha-bellevue" className="block py-1 hover:text-zinc-100 transition-colors">Mobile vs. Drop-Off</Link></li>
+            <li><Link to="/blog/how-often-detail-car-omaha-nebraska" className="block py-1 hover:text-zinc-100 transition-colors">Detailing Frequency</Link></li>
           </ul>
         </div>
 

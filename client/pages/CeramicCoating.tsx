@@ -5,6 +5,7 @@ import { Shield, Droplets, Sun, Zap, Star, CheckCircle2, ArrowRight, Award, Cloc
 import { Button } from '../components/ui/button';
 import { PHOTOS } from '@/shared/data/photos';
 import { formatCurrency } from '../lib/utils';
+import RelatedGuides from '../components/RelatedGuides';
 
 const BENEFITS = [
   {
@@ -592,6 +593,13 @@ export default function CeramicCoating() {
           </div>
         </div>
       </section>
+
+      <RelatedGuides
+        topic="ceramic"
+        theme="dark"
+        heading="Ceramic coating and paint-protection guides"
+        intro="Compare ceramic coating with wax, understand paint correction before coating, and plan for Nebraska road conditions."
+      />
 
       {/* FAQ */}
       <section className="py-24 bg-zinc-900">

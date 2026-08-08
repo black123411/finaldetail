@@ -4,6 +4,7 @@ export interface CityPage {
   type: 'primary' | 'secondary';
   seo: { title: string; description: string };
   content: {
+    featuredServiceIds?: string[];
     title: string;
     intro: string;
     servicesLabel: string;
@@ -24,6 +25,7 @@ export const CITIES: CityPage[] = [
       description: 'Professional mobile car detailing in Omaha. Interior detailing, complete details, paint correction, and Bellevue drop-off ceramic coating options.'
     },
     content: {
+      featuredServiceIds: ['maintenance-detail', 'interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'pre-sale-detail'],
       title: 'Mobile Car Detailing in Omaha, Nebraska',
       intro: "Bryan's Showroom Quality Detailing provides owner-operated mobile auto detailing throughout Omaha and the surrounding metro. Services include interior detailing, complete inside-and-out details, paint enhancement, paint correction, and ceramic coating preparation. Mobile availability depends on the service, weather, workspace, access, distance, and vehicle condition. Bellevue drop-off and pickup options are available for services that require controlled conditions or extended working time.",
       servicesLabel: 'Auto Detailing Services Available in Omaha:',
@@ -48,6 +50,7 @@ export const CITIES: CityPage[] = [
       description: 'Owner-operated car detailing in Bellevue, Nebraska. Mobile detailing, interior cleaning, full details, paint correction, and ceramic coating.'
     },
     content: {
+      featuredServiceIds: ['interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'new-car-detail', 'maintenance-detail'],
       title: 'Professional Car Detailing in Bellevue, Nebraska',
       intro: "Bryan's Showroom Quality Detailing is based in Bellevue and has served Bellevue and the Omaha metro since 2017. I provide professional interior detailing, full vehicle details, paint correction, and certified ceramic coating services for cars, trucks, SUVs, specialty vehicles, and work vehicles. Mobile service is available when the service, weather, workspace, and vehicle condition are suitable. Bellevue drop-off and pickup options are available by appointment for services that require more time or controlled conditions. This is an appointment-only drop-off location, not an open public storefront.",
       servicesLabel: 'Auto Detailing Services in Bellevue:',
@@ -68,10 +71,11 @@ export const CITIES: CityPage[] = [
     name: 'Papillion, NE',
     type: 'secondary',
     seo: {
-      title: 'Auto Detailing Papillion NE | Mobile & Drop-Off',
+      title: 'Mobile Car Detailing Papillion NE | Bryan\'s Detailing',
       description: 'Auto detailing for Papillion drivers, including interior cleaning, exterior wash and wax, paint correction, ceramic coating, and full details.'
     },
     content: {
+      featuredServiceIds: ['interior-detail', 'full-detail-package', 'pre-sale-detail', 'maintenance-detail'],
       title: 'Auto Detailing in Papillion, NE',
       intro: "Papillion drivers can book Bryan's Showroom Quality Mobile Detailing for careful interior, exterior, paint-correction, and ceramic-coating work. I bring mobile service to homes and offices, with Bellevue drop-off and pickup available when a service needs controlled working conditions.",
       servicesLabel: 'Detailing Services for Papillion Residents:',
@@ -92,10 +96,11 @@ export const CITIES: CityPage[] = [
     name: 'La Vista, NE',
     type: 'secondary',
     seo: {
-      title: 'Auto Detailing La Vista NE | Mobile Car Detailing',
+      title: 'Mobile Car Detailing La Vista NE | Bryan\'s Detailing',
       description: 'Mobile auto detailing in La Vista for interior cleaning, full details, paint care, maintenance, and Bellevue drop-off services when needed.'
     },
     content: {
+      featuredServiceIds: ['interior-detail', 'full-detail-package', 'maintenance-detail', 'odor-elimination'],
       title: 'Auto Detailing in La Vista, NE',
       intro: "La Vista drivers can schedule Bryan's Showroom Quality Mobile Detailing at home or work. I bring the equipment and products for mobile appointments, with Bellevue drop-off and pickup available for services that need controlled conditions.",
       servicesLabel: 'La Vista Detailing Services:',
@@ -116,10 +121,11 @@ export const CITIES: CityPage[] = [
     name: 'Ralston, NE',
     type: 'secondary',
     seo: {
-      title: 'Auto Detailing Ralston NE | Bryan\'s Detailing',
+      title: 'Car Detailing Ralston NE | Mobile Service | Bryan\'s',
       description: 'Auto detailing for Ralston drivers with interior cleaning, full-detail packages, paint correction, ceramic coating, and online booking.'
     },
     content: {
+      featuredServiceIds: ['interior-detail', 'interior-reset', 'full-detail-package', 'paint-correction-l1'],
       title: 'Auto Detailing in Ralston, NE',
       intro: "Ralston drivers can request mobile detailing without a long drive. Bryan's Showroom Quality Mobile Detailing offers maintenance details, interior restoration, full details, paint correction, and ceramic coating, with the service scope reviewed before work begins.",
       servicesLabel: 'Ralston Auto Detailing Services:',
@@ -140,10 +146,11 @@ export const CITIES: CityPage[] = [
     name: 'Gretna, NE',
     type: 'secondary',
     seo: {
-      title: 'Auto Detailing Gretna NE | Mobile Car Detailing',
+      title: 'Mobile Car Detailing Gretna NE | Bryan\'s Detailing',
       description: 'Mobile auto detailing in Gretna and Sarpy County for interior cleaning, full details, paint care, ceramic coating, and vehicle protection.'
     },
     content: {
+      featuredServiceIds: ['interior-detail', 'full-detail-package', 'pre-sale-detail', 'system-x-crystal-plus'],
       title: 'Auto Detailing in Gretna, NE',
       intro: "Gretna drivers can book Bryan's Showroom Quality Mobile Detailing for road grime, interior buildup, paint care, and pre-sale preparation. I provide mobile appointments when the location and service are a good fit, with Bellevue drop-off and pickup available for controlled work.",
       servicesLabel: 'Detailing Services for Gretna & Sarpy County:',
@@ -164,10 +171,11 @@ export const CITIES: CityPage[] = [
     name: 'Elkhorn, NE',
     type: 'secondary',
     seo: {
-      title: 'Auto Detailing Elkhorn NE | Paint & Ceramic Coating',
+      title: 'Car Detailing Elkhorn NE | Paint Correction & Ceramic',
       description: 'Auto detailing for Elkhorn and West Omaha with interior restoration, machine paint correction, ceramic coating, and new-car protection.'
     },
     content: {
+      featuredServiceIds: ['new-car-detail', 'paint-correction-l2', 'system-x-pro-plus', 'interior-detail'],
       title: 'Auto Detailing in Elkhorn, NE',
       intro: "Elkhorn and West Omaha drivers can schedule System X ceramic coating, multi-stage paint correction, and interior restoration through Bryan's Showroom Quality Mobile Detailing. I review the vehicle and preparation needed before confirming the service.",
       servicesLabel: 'Elkhorn Auto Detailing Services:',
@@ -188,10 +196,11 @@ export const CITIES: CityPage[] = [
     name: 'Council Bluffs, IA',
     type: 'secondary',
     seo: {
-      title: 'Auto Detailing Council Bluffs IA | Mobile Service',
+      title: 'Mobile Car Detailing Council Bluffs IA | Bryan\'s',
       description: 'Mobile auto detailing in Council Bluffs for interior cleaning, exterior protection, paint correction, ceramic coating, and full-detail packages.'
     },
     content: {
+      featuredServiceIds: ['interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus'],
       title: 'Auto Detailing in Council Bluffs, IA',
       intro: "Bryan's Showroom Quality Mobile Detailing serves Council Bluffs with mobile interior, exterior, paint-correction, and ceramic-coating appointments when the location is a good fit. Bellevue drop-off and pickup are also available for services that need controlled working conditions.",
       servicesLabel: 'Council Bluffs Detailing Services:',
@@ -212,10 +221,11 @@ export const CITIES: CityPage[] = [
     name: 'Offutt AFB',
     type: 'secondary',
     seo: {
-      title: 'Auto Detailing Near Offutt AFB | Bellevue NE',
+      title: 'Car Detailing Near Offutt AFB | Bellevue & Omaha',
       description: 'Auto detailing near Offutt AFB with mobile and Bellevue drop-off options for military families, including interior, full-detail, and paint services.'
     },
     content: {
+      featuredServiceIds: ['interior-detail', 'full-detail-package', 'pre-sale-detail', 'new-car-detail'],
       title: 'Auto Detailing Near Offutt AFB',
       intro: "Bryan's Showroom Quality Mobile Detailing serves Offutt Air Force Base families with mobile appointments near Bellevue when the location is suitable, plus Bellevue drop-off and pickup options. I review the vehicle, access, and timing before confirming the appointment.",
       servicesLabel: 'Services for Offutt AFB Families:',

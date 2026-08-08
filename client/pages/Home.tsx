@@ -5,6 +5,7 @@ import { Button } from '../components/ui/button';
 import ServiceMap from '../components/ServiceMap';
 import Testimonials from '../components/Testimonials';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
+import RelatedGuides from '../components/RelatedGuides';
 import { SERVICES } from '@/shared/data/services';
 import { BEFORE_AFTERS } from '@/shared/data/photos';
 
@@ -50,6 +51,12 @@ export default function Home() {
 
   const packageRows = [
     {
+      service: SERVICES.find(s => s.id === 'maintenance-interior'),
+      label: 'Maintenance Interior',
+      bestFor: 'Well-kept vehicles needing a refresh without shampooing or extraction',
+      outcome: 'Light interior refresh, glass cleaning, dash and mat care'
+    },
+    {
       service: SERVICES.find(s => s.id === 'interior-detail'),
       label: 'Signature Interior Detail',
       bestFor: 'Vehicles with normal dirt, dust, crumbs, and light staining',
@@ -74,6 +81,36 @@ export default function Home() {
       outcome: 'Paint enhancement plus certified System X Pro+ and Glass+ protection'
     }
   ].filter(row => row.service);
+
+  const heroPrices = {
+    interiorDetail: SERVICES.find(s => s.id === 'interior-detail')?.price.car ?? 179,
+    interiorReset: SERVICES.find(s => s.id === 'interior-reset')?.price.car ?? 249,
+    fullDetail: SERVICES.find(s => s.id === 'full-detail-package')?.price.car ?? 279,
+  };
+
+  const packageCards = [
+    {
+      service: SERVICES.find(s => s.id === 'interior-detail'),
+      title: 'Interior Detail',
+      description: 'Signature interior refresh for dust, crumbs, light stains, and glass cleaning.',
+      detailPath: '/services/interior-detail',
+      bookPath: '/book?serviceId=interior-detail',
+    },
+    {
+      service: SERVICES.find(s => s.id === 'interior-reset'),
+      title: 'Interior Restoration',
+      description: 'Deep restoration for pet hair, embedded stains, and stale cabin odors.',
+      detailPath: '/services/interior-reset',
+      bookPath: '/book?serviceId=interior-reset',
+    },
+    {
+      service: SERVICES.find(s => s.id === 'full-detail-package'),
+      title: 'Inside & Out Detail',
+      description: 'Complete inside-and-out detail for a showroom-ready finish.',
+      detailPath: '/services/full-detail-package',
+      bookPath: '/book?serviceId=full-detail-package',
+    },
+  ].filter(item => item.service);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -110,15 +147,43 @@ export default function Home() {
             </div>
 
             <h1 className="text-5xl sm:text-6xl md:text-[5.25rem] font-black tracking-tight leading-[0.92] uppercase">
-              Mobile Car Detailing <span className="text-zinc-400 italic block font-normal normal-case">in Bellevue & Omaha.</span>
+              Mobile Car Detailing <span className="text-zinc-400 italic block font-normal normal-case">in Omaha & Bellevue, NE.</span>
             </h1>
 
           <p className="text-lg md:text-2xl text-zinc-300 max-w-2xl leading-relaxed font-medium mt-6">
             Professional interior detailing, complete inside-and-out details, paint correction, and ceramic coatings for cars, trucks, and SUVs.
             <span className="block mt-3">I provide mobile detailing throughout Bellevue and the Omaha metro when the service, weather, and location are a good fit. Bellevue drop-off and pickup options are also available for services that benefit from controlled working conditions.</span>
           </p>
+          <p className="text-lg md:text-2xl text-emerald-300 max-w-2xl leading-relaxed font-semibold mt-4">
+            Interior Detail ${heroPrices.interiorDetail} · Interior Restoration ${heroPrices.interiorReset} · Inside & Out Detail ${heroPrices.fullDetail}
+          </p>
+          <p className="mt-6 text-sm text-zinc-300 max-w-2xl leading-relaxed">
+            View current appointment availability and choose an open date and time.
+          </p>
 
-            <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-6">
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
+            {packageCards.map((item) => (
+              <article key={item.title} className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-xl shadow-black/20">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-black uppercase tracking-[0.28em] text-emerald-300">{item.title}</p>
+                    <p className="mt-2 text-3xl font-black tracking-tight text-white">${item.service?.price.car}</p>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-zinc-300">{item.description}</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button size="sm" variant="outline" className="h-11 rounded-xl border-zinc-700 bg-zinc-950/60 text-white hover:bg-zinc-900" asChild>
+                    <Link to={item.detailPath}>View Details</Link>
+                  </Button>
+                  <Button size="sm" className="h-11 rounded-xl bg-emerald-500 text-zinc-950 hover:bg-emerald-400" asChild>
+                    <Link to={item.bookPath}>Book Now</Link>
+                  </Button>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-6">
               <Button size="lg" className="h-16 px-10 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-zinc-950 font-black uppercase tracking-widest text-sm shadow-2xl shadow-emerald-500/20" asChild>
                 <Link
                   to="/book"
@@ -296,6 +361,9 @@ export default function Home() {
                   <p className="text-xs text-zinc-300 font-medium leading-relaxed">
                     Final price depends on vehicle size, condition, pet hair, odor, and add-ons. You will see package pricing before confirming.
                   </p>
+                  <p className="mt-3 text-xs text-zinc-300 font-medium leading-relaxed">
+                    Book now to see live appointment availability for your vehicle and secure a weekend or evening slot.
+                  </p>
                   <p className="mt-3 text-xs text-zinc-400 font-medium leading-relaxed">
                     Already detailed or ceramic coated? <Link to="/services/maintenance-detail" className="font-bold text-emerald-400 hover:text-emerald-300">Maintenance plans start at $119</Link> and are reserved for returning or recently detailed vehicles.
                   </p>
@@ -457,6 +525,12 @@ export default function Home() {
         </div>
       </section>
 
+      <RelatedGuides
+        topic="home"
+        heading="Plan your next detail with confidence"
+        intro="Compare service formats, build a realistic maintenance schedule, and prepare your vehicle for Nebraska weather before choosing a package."
+      />
+
       {/* Service Area Grid */}
       <section className="py-32 bg-zinc-50 border-t border-zinc-200">
          <div className="container mx-auto px-4">
@@ -469,6 +543,56 @@ export default function Home() {
             </div>
             <ServiceMap />
          </div>
+      </section>
+
+      {/* Local SEO / Service Area Section */}
+      <section className="py-24 lg:py-28 bg-white border-t border-zinc-200">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center space-y-5">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-700">Omaha Metro Detailing</span>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tight text-zinc-900 leading-none">
+              Mobile detailing in Omaha. <span className="text-emerald-700 italic font-medium">Bellevue drop-off.</span>
+            </h2>
+            <p className="text-lg md:text-xl text-zinc-600 font-medium leading-relaxed">
+              Bryan's Showroom Quality Mobile Detailing is based in Bellevue and serves drivers around the Omaha metro.
+              Mobile appointments are available where the vehicle and site are suitable, while the Bellevue location is
+              available for intensive interior restoration, paint correction, ceramic coating, and other work that benefits
+              from a controlled setting.
+            </p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <article className="rounded-3xl border border-zinc-200 bg-zinc-50 p-8">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Omaha</p>
+              <h3 className="mt-3 text-3xl font-black text-zinc-900">Mobile Car Detailing in Omaha, NE</h3>
+              <p className="mt-4 text-zinc-600 leading-7">
+                Interior detailing, full details, paint correction, ceramic coating, maintenance care, and
+                condition-based specialty work for Omaha drivers.
+              </p>
+              <Link to="/areas/omaha-ne" className="mt-6 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-zinc-900 hover:text-emerald-700">
+                Explore Omaha Detailing <ArrowRight className="h-4 w-4" />
+              </Link>
+            </article>
+
+            <article className="rounded-3xl border border-zinc-200 bg-zinc-50 p-8">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Bellevue</p>
+              <h3 className="mt-3 text-3xl font-black text-zinc-900">Car Detailing in Bellevue, NE</h3>
+              <p className="mt-4 text-zinc-600 leading-7">
+                Convenient Bellevue drop-off plus mobile service for routine detailing, with specialized paint and
+                ceramic-coating services for vehicles that need more intensive preparation.
+              </p>
+              <Link to="/areas/bellevue-ne" className="mt-6 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-zinc-900 hover:text-emerald-700">
+                Explore Bellevue Detailing <ArrowRight className="h-4 w-4" />
+              </Link>
+            </article>
+          </div>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3 text-sm font-semibold text-zinc-500">
+            {['Papillion', 'La Vista', 'Ralston', 'Gretna', 'Elkhorn', 'Council Bluffs', 'Offutt AFB'].map((area) => (
+              <span key={area} className="rounded-full border border-zinc-200 bg-zinc-50 px-4 py-2">{area}</span>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* FAQ Section */}

@@ -1,5 +1,6 @@
 import { Gift, MessageSquare, Phone } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import RelatedGuides from '../components/RelatedGuides';
 
 export default function GiftCards() {
   return (
@@ -70,6 +71,11 @@ export default function GiftCards() {
           </div>
         </div>
       </div>
+      <RelatedGuides
+        topic="gift"
+        heading="Help the recipient choose the right detail"
+        intro="These guides explain popular interior, protection, and maintenance options before a gift card is applied to a service."
+      />
     </div>
   );
 }

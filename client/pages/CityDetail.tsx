@@ -1,10 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
-import { MapPin, CheckCircle2, ArrowRight, ShieldCheck, Star } from 'lucide-react';
+import { MapPin, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
 import { CITIES } from '@/shared/data/cities';
 import { SERVICES } from '@/shared/data/services';
 import { Button } from "../components/ui/button";
+import RelatedGuides from '../components/RelatedGuides';
 
 export default function CityDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -24,19 +25,24 @@ export default function CityDetail() {
     );
   }
 
+  const region = city.name.includes('Council Bluffs') ? 'IA' : 'NE';
   const citySchema = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": `Bryan's Showroom Quality Mobile Detailing - ${city.name}`,
-    "image": "/20211009_021727-COLLAGE.jpg",
+    "@type": "Service",
+    "name": `Auto Detailing in ${city.name}`,
+    "serviceType": "Auto detailing",
     "description": city.seo.description,
     "url": `https://bryansdetailingomaha.com/areas/${city.slug}`,
-    "telephone": "+17123056313",
-    "priceRange": "$$",
+    "provider": {
+      "@type": ["LocalBusiness", "AutomotiveBusiness"],
+      "@id": "https://bryansdetailingomaha.com/#business",
+      "name": "Bryan's Showroom Quality Mobile Detailing"
+    },
     "areaServed": {
       "@type": "City",
-      "name": city.name,
-      "addressRegion": "NE" // Adjust region if necessary
+      "name": city.name.replace(/, (NE|IA)$/, ''),
+      "addressRegion": region,
+      "addressCountry": "US"
     }
   };
 
@@ -100,7 +106,12 @@ export default function CityDetail() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {SERVICES.map((service, index) => (
+            {[
+              ...((city.content.featuredServiceIds || [])
+                .map((id) => SERVICES.find((service) => service.id === id))
+                .filter((service): service is typeof SERVICES[number] => Boolean(service))),
+              ...SERVICES.filter((service) => !(city.content.featuredServiceIds || []).includes(service.id)),
+            ].map((service, index) => (
               <motion.div
                 key={service.id}
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -146,17 +157,6 @@ export default function CityDetail() {
                   </div>
                 ))}
               </div>
-              
-              {city.slug === 'papillion-ne' && <div className="mt-12 p-8 bg-white rounded-3xl border border-zinc-100 shadow-sm">
-                <div className="flex items-center gap-3 mb-4">
-                  <Star className="h-5 w-5 text-yellow-500 fill-current" />
-                  <span className="text-xs font-black uppercase tracking-widest text-zinc-900">Local Area Favorites</span>
-                </div>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-6 font-medium italic">
-                  "Bryan did an amazing job on my car in Papillion. The interior looks brand new and he was so professional. Highly recommend his mobile services!"
-                </p>
-                <span className="text-[10px] font-black uppercase text-zinc-400 tracking-widest">— Local Customer Review</span>
-              </div>}
             </div>
 
             <div className="bg-zinc-900 rounded-[3rem] p-12 text-white relative overflow-hidden">
@@ -183,6 +183,110 @@ export default function CityDetail() {
           </div>
         </div>
       </section>
+
+      {/* Local service-intent links */}
+      <section className="py-20 bg-white border-t border-zinc-100">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-600 mb-3">
+              Popular {city.name} searches
+            </p>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight text-zinc-950 mb-5">
+              Detailing services for {city.name} drivers
+            </h2>
+            <p className="text-lg leading-8 text-zinc-600 mb-8">
+              Start with the service that matches the vehicle's condition. Bryan's offers mobile detailing
+              where practical, plus Bellevue drop-off for intensive paint and protection work.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {(city.content.featuredServiceIds || []).slice(0, 6).map((serviceId) => {
+                const service = SERVICES.find((item) => item.id === serviceId);
+                if (!service) return null;
+                return (
+                  <Link
+                    key={service.id}
+                    to={`/services/${service.id}`}
+                    className="rounded-2xl border border-zinc-200 p-5 hover:border-emerald-400 hover:shadow-lg transition-all"
+                  >
+                    <span className="block font-black text-zinc-900">{service.name}</span>
+                    <span className="mt-2 block text-sm leading-6 text-zinc-500">{service.shortDescription}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-zinc-50 border-t border-zinc-200">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">How it works</p>
+              <h2 className="mt-3 text-3xl md:text-4xl font-black tracking-tight text-zinc-950">
+                A straightforward detailing process for {city.name}
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-zinc-600">
+                Start with the vehicle's condition and the result you want. Choose an online appointment when the
+                service is straightforward, or send photos for help choosing between packages when the condition is
+                harder to judge from a service name alone.
+              </p>
+            </div>
+            <div className="grid gap-4">
+              {[
+                ['1', 'Choose the right service', 'Compare interior, full-detail, paint-correction, ceramic-coating, and maintenance options.'],
+                ['2', 'Confirm the appointment', 'Use online booking for available dates and times.'],
+                ['3', 'Prepare the vehicle', 'For mobile service, make sure the vehicle and work area are suitable for the selected service.'],
+                ['4', 'Review the result', "For restoration and protection work, expectations are discussed around the vehicle's actual condition."],
+              ].map(([number, title, body]) => (
+                <div key={number} className="flex gap-4 rounded-2xl border border-zinc-200 bg-white p-5">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-zinc-950 text-sm font-black text-white">{number}</span>
+                  <div>
+                    <h3 className="font-black text-zinc-900">{title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-zinc-600">{body}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white border-t border-zinc-200">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Local FAQ</p>
+          <h2 className="mt-3 text-3xl md:text-4xl font-black tracking-tight text-zinc-950">
+            {city.name} detailing questions
+          </h2>
+          <div className="mt-8 space-y-4">
+            {[
+              {
+                q: `Do you offer mobile car detailing in ${city.name}?`,
+                a: `Mobile service is available around the Omaha metro where the vehicle, work area, and selected service are suitable. Bellevue drop-off is available for intensive work.`
+              },
+              {
+                q: `What detailing service should I choose in ${city.name}?`,
+                a: `Choose interior detailing for cabin buildup, stains, pet hair, or spills; a full detail for inside-and-out cleaning; paint correction for visible paint defects; and ceramic coating when long-term paint protection is the goal.`
+              },
+              {
+                q: `Can I get paint correction or ceramic coating near ${city.name}?`,
+                a: `Yes. Paint correction and System X ceramic-coating services are available through Bryan's Bellevue operation, with the exact process based on the vehicle's condition and the protection goal.`
+              }
+            ].map((faq) => (
+              <article key={faq.q} className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6">
+                <h3 className="font-black text-zinc-900">{faq.q}</h3>
+                <p className="mt-2 leading-7 text-zinc-600">{faq.a}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <RelatedGuides
+        topic="local"
+        heading={`Car-care guides for ${city.name} drivers`}
+        intro={`Compare mobile and drop-off service, plan around Nebraska weather, and build a practical detailing schedule for a vehicle driven around ${city.name}.`}
+      />
 
       {/* Link Map Section (Internal Linking Boost) */}
       <section className="py-12 bg-white border-t border-zinc-100">

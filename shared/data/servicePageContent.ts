@@ -124,7 +124,49 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         answer: "Yes. A clean cabin changes buyer perception immediately. If you also need exterior gloss for listing photos, compare the Pre-Sale Detail Package."
       }
     ],
-    internalServiceIds: ["odor-elimination", "pre-sale-detail", "showroom-package", "interior-detail"]
+    internalServiceIds: ["odor-elimination", "pre-sale-detail", "showroom-package", "interior-detail", "maintenance-interior"]
+  },
+  "maintenance-interior": {
+    headline: "Maintenance Interior for a light cabin refresh and everyday upkeep",
+    intro: "Maintenance Interior is for vehicles that are already in good shape and need an affordable interior refresh. It focuses on vacuuming, wiping, glass cleaning, mat care, and light spot treatment without full shampooing or extraction.",
+    sections: [
+      {
+        title: "What this service solves",
+        body: "It refreshes vehicles with light dust, crumbs, surface stains, and everyday dirt. This service is designed for interiors that need a clean feel without the time and cost of a full deep restoration."
+      },
+      {
+        title: "What makes it different",
+        body: "Maintenance Interior is a maintenance-first package. It uses targeted cleaning, interior glass care, pressure air, and finish wipes instead of full upholstery extraction so the cabin looks tidy and feels renewed."
+      },
+      {
+        title: "Best time to book",
+        body: "Book it when your vehicle is still in good condition but needs a noticeable refresh before a weekend trip, showing, or routine upkeep."
+      }
+    ],
+    processTitle: "Maintenance interior process",
+    process: [
+      "Inspect the cabin and identify light dust, debris, and surface buildup.",
+      "Thoroughly vacuum seats, carpet, mats, and cargo areas.",
+      "Clean dash, console, door panels, cupholders, and interior trim.",
+      "Clean interior glass and wipe down surfaces with safe cleaners.",
+      "Perform light spot treatment and complete a final quality check."
+    ],
+    buyerNotes: [
+      "Choose Signature Interior Detail if you need deeper stain treatment or full fabric cleaning.",
+      "Maintenance Interior is ideal when the vehicle is already well maintained and only needs a refresh.",
+      "Remove personal items before the appointment so Bryan can clean storage compartments and consoles."
+    ],
+    faq: [
+      {
+        question: "Is Maintenance Interior the same as a full interior detail?",
+        answer: "No. It is a lighter refresh for cabins that are already in good condition. It does not include full hot water extraction, heavy stain removal, or deep odor remediation."
+      },
+      {
+        question: "What price should I expect?",
+        answer: "Prices start at $139 for cars, with slightly higher pricing for SUVs, trucks, and XL vehicles. The final quote is based on size and vehicle condition."
+      }
+    ],
+    internalServiceIds: ["interior-detail", "interior-reset", "maintenance-detail"]
   },
   "exterior-enhancement": {
     headline: "Premium Wash and Wax for smooth paint, gloss, and seasonal protection",

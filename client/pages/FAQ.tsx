@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
 import { ChevronDown, HelpCircle, Loader2 } from 'lucide-react';
 import { FAQAPI } from '../services/api';
+import RelatedGuides from '../components/RelatedGuides';
 
 const DEFAULT_FAQS = [
   {
@@ -140,6 +141,11 @@ export default function FAQ() {
           </div>
         </div>
       </div>
+      <RelatedGuides
+        topic="all"
+        heading="Detailed answers beyond the FAQ"
+        intro="Read the complete guides for service comparisons, maintenance timing, seasonal care, and realistic detailing results."
+      />
     </div>
   );
 }

@@ -72,7 +72,7 @@ function fallbackMarkup({ heading, description, details = '', links = [] }) {
 
 function staticHeading(path, title) {
   const headings = {
-    '/': 'Mobile Car Detailing in Bellevue & Omaha',
+    '/': 'Mobile Car Detailing in Omaha & Bellevue, NE',
     '/services': 'Auto Detailing Services and Pricing',
     '/book': 'Book Your Auto Detail',
     '/gallery': 'Auto Detailing Before & After Gallery',
@@ -82,6 +82,10 @@ function staticHeading(path, title) {
     '/faq': 'Auto Detailing Frequently Asked Questions',
     '/quote': 'Request an Auto Detailing Quote',
     '/blog': 'Auto Detailing Tips & Guides',
+    '/review': 'Enjoyed your detail?',
+    '/sitemap': 'Sitemap',
+    '/terms': 'Terms of Service',
+    '/privacy': 'Privacy Policy',
   };
   return headings[path] || title.split('|')[0].trim();
 }
@@ -149,7 +153,7 @@ function buildStaticRoutes() {
       description: category.seo?.description || category.description,
       imagePath: category.image || DEFAULT_IMAGE,
       fallback: fallbackMarkup({
-        heading: category.name,
+        heading: `${category.name} in Omaha & Bellevue`,
         description: category.description,
         details: `<h2>Available ${escapeHtml(category.name)} services</h2>${linkListMarkup(categoryServices.map((service) => ({
           href: `/services/${service.id}`,
@@ -192,6 +196,29 @@ function buildStaticRoutes() {
 
   for (const city of CITIES) {
     const path = `/areas/${city.slug}`;
+    const cityServices = SERVICES.filter((service) => city.content.featuredServiceIds?.includes(service.id));
+    const serviceLinks = (cityServices.length ? cityServices : SERVICES.slice(0, 8)).map((service) => ({
+      href: `/services/${service.id}`,
+      label: service.name,
+    }));
+    const areaLinks = city.content.serviceAreas.map((area) => {
+      const matchingCity = CITIES.find((candidate) => candidate.name.toLowerCase().startsWith(area.toLowerCase()));
+      return matchingCity ? { href: `/areas/${matchingCity.slug}`, label: `Auto detailing in ${matchingCity.name}` } : null;
+    }).filter(Boolean);
+
+    const processDetails = [
+      'Choose the service that matches the vehicle condition and desired result.',
+      'Confirm an available appointment online or request help choosing a package.',
+      'Prepare the vehicle and work area when mobile service is selected.',
+      'Review the completed work and maintenance recommendations.',
+    ];
+
+    const faqQuestions = [
+      `Do you offer mobile car detailing in ${city.name}?`,
+      `What detailing service should I choose in ${city.name}?`,
+      `Can I get paint correction or ceramic coating near ${city.name}?`,
+    ];
+
     routes.set(path, {
       path,
       title: city.seo.title,
@@ -200,8 +227,19 @@ function buildStaticRoutes() {
       fallback: fallbackMarkup({
         heading: city.content.title,
         description: city.content.intro,
-        details: `<h2>${escapeHtml(city.content.whyLabel)}</h2>${listMarkup(city.content.whyPoints)}`,
-        links: categoryLinks,
+        details: [
+          `<h2>${escapeHtml(city.content.servicesLabel)}</h2>${linkListMarkup(serviceLinks)}`,
+          `<h2>${escapeHtml(city.content.whyLabel)}</h2>${listMarkup(city.content.whyPoints)}`,
+          `<h2>Nearby service areas</h2>${listMarkup(city.content.serviceAreas)}`,
+          `<h2>How detailing works</h2><ol>${processDetails.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol>`,
+          `<h2>Local questions</h2>${listMarkup(faqQuestions)}`,
+          `<p><strong>${escapeHtml(city.content.cta)}</strong></p>`,
+        ].join(''),
+        links: [
+          ...areaLinks,
+          ...serviceLinks.slice(0, 6),
+          { href: '/quote', label: `Get a ${city.name} detailing quote` },
+        ],
       }),
     });
   }
@@ -250,6 +288,32 @@ function replaceManagedTag(html, matcher, replacement) {
   return html.replace(matcher, replacement);
 }
 
+function routeSchema(route) {
+  const city = CITIES.find((candidate) => `/areas/${candidate.slug}` === route.path);
+  if (!city) return null;
+
+  const region = city.name.includes('Council Bluffs') ? 'IA' : 'NE';
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `Auto Detailing in ${city.name}`,
+    serviceType: 'Auto detailing',
+    description: city.seo.description,
+    url: routeUrl(route.path),
+    provider: {
+      '@type': ['LocalBusiness', 'AutomotiveBusiness'],
+      '@id': `${SITE_ORIGIN}/#business`,
+      name: "Bryan's Showroom Quality Mobile Detailing",
+    },
+    areaServed: {
+      '@type': 'City',
+      name: city.name.replace(/, (NE|IA)$/, ''),
+      addressRegion: region,
+      addressCountry: 'US',
+    },
+  };
+}
+
 function renderRouteHtml(template, route) {
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
@@ -292,6 +356,14 @@ function renderRouteHtml(template, route) {
     html = /<meta(?=[^>]*name="robots")[^>]*>/i.test(html)
       ? html.replace(/<meta(?=[^>]*name="robots")[^>]*>/i, robotsTag)
       : html.replace('</head>', `    ${robotsTag}\n  </head>`);
+  }
+
+  const schema = routeSchema(route);
+  if (schema) {
+    html = html.replace(
+      '</head>',
+      `    <script type="application/ld+json">${JSON.stringify(schema).replaceAll('</', '<\\/')}</script>\n  </head>`,
+    );
   }
 
   if (!/<div id="root"><\/div>/i.test(html)) {

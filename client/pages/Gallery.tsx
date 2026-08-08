@@ -4,6 +4,7 @@ import { Sparkles, Camera, Award } from 'lucide-react';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 import { Helmet } from 'react-helmet-async';
 import { GALLERY_IMAGES, BEFORE_AFTERS } from '@/shared/data/photos';
+import RelatedGuides from '../components/RelatedGuides';
 
 const CATEGORIES = [
   { id: 'all', label: 'All Work' },
@@ -185,6 +186,13 @@ export default function Gallery() {
           </motion.div>
         )}
       </AnimatePresence>
+      <RelatedGuides
+        topic="gallery"
+        theme="dark"
+        heading="Understand the work behind the results"
+        intro="See how interior detailing, paint correction, and ceramic protection differ before comparing the gallery to your vehicle."
+      />
+
       {/* SEO Content Block */}
       <section className="py-24 bg-zinc-950 border-t border-zinc-900 mt-16">
         <div className="container mx-auto px-4 max-w-4xl">

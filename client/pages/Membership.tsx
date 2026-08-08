@@ -1,5 +1,6 @@
 import { CheckCircle2, Shield, Star, Crown, MessageSquare } from 'lucide-react';
 import { Button } from '../components/ui/button';
+import RelatedGuides from '../components/RelatedGuides';
 
 const membershipTextLink = (plan: string) =>
   `sms:+17123056313?body=${encodeURIComponent(`Hi Bryan, I'm interested in the ${plan} maintenance plan. Can you confirm availability, eligibility, and billing details?`)}`;
@@ -166,6 +167,11 @@ export default function Membership() {
           </p>
         </div>
       </div>
+      <RelatedGuides
+        topic="maintenance"
+        heading="Build a practical maintenance plan"
+        intro="Learn how often to detail, how winter driving affects upkeep, and when longer-lasting paint protection makes sense."
+      />
     </div>
   );
 }

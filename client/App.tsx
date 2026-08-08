@@ -15,6 +15,7 @@ import {
   NOT_FOUND_SEO,
   SITE_ORIGIN,
   STATIC_PAGE_SEO,
+  BUSINESS,
   type SeoRoute,
 } from '@/shared/data/seo';
 import { trackEvent } from './lib/analytics';
@@ -63,6 +64,12 @@ function SEO() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // Blog articles load their SEO data with the post. Let BlogPostDetail own
+  // those tags so the global fallback cannot mark valid articles as 404/noindex.
+  if (/^\/blog\/[a-z0-9-]+$/.test(pathname)) {
+    return null;
+  }
 
   const serviceMatch = pathname.match(/^\/services\/([a-z0-9-]+)$/);
   const categoryMatch = pathname.match(/^\/services\/category\/([a-z-]+)$/);
@@ -117,73 +124,46 @@ function SEO() {
   const image = `${domain}${current.imagePath || DEFAULT_SOCIAL_IMAGE}`;
 
   const schema = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "AutomotiveBusiness"],
-    "name": "Bryan's Showroom Quality Mobile Detailing",
-    "image": image,
-    "@id": `${domain}/#business`,
-    "url": `${domain}/`,
-    "telephone": "+1-712-305-6313",
-    "email": "bryansmobiledetailing@gmail.com",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "1907 Arlington Cir",
-      "addressLocality": "Bellevue",
-      "addressRegion": "NE",
-      "postalCode": "68123",
-      "addressCountry": "US"
+    '@context': 'https://schema.org',
+    '@type': ['LocalBusiness', 'AutomotiveBusiness'],
+    '@id': `${SITE_ORIGIN}/#business`,
+    name: BUSINESS.name,
+    url: BUSINESS.url,
+    telephone: BUSINESS.telephone,
+    email: BUSINESS.email,
+    priceRange: BUSINESS.priceRange,
+    image,
+    address: {
+      '@type': 'PostalAddress',
+      ...BUSINESS.address,
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 41.1544,
-      "longitude": -95.9153
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: BUSINESS.geo.latitude,
+      longitude: BUSINESS.geo.longitude,
     },
-    "areaServed": [
-      { "@type": "City", "name": "Bellevue" },
-      { "@type": "City", "name": "Omaha" },
-      { "@type": "City", "name": "Papillion" },
-      { "@type": "City", "name": "La Vista" },
-      { "@type": "City", "name": "Gretna" },
-      { "@type": "City", "name": "Elkhorn" },
-      { "@type": "City", "name": "Council Bluffs" }
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Auto Detailing Services",
-      "itemListElement": SERVICES.map(s => {
-        const prices = Object.values(s.price).filter((price) => Number.isFinite(price) && price > 0);
-        return {
-          "@type": "Offer",
-          ...(s.pricingType === 'fixed' && prices.length > 0 ? {
-            "priceSpecification": {
-              "@type": "PriceSpecification",
-              "priceCurrency": "USD",
-              "minPrice": Math.min(...prices),
-              "maxPrice": Math.max(...prices)
-            }
-          } : {}),
-          "itemOffered": {
-            "@type": "Service",
-            "name": s.name,
-            "description": s.shortDescription
-          }
-        };
-      })
+    areaServed: BUSINESS.areaServed.map((name) => ({
+      '@type': 'Place',
+      name,
+    })),
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Auto Detailing Services',
+      itemListElement: SERVICES.map((s) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: s.name,
+          description: s.shortDescription,
+          areaServed: BUSINESS.areaServed.map((name) => ({ '@type': 'Place', name })),
+         },
+       })),
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "opens": "07:00",
-      "closes": "19:00"
+    openingHoursSpecification: {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '07:00',
+      closes: '19:00',
     },
   };
 

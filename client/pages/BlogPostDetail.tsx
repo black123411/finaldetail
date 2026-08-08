@@ -98,6 +98,7 @@ export default function BlogPostDetail() {
       <Helmet>
         <title>{seoTitle}</title>
         <meta name="description" content={seoDescription} />
+        <meta name="robots" content="index,follow,max-image-preview:large" />
         <link rel="canonical" href={articleUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={articleUrl} />

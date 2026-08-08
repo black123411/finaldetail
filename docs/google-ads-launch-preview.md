@@ -75,7 +75,7 @@ Headlines:
 
 - Interior Detailing Omaha
 - Bellevue Interior Detail
-- Interior Detail From $179
+- Interior Detailing From $139
 - Stains, Mats & Glass Cleaned
 - Book Your Detail Online
 - Local Professional Detailer
@@ -83,7 +83,7 @@ Headlines:
 Descriptions:
 
 - Interior detailing for dust, crumbs, mats, glass and light stains. Book online.
-- Bellevue-based detailing serving the Omaha metro. Sedan packages start at $179.
+- Bellevue-based detailing serving the Omaha metro. Sedan packages start at $139.
 
 ## Ad group 2 — Full detailing
 
@@ -101,7 +101,7 @@ Headlines:
 
 - Full Car Detailing Omaha
 - Bellevue Auto Detailing
-- Full Detail From $279
+- Full Detail From $269
 - Interior & Exterior Detail
 - See Prices Before Booking
 - Book Your Detail Online

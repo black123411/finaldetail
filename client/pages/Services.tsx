@@ -5,6 +5,7 @@ import { ArrowRight, Calendar, Check, Clock } from 'lucide-react';
 import { SERVICES, type Service } from '@/shared/data/services';
 import { ServiceAPI } from '../services/api';
 import { formatCurrency } from '../lib/utils';
+import RelatedGuides from '../components/RelatedGuides';
 
 interface SquareService {
   id: string;
@@ -16,7 +17,7 @@ const SERVICE_GROUPS = [
   {
     title: 'Interior Detailing',
     description: 'Interior cleaning for everyday buildup, heavy stains, pet hair, spills, and odor problems.',
-    ids: ['interior-detail', 'interior-reset', 'odor-elimination'],
+    ids: ['maintenance-interior', 'interior-detail', 'interior-reset', 'odor-elimination'],
   },
   {
     title: 'Complete Vehicle Details',
@@ -80,14 +81,17 @@ export default function Services() {
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(servicesSchema)}</script>
       </Helmet>
+      <section className="bg-emerald-500 text-zinc-950 py-4 text-center font-black uppercase tracking-[0.24em]">
+        Book online 24/7 and reserve your preferred detail time. Weekend and holiday appointments are scheduled based on availability.
+      </section>
 
-      <section className="relative min-h-[560px] flex items-end overflow-hidden bg-zinc-950">
+      <section className="relative min-h-140 flex items-end overflow-hidden bg-zinc-950">
         <img
           src="/gallery/takeout/20260502_192636.webp"
           alt="Corrected black vehicle paint after professional detailing in Bellevue"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/15" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/65 to-black/15" />
         <div className="container relative mx-auto px-4 pb-16 pt-32 md:pb-24">
           <div className="max-w-3xl text-white">
             <h1 className="text-5xl font-black leading-[0.95] md:text-7xl">
@@ -95,7 +99,7 @@ export default function Services() {
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-zinc-200 md:text-xl">
               Choose the service based on the result your vehicle needs—not simply the cheapest package. The prices below are starting prices for standard-condition vehicles. Vehicle size, excessive pet hair, staining, mud, bodily fluids, smoke, severe odors, oxidation, and neglected condition may affect the final price. Any condition adjustment is explained before additional work begins.
-            </p>
+             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link
                 to="/book"
@@ -110,6 +114,9 @@ export default function Services() {
                 Text Photos for a Recommendation
               </Link>
             </div>
+            <p className="mt-4 max-w-2xl text-sm text-zinc-200 leading-relaxed">
+              Book now to see live appointment availability for your vehicle size and condition. Most weekend details are reserved quickly.
+            </p>
           </div>
         </div>
       </section>
@@ -147,7 +154,7 @@ export default function Services() {
                   {groupServices.map((service) => (
                     <article key={service.id} className="overflow-hidden rounded-lg border border-zinc-200 bg-white">
                       <Link to={`/services/${service.id}`} className="group block">
-                        <div className="aspect-[16/8] overflow-hidden bg-zinc-900">
+                        <div className="aspect-16/8 overflow-hidden bg-zinc-900">
                           {service.image ? (
                             <img
                               src={service.image}
@@ -191,6 +198,12 @@ export default function Services() {
           })}
         </div>
       </div>
+
+      <RelatedGuides
+        topic="all"
+        heading="Compare services before you book"
+        intro="These six guides explain interior work, paint correction, protection, maintenance timing, winter care, and mobile versus drop-off appointments."
+      />
 
       <section className="bg-zinc-950 py-20 text-white">
         <div className="container mx-auto flex flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-center">
