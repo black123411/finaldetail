@@ -53,8 +53,8 @@ export default function Home() {
     {
       service: SERVICES.find(s => s.id === 'maintenance-interior'),
       label: 'Maintenance Interior',
-      bestFor: 'Well-kept vehicles needing a refresh without shampooing or extraction',
-      outcome: 'Light interior refresh, glass cleaning, dash and mat care'
+      bestFor: 'Regularly maintained vehicles with light, everyday interior buildup',
+      outcome: 'From $139. Not intended for heavy stains, major pet hair, spills, strong odors, or neglected interiors.'
     },
     {
       service: SERVICES.find(s => s.id === 'interior-detail'),
@@ -292,7 +292,7 @@ export default function Home() {
                   Compare popular packages.
                 </h2>
                 <p className="text-lg text-zinc-600 font-medium leading-relaxed">
-                  Most customers only need one of these four packages. Compare the starting price and choose the result that matches your vehicle.
+                  Most customers only need one of these five packages. Compare the starting price and choose the result that matches your vehicle.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
                   <Button className="h-14 px-8 rounded-xl bg-zinc-900 hover:bg-zinc-800 font-black uppercase tracking-widest text-xs" asChild>
@@ -330,7 +330,7 @@ export default function Home() {
                       <div key={service.id} className="grid grid-cols-1 md:grid-cols-[1.2fr_0.85fr_1.35fr_0.65fr] gap-4 px-6 py-6 md:items-center">
                         <div>
                           <div className="flex items-center gap-3 mb-2">
-                            <span className={`h-8 w-8 rounded-xl flex items-center justify-center text-xs font-black ${index === 1 ? 'bg-emerald-500 text-zinc-950' : 'bg-white/5 text-zinc-400 border border-white/10'}`}>
+                            <span className={`h-8 w-8 rounded-xl flex items-center justify-center text-xs font-black ${index === 0 ? 'bg-emerald-500 text-zinc-950' : 'bg-white/5 text-zinc-400 border border-white/10'}`}>
                               {index + 1}
                             </span>
                             <h3 className="text-xl font-black text-white tracking-tight">{row.label}</h3>
@@ -365,7 +365,7 @@ export default function Home() {
                     Book now to see live appointment availability for your vehicle and secure a weekend or evening slot.
                   </p>
                   <p className="mt-3 text-xs text-zinc-400 font-medium leading-relaxed">
-                    Already detailed or ceramic coated? <Link to="/services/maintenance-detail" className="font-bold text-emerald-400 hover:text-emerald-300">Maintenance plans start at $119</Link> and are reserved for returning or recently detailed vehicles.
+                    Already fully detailed or ceramic coated? <Link to="/services/maintenance-detail" className="font-bold text-emerald-400 hover:text-emerald-300">Ongoing inside-and-out maintenance plans start at $119</Link> and are reserved for existing clients or recently detailed vehicles.
                   </p>
                 </div>
               </div>

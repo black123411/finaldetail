@@ -338,7 +338,6 @@ async function startServer() {
       '/services/full-detailing': '/services/category/full-detailing',
       '/services/interior-only': '/services/interior-detail',
       '/services/maintenance': '/services/maintenance-detail',
-      '/services/maintenance-interior': '/services/maintenance-detail',
       '/product/paint-correction/dtj56skdjjzlkx6vfwehttsq': '/services/category/paint-correction',
       '/product/exterior-protection/ztfv36ft57ejxi3h2hxlh4hu': '/services/category/exterior-detailing',
       '/shop/rv-detailing-services/da32pniiisvjwk7d5iudz4jw': '/services/category/rv-boat-detailing'

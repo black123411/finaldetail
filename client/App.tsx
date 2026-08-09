@@ -214,7 +214,6 @@ export default function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/services/ceramic-3yr" element={<Navigate replace to="/services/system-x-crystal-plus" />} />
                 <Route path="/services/protection-package" element={<Navigate replace to="/services/system-x-pro-plus" />} />
-                <Route path="/services/maintenance-interior" element={<Navigate replace to="/services/maintenance-detail" />} />
                 <Route path="/services/:serviceId" element={<ServiceDetail />} />
                 <Route path="/services/category/:slug" element={<CategoryDetail />} />
                 <Route path="/areas/:slug" element={<CityDetail />} />

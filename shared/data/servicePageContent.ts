@@ -20,6 +20,51 @@ export type ServicePageContent = {
 };
 
 export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
+  "maintenance-interior": {
+    headline: "Maintenance Interior for vehicles that need upkeep, not restoration",
+    intro: "Maintenance Interior is the lower-cost interior option for Bellevue and Omaha drivers whose vehicle is already in reasonably maintained condition. It provides a proper vacuum, air blowout, surface cleaning, mats, glass, and light spot cleaning without charging for full shampooing or extraction the vehicle does not need.",
+    sections: [
+      {
+        title: "What this service solves",
+        body: "It handles normal dust, crumbs, fingerprints, light floor-mat soil, and everyday interior buildup before they turn into a larger reset."
+      },
+      {
+        title: "What it does not cover",
+        body: "Heavy stains, embedded pet hair, major spills, strong odors, biohazards, and neglected interiors require Signature Interior Detail, Interior Restoration, or a condition-based quote."
+      },
+      {
+        title: "Best time to book",
+        body: "Choose it when the cabin is generally cared for but needs a more complete professional upkeep visit than a quick vacuum and wipe."
+      }
+    ],
+    processTitle: "Maintenance interior process",
+    process: [
+      "Inspect the interior condition and confirm it qualifies for maintenance-level cleaning.",
+      "Air purge and vacuum the seats, carpet, trunk, cracks, mats, and accessible storage areas.",
+      "Clean the dash, console, doors, plastics, mats, and interior glass.",
+      "Treat light spots and complete a final interior quality check."
+    ],
+    buyerNotes: [
+      "This service is for regularly maintained vehicles.",
+      "Heavy stains, major pet hair, spills, odors, or neglected interiors need a higher-level service.",
+      "Text photos if you are unsure which interior package fits."
+    ],
+    faq: [
+      {
+        question: "How is Maintenance Interior different from Signature Interior Detail?",
+        answer: "Maintenance Interior is for lighter, routine buildup. Signature Interior Detail allows more time for normal dirt, light staining, and a more involved cabin cleanup."
+      },
+      {
+        question: "Does the $139 service include full shampooing or extraction?",
+        answer: "No. Full fabric shampooing, hot-water extraction, severe stain work, and major pet-hair removal require a higher-level interior service."
+      },
+      {
+        question: "Can I send photos before booking?",
+        answer: "Yes. Texting clear interior photos helps Bryan confirm whether the vehicle fits Maintenance Interior pricing before the appointment."
+      }
+    ],
+    internalServiceIds: ["interior-detail", "interior-reset", "odor-elimination", "full-detail-package"]
+  },
   "interior-detail": {
     headline: "Signature Interior Detail for maintained daily drivers",
     intro: "The Signature Interior Detail is for Bellevue and Omaha drivers with normal dirt, crumbs, dust, fingerprints, light staining, and everyday interior buildup. It focuses on the touch points, cracks, plastics, mats, glass, and surfaces that need a professional cleanup without full extraction.",
@@ -71,7 +116,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         answer: "Many interior details can be done mobile around Bellevue, Omaha, Papillion, La Vista, and nearby areas when weather, power, space, and vehicle condition allow it."
       }
     ],
-    internalServiceIds: ["interior-reset", "odor-elimination", "full-detail-package", "maintenance-detail"]
+    internalServiceIds: ["maintenance-interior", "interior-reset", "odor-elimination", "full-detail-package"]
   },
   "interior-reset": {
     headline: "Interior Restoration for stains, pet hair, spills, and neglected cabins",
@@ -125,48 +170,6 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       }
     ],
     internalServiceIds: ["odor-elimination", "pre-sale-detail", "showroom-package", "interior-detail", "maintenance-interior"]
-  },
-  "maintenance-interior": {
-    headline: "Maintenance Interior for a light cabin refresh and everyday upkeep",
-    intro: "Maintenance Interior is for vehicles that are already in good shape and need an affordable interior refresh. It focuses on vacuuming, wiping, glass cleaning, mat care, and light spot treatment without full shampooing or extraction.",
-    sections: [
-      {
-        title: "What this service solves",
-        body: "It refreshes vehicles with light dust, crumbs, surface stains, and everyday dirt. This service is designed for interiors that need a clean feel without the time and cost of a full deep restoration."
-      },
-      {
-        title: "What makes it different",
-        body: "Maintenance Interior is a maintenance-first package. It uses targeted cleaning, interior glass care, pressure air, and finish wipes instead of full upholstery extraction so the cabin looks tidy and feels renewed."
-      },
-      {
-        title: "Best time to book",
-        body: "Book it when your vehicle is still in good condition but needs a noticeable refresh before a weekend trip, showing, or routine upkeep."
-      }
-    ],
-    processTitle: "Maintenance interior process",
-    process: [
-      "Inspect the cabin and identify light dust, debris, and surface buildup.",
-      "Thoroughly vacuum seats, carpet, mats, and cargo areas.",
-      "Clean dash, console, door panels, cupholders, and interior trim.",
-      "Clean interior glass and wipe down surfaces with safe cleaners.",
-      "Perform light spot treatment and complete a final quality check."
-    ],
-    buyerNotes: [
-      "Choose Signature Interior Detail if you need deeper stain treatment or full fabric cleaning.",
-      "Maintenance Interior is ideal when the vehicle is already well maintained and only needs a refresh.",
-      "Remove personal items before the appointment so Bryan can clean storage compartments and consoles."
-    ],
-    faq: [
-      {
-        question: "Is Maintenance Interior the same as a full interior detail?",
-        answer: "No. It is a lighter refresh for cabins that are already in good condition. It does not include full hot water extraction, heavy stain removal, or deep odor remediation."
-      },
-      {
-        question: "What price should I expect?",
-        answer: "Prices start at $139 for cars, with slightly higher pricing for SUVs, trucks, and XL vehicles. The final quote is based on size and vehicle condition."
-      }
-    ],
-    internalServiceIds: ["interior-detail", "interior-reset", "maintenance-detail"]
   },
   "exterior-enhancement": {
     headline: "Premium Wash and Wax for smooth paint, gloss, and seasonal protection",

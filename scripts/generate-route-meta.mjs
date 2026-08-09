@@ -104,7 +104,7 @@ function buildStaticRoutes() {
 
     if (path === '/' || path === '/services') {
       const featuredServices = SERVICES
-        .filter((service) => ['interior-detail', 'interior-reset', 'full-detail-package', 'showroom-package', 'system-x-pro-plus'].includes(service.id))
+        .filter((service) => ['maintenance-interior', 'interior-detail', 'interior-reset', 'full-detail-package', 'showroom-package', 'system-x-pro-plus'].includes(service.id))
         .map((service) => ({
           href: `/services/${service.id}`,
           label: `${service.name} — ${service.pricingType === 'custom' ? 'quote' : `from ${formatPrice(Math.min(...Object.values(service.price).filter((price) => Number.isFinite(price) && price > 0)))}`}`,

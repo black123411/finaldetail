@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { 
   Calendar, 
   ChevronRight, 
@@ -16,7 +16,7 @@ import {
   Flame
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { VEHICLE_SIZES, SPECIALTY_SIZES, SERVICES, CATEGORIES, ADD_ONS } from '@/shared/data/services';
+import { VEHICLE_SIZES, SPECIALTY_SIZES, SERVICES, ADD_ONS } from '@/shared/data/services';
 import { format, addMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfToday, parseISO } from 'date-fns';
 import { BookingAPI, ServiceAPI } from '../services/api';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
@@ -24,6 +24,48 @@ import { trackEvent } from '../lib/analytics';
 import { formatCurrency } from '../lib/utils';
 
 type Step = 'service' | 'size' | 'addons' | 'datetime' | 'details' | 'success';
+type BookingPathId = 'interior' | 'full-detail' | 'exterior-paint' | 'ceramic' | 'specialty';
+
+const BOOKING_PATHS: Array<{
+  id: BookingPathId;
+  label: string;
+  description: string;
+  categoryIds: string[];
+}> = [
+  {
+    id: 'interior',
+    label: 'Interior',
+    description: 'Maintenance cleaning, deeper interior detailing, stains, pet hair, spills, or odors.',
+    categoryIds: ['interior-detailing'],
+  },
+  {
+    id: 'full-detail',
+    label: 'Full Detail',
+    description: 'Inside-and-out packages, new-car preparation, pre-sale work, or ongoing maintenance.',
+    categoryIds: ['full-detailing', 'maintenance'],
+  },
+  {
+    id: 'exterior-paint',
+    label: 'Exterior / Paint',
+    description: 'Wash and wax, paint enhancement, swirl reduction, or multi-stage paint correction.',
+    categoryIds: ['exterior-detailing', 'paint-correction'],
+  },
+  {
+    id: 'ceramic',
+    label: 'Ceramic Coating',
+    description: 'System X coating packages and paint-protection consultations.',
+    categoryIds: ['protection'],
+  },
+  {
+    id: 'specialty',
+    label: 'Specialty / Not Sure',
+    description: 'RV, boat, tractor, equipment, or help choosing the right service for your vehicle.',
+    categoryIds: ['rv-boat-detailing', 'tractor-detailing'],
+  },
+];
+
+const getBookingPathForCategory = (categoryId: string) =>
+  BOOKING_PATHS.find(path => path.categoryIds.includes(categoryId))?.id || null;
 
 interface SquareService {
   id: string;
@@ -182,7 +224,7 @@ export default function Booking() {
   // Calendar state
   const [viewDate, setViewDate] = useState(new Date());
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedPath, setSelectedPath] = useState<BookingPathId | null>(null);
 
   useEffect(() => {
     fetchServices();
@@ -215,7 +257,7 @@ export default function Booking() {
         const matched = services.find(s => s.name.toLowerCase().includes(targetName));
         if (matched) {
           setSelectedServices([matched]);
-          setSelectedCategory(localService.categoryId);
+          setSelectedPath(getBookingPathForCategory(localService.categoryId));
           setStep('size');
         }
       }
@@ -305,11 +347,9 @@ export default function Booking() {
     
     if (isAddon) return false;
     
-    // Show services if no category selected or match selected category
-    if (!selectedCategory) {
-      return true;
-    }
-    return s.categoryId === selectedCategory;
+    const path = BOOKING_PATHS.find(candidate => candidate.id === selectedPath);
+    if (!path) return false;
+    return !!s.categoryId && path.categoryIds.includes(s.categoryId);
   });
 
   const availableAddons = services.filter(s => {
@@ -573,38 +613,63 @@ export default function Booking() {
                   className="space-y-6"
                 >
                   <div>
-                    <h2 className="text-xl font-bold text-zinc-900 mb-1">Select a Service</h2>
-                    <p className="text-xs text-zinc-500">Pick your baseline service package.</p>
+                    <h2 className="text-xl font-bold text-zinc-900 mb-1">
+                      {selectedPath ? 'Choose Your Package' : 'What Does Your Vehicle Need?'}
+                    </h2>
+                    <p className="text-xs text-zinc-500">
+                      {selectedPath ? 'Compare the packages in this service path.' : 'Start with one of five simple paths. You will see the detailed packages next.'}
+                    </p>
                   </div>
 
-                  {/* Category Tabs */}
-                  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-                    <button
-                      onClick={() => setSelectedCategory(null)}
-                      className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${
-                        selectedCategory === null 
-                          ? 'bg-zinc-900 border-zinc-900 text-white shadow-md' 
-                          : 'bg-white border-zinc-200 text-zinc-500 hover:border-zinc-300'
-                      }`}
-                    >
-                      All Services
-                    </button>
-                    {CATEGORIES.filter(c => !['maintenance', 'rv-boat-detailing', 'tractor-detailing'].includes(c.id))
-                      .filter(cat => services.some(s => s.categoryId === cat.id && !s.name.toLowerCase().includes('add-on')))
-                      .map(cat => (
+                  {!selectedPath ? (
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {BOOKING_PATHS.map((path, index) => (
+                        <button
+                          key={path.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedServices([]);
+                            setSelectedPath(path.id);
+                            trackEvent('booking_select_path', { path_id: path.id, path_label: path.label });
+                          }}
+                          className="group flex min-h-36 items-start gap-4 rounded-2xl border-2 border-transparent bg-white p-5 text-left shadow-sm transition-all hover:border-zinc-300 hover:shadow-md"
+                        >
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-zinc-900 text-sm font-black text-white">
+                            {index + 1}
+                          </span>
+                          <span>
+                            <span className="block text-lg font-black text-zinc-900 group-hover:text-emerald-700">{path.label}</span>
+                            <span className="mt-2 block text-xs leading-relaxed text-zinc-500">{path.description}</span>
+                            <span className="mt-4 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-zinc-700">
+                              View options <ChevronRight className="h-3.5 w-3.5" />
+                            </span>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
                       <button
-                        key={cat.id}
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border ${
-                          selectedCategory === cat.id 
-                            ? 'bg-zinc-900 border-zinc-900 text-white shadow-md' 
-                            : 'bg-white border-zinc-200 text-zinc-500 hover:border-zinc-300'
-                        }`}
+                        type="button"
+                        onClick={() => {
+                          setSelectedPath(null);
+                          setSelectedServices([]);
+                        }}
+                        className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-zinc-600 hover:text-zinc-950"
                       >
-                        {cat.name}
+                        <ChevronLeft className="h-4 w-4" /> Change service path
                       </button>
-                    ))}
-                  </div>
+                        <p className="text-sm font-bold text-zinc-900">
+                          {BOOKING_PATHS.find(path => path.id === selectedPath)?.label}
+                        </p>
+                      </div>
+
+                      {selectedPath === 'specialty' && (
+                        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-relaxed text-emerald-950">
+                          Not sure which service fits? <Link to="/quote" className="font-black underline underline-offset-2">Send vehicle details and photos for Bryan's recommendation.</Link>
+                        </div>
+                      )}
 
                   <div className="grid gap-3">
                     {mainServices.length > 0 ? (
@@ -671,6 +736,8 @@ export default function Booking() {
                         Continue to Vehicle Size
                       </Button>
                     </div>
+                  )}
+                    </>
                   )}
                 </motion.div>
               )}

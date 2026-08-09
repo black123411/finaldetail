@@ -51,8 +51,8 @@ export const CATEGORIES: Category[] = [
     description: 'Interior car detailing in Bellevue and Omaha for dust, crumbs, stains, pet hair, and odor. Start with Maintenance Interior from $139, then choose Signature Interior Detail or Deep Interior Restoration for heavier buildup. Services include vacuuming, steam cleaning, upholstery shampoo, hot water extraction, glass cleaning, and interior wipe down.',
     image: '/gallery/takeout/20210629_204424.webp',
     seo: {
-      title: 'Interior Car Detailing Bellevue & Omaha | Prices From $179',
-      description: 'Professional interior car detailing in Bellevue and Omaha. Vacuuming, compressed-air cleaning, shampoo, extraction, stain treatment, and pet-hair options.'
+      title: 'Interior Car Detailing Bellevue & Omaha | Prices From $139',
+      description: 'Interior car detailing in Bellevue and Omaha from $139, with maintenance cleaning, vacuuming, shampoo, extraction, stain treatment, and pet-hair options.'
     }
   },
   { 
@@ -190,28 +190,26 @@ export const SERVICES: Service[] = [
     id: 'maintenance-interior',
     categoryId: 'interior-detailing',
     name: 'Maintenance Interior',
-    shortDescription: 'Maintenance interior cleaning for reasonably maintained vehicles with light dust, crumbs, glass, and wipe-down care.',
-    longDescription: 'Maintenance Interior is for vehicles that are already in good condition and need a clean cabin refresh. The service includes a thorough vacuum, compressed-air blowout, dash, console, door, and plastic wipe down, floor mat cleaning, interior glass cleaning, and light spot treatment. It does not include full shampooing, extraction, severe stains, excessive pet hair, or major odor removal.',
-    price: { car: 139, suv: 159, truck: 169, largeSuv: 179 },
+    shortDescription: 'A thorough vacuum and interior wipe-down for regularly maintained vehicles that do not need full shampooing or extraction.',
+    longDescription: 'Maintenance Interior is for reasonably maintained vehicles that need a proper vacuum and wipe-down without full shampooing or extraction. It includes a thorough vacuum, compressed-air blowout, cleaning of the dash, console, doors, and plastics, floor mat cleaning, interior glass, and light spot cleaning. Severe stains, excessive pet hair, major odor removal, and full fabric extraction require a higher-level interior service.',
+    price: { car: 139, suv: 159, truck: 179, largeSuv: 199 },
     pricingType: 'fixed',
     squareName: 'Maintenance Interior',
     seo: {
-      title: 'Maintenance Interior Detailing Bellevue NE | Light Interior Refresh',
-      description: 'Maintenance interior detailing in Bellevue and Omaha for clean cabins needing a refreshing vacuum, wipe down, glass cleaning, and light spot treatment.'
+      title: 'Maintenance Interior Cleaning | Bellevue & Omaha From $139',
+      description: 'Maintenance interior cleaning in Bellevue and Omaha from $139 for regularly maintained vehicles that need vacuuming, wipe-down, mats, glass, and light spot cleaning.'
     },
     features: [
-      'Thorough interior vacuum',
-      'Compressed-air blowout for vents and crevices',
-      'Dash, console, door, and plastic wipe down',
+      'Thorough interior and trunk vacuum',
+      'Compressed-air blowout for cracks and crevices',
+      'Dash, console, door, and plastic cleaning',
       'Floor mat cleaning',
       'Interior glass cleaning',
-      'Light stain spot treatment',
-      'Cupholder and console cleaning',
-      'Door jamb wipe down'
+      'Light spot cleaning'
     ],
-    duration: '1.5-2 hours',
-    bestFor: 'Reasonably maintained vehicles with light dust, crumbs, and surface buildup.',
-    badge: 'New',
+    duration: '2-2.5 hours',
+    bestFor: 'Regularly maintained vehicles without heavy stains, major pet hair, spills, strong odors, or neglected interiors.',
+    badge: 'From $139',
     image: '/gallery/takeout/20210629_204424.webp'
   },
   {
@@ -484,7 +482,7 @@ export const SERVICES: Service[] = [
     name: 'Signature Full Detail',
     shortDescription: 'Full car detail package with interior cleaning, exterior hand wash, paint decontamination, and paint sealant.',
     longDescription: 'Signature Full Detail combines Signature Interior Detail with Premium Wash & Wax. It is the main full car detailing package for Bellevue and Omaha drivers who want the inside cleaned and the exterior washed, decontaminated, and protected in one appointment.',
-    price: { car: 279, suv: 299, truck: 319, largeSuv: 349 },
+    price: { car: 279, suv: 319, truck: 359, largeSuv: 399 },
     pricingType: 'fixed',
     squareName: 'Signature Full Detail',
     seo: {

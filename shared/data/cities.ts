@@ -54,7 +54,7 @@ export const CITIES: CityPage[] = [
       title: 'Professional Car Detailing in Bellevue, Nebraska',
       intro: "Bryan's Showroom Quality Detailing is based in Bellevue and has served Bellevue and the Omaha metro since 2017. I provide professional interior detailing, full vehicle details, paint correction, and certified ceramic coating services for cars, trucks, SUVs, specialty vehicles, and work vehicles. Mobile service is available when the service, weather, workspace, and vehicle condition are suitable. Bellevue drop-off and pickup options are available by appointment for services that require more time or controlled conditions. This is an appointment-only drop-off location, not an open public storefront.",
       servicesLabel: 'Auto Detailing Services in Bellevue:',
-      whyLabel: "Why Bellevue residents choose Bryan's:",
+      whyLabel: 'Why Bellevue drivers choose Bryan:',
       whyPoints: [
         'Locally owned and operated in Bellevue since 2017',
         'Serving Offutt AFB military families with flexible scheduling',
@@ -179,9 +179,9 @@ export const CITIES: CityPage[] = [
       title: 'Auto Detailing in Elkhorn, NE',
       intro: "Elkhorn and West Omaha drivers can schedule System X ceramic coating, multi-stage paint correction, and interior restoration through Bryan's Showroom Quality Mobile Detailing. I review the vehicle and preparation needed before confirming the service.",
       servicesLabel: 'Elkhorn Auto Detailing Services:',
-      whyLabel: 'Why Elkhorn residents choose Bryan\'s:',
+      whyLabel: 'Why Elkhorn drivers choose Bryan:',
       whyPoints: [
-        'System X certified ceramic coating for long-term protection',
+        'I install System X certified ceramic coatings with preparation matched to the vehicle',
         'Multi-stage paint correction for luxury and performance vehicles',
         'New-car detail packages with inspection-based paint preparation',
         'Mobile service to Elkhorn and West Omaha',

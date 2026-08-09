@@ -89,11 +89,6 @@
         "type": 301
       },
       {
-        "source": "/services/maintenance-interior",
-        "destination": "/services/maintenance-detail",
-        "type": 301
-      },
-      {
         "source": "/services/ceramic-3yr",
         "destination": "/services/system-x-crystal-plus",
         "type": 301
