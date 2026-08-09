@@ -117,6 +117,21 @@
         "source": "/blog/best-car-detailing-bellevue-ne",
         "destination": "/areas/bellevue-ne",
         "type": 301
+      },
+      {
+        "source": "/blog/ceramic-coating-cost-omaha",
+        "destination": "/ceramic-coating",
+        "type": 301
+      },
+      {
+        "source": "/blog/paint-correction-vs-ceramic-coating",
+        "destination": "/blog/paint-correction-swirl-marks-scratches-omaha",
+        "type": 301
+      },
+      {
+        "source": "/blog/pre-sale-detail-omaha",
+        "destination": "/services/pre-sale-detail",
+        "type": 301
       }
     ],
     "headers": [
