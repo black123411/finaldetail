@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BookOpen, ChevronRight, CircleHelp, ExternalLink, LogOut, ShieldCheck, Wrench } from 'lucide-react';
+import { BookOpen, ChevronRight, CircleHelp, ExternalLink, LogOut, MessageSquareText, ShieldCheck, Wrench } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { useAuth } from '../context/AuthContext';
 import { ServiceAPI } from '../services/api';
@@ -48,6 +48,13 @@ export default function Admin() {
       icon: CircleHelp,
       meta: 'Live website content',
     },
+    {
+      title: 'Review Requests',
+      description: 'Personalize and copy an honest post-job review request with the verified Google review link.',
+      to: '/admin/reviews',
+      icon: MessageSquareText,
+      meta: 'Manual customer follow-up',
+    },
   ];
 
   return (
@@ -70,7 +77,7 @@ export default function Admin() {
           </div>
         </section>
 
-        <section className="grid gap-5 md:grid-cols-3">
+        <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {tools.map(({ title, description, to, icon: Icon, meta }) => (
             <Link key={to} to={to} className="group rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-lg">
               <div className="mb-8 flex items-start justify-between">

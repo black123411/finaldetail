@@ -30,6 +30,7 @@ const FAQManager = lazy(() => import('./pages/FAQManager'));
 const Booking = lazy(() => import('./pages/Booking'));
 const Admin = lazy(() => import('./pages/Admin'));
 const AdminServiceManager = lazy(() => import('./pages/AdminServiceManager'));
+const AdminReviewRequests = lazy(() => import('./pages/AdminReviewRequests'));
 const Blog = lazy(() => import('./pages/Blog'));
 const BlogPostDetail = lazy(() => import('./pages/BlogPostDetail'));
 const BlogManager = lazy(() => import('./pages/BlogManager'));
@@ -259,6 +260,14 @@ export default function App() {
                       <FAQManager />
                     </AdminGuard>
                   } 
+                />
+                <Route
+                  path="/admin/reviews"
+                  element={
+                    <AdminGuard>
+                      <AdminReviewRequests />
+                    </AdminGuard>
+                  }
                 />
                 <Route path="/sitemap" element={<Sitemap />} />
                 <Route path="/terms" element={<TermsOfService />} />
