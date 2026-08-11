@@ -16,7 +16,7 @@ import {
   Twitter,
   Facebook
 } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Button } from '../components/ui/button';
 import { BlogAPI } from '../services/api';
@@ -34,6 +34,47 @@ interface BlogPost {
   createdAt: any;
   published: boolean;
 }
+
+const ARTICLE_MARKDOWN_COMPONENTS: Components = {
+  h2: ({ node: _node, ...props }) => (
+    <h2 className="mt-14 border-t border-zinc-200 pt-10 text-3xl font-black leading-tight tracking-tight text-zinc-950 md:text-4xl" {...props} />
+  ),
+  h3: ({ node: _node, ...props }) => (
+    <h3 className="mb-4 mt-10 text-2xl font-black leading-tight tracking-tight text-zinc-950 md:text-3xl" {...props} />
+  ),
+  h4: ({ node: _node, ...props }) => (
+    <h4 className="mb-3 mt-8 text-xl font-black leading-tight text-zinc-950" {...props} />
+  ),
+  p: ({ node: _node, ...props }) => (
+    <p className="my-5 text-lg font-normal leading-8 text-zinc-700" {...props} />
+  ),
+  a: ({ node: _node, ...props }) => (
+    <a className="font-bold text-emerald-700 underline decoration-emerald-300 decoration-2 underline-offset-4 hover:text-emerald-800" {...props} />
+  ),
+  strong: ({ node: _node, ...props }) => (
+    <strong className="font-black text-zinc-950" {...props} />
+  ),
+  ul: ({ node: _node, ...props }) => (
+    <ul className="my-6 list-disc space-y-3 pl-7 text-lg leading-8 text-zinc-700 marker:text-emerald-600" {...props} />
+  ),
+  ol: ({ node: _node, ...props }) => (
+    <ol className="my-6 list-decimal space-y-3 pl-7 text-lg leading-8 text-zinc-700 marker:font-bold marker:text-emerald-700" {...props} />
+  ),
+  blockquote: ({ node: _node, ...props }) => (
+    <blockquote className="my-8 border-l-4 border-emerald-500 bg-emerald-50 px-6 py-4 text-lg leading-8 text-zinc-700" {...props} />
+  ),
+  table: ({ node: _node, ...props }) => (
+    <div className="my-8 overflow-x-auto rounded-2xl border border-zinc-200">
+      <table className="w-full border-collapse text-left text-sm" {...props} />
+    </div>
+  ),
+  th: ({ node: _node, ...props }) => (
+    <th className="border-b border-zinc-200 bg-zinc-100 px-4 py-3 font-black text-zinc-950" {...props} />
+  ),
+  td: ({ node: _node, ...props }) => (
+    <td className="border-b border-zinc-100 px-4 py-3 text-zinc-700" {...props} />
+  ),
+};
 
 function estimateReadTime(content: string) {
   const wordCount = content
@@ -155,7 +196,7 @@ export default function BlogPostDetail() {
               {post.category}
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-black text-zinc-900 italic tracking-tighter mb-8 leading-[1.1]">
+          <h1 className="mb-8 text-4xl font-black leading-[1.08] tracking-tight text-zinc-900 md:text-5xl">
             {post.title}
           </h1>
           
@@ -210,8 +251,8 @@ export default function BlogPostDetail() {
         {/* Main Content */}
         <article className="lg:col-span-8">
           <div className="bg-white rounded-[3rem] p-8 md:p-16 border border-zinc-100 shadow-sm">
-            <div className="prose prose-zinc prose-lg max-w-none prose-headings:italic prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-zinc-900 prose-p:text-zinc-600 prose-p:font-medium prose-p:leading-relaxed prose-strong:text-zinc-900 prose-strong:font-black prose-a:text-emerald-500 prose-a:font-black hover:prose-a:text-emerald-600 prose-img:rounded-[2rem] prose-table:text-sm prose-th:font-black prose-th:text-zinc-900 prose-td:text-zinc-600">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+            <div className="max-w-none">
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={ARTICLE_MARKDOWN_COMPONENTS}>{post.content}</ReactMarkdown>
             </div>
             
             <div className="mt-16 pt-12 border-t border-zinc-50 flex flex-wrap items-center justify-between gap-8">
