@@ -88,7 +88,7 @@ export default function Membership() {
                 "Repeat-service scheduling",
                 "Service matched to your vehicle",
                 "Add-ons discussed before work",
-                "Mobile or Bellevue drop-off when suitable"
+                "Mobile or Bellevue drop-off, depending on the service and weather"
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-300">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />

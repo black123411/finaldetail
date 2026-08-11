@@ -152,7 +152,7 @@ export default function Home() {
 
           <p className="text-lg md:text-2xl text-zinc-300 max-w-2xl leading-relaxed font-medium mt-6">
             Professional interior detailing, complete inside-and-out details, paint correction, and ceramic coatings for cars, trucks, and SUVs.
-            <span className="block mt-3">I provide mobile detailing throughout Bellevue and the Omaha metro when the service, weather, and location are a good fit. Bellevue drop-off and pickup options are also available for services that benefit from controlled working conditions.</span>
+            <span className="block mt-3">I provide mobile detailing throughout Bellevue and the Omaha metro when weather and workspace allow. Bellevue drop-off and pickup are also available for longer services and work that needs consistent lighting or protection from the weather.</span>
           </p>
           <p className="text-lg md:text-2xl text-emerald-300 max-w-2xl leading-relaxed font-semibold mt-4">
             Interior Detail ${heroPrices.interiorDetail} · Interior Restoration ${heroPrices.interiorReset} · Inside & Out Detail ${heroPrices.fullDetail}
@@ -436,7 +436,7 @@ export default function Home() {
                        <ShieldCheck className="h-6 w-6 text-emerald-400" />
                     </div>
                     <h3 className="text-xl font-bold">Flexible Options</h3>
-                    <p className="text-sm text-zinc-500 leading-relaxed font-medium">I offer mobile detailing when the location and service are a good fit, plus Bellevue drop-off and pickup by appointment for controlled-condition work.</p>
+                    <p className="text-sm text-zinc-500 leading-relaxed font-medium">I offer mobile detailing when weather and workspace allow, plus Bellevue drop-off and pickup by appointment for longer or weather-sensitive work.</p>
                  </div>
                  <div className="space-y-4">
                     <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">

@@ -614,7 +614,7 @@ export const SERVICES: Service[] = [
     categoryId: 'tractor-detailing',
     name: 'Tractor / Equipment Cleanup',
     shortDescription: 'Tractor and equipment cleaning for mud, grease, dust, cab interiors, glass, and exterior buildup.',
-    longDescription: 'Tractor / Equipment Cleanup is performed at the customer\'s location and has a $250 minimum covering up to the first two hours, then costs $150 per additional hour. The customer must provide a safe, suitable work area with water and standard electrical access. Final price is confirmed after texted photos; heavy mud, grease, access limitations, and disposal requirements are quoted before work.',
+    longDescription: 'Tractor / Equipment Cleanup is performed at the customer\'s location and has a $250 minimum covering up to the first two hours, then costs $150 per additional hour. The customer must provide a safe work area with water and standard electrical access. Final price is confirmed after texted photos; heavy mud, grease, access limitations, and disposal requirements are quoted before work.',
     price: { tractor: 250 },
     pricingType: 'custom',
     squareName: 'Tractor / Equipment Cleanup',

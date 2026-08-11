@@ -206,7 +206,7 @@ export default function Gallery() {
             The before-and-after section uses matching photos from the same vehicle and work area. The main gallery separates interior, exterior, paint correction, and specialty vehicle results.
           </p>
           <p className="text-zinc-400 leading-relaxed font-medium">
-            When you book with Bryan's Showroom Quality Mobile Detailing, the goal is clear service matching: interior cleaning for dirty cabins, paint correction for swirl marks, ceramic coating for protection, and mobile detailing where the job is a good fit.
+            When you book with Bryan's Showroom Quality Mobile Detailing, the service should match what your vehicle needs: interior cleaning for dirty cabins, paint correction for swirl marks, ceramic coating for protection, and mobile detailing when weather and workspace allow.
           </p>
         </div>
       </section>

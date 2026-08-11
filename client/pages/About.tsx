@@ -138,7 +138,7 @@ export default function About() {
             <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-700">Detailing specialties</p>
             <h2 className="mt-4 text-4xl font-black tracking-tight text-zinc-950 md:text-5xl">From daily-driver interiors to long-term paint protection.</h2>
             <p className="mt-6 text-lg leading-relaxed text-zinc-600">
-              Services are selected around the vehicle's condition and the result you want. Mobile work is available where the service, weather, access, and workspace are suitable. Intensive paint, coating, and restoration work can use Bellevue drop-off by appointment.
+              Services are selected around the vehicle's condition and the result you want. Mobile work is available when weather, access, and workspace allow. Intensive paint, coating, and restoration work can use Bellevue drop-off by appointment.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild><Link to="/services">Compare Services & Pricing</Link></Button>

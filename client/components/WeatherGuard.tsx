@@ -44,16 +44,16 @@ const WeatherGuard: React.FC<WeatherGuardProps> = ({ date }) => {
           } else if (code >= 45 && code <= 48) {
             condition = "Foggy";
             recType = 'success';
-            recText = "Foggy outside. Bellevue drop-off keeps controlled-condition services protected from the weather.";
+            recText = "Foggy outside. Bellevue drop-off keeps longer and weather-sensitive services protected from the weather.";
           } else if (code >= 51 && code <= 67 || code >= 80) {
             condition = "Rainy";
             recType = 'warning';
-            recText = "Rain is in the forecast. Mobile work may need to move, while Bellevue drop-off remains available for services that require controlled conditions.";
+            recText = "Rain is in the forecast. Mobile work may need to move, while Bellevue drop-off remains available for longer or weather-sensitive services.";
           }
 
           if (precip > 30 && recType === 'success') {
             recType = 'success';
-            recText = "Rain is possible. Bellevue drop-off is an option for services that require controlled conditions; mobile availability depends on the location and weather.";
+            recText = "Rain is possible. Bellevue drop-off is an option for longer or weather-sensitive services; mobile availability depends on the location and weather.";
           }
 
           setWeather({

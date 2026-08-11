@@ -13,12 +13,12 @@ const DEFAULT_FAQS = [
   },
   {
     question: 'What is your rain or weather policy for mobile detailing?',
-    answer: 'For mobile car detailing, your appointment is weather-dependent. If rain, snow, or extreme temperatures are forecasted, I will contact you to reschedule. Interior or limited exterior work may still be possible when suitable covered conditions are available. Bellevue drop-off is available for services that need controlled conditions.',
+    answer: 'Mobile appointments depend on the weather. If rain, snow, or extreme temperatures are forecast, I will contact you to reschedule. Interior or limited exterior work may still be possible with a safe covered work area. Bellevue drop-off is available for longer or weather-sensitive services.',
     order: 2
   },
   {
     question: 'Do I need to provide water or electricity for mobile detailing?',
-    answer: 'For most mobile appointments, I bring the equipment and water needed for the service. The vehicle must be parked in a safe, accessible location. Bellevue drop-off and pickup are available when controlled conditions are needed.',
+    answer: 'For most mobile appointments, I bring the equipment and water needed for the service. The vehicle must be parked in a safe, accessible location with enough room to work. Bellevue drop-off and pickup are available for longer or weather-sensitive services.',
     order: 3
   }
 ];

@@ -236,7 +236,7 @@ export default function CityDetail() {
               {[
                 ['1', 'Choose the right service', 'Compare interior, full-detail, paint-correction, ceramic-coating, and maintenance options.'],
                 ['2', 'Confirm the appointment', 'Use online booking for available dates and times.'],
-                ['3', 'Prepare the vehicle', 'For mobile service, make sure the vehicle and work area are suitable for the selected service.'],
+                ['3', 'Prepare the vehicle', 'For mobile service, make sure the vehicle is accessible and there is enough safe working space.'],
                 ['4', 'Review the result', "For restoration and protection work, Bryan explains what can improve based on the vehicle's actual condition."],
               ].map(([number, title, body]) => (
                 <div key={number} className="flex gap-4 rounded-2xl border border-zinc-200 bg-white p-5">
@@ -262,7 +262,7 @@ export default function CityDetail() {
             {[
               {
                 q: `Do you offer mobile car detailing in ${city.name}?`,
-                a: `Mobile service is available around the Omaha metro where the vehicle, work area, and selected service are suitable. Bellevue drop-off is available for intensive work.`
+                a: `Mobile service is available around the Omaha metro when the vehicle is accessible and there is enough safe working space. Bellevue drop-off is available for intensive work.`
               },
               {
                 q: `What detailing service should I choose in ${city.name}?`,

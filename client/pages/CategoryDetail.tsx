@@ -120,8 +120,8 @@ export default function CategoryDetail() {
               </h2>
               <p className="mt-4 text-lg leading-8 text-zinc-600">
                 Compare the options below by vehicle condition, desired result, starting price, and time.
-                Mobile service is available for suitable jobs around the metro; Bellevue drop-off is recommended
-                for intensive paint correction, ceramic coating, and other controlled-setting work.
+                Mobile service is available when the job and workspace allow; Bellevue drop-off is recommended
+                for intensive paint correction, ceramic coating, and other longer services.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">

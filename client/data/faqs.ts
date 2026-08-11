@@ -15,7 +15,7 @@ export const FAQS: FAQ[] = [
   {
     id: '2',
     question: 'Do you need access to water and power?',
-    answer: 'For most mobile appointments, I bring the equipment and water needed for the service. The vehicle must be parked in a safe, accessible location. Bellevue drop-off and pickup are available when controlled conditions are needed.',
+    answer: 'For most mobile appointments, I bring the equipment and water needed for the service. The vehicle must be parked in a safe, accessible location with enough room to work. Bellevue drop-off and pickup are available for longer or weather-sensitive services.',
     order: 2
   },
   {

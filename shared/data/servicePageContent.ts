@@ -355,7 +355,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       "Panel wipe, inspect under lighting, and protect the corrected surface."
     ],
     buyerNotes: [
-      "This is usually a drop-off service because it needs time, lighting, and controlled conditions.",
+      "This is usually a drop-off service because it needs extra time, consistent lighting, and protection from the weather.",
       "Not every defect can be safely removed if it is through the clear coat.",
       "Best paired with ceramic coating because the corrected surface deserves durable protection."
     ],
