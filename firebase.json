@@ -132,6 +132,11 @@
         "source": "/blog/pre-sale-detail-omaha",
         "destination": "/services/pre-sale-detail",
         "type": 301
+      },
+      {
+        "source": "/blog/how-to-protect-new-car-paint",
+        "destination": "/services/new-car-detail",
+        "type": 301
       }
     ],
     "headers": [

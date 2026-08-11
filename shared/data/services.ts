@@ -147,7 +147,7 @@ export const SPECIALTY_SIZES = [
 ];
 
 export const ADD_ONS: AddOn[] = [
-  { id: 'pet-hair', name: 'Pet Hair Removal', price: 75, duration: 'Quoted after photos', description: 'Starts at $75. Final price is quoted after texted photos because embedded pet hair, vehicle size, and cargo-area condition can change the time required.' },
+  { id: 'pet-hair', name: 'Pet Hair Removal', price: 75, duration: 'Quoted after photos', description: 'Starts at $75. Final price is quoted after texted photos because embedded pet hair, vehicle size, and the condition of the rear storage area can change the time required.' },
   { id: 'smoke-odor', name: 'Ozone Odor Elimination', price: 125, duration: '3.5 hours', description: 'Ozone odor treatment for smoke, pet, mildew, and food smells after the odor source has been cleaned.' },
   { id: 'engine-bay', name: 'Engine Bay Detail', price: 50, duration: '45 mins', description: 'Safe low-pressure degreasing, steam cleaning, and dressing of the engine compartment. Makes leaks easier to spot and runs cooler.' },
   { id: 'headlight', name: 'Headlight Restoration', price: 100, duration: '60-90 mins', description: 'Multi-stage wet sanding, polishing, and UV sealant coating restores clarity and nighttime visibility to yellowed, hazy headlights.' },

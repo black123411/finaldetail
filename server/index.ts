@@ -340,7 +340,8 @@ async function startServer() {
       '/services/maintenance': '/services/maintenance-detail',
       '/product/paint-correction/dtj56skdjjzlkx6vfwehttsq': '/services/category/paint-correction',
       '/product/exterior-protection/ztfv36ft57ejxi3h2hxlh4hu': '/services/category/exterior-detailing',
-      '/shop/rv-detailing-services/da32pniiisvjwk7d5iudz4jw': '/services/category/rv-boat-detailing'
+      '/shop/rv-detailing-services/da32pniiisvjwk7d5iudz4jw': '/services/category/rv-boat-detailing',
+      '/blog/how-to-protect-new-car-paint': '/services/new-car-detail'
     };
     const legacyDestination = legacyRedirects[requestPath];
     

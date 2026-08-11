@@ -49,7 +49,7 @@ function priceMarkup(service) {
   }
   const suffix = service.pricingType === 'variable' ? '/ft' : '';
   const qualifier = service.pricingType === 'custom' ? 'Starting prices:' : 'Current pricing:';
-  return `<p><strong>${qualifier}</strong> ${entries.map(([size, price]) => `${escapeHtml(VEHICLE_SIZE_LABELS[size] || size)} ${formatPrice(price)}${suffix}`).join(' · ')}. Final scope is confirmed after photos and condition review.</p>`;
+  return `<p><strong>${qualifier}</strong> ${entries.map(([size, price]) => `${escapeHtml(VEHICLE_SIZE_LABELS[size] || size)} ${formatPrice(price)}${suffix}`).join(' · ')}. Final price is confirmed after Bryan reviews the vehicle photos and condition.</p>`;
 }
 
 function linkListMarkup(items) {
@@ -91,7 +91,7 @@ function staticHeading(path, title) {
   return headings[path] || title.split('|')[0].trim();
 }
 
-function buildStaticRoutes() {
+function buildStaticRoutes(blogRoutes = []) {
   const routes = new Map();
   const categoryLinks = CATEGORIES.map((category) => ({
     href: `/services/category/${category.slug}`,
@@ -127,6 +127,13 @@ function buildStaticRoutes() {
       })))}`;
     } else if (path === '/gallery') {
       links = categoryLinks;
+    } else if (path === '/blog') {
+      details = blogRoutes.length
+        ? `<h2>Latest auto detailing guides</h2>${linkListMarkup(blogRoutes.map((route) => ({
+            href: route.path,
+            label: route.title.split('|')[0].trim(),
+          })))}`
+        : '';
     }
 
     routes.set(path, {
@@ -171,7 +178,7 @@ function buildStaticRoutes() {
     const priceText = prices.length === 0
       ? 'Custom quote based on vehicle size and condition.'
       : service.pricingType === 'custom'
-        ? `Starting prices are ${formatPrice(Math.min(...prices))}; final scope is confirmed after photos and condition review.`
+        ? `Starting prices are ${formatPrice(Math.min(...prices))}; the final price is confirmed after Bryan reviews the vehicle photos and condition.`
         : `Pricing starts at ${formatPrice(Math.min(...prices))}.`;
     routes.set(path, {
       path,
@@ -408,7 +415,7 @@ if (blogEntries) {
   await writeFile(sitemapPath, sitemap, 'utf8');
 }
 
-const routes = buildStaticRoutes();
+const routes = buildStaticRoutes(blogRoutes);
 for (const route of blogRoutes) routes.set(route.path, route);
 
 const sitemapPaths = [...sitemap.matchAll(/<loc>https:\/\/bryansdetailingomaha\.com(\/[^<]*)<\/loc>/g)]

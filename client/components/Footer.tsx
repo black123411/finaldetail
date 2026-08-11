@@ -39,6 +39,7 @@ export default function Footer() {
         <div className="space-y-4">
           <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Helpful Guides</h4>
           <ul className="space-y-2 text-sm">
+            <li><Link to="/blog/car-detailing-cost-omaha-2026" className="block py-1 hover:text-zinc-100 transition-colors">2026 Detailing Price Guide</Link></li>
             <li><Link to="/blog/what-does-interior-car-detailing-include-omaha-bellevue" className="block py-1 hover:text-zinc-100 transition-colors">Interior Detailing Guide</Link></li>
             <li><Link to="/blog/paint-correction-swirl-marks-scratches-omaha" className="block py-1 hover:text-zinc-100 transition-colors">Paint Correction Guide</Link></li>
             <li><Link to="/blog/ceramic-coating-vs-wax-nebraska" className="block py-1 hover:text-zinc-100 transition-colors">Ceramic vs. Wax</Link></li>

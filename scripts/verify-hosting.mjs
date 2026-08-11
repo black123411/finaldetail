@@ -8,6 +8,7 @@ const cases = [
   { path: '/about', status: 200, canonical: 'https://bryansdetailingomaha.com/about', h1: 'Meet Bryan, Your Local Auto Detailer' },
   { path: '/areas/omaha-ne', status: 200, canonical: 'https://bryansdetailingomaha.com/areas/omaha-ne', h1: 'Mobile Car Detailing in Omaha, NE' },
   { path: '/services/interior-detail', status: 200, canonical: 'https://bryansdetailingomaha.com/services/interior-detail', h1: 'Signature Interior Detail' },
+  { path: '/blog/how-to-protect-new-car-paint', status: 301, location: '/services/new-car-detail' },
   { path: '/app/cms', status: 404, noindex: true, h1: 'Page Not Found' },
   { path: '/definitely-not-a-real-page', status: 404, noindex: true, h1: 'Page Not Found' },
 ];

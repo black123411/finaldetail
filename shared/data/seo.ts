@@ -142,6 +142,7 @@ export const NOT_FOUND_SEO: SeoRoute = {
 };
 
 const BLOG_SEO_TITLES: Record<string, string> = {
+  'car-detailing-cost-omaha-2026': "Car Detailing Cost in Omaha (2026) | Bryan's",
   'ceramic-coating-cost-omaha': "Ceramic Coating Cost in Omaha NE | Bryan's Detailing",
   'paint-correction-vs-ceramic-coating': "Paint Correction vs Ceramic Coating | Bryan's Detailing",
   'best-car-detailing-bellevue-ne': "Choosing a Bellevue Auto Detailer | Bryan's Detailing",
@@ -150,6 +151,7 @@ const BLOG_SEO_TITLES: Record<string, string> = {
 };
 
 const BLOG_SEO_DESCRIPTIONS: Record<string, string> = {
+  'car-detailing-cost-omaha-2026': 'See current Omaha car detailing prices for interior cleaning, full details, paint correction, and ceramic coating, plus what can change the final price.',
   'ceramic-coating-cost-omaha': 'Omaha ceramic coating pricing guide covering paint preparation, vehicle condition, coating terms, maintenance, and questions to ask an installer.',
   'paint-correction-vs-ceramic-coating': 'Learn how paint correction improves visible defects, how ceramic coating protects prepared paint, and when combining both services makes sense.',
   'best-car-detailing-bellevue-ne': 'A practical checklist for comparing Bellevue auto detailers, evaluating quotes, understanding what each service includes, and knowing what results to expect.',

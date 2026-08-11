@@ -59,7 +59,12 @@ export default function BlogPostDetail() {
           BlogAPI.getPosts() as Promise<BlogPost[]>,
         ]);
         setPost(postData);
-        setRelatedPosts(storedPosts.filter(item => item.slug !== slug && item.category === postData.category).slice(0, 3));
+        const otherPosts = storedPosts.filter(item => item.slug !== slug);
+        const relatedCandidates = [
+          ...otherPosts.filter(item => item.category === postData.category),
+          ...otherPosts.filter(item => item.category !== postData.category),
+        ];
+        setRelatedPosts(relatedCandidates.slice(0, 3));
       } catch {
         // A missing or unpublished slug should remain a real 404 route rather than
         // silently redirecting visitors to the blog index.
@@ -269,12 +274,12 @@ export default function BlogPostDetail() {
                <Sparkles className="w-48 h-48" />
             </div>
             <div className="relative z-10">
-              <h3 className="text-2xl font-black italic tracking-tight mb-4">Ready for a Transformation?</h3>
+              <h3 className="text-2xl font-black italic tracking-tight mb-4">Not Sure What to Book?</h3>
               <p className="text-emerald-100 text-sm font-medium mb-8 leading-relaxed">
-                Bring back that showroom feel with professional interior detailing for Bellevue and Omaha.
+                Send a few clear photos. I’ll look at the condition and point you toward the service that makes sense.
               </p>
               <Button asChild className="w-full h-14 bg-zinc-900 hover:bg-black text-white rounded-2xl font-black italic tracking-tight shadow-xl">
-                <Link to="/book">Book Now</Link>
+                <Link to="/quote">Send Photos</Link>
               </Button>
             </div>
           </div>

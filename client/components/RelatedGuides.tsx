@@ -15,6 +15,7 @@ export type GuideTopic =
   | 'gift';
 
 type GuideKey =
+  | 'price-guide'
   | 'paint-correction'
   | 'ceramic-vs-wax'
   | 'interior-detailing'
@@ -23,6 +24,11 @@ type GuideKey =
   | 'detailing-frequency';
 
 const GUIDES: Record<GuideKey, { title: string; description: string; path: string }> = {
+  'price-guide': {
+    title: '2026 Omaha Car Detailing Price Guide',
+    description: 'See current starting prices and what vehicle size, stains, pet hair, odors, and paint condition can change.',
+    path: '/blog/car-detailing-cost-omaha-2026',
+  },
   'paint-correction': {
     title: 'Paint Correction Explained',
     description: 'Learn what swirl marks and scratches can be improved, and when clear-coat preservation matters.',
@@ -56,15 +62,15 @@ const GUIDES: Record<GuideKey, { title: string; description: string; path: strin
 };
 
 const TOPIC_GUIDES: Record<GuideTopic, GuideKey[]> = {
-  all: ['interior-detailing', 'paint-correction', 'ceramic-vs-wax', 'winter-road-salt', 'mobile-vs-dropoff', 'detailing-frequency'],
-  home: ['detailing-frequency', 'mobile-vs-dropoff', 'winter-road-salt'],
-  interior: ['interior-detailing', 'detailing-frequency', 'mobile-vs-dropoff'],
+  all: ['price-guide', 'interior-detailing', 'paint-correction', 'ceramic-vs-wax', 'winter-road-salt', 'mobile-vs-dropoff', 'detailing-frequency'],
+  home: ['price-guide', 'detailing-frequency', 'mobile-vs-dropoff'],
+  interior: ['price-guide', 'interior-detailing', 'detailing-frequency'],
   exterior: ['winter-road-salt', 'ceramic-vs-wax', 'detailing-frequency'],
-  'full-detail': ['mobile-vs-dropoff', 'detailing-frequency', 'winter-road-salt'],
+  'full-detail': ['price-guide', 'mobile-vs-dropoff', 'detailing-frequency'],
   paint: ['paint-correction', 'ceramic-vs-wax', 'winter-road-salt'],
   ceramic: ['ceramic-vs-wax', 'paint-correction', 'winter-road-salt'],
   maintenance: ['detailing-frequency', 'winter-road-salt', 'ceramic-vs-wax'],
-  local: ['mobile-vs-dropoff', 'winter-road-salt', 'detailing-frequency'],
+  local: ['price-guide', 'mobile-vs-dropoff', 'winter-road-salt'],
   gallery: ['paint-correction', 'interior-detailing', 'ceramic-vs-wax'],
   gift: ['detailing-frequency', 'interior-detailing', 'ceramic-vs-wax'],
 };
