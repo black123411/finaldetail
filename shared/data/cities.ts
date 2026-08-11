@@ -110,7 +110,7 @@ export const CITIES: CityPage[] = [
         'Interior cleaning for families and pet owners',
         'Exterior paint enhancement and gloss improvement',
         'Starting prices and condition adjustments explained clearly',
-        'Clear scope and timing before work begins'
+        'Clear pricing and timing before work begins'
       ],
       serviceAreas: ['La Vista', 'Papillion', 'Ralston', 'Bellevue', 'South Omaha'],
       cta: 'View La Vista detailing services and current availability.'
@@ -127,14 +127,14 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['interior-detail', 'interior-reset', 'full-detail-package', 'paint-correction-l1'],
       title: 'Auto Detailing in Ralston, NE',
-      intro: "Ralston drivers can request mobile detailing without a long drive. Bryan's Showroom Quality Mobile Detailing offers maintenance details, interior restoration, full details, paint correction, and ceramic coating, with the service scope reviewed before work begins.",
+      intro: "Ralston drivers can request mobile detailing without a long drive. Bryan's Showroom Quality Mobile Detailing offers maintenance details, interior restoration, full details, paint correction, and ceramic coating. Bryan explains what is included before work begins.",
       servicesLabel: 'Ralston Auto Detailing Services:',
       whyLabel: "Why Ralston drivers choose Bryan's:",
       whyPoints: [
         'Mobile scheduling for Ralston residents',
         'Interior restoration for stains, pet hair, and odor sources',
         'Paint correction to reduce eligible wash marks and swirls',
-        'Starting prices with the scope explained before work begins',
+        'Starting prices with the included work explained before work begins',
         'Owner-operated service with mobile and Bellevue options'
       ],
       serviceAreas: ['Ralston', 'Bellevue', 'La Vista', 'South Omaha'],

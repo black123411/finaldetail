@@ -215,7 +215,7 @@ export default function ServiceDetail() {
               Live availability updates during booking. Reserve your preferred date and time now—Saturday and evening appointments often fill up first.
             </p>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
-              Bryan confirms the exact scope and any vehicle-specific needs before the service begins. Book online now to secure the best available slot.
+              Bryan confirms what is included and any vehicle-specific needs before the service begins. Book online now to secure the best available slot.
             </p>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
               Prefer a quick answer? <a href="tel:712-305-6313" onClick={() => trackEvent('click_call', { location: 'service_detail', service_id: service.id })} className="font-bold underline">Call Bryan</a> for availability and package advice.
@@ -232,7 +232,7 @@ export default function ServiceDetail() {
           </div>
           <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
             <CircleDollarSign className="h-6 w-6 shrink-0 text-emerald-400" />
-            <div><p className="font-black">Condition-based pricing</p><p className="mt-1 text-sm text-zinc-400">Additional work is explained before it is added.</p></div>
+            <div><p className="font-black">Pricing based on your vehicle</p><p className="mt-1 text-sm text-zinc-400">Additional work is explained before it is added.</p></div>
           </div>
           <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
             <MapPin className="h-6 w-6 shrink-0 text-emerald-400" />

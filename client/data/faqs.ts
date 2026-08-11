@@ -9,7 +9,7 @@ export const FAQS: FAQ[] = [
   {
     id: '1',
     question: 'How long does a full detail take?',
-    answer: 'A full interior and exterior detail typically takes 4 to 6 hours, depending on vehicle size and condition. I confirm the expected scope and timing before the appointment.',
+    answer: 'A full interior and exterior detail typically takes 4 to 6 hours, depending on vehicle size and condition. I will confirm what is included and how long it should take before the appointment.',
     order: 1
   },
   {

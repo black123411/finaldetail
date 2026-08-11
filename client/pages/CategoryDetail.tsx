@@ -99,11 +99,11 @@ export default function CategoryDetail() {
             <div className="flex flex-wrap gap-4 pt-2">
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <ShieldCheck className="h-5 w-5 text-emerald-400" />
-                Clear service scope
+                Clear service details
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <Sparkles className="h-5 w-5 text-emerald-400" />
-                Condition-based service
+                Matched to your vehicle
               </div>
             </div>
           </motion.div>
@@ -214,7 +214,7 @@ export default function CategoryDetail() {
                         <ul className="space-y-2 text-xs text-zinc-700 font-medium">
                           <li>• Vehicles with {category.name.toLowerCase()} concerns</li>
                           <li>• Drivers looking for this specific result</li>
-                          <li>• Vehicles whose condition matches the listed scope</li>
+                          <li>• Vehicles that match what this service is designed to handle</li>
                         </ul>
                       </div>
                       <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100">
@@ -297,7 +297,7 @@ export default function CategoryDetail() {
         <div className="container mx-auto px-4 max-w-3xl space-y-8">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to choose the right service?</h2>
           <p className="text-xl text-zinc-400">
-            Compare the service scope, then view current appointment availability. Bryan provides owner-operated detailing with mobile service and Bellevue drop-off options.
+            Compare what each service includes, then view current appointment availability. Bryan provides owner-operated detailing with mobile service and Bellevue drop-off options.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="h-14 px-10 text-lg bg-white text-zinc-950 hover:bg-zinc-200" asChild>

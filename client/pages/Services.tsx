@@ -31,7 +31,7 @@ const SERVICE_GROUPS = [
   },
   {
     title: 'RV, Boat and Equipment Detailing',
-    description: 'Condition-based cleaning and restoration for larger vehicles, boats, trailers, tractors, and equipment.',
+    description: 'Cleaning and restoration for larger vehicles, boats, trailers, tractors, and equipment.',
     ids: ['rv-boat-wash-wax', 'rv-boat-oxidation', 'tractor-detailing-service'],
   },
 ];
@@ -133,7 +133,7 @@ export default function Services() {
         <div className="max-w-3xl">
           <h2 className="text-4xl font-black tracking-tight md:text-5xl">Choose the result your vehicle needs</h2>
           <p className="mt-5 text-lg leading-relaxed text-zinc-600">
-            Compare interior detailing, complete inside-and-out packages, paint correction, ceramic coating, and specialty vehicle services. Each service page explains what is included, what is not included, and when a condition-based quote is needed.
+            Compare interior detailing, complete inside-and-out packages, paint correction, ceramic coating, and specialty vehicle services. Each service page explains what is included, what is not included, and when Bryan needs photos before giving an exact quote.
           </p>
         </div>
 

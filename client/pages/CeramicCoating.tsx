@@ -188,7 +188,7 @@ const FAQS = [
   },
   {
     q: 'How much does ceramic coating cost in Omaha?',
-    a: 'System X Crystal+ Essential starts at $699 for a sedan, Pro+ Signature at $1,099, MAX G+ Ultimate at $1,599, and Phantom 2K Bespoke at $1,999. Vehicle size and paint condition determine the final scope.',
+    a: 'System X Crystal+ Essential starts at $699 for a sedan, Pro+ Signature at $1,099, MAX G+ Ultimate at $1,599, and Phantom 2K Bespoke at $1,999. Vehicle size and paint condition determine the final price and prep work.',
   },
   {
     q: 'How do I maintain a ceramic-coated vehicle?',

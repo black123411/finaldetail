@@ -30,12 +30,12 @@ const GUIDES: Record<GuideKey, { title: string; description: string; path: strin
   },
   'ceramic-vs-wax': {
     title: 'Ceramic Coating vs. Wax in Nebraska',
-    description: 'Compare durability, gloss, upkeep, and realistic protection for Nebraska driving conditions.',
+    description: 'Compare durability, gloss, upkeep, and protection options for Nebraska driving conditions.',
     path: '/blog/ceramic-coating-vs-wax-nebraska',
   },
   'interior-detailing': {
     title: 'What Interior Detailing Includes',
-    description: 'See what professional interior detailing covers and what can affect the scope and price.',
+    description: 'See what professional interior detailing includes and what can affect the price.',
     path: '/blog/what-does-interior-car-detailing-include-omaha-bellevue',
   },
   'winter-road-salt': {
@@ -97,7 +97,7 @@ interface RelatedGuidesProps {
 export default function RelatedGuides({
   topic,
   heading = 'Helpful detailing guides',
-  intro = 'Use these practical guides to compare options, set realistic expectations, and choose the right next step for your vehicle.',
+  intro = 'Use these practical guides to compare options and choose the right next step for your vehicle.',
   theme = 'light',
 }: RelatedGuidesProps) {
   const guides = TOPIC_GUIDES[topic].map((key) => ({ key, ...GUIDES[key] }));

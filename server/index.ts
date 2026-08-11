@@ -114,7 +114,7 @@ const getServiceFaqSchema = (service: Service) => {
   const faq = [
     {
       question: `What is included in ${service.name}?`,
-      answer: `${service.name} includes ${service.features.slice(0, 3).join(', ').toLowerCase()} and the professional process described on this service page. Bryan confirms vehicle condition, size, and add-ons before the appointment is finalized.`
+      answer: `${service.name} includes ${service.features.slice(0, 3).join(', ').toLowerCase()} and the steps explained on this page. Bryan confirms vehicle condition, size, and add-ons before the appointment is finalized.`
     },
     {
       question: `How long does ${service.name} take?`,

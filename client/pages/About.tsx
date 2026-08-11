@@ -8,7 +8,7 @@ const APPROACH = [
   {
     icon: Search,
     title: 'Inspect before recommending',
-    copy: 'Vehicle condition, materials, paint defects, access, and the result you want are reviewed before the service scope is finalized.',
+    copy: 'I look at the vehicle, its materials, paint defects, access, and the result you want before recommending a service.',
   },
   {
     icon: ShieldCheck,
@@ -69,7 +69,7 @@ export default function About() {
               Bryan owns and operates Bryan's Showroom Quality Mobile Detailing from Bellevue, serving drivers throughout the Omaha metro with mobile and appointment-only drop-off options.
             </p>
             <p className="mt-5 max-w-2xl leading-relaxed text-zinc-400">
-              Every vehicle is handled with a condition-based plan—not an assembly-line checklist. The goal is to recommend the service the vehicle actually needs, set realistic expectations, and protect the materials and finish while producing a result worth maintaining.
+              Every vehicle gets a plan based on what it actually needs—not an assembly-line checklist. I will explain what can improve, what may not, and how to protect the materials and finish after the detail.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button size="lg" className="h-14 bg-emerald-500 px-7 font-black text-zinc-950 hover:bg-emerald-400" asChild>
@@ -115,7 +115,7 @@ export default function About() {
             <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-700">The owner-operated difference</p>
             <h2 className="mt-4 text-4xl font-black tracking-tight text-zinc-950 md:text-6xl">One person accountable for the process.</h2>
             <p className="mt-6 text-lg leading-relaxed text-zinc-600">
-              Bryan reviews the vehicle, performs the work, and communicates the scope. That keeps recommendations, expectations, and quality control connected from the first photos through the final walkthrough.
+              Bryan reviews the vehicle, performs the work, and keeps you updated. That means one person is accountable from the first photos through the final walkthrough.
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-3">

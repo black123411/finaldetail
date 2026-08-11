@@ -175,8 +175,8 @@ export default function CityDetail() {
                <div className="mt-12 flex items-center gap-4 p-6 bg-zinc-800/50 rounded-2xl border border-zinc-800">
                  <ShieldCheck className="h-6 w-6 text-emerald-500" />
                  <div>
-                   <p className="text-xs font-black uppercase tracking-widest text-zinc-200">Condition-aware service</p>
-                   <p className="text-[10px] text-zinc-500 font-medium">Vehicle condition and service scope are reviewed before work begins.</p>
+                   <p className="text-xs font-black uppercase tracking-widest text-zinc-200">The right service for your vehicle</p>
+                   <p className="text-[10px] text-zinc-500 font-medium">Bryan reviews your vehicle and explains the recommended work before starting.</p>
                  </div>
                </div>
             </div>
@@ -237,7 +237,7 @@ export default function CityDetail() {
                 ['1', 'Choose the right service', 'Compare interior, full-detail, paint-correction, ceramic-coating, and maintenance options.'],
                 ['2', 'Confirm the appointment', 'Use online booking for available dates and times.'],
                 ['3', 'Prepare the vehicle', 'For mobile service, make sure the vehicle and work area are suitable for the selected service.'],
-                ['4', 'Review the result', "For restoration and protection work, expectations are discussed around the vehicle's actual condition."],
+                ['4', 'Review the result', "For restoration and protection work, Bryan explains what can improve based on the vehicle's actual condition."],
               ].map(([number, title, body]) => (
                 <div key={number} className="flex gap-4 rounded-2xl border border-zinc-200 bg-white p-5">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-zinc-950 text-sm font-black text-white">{number}</span>

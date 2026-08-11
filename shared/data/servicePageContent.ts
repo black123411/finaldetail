@@ -30,7 +30,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "What it does not cover",
-        body: "Heavy stains, embedded pet hair, major spills, strong odors, biohazards, and neglected interiors require Signature Interior Detail, Interior Restoration, or a condition-based quote."
+        body: "Heavy stains, embedded pet hair, major spills, strong odors, biohazards, and neglected interiors require Signature Interior Detail, Interior Restoration, or photos before Bryan can quote the work."
       },
       {
         title: "Best time to book",
@@ -75,7 +75,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "What makes it different",
-        body: "Bryan works through the cabin by zone instead of doing only a quick vacuum and wipe. Air purging, detail brushes, material-appropriate cleaners, mat cleaning, and interior dressing are used where appropriate."
+        body: "Bryan works through the cabin one area at a time instead of doing only a quick vacuum and wipe. Air purging, detail brushes, cleaners chosen for each material, mat cleaning, and interior dressing are used as needed."
       },
       {
         title: "Best time to book",
@@ -87,7 +87,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       "Inspect the cabin, stains, materials, mats, and high-touch areas before cleaning begins.",
       "Air purge and vacuum seats, carpet, trunk, cracks, crevices, cupholders, pockets, and seat tracks.",
       "Clean plastics, vinyl, panels, console areas, door jambs, mats, glass, and visible trim.",
-      "Treat light stains, apply interior protection where appropriate, and do a final detail check."
+      "Treat light stains, apply interior protection where needed, and do a final detail check."
     ],
     buyerNotes: [
       "Choose Interior Restoration instead if you have heavy pet hair, major spills, or severe stains.",
@@ -145,7 +145,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     buyerNotes: [
       "Severe biohazard, mold, or water damage may need a custom quote before work starts.",
       "Some stains permanently dye fibers and can improve without disappearing completely.",
-      "Send photos when possible so time and expectations are accurate."
+      "Send photos when possible so Bryan can estimate the time and recommend the right service."
     ],
     faq: [
       {
@@ -215,7 +215,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Can this be done before ceramic coating?",
-        answer: "It is a good starting point, but ceramic coating also needs proper polish or panel prep depending on paint condition."
+        answer: "It is a good first step, but ceramic coating may also need polishing or panel prep depending on the paint condition."
       },
       {
         question: "Does it include interior cleaning?",
@@ -650,7 +650,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
   },
   "rv-boat-wash-wax": {
     headline: "RV and Boat Wash and Wax for large-surface cleaning and UV protection",
-    intro: "RV and Boat Wash and Wax is built around size, access, exterior material, bug buildup, road grime, water spotting, and sun exposure. Large vehicles need realistic quoting and a careful process.",
+    intro: "RV and Boat Wash and Wax is quoted by size, access, exterior material, bug buildup, road grime, water spotting, and sun exposure. Large vehicles take more time and need a careful process.",
     sections: [
       {
         title: "What this service solves",
@@ -680,7 +680,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     faq: [
       {
         question: "Why is RV and boat pricing by foot?",
-        answer: "Large vehicles vary by length, height, surface area, and access. Per-foot pricing keeps quotes more realistic than treating them like cars."
+        answer: "Large vehicles vary by length, height, surface area, and access. Per-foot pricing keeps the quote fair instead of treating them like cars."
       },
       {
         question: "Can you wash the roof?",
@@ -727,13 +727,13 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     ],
     buyerNotes: [
       "Severe oxidation may require multiple stages or may only improve, not fully restore.",
-      "Decals, older gel coat, and failing surfaces require careful expectations.",
+      "Decals, older gel coat, and failing surfaces may limit how much improvement is possible.",
       "Photos are important before quoting."
     ],
     faq: [
       {
         question: "Can you fully restore badly oxidized gel coat?",
-        answer: "Many oxidized surfaces improve significantly, but extremely weathered or failing gel coat may not return to a new look. Bryan will set expectations after inspection."
+        answer: "Many oxidized surfaces improve significantly, but extremely weathered or failing gel coat may not return to a new look. Bryan will explain how much improvement is possible after inspection."
       },
       {
         question: "How is this different from wash and wax?",
@@ -774,7 +774,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     processTitle: "Equipment cleanup process",
     process: [
       "Review equipment type, access, grease level, mud, cab condition, and sensitive components.",
-      "Degrease and pressure clean exterior surfaces where appropriate.",
+      "Degrease and pressure clean exterior surfaces where it is safe to do so.",
       "Clean cab touch points, glass, floor areas, panels, and visible interior surfaces.",
       "Inspect remaining buildup and recommend any extra labor for severe contamination."
     ],
@@ -794,7 +794,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Can you clean the cab interior?",
-        answer: "Yes. Cab wipe-down, glass cleaning, dust removal, and visible interior cleanup are included in the service scope."
+        answer: "Yes. Cab wipe-down, glass cleaning, dust removal, and visible interior cleanup are included."
       },
       {
         question: "How do you quote equipment?",
@@ -923,7 +923,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Why source removal matters",
-        body: "Odor treatment works best after the physical source is cleaned. Bryan pairs cleaning, enzyme treatment where appropriate, and ozone treatment for a more complete result."
+        body: "Odor treatment works best after the physical source is cleaned. Bryan pairs cleaning, enzyme treatment when needed, and ozone treatment for a more complete result."
       },
       {
         title: "Best time to book",
@@ -1030,7 +1030,7 @@ Object.assign(SERVICE_PAGE_CONTENT, {
       { title: "Who it fits", body: "Choose Crystal+ when the paint is already in good condition and you want easier washing, stronger gloss, and professional protection at the most accessible System X price." }
     ],
     processTitle: "How Crystal+ Essential is installed",
-    process: ["Inspect the paint and confirm the final scope", "Wash and chemically decontaminate the exterior", "Clay and lightly polish the paint", "Panel-wipe and install Crystal+", "Cure, inspect, register, and explain aftercare"],
+    process: ["Inspect the paint and agree on the prep plan", "Wash and chemically decontaminate the exterior", "Clay and lightly polish the paint", "Panel-wipe and install Crystal+", "Cure, inspect, register, and explain aftercare"],
     buyerNotes: ["Starting price assumes average paint condition.", "Deeper swirl or scratch removal is quoted before work begins."],
     faq: [
       { question: "How long is Crystal+ covered?", answer: "Crystal+ carries a 2-year System X warranty when installed, registered, and maintained according to the manufacturer requirements." },
@@ -1072,17 +1072,17 @@ Object.assign(SERVICE_PAGE_CONTENT, {
   },
   "system-x-phantom-2k": {
     headline: "Phantom 2K Bespoke is the flagship System X finish for specialty and high-end vehicles",
-    intro: "Phantom 2K Bespoke starts with a paint inspection because the flagship coating deserves a correction plan matched to the actual vehicle. The scope may use one or two correction stages before the two-part coating system is installed.",
+    intro: "Phantom 2K Bespoke starts with a paint inspection because the flagship coating deserves a correction plan matched to the actual vehicle. The plan may use one or two correction stages before the two-part coating system is installed.",
     sections: [
       { title: "What is included", body: "A vehicle-specific correction plan, Phantom 2K on paint and applicable exterior surfaces, Wheel+ on wheel faces, Glass+ on the windshield, registration, cure inspection, and detailed aftercare." },
-      { title: "Why the scope is bespoke", body: "Collector cars, black paint, repainted panels, and specialty finishes do not all need the same polishing process. Inspection protects the finish and keeps the quote honest." }
+      { title: "Why the plan is tailored", body: "Collector cars, black paint, repainted panels, and specialty finishes do not all need the same polishing process. Inspection protects the finish and keeps the quote honest." }
     ],
     processTitle: "How Phantom 2K Bespoke is installed",
     process: ["Inspect paint history, defects, and finish type", "Decontaminate and perform test spots", "Complete the agreed one- or two-stage correction", "Install Phantom 2K, Wheel+, and Glass+", "Cure, inspect, register, and deliver the care plan"],
-    buyerNotes: ["Final correction scope is confirmed after inspection.", "The starting price assumes a standard-size sedan with correctable paint."],
+    buyerNotes: ["The final correction plan is confirmed after inspection.", "The starting price assumes a standard-size sedan with correctable paint."],
     faq: [
       { question: "Why does Phantom 2K require an inspection?", answer: "Its buyers usually expect the highest finish quality. Inspection determines the safe correction steps before coating locks in the final appearance." },
-      { question: "Can I book it online?", answer: "Yes, you can start the booking request online. Bryan confirms paint condition, correction scope, and final price before the appointment." }
+      { question: "Can I book it online?", answer: "Yes, you can start the booking request online. Bryan confirms the paint condition, correction plan, and final price before the appointment." }
     ],
     internalServiceIds: ["system-x-max-g-plus", "paint-correction-l2", "maintenance-detail"]
   }

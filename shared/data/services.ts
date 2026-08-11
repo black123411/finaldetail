@@ -247,7 +247,7 @@ export const SERVICES: Service[] = [
     categoryId: 'interior-detailing',
     name: 'Interior Restoration',
     shortDescription: 'Deep interior cleaning with hot water extraction for heavy dirt, fabric stains, pet hair, spills, and odor sources.',
-    longDescription: 'Interior Restoration is for neglected interiors, family vehicles, work vehicles, used cars, and pet vehicles around Bellevue and Omaha. The service includes dry debris removal, pet hair removal, steam cleaning where appropriate, upholstery shampoo, hot-water extraction, seat track cleaning, mat cleaning, plastic cleaning, glass cleaning, and odor-source cleaning.',
+    longDescription: 'Interior Restoration is for neglected interiors, family vehicles, work vehicles, used cars, and pet vehicles around Bellevue and Omaha. The service includes dry debris removal, pet hair removal, steam cleaning as needed, upholstery shampoo, hot-water extraction, seat track cleaning, mat cleaning, plastic cleaning, glass cleaning, and odor-source cleaning.',
     price: { car: 249, suv: 279, truck: 289, largeSuv: 309 },
     pricingType: 'fixed',
     squareName: 'Deep Interior Restoration',
@@ -334,7 +334,7 @@ export const SERVICES: Service[] = [
     categoryId: 'paint-correction',
     name: 'Paint Correction (Level 1)',
     shortDescription: 'Single-stage, targeted paint improvement based on paint thickness, a test spot, and the defects that can be corrected safely.',
-    longDescription: 'Paint Correction Level 1 is a single-stage, targeted machine-polishing service for light to moderate swirl marks, wash scratches, towel marks, and paint haze. The process includes paint decontamination, clay bar treatment, paint-thickness checks where appropriate, a test spot, machine polishing, panel inspection, and paint protection. It removes or reduces defects instead of hiding them with glaze. Final price is confirmed after texted photos and paint inspection; heavy oxidation or defects requiring additional stages are quoted separately before work.',
+    longDescription: 'Paint Correction Level 1 is a single-stage, targeted machine-polishing service for light to moderate swirl marks, wash scratches, towel marks, and paint haze. The process includes paint decontamination, clay bar treatment, paint-thickness checks when needed, a test spot, machine polishing, panel inspection, and paint protection. It removes or reduces defects instead of hiding them with glaze. Final price is confirmed after texted photos and paint inspection; heavy oxidation or defects requiring additional stages are quoted separately before work.',
     price: { car: 499, suv: 549, truck: 599, largeSuv: 649 },
     pricingType: 'custom',
     squareName: 'Paint Correction (Level 1)',
@@ -453,7 +453,7 @@ export const SERVICES: Service[] = [
     categoryId: 'protection',
     name: 'System X Phantom 2K Bespoke',
     shortDescription: 'Flagship two-part System X protection paired with deeper correction, Wheel+, Glass+, and a vehicle-specific finish plan.',
-    longDescription: 'Phantom 2K Bespoke is the flagship package for owners who want the strongest System X automotive coating system. It combines a vehicle-specific one- or two-stage paint-correction plan with Phantom 2K on paint, badges, and applicable trim, Wheel+ on wheel faces, and Glass+ on the windshield. Final scope is confirmed after paint inspection because severe defects and specialty finishes require individualized preparation.',
+    longDescription: 'Phantom 2K Bespoke is the flagship package for owners who want the strongest System X automotive coating system. It combines a vehicle-specific one- or two-stage paint-correction plan with Phantom 2K on paint, badges, and applicable trim, Wheel+ on wheel faces, and Glass+ on the windshield. The final prep plan is confirmed after paint inspection because severe defects and specialty finishes require individualized preparation.',
     price: { car: 1999, suv: 2199, truck: 2399, largeSuv: 2599 },
     pricingType: 'custom',
     squareName: 'System X Phantom 2K Bespoke',
@@ -620,7 +620,7 @@ export const SERVICES: Service[] = [
     squareName: 'Tractor / Equipment Cleanup',
     seo: {
       title: 'Tractor & Equipment Detailing | Omaha & Bellevue',
-      description: 'Mobile tractor and equipment cleaning around Bellevue and Omaha with condition-based degreasing, pressure washing, cab cleanup, and glass cleaning.'
+      description: 'Mobile tractor and equipment cleaning around Bellevue and Omaha with safe degreasing, pressure washing, cab cleanup, and glass cleaning.'
     },
     features: [
       'Heavy-duty degreasing',
@@ -642,7 +642,7 @@ export const SERVICES: Service[] = [
     categoryId: 'full-detailing',
     name: 'New Car Detail & Protection',
     shortDescription: 'New vehicle detail with paint decontamination, light polishing, and sealant or ceramic coating protection.',
-    longDescription: 'New does not always mean perfect. Dealer prep, transport scratches, and contamination from sitting on a lot can leave light defects on a new vehicle. My New Car Detail addresses that buildup with a full decontamination wash, light paint correction where appropriate, and a professional sealant or ceramic coating for added protection. Final prep is based on the vehicle\'s condition.',
+    longDescription: 'New does not always mean perfect. Dealer prep, transport scratches, and contamination from sitting on a lot can leave light defects on a new vehicle. My New Car Detail addresses that buildup with a full decontamination wash, light paint correction when needed, and a professional sealant or ceramic coating for added protection. Final prep is based on the vehicle\'s condition.',
     price: { car: 349, suv: 399, truck: 449, largeSuv: 499 },
     pricingType: 'custom',
     squareName: 'New Car Detail & Protection',
@@ -695,7 +695,7 @@ export const SERVICES: Service[] = [
     categoryId: 'interior-detailing',
     name: 'Odor Elimination Treatment',
     shortDescription: 'Odor treatment for smoke, pet odor, mildew smell, food spills, and used-car interior odors.',
-    longDescription: 'Standalone Odor Elimination Treatment starts with a full interior detail and cleaning of the odor source, followed by targeted cleaning, enzyme treatment where appropriate, HVAC deodorizing, and controlled ozone treatment. It is intended for smoke smell, pet odor, mildew smell, food spills, and used-car odors. Final price is confirmed after texted photos. Water leaks, mold, biohazards, or active contamination must be corrected or separately quoted before work because the odor can return.',
+    longDescription: 'Standalone Odor Elimination Treatment starts with a full interior detail and cleaning of the odor source, followed by targeted cleaning, enzyme treatment when needed, HVAC deodorizing, and controlled ozone treatment. It is intended for smoke smell, pet odor, mildew smell, food spills, and used-car odors. Final price is confirmed after texted photos. Water leaks, mold, biohazards, or active contamination must be corrected or separately quoted before work because the odor can return.',
     price: { car: 299, suv: 329, truck: 359, largeSuv: 389 },
     pricingType: 'fixed',
     squareName: 'Odor Elimination Treatment',

@@ -46,7 +46,7 @@ export default function Home() {
     { label: 'Customer Feedback', value: 'Google Reviews', detail: 'Read current ratings and customer experiences' },
     { label: 'Certified Protection', value: 'System X', detail: 'Professional ceramic installer' },
     { label: 'Service Options', value: 'Mobile + Drop-off', detail: 'Bellevue base, Omaha metro service' },
-    { label: 'Quality Control', value: 'Owner-Operated', detail: 'Clear scope before additional work' },
+    { label: 'Quality Control', value: 'Owner-Operated', detail: 'No extra work without your approval' },
   ];
 
   const packageRows = [
@@ -234,7 +234,7 @@ export default function Home() {
 
           <div className="py-24 lg:py-28 border-b border-zinc-200">
             <div className="max-w-3xl mb-12 space-y-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-700">Choose Your Starting Point</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-700">Start Here</span>
               <h2 className="text-4xl md:text-6xl font-black tracking-tight text-zinc-900 leading-none">
                 What does your vehicle need?
               </h2>
@@ -418,7 +418,7 @@ export default function Home() {
               <div className="space-y-6">
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Owner-Operated Auto Detailing</span>
                 <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none uppercase">
-                   Clear Scope. <span className="text-zinc-500 italic block font-normal normal-case">Careful Work.</span>
+                   Straight Answers. <span className="text-zinc-500 italic block font-normal normal-case">Careful Work.</span>
                 </h2>
                 <p className="text-xl text-zinc-400 font-medium leading-relaxed max-w-xl">
                   Every vehicle is inspected before work begins and matched with the service it actually needs. I do not rush vehicles through an assembly-line process or recommend unnecessary upgrades.
@@ -521,7 +521,7 @@ export default function Home() {
               </p>
               <h3 className="text-2xl font-bold text-zinc-900 mt-12 mb-4">Flexible Mobile & Drop-Off Options</h3>
               <p>
-                I offer Bellevue drop-off for services that need controlled conditions, like ceramic coating and paint correction, as well as <strong>mobile auto detailing</strong> throughout the Omaha metro area when the service, weather, space, and vehicle condition are a good fit.
+                I offer Bellevue drop-off for services like ceramic coating and paint correction that need more time and consistent working conditions. I also provide <strong>mobile auto detailing</strong> throughout the Omaha metro when weather and workspace allow.
               </p>
             </div>
           </div>
@@ -531,7 +531,7 @@ export default function Home() {
       <RelatedGuides
         topic="home"
         heading="Plan your next detail with confidence"
-        intro="Compare service formats, build a realistic maintenance schedule, and prepare your vehicle for Nebraska weather before choosing a package."
+        intro="Use these practical guides to compare services, plan regular care, and protect your vehicle through Nebraska weather."
       />
 
       {/* Service Area Grid */}
@@ -558,7 +558,7 @@ export default function Home() {
             </h2>
             <p className="text-lg md:text-xl text-zinc-600 font-medium leading-relaxed">
               Bryan's Showroom Quality Mobile Detailing is based in Bellevue and serves drivers around the Omaha metro.
-              Mobile appointments are available where the vehicle and site are suitable, while the Bellevue location is
+              Mobile appointments are available when there is enough safe working space, while the Bellevue location is
               available for intensive interior restoration, paint correction, ceramic coating, and other work that benefits
               from a controlled setting.
             </p>
@@ -570,7 +570,7 @@ export default function Home() {
               <h3 className="mt-3 text-3xl font-black text-zinc-900">Mobile Car Detailing in Omaha, NE</h3>
               <p className="mt-4 text-zinc-600 leading-7">
                 Interior detailing, full details, paint correction, ceramic coating, maintenance care, and
-                condition-based specialty work for Omaha drivers.
+                specialty vehicle work for Omaha drivers.
               </p>
               <Link to="/areas/omaha-ne" className="mt-6 inline-flex items-center gap-2 text-sm font-black uppercase tracking-widest text-zinc-900 hover:text-emerald-700">
                 Explore Omaha Detailing <ArrowRight className="h-4 w-4" />
@@ -611,9 +611,9 @@ export default function Home() {
            <div className="space-y-4">
               {[
                   { q: "How long does a Full Detail take?", a: "Most full details require several hours. Exact timing depends on vehicle size, condition, package selection, and any additional treatment required." },
-                  { q: "Do you come to me or do I drop it off?", a: "Both options are available. I offer mobile service when the location and conditions are suitable, plus Bellevue drop-off and pickup by appointment for intensive work such as paint correction and ceramic coating." },
+                  { q: "Do you come to me or do I drop it off?", a: "Both options are available. I offer mobile service when weather and workspace allow, plus Bellevue drop-off and pickup by appointment for paint correction, ceramic coating, and other longer services." },
                   { q: "What's the difference between Wax and Ceramic Coating?", a: "Wax is a temporary protective layer. A professional ceramic coating is applied to properly prepared paint and can provide more durable gloss, chemical resistance, water behavior, and easier maintenance washing. Neither replaces safe washing or prevents every defect." },
-                  { q: "Can every interior stain be removed?", a: "Not always. Hot-water extraction and professional stain treatment can improve many stains, but permanent dye transfer, material damage, or old chemical reactions may remain. Bryan explains realistic expectations after inspecting the vehicle." },
+                  { q: "Can every interior stain be removed?", a: "Not always. Hot-water extraction and professional stain treatment can improve many stains, but permanent dye transfer, material damage, or old chemical reactions may remain. After inspecting the vehicle, Bryan will explain what can improve and what may be permanent." },
               ].map((faq, i) => (
                  <div key={i} className="bg-white p-8 rounded-3xl border border-zinc-100 shadow-sm transition-all hover:shadow-md">
                     <h3 className="text-lg font-black text-zinc-900 mb-3">{faq.q}</h3>

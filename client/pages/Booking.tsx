@@ -617,7 +617,7 @@ export default function Booking() {
                       {selectedPath ? 'Choose Your Package' : 'What Does Your Vehicle Need?'}
                     </h2>
                     <p className="text-xs text-zinc-500">
-                      {selectedPath ? 'Compare the packages in this service path.' : 'Start with one of five simple paths. You will see the detailed packages next.'}
+                      {selectedPath ? 'Compare the packages in this service type.' : 'Choose one of five service types. You will see the detailed packages next.'}
                     </p>
                   </div>
 
@@ -658,7 +658,7 @@ export default function Booking() {
                         }}
                         className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-zinc-600 hover:text-zinc-950"
                       >
-                        <ChevronLeft className="h-4 w-4" /> Change service path
+                        <ChevronLeft className="h-4 w-4" /> Change service type
                       </button>
                         <p className="text-sm font-bold text-zinc-900">
                           {BOOKING_PATHS.find(path => path.id === selectedPath)?.label}

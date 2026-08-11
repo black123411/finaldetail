@@ -144,7 +144,7 @@ export default function FAQ() {
       <RelatedGuides
         topic="all"
         heading="Detailed answers beyond the FAQ"
-        intro="Read the complete guides for service comparisons, maintenance timing, seasonal care, and realistic detailing results."
+        intro="Read the complete guides for service comparisons, maintenance timing, seasonal care, and the results different services can deliver."
       />
     </div>
   );

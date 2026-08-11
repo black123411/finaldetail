@@ -65,7 +65,7 @@ export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
   },
   '/quote': {
     title: 'Get an Auto Detailing Quote | Omaha & Bellevue NE',
-    description: 'Request a condition-based quote for heavy interior restoration, odor treatment, pet hair, paint correction, ceramic coating, RVs, boats, or specialty equipment.',
+    description: 'Send photos for an accurate quote on heavy interior restoration, odor treatment, pet hair, paint correction, ceramic coating, RVs, boats, or specialty equipment.',
   },
   '/gallery': {
     title: 'Car Detailing Before & After Gallery | Omaha & Bellevue',
@@ -152,7 +152,7 @@ const BLOG_SEO_TITLES: Record<string, string> = {
 const BLOG_SEO_DESCRIPTIONS: Record<string, string> = {
   'ceramic-coating-cost-omaha': 'Omaha ceramic coating pricing guide covering paint preparation, vehicle condition, coating terms, maintenance, and questions to ask an installer.',
   'paint-correction-vs-ceramic-coating': 'Learn how paint correction improves visible defects, how ceramic coating protects prepared paint, and when combining both services makes sense.',
-  'best-car-detailing-bellevue-ne': 'A practical checklist for comparing Bellevue auto detailers, evaluating quotes, understanding service processes, and setting realistic expectations.',
+  'best-car-detailing-bellevue-ne': 'A practical checklist for comparing Bellevue auto detailers, evaluating quotes, understanding what each service includes, and knowing what results to expect.',
   'pre-sale-detail-omaha': 'Learn which detailing steps can help an Omaha-area vehicle photograph better for sale, what to prioritize, and when paint correction is unnecessary.',
   'how-to-protect-new-car-paint': 'A practical guide to protecting new-car paint in Nebraska, including safe washing, contamination removal, polishing, and coatings.',
 };

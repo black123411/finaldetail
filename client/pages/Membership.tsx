@@ -12,7 +12,7 @@ export default function Membership() {
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Maintenance Detailing</h1>
           <p className="text-lg text-zinc-600">
-            Maintenance plans start at $119 and are reserved for returning or recently detailed vehicles. Bryan confirms eligibility, scope, scheduling, and billing before enrollment.
+            Maintenance plans start at $119 and are reserved for returning or recently detailed vehicles. Bryan confirms eligibility, what is included, scheduling, and billing before enrollment.
           </p>
         </div>
 
@@ -73,7 +73,7 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For drivers who want regular interior upkeep and safe exterior washing. Scope and frequency are confirmed before enrollment.</p>
+            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For drivers who want regular interior upkeep and safe exterior washing. Bryan will confirm what is included and how often your vehicle should be serviced before enrollment.</p>
             
             <div className="mb-8 p-4 bg-zinc-800/50 rounded-2xl border border-zinc-700">
               <div className="flex items-baseline gap-1">
@@ -86,7 +86,7 @@ export default function Membership() {
               {[
                 "2 Maintenance Details / mo (Bi-Weekly)",
                 "Repeat-service scheduling",
-                "Condition-based scope",
+                "Service matched to your vehicle",
                 "Add-ons discussed before work",
                 "Mobile or Bellevue drop-off when suitable"
               ].map((feature, i) => (
@@ -127,8 +127,8 @@ export default function Membership() {
               {[
                 "1 Full Detail Refresh / Quarter",
                 "Seasonal Sealant Refresh",
-                "Condition-based service scope",
-                "Protection refresh when appropriate"
+                "Service matched to your vehicle",
+                "Protection refresh when needed"
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-700">
                   <CheckCircle2 className="h-4 w-4 text-zinc-900" />
