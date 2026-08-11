@@ -141,6 +141,24 @@
     ],
     "headers": [
       {
+        "source": "/blog",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/blog/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
+      {
         "source": "**/*.@(js|css|webp|png|jpg|jpeg|gif|svg|ico)",
         "headers": [
           {
