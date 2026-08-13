@@ -148,7 +148,7 @@ export const SPECIALTY_SIZES = [
 
 export const ADD_ONS: AddOn[] = [
   { id: 'pet-hair', name: 'Pet Hair Removal', price: 75, duration: 'Quoted after photos', description: 'Starts at $75. Final price is quoted after texted photos because embedded pet hair, vehicle size, and the condition of the rear storage area can change the time required.' },
-  { id: 'smoke-odor', name: 'Ozone Odor Elimination', price: 125, duration: '3.5 hours', description: 'Ozone odor treatment for smoke, pet, mildew, and food smells after the odor source has been cleaned.' },
+  { id: 'smoke-odor', name: 'Ozone Odor Elimination', price: 125, duration: '3.5 hours', description: 'Bellevue drop-off only. Ozone odor treatment for smoke, pet, mildew, and food smells after the odor source has been cleaned.' },
   { id: 'engine-bay', name: 'Engine Bay Detail', price: 50, duration: '45 mins', description: 'Safe low-pressure degreasing, steam cleaning, and dressing of the engine compartment. Makes leaks easier to spot and runs cooler.' },
   { id: 'headlight', name: 'Headlight Restoration', price: 100, duration: '60-90 mins', description: 'Multi-stage wet sanding, polishing, and UV sealant coating restores clarity and nighttime visibility to yellowed, hazy headlights.' },
   {
@@ -694,8 +694,8 @@ export const SERVICES: Service[] = [
     id: 'odor-elimination',
     categoryId: 'interior-detailing',
     name: 'Odor Elimination Treatment',
-    shortDescription: 'Odor treatment for smoke, pet odor, mildew smell, food spills, and used-car interior odors.',
-    longDescription: 'Standalone Odor Elimination Treatment starts with a full interior detail and cleaning of the odor source, followed by targeted cleaning, enzyme treatment when needed, HVAC deodorizing, and controlled ozone treatment. It is intended for smoke smell, pet odor, mildew smell, food spills, and used-car odors. Final price is confirmed after texted photos. Water leaks, mold, biohazards, or active contamination must be corrected or separately quoted before work because the odor can return.',
+    shortDescription: 'Bellevue drop-off odor treatment for smoke, pet odor, mildew smell, food spills, and used-car interior odors.',
+    longDescription: 'Standalone Odor Elimination Treatment is a Bellevue drop-off-only service because the vehicle must remain unoccupied during the controlled ozone process and be aired out before pickup. The service starts with a full interior detail and cleaning of the odor source, followed by targeted cleaning, enzyme treatment when needed, HVAC deodorizing, and controlled ozone treatment. It is intended for smoke smell, pet odor, mildew smell, food spills, and used-car odors. Final price is confirmed after texted photos. Water leaks, mold, biohazards, or active contamination must be corrected or separately quoted before work because the odor can return.',
     price: { car: 299, suv: 329, truck: 359, largeSuv: 389 },
     pricingType: 'fixed',
     squareName: 'Odor Elimination Treatment',
@@ -704,6 +704,7 @@ export const SERVICES: Service[] = [
       description: 'Car odor treatment in Bellevue and Omaha for smoke, pets, food spills, mildew smells, and used-car odors after the source is properly cleaned.'
     },
     features: [
+      'Bellevue drop-off only',
       'Full interior detail & vacuum first',
       'Enzyme pre-treatment on problem areas',
       'Controlled ozone treatment',

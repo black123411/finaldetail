@@ -827,6 +827,18 @@ async function createBooking(request: Request, env: Env): Promise<Response> {
     return json(request, env, { error: "Please choose an available Square time slot." }, 400);
   }
 
+  const requiresDropOff =
+    /odor elimination/i.test(String(serviceName || "")) ||
+    (Array.isArray(addons) && addons.some((addon: unknown) => /ozone.*odor|odor.*ozone/i.test(String(addon))));
+  if (requiresDropOff && customer.locationType !== "drop-off") {
+    return json(
+      request,
+      env,
+      { error: "Odor and ozone treatments must be booked as a Bellevue drop-off appointment." },
+      400,
+    );
+  }
+
   const segments = appointmentSegments.map(appointmentSegment);
   if (segments.some((segment: any) => !segment.service_variation_id || !segment.team_member_id)) {
     return json(
@@ -886,6 +898,11 @@ async function createBooking(request: Request, env: Env): Promise<Response> {
   });
 
   if (!result.booking?.id) throw new SquareApiError("Square did not return a booking ID.", 502);
+  await audit(
+    env,
+    "Website booking created",
+    `${result.booking.id} | ${startAt} | ${serviceName || "Service not supplied"}`,
+  );
   return json(request, env, camelize(result.booking));
 }
 

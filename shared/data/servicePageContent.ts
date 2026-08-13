@@ -915,7 +915,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
   },
   "odor-elimination": {
     headline: "Odor Elimination Treatment for smoke, pet, mildew, and food smells",
-    intro: "Odor Elimination Treatment is for vehicles where air fresheners have failed. It focuses on cleaning odor sources first, then treating the cabin and ventilation areas so smells are neutralized instead of covered up.",
+    intro: "Odor Elimination Treatment is a Bellevue drop-off-only service for vehicles where air fresheners have failed. I clean the odor source first, then treat the cabin and ventilation areas so smells are neutralized instead of covered up.",
     sections: [
       {
         title: "What this service solves",
@@ -938,6 +938,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       "Run controlled ozone treatment and air out the vehicle before final inspection."
     ],
     buyerNotes: [
+      "This service is Bellevue drop-off only because the vehicle must remain unoccupied during ozone treatment and be aired out before pickup.",
       "Odor treatment is strongest when paired with interior cleaning.",
       "Water leaks, mold, or active contamination must be corrected or smells can return.",
       "Ozone treatment requires the vehicle to be empty of people, pets, and sensitive items during the process."
@@ -949,7 +950,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Is ozone safe?",
-        answer: "Ozone is only used while the vehicle is unoccupied and then aired out. Bryan follows a controlled process so the vehicle is safe before pickup."
+        answer: "Ozone is only used while the vehicle is unoccupied and then aired out. That is why this service must be completed as a Bellevue drop-off appointment. I follow a controlled process before the vehicle is ready for pickup."
       },
       {
         question: "Will odor come back?",

@@ -1132,6 +1132,13 @@ ${allUrls.map(path => {
         Array.isArray(addons) && addons.length > 0 ? `Add-ons: ${addons.join(", ")}` : "",
       ].filter(Boolean).join("\n");
 
+      const requiresDropOff =
+        /odor elimination/i.test(String(serviceName || "")) ||
+        (Array.isArray(addons) && addons.some((addon: unknown) => /ozone.*odor|odor.*ozone/i.test(String(addon))));
+      if (requiresDropOff && customer.locationType !== "drop-off") {
+        return res.status(400).json({ error: "Odor and ozone treatments must be booked as a Bellevue drop-off appointment." });
+      }
+
       const bookingResult = await client.bookingsApi.createBooking({
         idempotencyKey: randomUUID(),
         booking: {

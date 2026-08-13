@@ -59,6 +59,7 @@ function getPriceRows(service: Service) {
 
 function getServiceAvailability(service: Service) {
   if (service.id === 'ppf-inquiry') return 'Custom consultation required';
+  if (service.id === 'odor-elimination') return 'Bellevue drop-off only';
   if (service.isSpecialty) return 'Mobile service by quote';
   if (service.categoryId === 'paint-correction' || service.categoryId === 'protection') {
     return 'Bellevue drop-off recommended';

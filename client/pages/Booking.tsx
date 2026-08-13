@@ -225,6 +225,14 @@ export default function Booking() {
   const [viewDate, setViewDate] = useState(new Date());
 
   const [selectedPath, setSelectedPath] = useState<BookingPathId | null>(null);
+  const requiresDropOff =
+    selectedServices.some((service) => service.id === 'odor-elimination') ||
+    selectedAddons.includes('smoke-odor');
+
+  useEffect(() => {
+    if (!requiresDropOff || customerInfo.locationType === 'drop-off') return;
+    setCustomerInfo((current) => ({ ...current, locationType: 'drop-off', address: '' }));
+  }, [requiresDropOff, customerInfo.locationType]);
 
   useEffect(() => {
     fetchServices();
@@ -1046,6 +1054,12 @@ export default function Booking() {
                       
                       <div className="col-span-2 mt-4">
                         <label className="text-[10px] font-bold uppercase text-zinc-400 mb-2 block">Service Location</label>
+                        {requiresDropOff ? (
+                          <div role="status" className="border border-violet-200 bg-violet-50 p-4 text-sm leading-6 text-violet-950">
+                            <p className="font-black">Bellevue drop-off required</p>
+                            <p className="mt-1">Odor and ozone treatments cannot be completed as a mobile appointment. The vehicle must remain unoccupied during treatment and be aired out before pickup.</p>
+                          </div>
+                        ) : (
                         <div className="grid grid-cols-2 gap-3">
                           <button
                             type="button"
@@ -1076,6 +1090,7 @@ export default function Booking() {
                             Mobile Details
                           </button>
                         </div>
+                        )}
                         {customerInfo.locationType === 'mobile' && (
                           <div className="mt-3">
                             <label htmlFor="address" className="text-[10px] font-bold uppercase text-zinc-400 mb-1 block">Your Address</label>
