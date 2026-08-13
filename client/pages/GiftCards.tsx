@@ -1,81 +1,16 @@
-import { Gift, MessageSquare, Phone } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import RelatedGuides from '../components/RelatedGuides';
+import { Gift, MessageSquare, Phone, Check } from 'lucide-react';
+import { trackEvent } from '../lib/analytics';
+
+const amounts = [100, 150, 250, 500];
+const giftText = (amount?: number) => `sms:+17123056313?body=${encodeURIComponent(`Hi Bryan, I'd like to buy a detailing gift card${amount ? ` for $${amount}` : ''}. The recipient's name is: `)}`;
 
 export default function GiftCards() {
   return (
-    <div className="min-h-screen bg-zinc-50 py-16">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Detailing Gift Cards</h1>
-          <p className="text-lg text-zinc-600">
-                Give the gift of a professional vehicle reset for birthdays, holidays, or any occasion.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto items-center">
-          {/* Image Side */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-            <img
-              src="/gift-card-detailing-optimized.jpg"
-              alt="Gift card presentation"
-              width="1600"
-              height="1200"
-              loading="lazy"
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 to-transparent flex flex-col justify-end p-8 text-white">
-              <Gift className="h-12 w-12 mb-4 text-emerald-400" />
-              <h2 className="text-3xl font-bold mb-2">Bryan's Showroom Quality Mobile Detailing</h2>
-              <p className="text-zinc-300">A gift tailored to their vehicle</p>
-            </div>
-          </div>
-
-          {/* Content Side */}
-          <div className="space-y-8">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-zinc-200">
-              <h3 className="text-2xl font-bold text-zinc-900 mb-4">Purchase a Gift Card</h3>
-              <p className="text-zinc-600 mb-6">
-                Choose an amount or service, then contact Bryan to confirm the recipient details. Payment and fulfillment are handled securely through Square.
-              </p>
-
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start gap-3 text-sm text-zinc-700">
-                  <MessageSquare className="h-5 w-5 mt-0.5 shrink-0 text-zinc-900" />
-                  <span>Tell Bryan the amount, service, and recipient name</span>
-                </div>
-                <div className="flex items-start gap-3 text-sm text-zinc-700">
-                  <Gift className="h-5 w-5 mt-0.5 shrink-0 text-zinc-900" /> 
-                  <span>Available for detailing, paint correction, or ceramic coating</span>
-                </div>
-              </div>
-
-              <div className="bg-zinc-50 p-6 rounded-xl border border-zinc-200 mb-6">
-                <p className="text-sm text-zinc-600 text-center">Bryan will confirm availability, delivery details, and the secure Square payment step before purchase.</p>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2">
-                <Button className="h-14 text-base" asChild>
-                  <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%27d%20like%20to%20purchase%20a%20detailing%20gift%20card.%20The%20amount%20or%20service%20I%20have%20in%20mind%20is%3A%20">
-                    <MessageSquare className="mr-2 h-5 w-5" /> Text Bryan
-                  </a>
-                </Button>
-                <Button variant="outline" className="h-14 text-base" asChild>
-                  <a href="tel:+17123056313">
-                    <Phone className="mr-2 h-5 w-5" /> Call Bryan
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <RelatedGuides
-        topic="gift"
-        heading="Help the recipient choose the right detail"
-        intro="These guides explain popular interior, protection, and maintenance options before a gift card is applied to a service."
-      />
+    <div className="min-h-screen bg-white text-slate-950">
+      <section className="relative isolate overflow-hidden bg-slate-950 text-white"><img src="/hero-detailing-optimized.jpg" alt="Polished vehicle after detailing" className="absolute inset-0 -z-20 h-full w-full object-cover" /><div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/25" /><div className="container mx-auto px-4 py-24"><div className="max-w-2xl"><p className="text-sm font-black uppercase tracking-[.18em] text-blue-300">A useful gift for any vehicle</p><h1 className="mt-4 text-5xl font-black tracking-tight md:text-6xl">Detailing Gift Cards</h1><p className="mt-6 text-lg leading-8 text-slate-200">Choose any amount. The recipient can use the value toward any detailing service I offer.</p></div></div></section>
+      <section className="py-16 md:py-24"><div className="container mx-auto grid gap-12 px-4 lg:grid-cols-[.85fr_1.15fr]"><div><Gift className="h-10 w-10 text-blue-600" /><h2 className="mt-5 text-3xl font-black tracking-tight">Choose an amount</h2><p className="mt-4 leading-7 text-slate-600">These are quick options, not service restrictions. Every gift card is a dollar value that can be applied toward interior detailing, a full detail, paint correction, ceramic coating, or another service.</p><div className="mt-7 border-l-4 border-blue-600 bg-slate-50 p-6"><p className="font-black">Need a different amount?</p><p className="mt-2 text-sm leading-6 text-slate-600">Text or call me and tell me the value you want.</p></div></div><div className="grid gap-3 sm:grid-cols-2">{amounts.map((amount) => <a key={amount} href={giftText(amount)} onClick={() => trackEvent('click_text_quote', { location: 'gift_card_amount', amount })} className="group flex min-h-32 flex-col justify-between border border-slate-300 p-6 hover:border-blue-600 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"><span className="text-3xl font-black">${amount}</span><span className="mt-4 inline-flex items-center gap-2 font-black text-blue-700">Choose this value <MessageSquare className="h-4 w-4" /></span></a>)}</div></div></section>
+      <section className="border-y border-slate-200 bg-slate-50 py-16"><div className="container mx-auto px-4"><h2 className="text-3xl font-black tracking-tight">How ordering works</h2><div className="mt-9 grid gap-8 md:grid-cols-3">{[['1', 'Choose the value', 'Pick an amount above or ask me for a custom amount.'], ['2', 'Send the recipient details', 'Tell me the recipient name and how you want the gift delivered.'], ['3', 'Complete payment', 'After I confirm the details, secure payment is handled through Square.']].map(([number, title, copy]) => <div key={number} className="border-t-2 border-blue-600 pt-5"><span className="text-sm font-black text-blue-700">{number}</span><h3 className="mt-2 text-xl font-black">{title}</h3><p className="mt-3 leading-7 text-slate-600">{copy}</p></div>)}</div></div></section>
+      <section className="py-16 md:py-20"><div className="container mx-auto grid gap-10 px-4 md:grid-cols-2"><div><h2 className="text-3xl font-black">Good to know</h2><ul className="mt-6 space-y-4">{['The gift value may be used toward any detailing service.', 'Vehicle size and condition can change the final service price.', 'A gift card does not reserve an appointment time.', 'I confirm delivery and redemption details before payment.'].map((item) => <li key={item} className="flex gap-3 leading-7 text-slate-700"><Check className="mt-1 h-5 w-5 shrink-0 text-blue-600" />{item}</li>)}</ul></div><div className="bg-slate-950 p-8 text-white"><h2 className="text-3xl font-black">Order a gift card</h2><p className="mt-4 leading-7 text-slate-300">Texting is the quickest way to get started. You can also call if you would rather talk through the details.</p><div className="mt-7 flex flex-col gap-3 sm:flex-row"><a href={giftText()} onClick={() => trackEvent('click_text_quote', { location: 'gift_card_cta' })} className="inline-flex min-h-14 items-center justify-center gap-2 bg-blue-600 px-6 font-black hover:bg-blue-700"><MessageSquare className="h-5 w-5" /> Text Bryan</a><a href="tel:+17123056313" onClick={() => trackEvent('click_call', { location: 'gift_card_cta' })} className="inline-flex min-h-14 items-center justify-center gap-2 border border-slate-600 px-6 font-black hover:border-blue-400"><Phone className="h-5 w-5" /> Call Bryan</a></div></div></div></section>
     </div>
   );
 }

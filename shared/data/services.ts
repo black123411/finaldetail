@@ -48,7 +48,7 @@ export const CATEGORIES: Category[] = [
     id: 'interior-detailing', 
     slug: 'interior-detailing',
     name: 'Interior Detailing', 
-    description: 'Interior car detailing in Bellevue and Omaha for dust, crumbs, stains, pet hair, and odor. Start with Maintenance Interior from $139, then choose Signature Interior Detail or Deep Interior Restoration for heavier buildup. Services include vacuuming, steam cleaning, upholstery shampoo, hot water extraction, glass cleaning, and interior wipe down.',
+    description: 'I offer three levels of interior detailing, from routine upkeep to deep restoration. The work can include vacuuming, compressed-air cleaning, steam, upholstery shampoo, hot-water extraction, glass cleaning, stain treatment, pet hair removal, and odor-source cleaning.',
     image: '/gallery/takeout/20210629_204424.webp',
     seo: {
       title: 'Interior Car Detailing Bellevue & Omaha | Prices From $139',
@@ -59,7 +59,7 @@ export const CATEGORIES: Category[] = [
     id: 'exterior-detailing', 
     slug: 'exterior-detailing',
     name: 'Exterior Detailing', 
-    description: 'Professional exterior cleaning for road film, bugs, wheels, bonded contamination, and paint that feels rough after normal washing. The process cleans and protects the finish without promising correction that requires machine polishing.',
+    description: 'Exterior cleaning for road film, bugs, dirty wheels, bonded contamination, and paint that feels rough after normal washing. I clean and protect the finish; paint defects that need machine polishing are handled separately.',
     image: '/gallery/takeout/20220520_195826.webp',
     seo: {
       title: 'Exterior Car Detailing Omaha & Bellevue | Bryan\'s Detailing',
@@ -70,7 +70,7 @@ export const CATEGORIES: Category[] = [
     id: 'full-detailing', 
     slug: 'full-detailing',
     name: 'Full Detailing Packages', 
-    description: 'Complete car detailing packages for Bellevue and Omaha drivers who need interior cleaning and exterior detailing in one appointment. Choose full detail, pre-sale detail, new car protection, or paint enhancement.',
+    description: 'Complete inside-and-out detailing in one appointment. Choose a full detail, a deeper showroom package, new-car protection, pre-sale work, or regular maintenance.',
     image: '/gallery/takeout/20230507_162319.webp',
     seo: {
       title: 'Full Car Detailing Bellevue & Omaha | Inside and Out',
@@ -81,7 +81,7 @@ export const CATEGORIES: Category[] = [
     id: 'paint-correction', 
     slug: 'paint-correction',
     name: 'Paint Correction', 
-    description: 'Controlled machine polishing that permanently reduces or removes eligible swirl marks, oxidation, wash haze, and light scratches depending on paint depth and defect severity. The process restores clarity and depth to the clear coat without promising unsafe or impossible results.',
+    description: 'Machine polishing for swirl marks, oxidation, wash haze, and light scratches. I inspect the paint and perform a test spot so I can improve clarity and gloss without removing more clear coat than is safe.',
     image: '/gallery/takeout/20260502_192636.webp',
     seo: {
       title: 'Paint Correction Omaha & Bellevue | Swirl Mark Removal',
@@ -92,7 +92,7 @@ export const CATEGORIES: Category[] = [
     id: 'protection', 
     slug: 'ceramic-coating',
     name: 'Ceramic Coating', 
-    description: 'Certified System X ceramic coating in Bellevue and Omaha for durable gloss, chemical resistance, UV resistance, water behavior, and easier maintenance washing. Paint preparation is matched to the condition of the vehicle.',
+    description: 'I install certified System X ceramic coatings for longer-lasting gloss, chemical and UV resistance, water beading, and easier washing. I inspect and prepare the paint before coating it.',
     image: '/gallery/takeout/20230513_182328.webp',
     seo: {
       title: 'Ceramic Coating Omaha & Bellevue | System X Certified',
@@ -103,7 +103,7 @@ export const CATEGORIES: Category[] = [
     id: 'maintenance', 
     slug: 'maintenance-plans',
     name: 'Maintenance Detailing', 
-    description: 'Maintenance detailing for vehicles that have already been professionally cleaned, corrected, or ceramic coated. Routine interior wipe down, safe hand wash, glass cleaning, and protection refreshes.',
+    description: 'Routine upkeep for vehicles I have already detailed or vehicles that were recently cleaned, corrected, or ceramic coated. Includes a safe hand wash, quick interior cleanup, glass, tires, and a protection refresh.',
     image: '/gallery/takeout/20230420_162911.webp',
     seo: {
       title: 'Maintenance Car Detailing Omaha & Bellevue | Bryan\'s Detailing',

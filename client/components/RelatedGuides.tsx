@@ -114,14 +114,14 @@ export default function RelatedGuides({
       <div className="container mx-auto px-4">
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div className="max-w-3xl">
-            <div className={`flex items-center gap-2 text-xs font-black uppercase tracking-[0.22em] ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
+            <div className={`flex items-center gap-2 text-xs font-black uppercase tracking-[0.22em] ${isDark ? 'text-blue-400' : 'text-blue-700'}`}>
               <BookOpen className="h-4 w-4" />
               Detailing knowledge center
             </div>
             <h2 className="mt-4 text-3xl font-black tracking-tight md:text-5xl">{heading}</h2>
             <p className={`mt-4 max-w-2xl leading-relaxed ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>{intro}</p>
           </div>
-          <Link to="/blog" className={`inline-flex items-center gap-2 font-black ${isDark ? 'text-emerald-400 hover:text-emerald-300' : 'text-zinc-950 hover:text-emerald-700'}`}>
+          <Link to="/blog" className={`inline-flex items-center gap-2 font-black ${isDark ? 'text-blue-400 hover:text-blue-300' : 'text-zinc-950 hover:text-blue-700'}`}>
             View all detailing tips <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -133,11 +133,11 @@ export default function RelatedGuides({
               to={guide.path}
               className={`group flex min-h-56 flex-col rounded-2xl border p-6 transition-all hover:-translate-y-1 ${
                 isDark
-                  ? 'border-zinc-800 bg-zinc-900 hover:border-emerald-500/50'
-                  : 'border-zinc-200 bg-white hover:border-emerald-500 hover:shadow-xl hover:shadow-zinc-200/50'
+                  ? 'border-zinc-800 bg-zinc-900 hover:border-blue-600/50'
+                  : 'border-zinc-200 bg-white hover:border-blue-600 hover:shadow-xl hover:shadow-zinc-200/50'
               }`}
             >
-              <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>Read the guide</span>
+              <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${isDark ? 'text-blue-400' : 'text-blue-700'}`}>Read the guide</span>
               <h3 className="mt-4 text-xl font-black leading-tight tracking-tight">{guide.title}</h3>
               <p className={`mt-3 text-sm leading-relaxed ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>{guide.description}</p>
               <span className={`mt-auto inline-flex items-center gap-2 pt-6 text-sm font-black ${isDark ? 'text-white' : 'text-zinc-950'}`}>

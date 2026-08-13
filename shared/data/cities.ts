@@ -27,11 +27,11 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['maintenance-detail', 'interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'pre-sale-detail'],
       title: 'Mobile Car Detailing in Omaha, NE',
-      intro: "Bryan's Showroom Quality Detailing provides owner-operated mobile auto detailing throughout Omaha and the surrounding metro. Services include interior detailing, complete inside-and-out details, paint enhancement, paint correction, and ceramic coating preparation. Mobile availability depends on the service, weather, workspace, access, distance, and vehicle condition. Bellevue drop-off and pickup are available for longer or weather-sensitive services.",
+      intro: "I provide mobile auto detailing throughout Omaha and the surrounding metro, including interior details, complete inside-and-out details, paint enhancement, paint correction, and ceramic coating. Mobile availability depends on the work, weather, access, distance, and vehicle condition. Bellevue drop-off and pickup are available for longer or weather-sensitive services.",
       servicesLabel: 'Auto Detailing Services Available in Omaha:',
       whyLabel: "Why Omaha drivers choose Bryan's:",
       whyPoints: [
-        'Current ratings and customer reviews available on Google',
+        'Owner-operated service with clear communication',
         'System X certified ceramic coating installer',
         'Paint correction that reduces or removes eligible swirls and scratches',
         'Mobile service in Omaha when access and conditions allow',
@@ -52,7 +52,7 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'new-car-detail', 'maintenance-detail'],
       title: 'Professional Car Detailing in Bellevue, Nebraska',
-      intro: "Bryan's Showroom Quality Detailing is based in Bellevue and has served Bellevue and the Omaha metro since 2017. I provide professional interior detailing, full vehicle details, paint correction, and certified ceramic coating services for cars, trucks, SUVs, specialty vehicles, and work vehicles. Mobile service is available when weather, workspace, and the selected service allow. Bellevue drop-off and pickup are available by appointment for longer or weather-sensitive services. This is an appointment-only drop-off location, not an open public storefront.",
+      intro: "I am based in Bellevue and have served Bellevue and the Omaha metro since 2017. I detail cars, trucks, SUVs, specialty vehicles, and work vehicles. Mobile service is available when the weather, workspace, and service allow. Bellevue drop-off and pickup are available by appointment for longer or weather-sensitive work. This is an appointment-only drop-off location, not an open public storefront.",
       servicesLabel: 'Auto Detailing Services in Bellevue:',
       whyLabel: 'Why Bellevue drivers choose Bryan:',
       whyPoints: [
@@ -60,7 +60,7 @@ export const CITIES: CityPage[] = [
         'Serving Offutt AFB military families with flexible scheduling',
         'System X certified ceramic coating installation',
         'Mobile service plus Bellevue drop-off options',
-        'Current Bellevue and Omaha customer reviews available on Google'
+        'Owner-operated service with clear communication'
       ],
       serviceAreas: ['Bellevue', 'Offutt AFB', 'Fontenelle Hills', 'Levi Carter Park area', 'Papillion'],
       cta: 'View current Bellevue appointment availability.'
@@ -77,13 +77,13 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'pre-sale-detail', 'maintenance-detail'],
       title: 'Auto Detailing in Papillion, NE',
-      intro: "Papillion drivers can book Bryan's Showroom Quality Mobile Detailing for careful interior, exterior, paint-correction, and ceramic-coating work. I bring mobile service to homes and offices, with Bellevue drop-off and pickup available when a service needs controlled working conditions.",
+      intro: "I provide interior detailing, full details, paint correction, and ceramic coating for Papillion drivers. I can work at homes and offices when the space and weather allow, with Bellevue drop-off and pickup available for longer services.",
       servicesLabel: 'Detailing Services for Papillion Residents:',
       whyLabel: "What Papillion customers can expect:",
       whyPoints: [
         'Mobile detailing at your home or office in Papillion',
         'Paint correction based on the finish and defects that can be safely improved',
-        'Ceramic coating with preparation matched to the vehicle',
+        'Ceramic coating with the paint prep the vehicle needs',
         'Interior services for pet hair, stains, spills, and odors',
         'Online booking plus photo-based recommendations'
       ],
@@ -109,7 +109,7 @@ export const CITIES: CityPage[] = [
         'Mobile service at your La Vista address',
         'Interior cleaning for families and pet owners',
         'Exterior paint enhancement and gloss improvement',
-        'Starting prices and condition adjustments explained clearly',
+        'Starting prices and any additional work explained clearly',
         'Clear pricing and timing before work begins'
       ],
       serviceAreas: ['La Vista', 'Papillion', 'Ralston', 'Bellevue', 'South Omaha'],
@@ -127,7 +127,7 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['interior-detail', 'interior-reset', 'full-detail-package', 'paint-correction-l1'],
       title: 'Auto Detailing in Ralston, NE',
-      intro: "Ralston drivers can request mobile detailing without a long drive. Bryan's Showroom Quality Mobile Detailing offers maintenance details, interior restoration, full details, paint correction, and ceramic coating. Bryan explains what is included before work begins.",
+      intro: "I offer mobile detailing for Ralston drivers, including maintenance details, interior restoration, full details, paint correction, and ceramic coating. I explain what is included before work begins.",
       servicesLabel: 'Ralston Auto Detailing Services:',
       whyLabel: "Why Ralston drivers choose Bryan's:",
       whyPoints: [
@@ -160,7 +160,7 @@ export const CITIES: CityPage[] = [
         'Interior and exterior cleaning for road grime and family vehicles',
         'SUV and truck detailing matched to vehicle condition',
         'Pre-sale detail packages that improve presentation',
-        'Professional ceramic coating with inspection-based preparation'
+        'Ceramic coating with paint prep based on what I find'
       ],
       serviceAreas: ['Gretna', 'Springfield', 'Papillion', 'Bellevue', 'Sarpy County'],
       cta: 'Book a Gretna mobile detail or choose Bellevue drop-off.'
@@ -181,9 +181,9 @@ export const CITIES: CityPage[] = [
       servicesLabel: 'Elkhorn Auto Detailing Services:',
       whyLabel: 'Why Elkhorn drivers choose Bryan:',
       whyPoints: [
-        'I install System X certified ceramic coatings with preparation matched to the vehicle',
+        'I install System X certified ceramic coatings with the paint prep each vehicle needs',
         'Multi-stage paint correction for luxury and performance vehicles',
-        'New-car detail packages with inspection-based paint preparation',
+        'New-car details with paint prep based on what I find',
         'Mobile service to Elkhorn and West Omaha',
         'Mobile and Bellevue drop-off options when conditions require'
       ],
@@ -210,7 +210,7 @@ export const CITIES: CityPage[] = [
         'Interior extraction for heavy stains and odor sources',
         'Exterior paint decontamination and sealant',
         'Road-salt and contamination removal based on condition',
-        'Starting prices and any condition adjustment explained in advance'
+        'Starting prices and any additional work explained in advance'
       ],
       serviceAreas: ['Council Bluffs', 'Carter Lake', 'Missouri Valley', 'Omaha border area'],
       cta: 'Book your Council Bluffs detail and view current availability.'

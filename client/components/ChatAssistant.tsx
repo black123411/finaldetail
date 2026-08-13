@@ -7,7 +7,7 @@ export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-24 right-4 z-50 md:bottom-6 md:right-6">
+    <div className="fixed bottom-6 right-6 z-50 hidden md:block">
       <AnimatePresence>
         {isOpen && (
           <motion.div

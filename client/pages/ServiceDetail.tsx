@@ -175,22 +175,22 @@ export default function ServiceDetail() {
               <Link to={`/services/category/${category.slug}`} className="hover:text-white">{category.name}</Link>
             </div>
             {service.badge && (
-              <p className="mt-7 inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-300">
+              <p className="mt-7 inline-flex rounded-full border border-blue-400/30 bg-blue-400/10 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-blue-300">
                 {service.badge}
               </p>
             )}
             <h1 className="mt-6 text-5xl font-black leading-[0.95] md:text-7xl">{service.name}</h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-200 md:text-xl">{service.shortDescription}</p>
             <div className="mt-8 grid max-w-3xl gap-3 sm:grid-cols-3">
-              <div className="border-l-2 border-emerald-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
+              <div className="border-l-2 border-blue-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Typical Time</p>
                 <p className="mt-1 font-bold text-white">{getDuration(service)}</p>
               </div>
-              <div className="border-l-2 border-emerald-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
+              <div className="border-l-2 border-blue-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Pricing</p>
                 <p className="mt-1 font-bold text-white">{getStartingPrice(service) === 'Custom quote' ? 'Custom quote' : `Starts at ${getStartingPrice(service)}`}</p>
               </div>
-              <div className="border-l-2 border-emerald-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
+              <div className="border-l-2 border-blue-400 bg-black/30 px-4 py-3 backdrop-blur-sm">
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Service Option</p>
                 <p className="mt-1 font-bold text-white">{getServiceAvailability(service)}</p>
               </div>
@@ -199,7 +199,7 @@ export default function ServiceDetail() {
               <Link
                 to={primaryTarget}
                 onClick={() => trackEvent('begin_booking', { location: 'service_detail', service_id: service.id })}
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-emerald-500 px-7 font-black text-zinc-950 hover:bg-emerald-400"
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-blue-600 px-7 font-black text-zinc-950 hover:bg-blue-400"
               >
                 <Calendar className="h-5 w-5" /> {primaryLabel}
               </Link>
@@ -215,10 +215,10 @@ export default function ServiceDetail() {
               Live availability updates during booking. Reserve your preferred date and time now—Saturday and evening appointments often fill up first.
             </p>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
-              Bryan confirms what is included and any vehicle-specific needs before the service begins. Book online now to secure the best available slot.
+              I confirm what is included and anything specific to your vehicle before the service begins. Book online to see current availability.
             </p>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
-              Prefer a quick answer? <a href="tel:712-305-6313" onClick={() => trackEvent('click_call', { location: 'service_detail', service_id: service.id })} className="font-bold underline">Call Bryan</a> for availability and package advice.
+              Prefer a quick answer? <a href="tel:712-305-6313" onClick={() => trackEvent('click_call', { location: 'service_detail', service_id: service.id })} className="font-bold underline">Call me</a> for availability or help choosing a service.
             </p>
           </div>
         </div>
@@ -227,15 +227,15 @@ export default function ServiceDetail() {
       <section className="border-b border-zinc-200 bg-zinc-950 text-white">
         <div className="container mx-auto grid gap-px bg-zinc-800 md:grid-cols-3">
           <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
-            <ShieldCheck className="h-6 w-6 shrink-0 text-emerald-400" />
-            <div><p className="font-black">Owner-operated</p><p className="mt-1 text-sm text-zinc-400">Bryan handles the appointment and quality check.</p></div>
+            <ShieldCheck className="h-6 w-6 shrink-0 text-blue-400" />
+            <div><p className="font-black">Owner-operated</p><p className="mt-1 text-sm text-zinc-400">I handle the appointment, the work, and the final check.</p></div>
           </div>
           <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
-            <CircleDollarSign className="h-6 w-6 shrink-0 text-emerald-400" />
+            <CircleDollarSign className="h-6 w-6 shrink-0 text-blue-400" />
             <div><p className="font-black">Pricing based on your vehicle</p><p className="mt-1 text-sm text-zinc-400">Additional work is explained before it is added.</p></div>
           </div>
           <div className="flex gap-4 bg-zinc-950 px-5 py-6 md:px-8">
-            <MapPin className="h-6 w-6 shrink-0 text-emerald-400" />
+            <MapPin className="h-6 w-6 shrink-0 text-blue-400" />
             <div><p className="font-black">Omaha metro service</p><p className="mt-1 text-sm text-zinc-400">Mobile options plus Bellevue drop-off.</p></div>
           </div>
         </div>
@@ -244,7 +244,7 @@ export default function ServiceDetail() {
       <section className="border-b border-zinc-200 py-20 md:py-28">
         <div className="container mx-auto px-4">
           <div className="mb-14 grid gap-6 border-y border-zinc-200 py-8 md:grid-cols-[220px_1fr] md:items-start">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">Best fit for</p>
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-blue-700">Best fit for</p>
             <p className="text-xl font-bold leading-relaxed text-zinc-800">{service.bestFor || guide?.headline || service.shortDescription}</p>
           </div>
           <div className="grid gap-14 lg:grid-cols-[1.25fr_0.75fr]">
@@ -293,12 +293,12 @@ export default function ServiceDetail() {
             )}
             </div>
 
-            <aside className="border-l-4 border-emerald-500 bg-zinc-50 p-7 md:p-9">
+            <aside className="border-l-4 border-blue-600 bg-zinc-50 p-7 md:p-9">
             <h2 className="text-2xl font-black">What is included</h2>
             <ul className="mt-6 space-y-4">
               {service.features.map((feature) => (
                 <li key={feature} className="flex items-start gap-3 leading-relaxed text-zinc-700">
-                  <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-600" />
+                  <Check className="mt-1 h-4 w-4 shrink-0 text-blue-600" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -338,7 +338,7 @@ export default function ServiceDetail() {
             <ul className="mt-7 space-y-5">
               {(guide?.process || []).map((item) => (
                 <li key={item} className="flex items-start gap-4 border-b border-zinc-200 pb-5">
-                  <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-emerald-600" />
+                  <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-blue-600" />
                   <span className="leading-relaxed text-zinc-700">{item}</span>
                 </li>
               ))}
@@ -352,7 +352,7 @@ export default function ServiceDetail() {
           <div className="container mx-auto px-4">
             <div className="grid gap-8 md:grid-cols-[240px_1fr]">
               <div>
-                <Info className="h-6 w-6 text-emerald-600" />
+                <Info className="h-6 w-6 text-blue-600" />
                 <h2 className="mt-3 text-2xl font-black">Before your appointment</h2>
               </div>
               <ul className="grid gap-4 md:grid-cols-3">
@@ -371,7 +371,7 @@ export default function ServiceDetail() {
             <div>
               <h2 className="text-4xl font-black tracking-tight md:text-5xl">Real results from this type of work</h2>
               <p className="mt-5 text-lg leading-relaxed text-zinc-300">{visualProof.description}</p>
-              <Link to="/gallery" className="mt-7 inline-flex items-center gap-2 font-black text-emerald-400 hover:text-emerald-300">
+              <Link to="/gallery" className="mt-7 inline-flex items-center gap-2 font-black text-blue-400 hover:text-blue-300">
                 View the full gallery <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -433,7 +433,7 @@ export default function ServiceDetail() {
                     <div className="flex aspect-video items-end bg-zinc-900 p-5 font-black text-white">{related.name}</div>
                   )}
                   <div className="p-5">
-                    <h3 className="text-xl font-black group-hover:text-emerald-700">{related.name}</h3>
+                    <h3 className="text-xl font-black group-hover:text-blue-700">{related.name}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-zinc-600">{related.shortDescription}</p>
                     {related.bestFor && <p className="mt-3 text-xs font-bold leading-relaxed text-zinc-500">Best for: {related.bestFor}</p>}
                   </div>
@@ -444,7 +444,7 @@ export default function ServiceDetail() {
         </section>
       )}
 
-      <section className="bg-emerald-500 py-16 text-zinc-950">
+      <section className="bg-blue-600 py-16 text-zinc-950">
         <div className="container mx-auto flex flex-col items-start justify-between gap-7 px-4 md:flex-row md:items-center">
           <div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">{isInquiryOnly ? `Want a quote for ${service.name}?` : `Ready to book ${service.name}?`}</h2>

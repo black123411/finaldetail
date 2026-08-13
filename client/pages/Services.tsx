@@ -1,226 +1,65 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ArrowRight, Calendar, Check, Clock } from 'lucide-react';
+import { ArrowRight, Check, Clock, MessageSquare } from 'lucide-react';
 import { SERVICES, type Service } from '@/shared/data/services';
 import { ServiceAPI } from '../services/api';
 import { formatCurrency } from '../lib/utils';
 import RelatedGuides from '../components/RelatedGuides';
+import { trackEvent } from '../lib/analytics';
 
-interface SquareService {
-  id: string;
-  name: string;
-  variations: Array<{ id: string; name: string; price: number }>;
-}
+interface SquareService { id: string; name: string; variations: Array<{ id: string; name: string; price: number }> }
 
-const SERVICE_GROUPS = [
-  {
-    title: 'Interior Detailing',
-    description: 'Interior cleaning for everyday buildup, heavy stains, pet hair, spills, and odor problems.',
-    ids: ['maintenance-interior', 'interior-detail', 'interior-reset', 'odor-elimination'],
-  },
-  {
-    title: 'Complete Vehicle Details',
-    description: 'Inside-and-out packages for daily drivers, neglected vehicles, new cars, pre-sale preparation, and ongoing maintenance.',
-    ids: ['full-detail-package', 'showroom-package', 'new-car-detail', 'pre-sale-detail', 'maintenance-detail'],
-  },
-  {
-    title: 'Paint Restoration and Protection',
-    description: 'Exterior washing, decontamination, machine polishing, swirl removal, ceramic coating, and long-term paint protection.',
-    ids: ['exterior-enhancement', 'paint-enhancement-polish', 'paint-correction-l1', 'paint-correction-l2', 'system-x-crystal-plus', 'system-x-pro-plus', 'system-x-max-g-plus', 'system-x-phantom-2k', 'ppf-inquiry'],
-  },
-  {
-    title: 'RV, Boat and Equipment Detailing',
-    description: 'Cleaning and restoration for larger vehicles, boats, trailers, tractors, and equipment.',
-    ids: ['rv-boat-wash-wax', 'rv-boat-oxidation', 'tractor-detailing-service'],
-  },
-];
+const groups = [
+  { id: 'interior', label: 'Interior', title: 'Interior Detailing', description: 'From light upkeep to deep interior restoration, stain treatment, pet hair removal, and odor work.', ids: ['maintenance-interior', 'interior-detail', 'interior-reset', 'odor-elimination'] },
+  { id: 'full-detail', label: 'Full Detail', title: 'Full Details', description: 'Inside-and-out packages for daily drivers, seasonal cleanups, new vehicles, and pre-sale preparation.', ids: ['full-detail-package', 'showroom-package', 'new-car-detail', 'pre-sale-detail', 'maintenance-detail'] },
+  { id: 'paint', label: 'Paint', title: 'Paint Correction', description: 'Exterior decontamination and machine polishing to improve gloss, oxidation, swirls, and other correctable paint defects.', ids: ['exterior-enhancement', 'paint-enhancement-polish', 'paint-correction-l1', 'paint-correction-l2'] },
+  { id: 'ceramic', label: 'Ceramic', title: 'Ceramic Coating', description: 'System X ceramic coating options with the paint preparation needed for a clean, durable finish.', ids: ['system-x-crystal-plus', 'system-x-pro-plus', 'system-x-max-g-plus', 'system-x-phantom-2k', 'ppf-inquiry'] },
+  { id: 'specialty', label: 'Specialty', title: 'Specialty Vehicles', description: 'Cleaning, polishing, and protection for RVs, boats, tractors, trailers, and equipment.', ids: ['rv-boat-wash-wax', 'rv-boat-oxidation', 'tractor-detailing-service'] },
+] as const;
 
 const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
-
-function getStartingPrice(service: Service, squareServices: SquareService[]) {
-  const localPrice = service.price.car || service.price.suv || service.price.rv || Object.values(service.price)[0];
-  const targetName = normalize(service.squareName || service.name);
-  const squareMatch = squareServices.find((item) => {
-    const squareName = normalize(item.name);
-    return squareName === targetName || squareName.includes(targetName) || targetName.includes(squareName);
-  });
-  const squarePrices = squareMatch?.variations.map((variation) => variation.price).filter((price) => price > 0) || [];
-  const price = squarePrices.length ? Math.min(...squarePrices) : localPrice;
+function getStartingPrice(service: Service, square: SquareService[]) {
+  const local = service.price.car || service.price.suv || service.price.rv || Object.values(service.price)[0];
+  const target = normalize(service.squareName || service.name);
+  const match = square.find((item) => normalize(item.name) === target || normalize(item.name).includes(target) || target.includes(normalize(item.name)));
+  const prices = match?.variations.map((variation) => variation.price).filter((price) => price > 0) || [];
+  const price = prices.length ? Math.min(...prices) : local;
   if (!price) return 'Custom quote';
-  return service.pricingType === 'variable' ? 'From ' + formatCurrency(price) + '/ft' : 'From ' + formatCurrency(price);
+  return service.pricingType === 'variable' ? `From ${formatCurrency(price)}/ft` : `From ${formatCurrency(price)}`;
 }
-
-function getDuration(service: Service) {
-  if (typeof service.duration === 'string') return service.duration;
-  return service.duration.car || service.duration.rv || Object.values(service.duration)[0];
-}
+function getDuration(service: Service) { return typeof service.duration === 'string' ? service.duration : service.duration.car || service.duration.rv || Object.values(service.duration)[0] }
 
 export default function Services() {
   const [squareServices, setSquareServices] = useState<SquareService[]>([]);
-
-  useEffect(() => {
-    ServiceAPI.getCatalogServices()
-      .then((data) => setSquareServices(Array.isArray(data) ? data : []))
-      .catch(() => setSquareServices([]));
-  }, []);
-
-  const servicesSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: SERVICES.map((service, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url: `https://bryansdetailingomaha.com/services/${service.id}`,
-      name: service.name,
-    })),
-  };
+  useEffect(() => { ServiceAPI.getCatalogServices().then((data) => setSquareServices(Array.isArray(data) ? data : [])).catch(() => setSquareServices([])); }, []);
+  const schema = { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: SERVICES.map((service, index) => ({ '@type': 'ListItem', position: index + 1, url: `https://bryansdetailingomaha.com/services/${service.id}`, name: service.name })) };
 
   return (
-    <main className="min-h-screen bg-white text-zinc-950">
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(servicesSchema)}</script>
-      </Helmet>
-      <section className="bg-emerald-500 text-zinc-950 py-4 text-center font-black uppercase tracking-[0.24em]">
-        Book online 24/7 and reserve your preferred detail time. Weekend and holiday appointments are scheduled based on availability.
+    <div className="min-h-screen bg-white text-slate-950">
+      <Helmet><script type="application/ld+json">{JSON.stringify(schema)}</script></Helmet>
+      <section className="relative isolate overflow-hidden bg-slate-950 text-white">
+        <img src="/gallery/takeout/20260502_192636.webp" alt="Black vehicle paint after detailing" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/35" />
+        <div className="container mx-auto px-4 py-14 md:py-20"><div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[.18em] text-blue-300">Services &amp; pricing</p><h1 className="mt-4 text-4xl font-black leading-[.98] tracking-tight sm:text-5xl md:text-6xl">Auto Detailing Services and Pricing</h1><p className="mt-5 max-w-2xl text-base leading-7 text-slate-200 md:text-lg">Compare the services below by the work your vehicle needs. Prices start with standard-condition vehicles and change with size or heavier work. I explain any additional cost before I begin.</p><div className="mt-7 flex flex-col gap-3 sm:flex-row"><Link to="/book" className="inline-flex min-h-14 items-center justify-center bg-blue-600 px-7 font-black hover:bg-blue-700">Check Availability</Link><a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detail.%20Here%20are%20photos%3A" className="inline-flex min-h-14 items-center justify-center gap-2 border border-white/50 px-7 font-black hover:bg-white hover:text-slate-950"><MessageSquare className="h-5 w-5" /> Text Photos</a></div></div></div>
       </section>
 
-      <section className="relative min-h-140 flex items-end overflow-hidden bg-zinc-950">
-        <img
-          src="/gallery/takeout/20260502_192636.webp"
-          alt="Corrected black vehicle paint after professional detailing in Bellevue"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-black/90 via-black/65 to-black/15" />
-        <div className="container relative mx-auto px-4 pb-16 pt-32 md:pb-24">
-          <div className="max-w-3xl text-white">
-            <h1 className="text-5xl font-black leading-[0.95] md:text-7xl">
-              Auto Detailing Services and Pricing
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-zinc-200 md:text-xl">
-              Choose the service based on the result your vehicle needs—not simply the cheapest package. The prices below are starting prices for standard-condition vehicles. Vehicle size, excessive pet hair, staining, mud, bodily fluids, smoke, severe odors, oxidation, and neglected condition may affect the final price. Any condition adjustment is explained before additional work begins.
-             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to="/book"
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-emerald-500 px-7 font-black text-zinc-950 transition-colors hover:bg-emerald-400"
-              >
-                <Calendar className="h-5 w-5" /> View Current Availability
-              </Link>
-              <Link
-                to="/quote"
-                className="inline-flex h-14 items-center justify-center rounded-md border border-white/40 bg-black/20 px-7 font-bold text-white transition-colors hover:bg-white hover:text-zinc-950"
-              >
-                Text Photos for a Recommendation
-              </Link>
-            </div>
-            <p className="mt-4 max-w-2xl text-sm text-zinc-200 leading-relaxed">
-              Book now to see live appointment availability for your vehicle size and condition. Most weekend details are reserved quickly.
-            </p>
-          </div>
-        </div>
-      </section>
+      <nav aria-label="Service categories" className="sticky top-18 z-30 border-b border-slate-200 bg-white"><div className="container mx-auto flex snap-x overflow-x-auto px-4">{groups.map((group) => <a key={group.id} href={`#${group.id}`} className="flex min-h-14 shrink-0 snap-start items-center border-b-2 border-transparent px-5 text-sm font-black text-slate-600 hover:border-blue-600 hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">{group.label}</a>)}</div></nav>
 
-      <section className="border-b border-zinc-200 bg-zinc-50">
-        <div className="container mx-auto grid gap-6 px-4 py-8 text-sm font-semibold text-zinc-700 md:grid-cols-3">
-          <p>Prices vary by vehicle size and condition.</p>
-          <p>Mobile service and Bellevue drop-off are available.</p>
-          <p>Payment is collected after the work is completed.</p>
-        </div>
-      </section>
-
-      <div className="container mx-auto px-4 py-20 md:py-28">
-        <div className="max-w-3xl">
-          <h2 className="text-4xl font-black tracking-tight md:text-5xl">Choose the result your vehicle needs</h2>
-          <p className="mt-5 text-lg leading-relaxed text-zinc-600">
-            Compare interior detailing, complete inside-and-out packages, paint correction, ceramic coating, and specialty vehicle services. Each service page explains what is included, what is not included, and when Bryan needs photos before giving an exact quote.
-          </p>
-        </div>
-
-        <div className="mt-20 space-y-24">
-          {SERVICE_GROUPS.map((group) => {
-            const groupServices = group.ids
-              .map((id) => SERVICES.find((service) => service.id === id))
-              .filter((service): service is Service => Boolean(service));
-
-            return (
-              <section key={group.title}>
-                <div className="max-w-3xl border-l-4 border-emerald-500 pl-5">
-                  <h2 className="text-3xl font-black tracking-tight md:text-4xl">{group.title}</h2>
-                  <p className="mt-3 leading-relaxed text-zinc-600">{group.description}</p>
-                </div>
-
-                <div className="mt-10 grid gap-7 lg:grid-cols-2">
-                  {groupServices.map((service) => (
-                    <article key={service.id} className="overflow-hidden rounded-lg border border-zinc-200 bg-white">
-                      <Link to={`/services/${service.id}`} className="group block">
-                        <div className="aspect-16/8 overflow-hidden bg-zinc-900">
-                          {service.image ? (
-                            <img
-                              src={service.image}
-                              alt={`${service.name} by Bryan's Showroom Quality Mobile Detailing`}
-                              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="flex h-full items-end p-6 text-2xl font-black text-white">
-                              Tractor and equipment cleaning
-                            </div>
-                          )}
-                        </div>
-                        <div className="p-6 md:p-7">
-                          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-bold text-zinc-600">
-                            <span>{getStartingPrice(service, squareServices)}</span>
-                            <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4" /> {getDuration(service)}</span>
-                          </div>
-                          <h3 className="mt-4 text-2xl font-black tracking-tight transition-colors group-hover:text-emerald-700">
-                            {service.name}
-                          </h3>
-                          <p className="mt-3 leading-relaxed text-zinc-600">{service.shortDescription}</p>
-                          <ul className="mt-5 grid gap-2 sm:grid-cols-2">
-                            {service.features.slice(0, 4).map((feature) => (
-                              <li key={feature} className="flex items-start gap-2 text-sm text-zinc-700">
-                                <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
-                                <span>{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                          <span className="mt-6 inline-flex items-center gap-2 font-black text-zinc-950">
-                            View service details <ArrowRight className="h-4 w-4" />
-                          </span>
-                        </div>
-                      </Link>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            );
+      <div className="container mx-auto px-4 py-10 md:py-16">
+        <p className="mb-10 border-b border-slate-200 pb-6 text-sm font-semibold leading-6 text-slate-600">Starting prices vary by vehicle size and condition. Mobile service and Bellevue drop-off are available. Payment is collected after the work is completed.</p>
+        <div className="space-y-16">
+          {groups.map((group) => {
+            const services = group.ids.map((id) => SERVICES.find((service) => service.id === id)).filter((service): service is Service => Boolean(service));
+            return <section key={group.id} id={group.id} className="scroll-mt-36"><div className="grid gap-5 border-b-2 border-slate-950 pb-7 md:grid-cols-[.8fr_1.2fr]"><h2 className="text-3xl font-black tracking-tight md:text-4xl">{group.title}</h2><p className="max-w-2xl leading-7 text-slate-600">{group.description}</p></div><div className="divide-y divide-slate-200 border-b border-slate-200">{services.map((service) => {
+              const inquiry = service.id === 'ppf-inquiry' || !Object.values(service.price).some((price) => price > 0);
+              return <article key={service.id} className="grid gap-6 py-7 lg:grid-cols-[1fr_1.3fr_auto] lg:items-start"><div><h3 className="text-2xl font-black tracking-tight">{service.name}</h3><div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold text-blue-700"><span>{getStartingPrice(service, squareServices)}</span><span className="inline-flex items-center gap-1.5 text-slate-600"><Clock className="h-4 w-4" /> {getDuration(service)}</span></div></div><div><p className="leading-7 text-slate-600">{service.bestFor || service.shortDescription}</p><ul className="mt-4 grid gap-2 sm:grid-cols-2">{service.features.slice(0, 3).map((feature) => <li key={feature} className="flex gap-2 text-sm text-slate-700"><Check className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />{feature}</li>)}</ul></div><div className="flex gap-2 lg:justify-end"><Link to={`/services/${service.id}`} className="inline-flex min-h-11 items-center border border-slate-300 px-4 font-bold hover:border-blue-600 hover:text-blue-700">View Details</Link><Link to={inquiry ? '/quote' : `/book?serviceId=${service.id}`} onClick={() => trackEvent(inquiry ? 'begin_quote' : 'begin_booking', { location: 'services_list', service_id: service.id })} className="inline-flex min-h-11 items-center bg-blue-600 px-5 font-black text-white hover:bg-blue-700">{inquiry ? 'Request Quote' : 'Book'}</Link></div></article>;
+            })}</div></section>;
           })}
         </div>
       </div>
-
-      <RelatedGuides
-        topic="all"
-        heading="Compare services before you book"
-        intro="These six guides explain interior work, paint correction, protection, maintenance timing, winter care, and mobile versus drop-off appointments."
-      />
-
-      <section className="bg-zinc-950 py-20 text-white">
-        <div className="container mx-auto flex flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-center">
-          <div className="max-w-2xl">
-            <h2 className="text-4xl font-black tracking-tight">Not sure which service fits?</h2>
-            <p className="mt-4 text-lg leading-relaxed text-zinc-300">
-              Send clear photos and a short description of the vehicle condition. I can recommend the appropriate package before scheduling.
-            </p>
-          </div>
-          <Link
-            to="/quote"
-            className="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-md bg-white px-7 font-black text-zinc-950 hover:bg-zinc-200"
-          >
-            Text Photos for a Recommendation <ArrowRight className="h-5 w-5" />
-          </Link>
-        </div>
-      </section>
-    </main>
+      <RelatedGuides topic="all" heading="Helpful detailing guides" intro="Learn more about interior work, paint correction, ceramic protection, seasonal care, and appointment options." />
+      <section className="bg-slate-950 py-16 text-white"><div className="container mx-auto flex flex-col justify-between gap-7 px-4 md:flex-row md:items-center"><div><h2 className="text-3xl font-black">Not sure what your vehicle needs?</h2><p className="mt-3 max-w-2xl text-slate-300">Text me clear photos and tell me what you want fixed. I will point you toward the service that makes sense.</p></div><a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detail.%20Here%20are%20photos%3A" className="inline-flex min-h-14 shrink-0 items-center justify-center gap-2 bg-blue-600 px-7 font-black hover:bg-blue-700">Text Photos <ArrowRight className="h-5 w-5" /></a></div></section>
+    </div>
   );
 }

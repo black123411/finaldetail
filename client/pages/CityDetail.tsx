@@ -72,8 +72,8 @@ export default function CityDetail() {
             className="max-w-3xl"
           >
             <div className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-[1px] bg-emerald-500" />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500">Service Area: {city.name}</span>
+              <div className="w-10 h-[1px] bg-blue-600" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-600">Service Area: {city.name}</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-black italic tracking-tighter mb-8 leading-[0.9]">
               {city.content.title}
@@ -83,13 +83,13 @@ export default function CityDetail() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/book">
-                <Button size="lg" className="w-full sm:w-auto h-16 px-10 text-xs font-black uppercase tracking-widest bg-emerald-500 text-zinc-950 hover:bg-emerald-400 border-none shadow-[0_8px_30px_rgb(16,185,129,0.3)]">
+                <Button size="lg" className="w-full sm:w-auto h-16 px-10 text-xs font-black uppercase tracking-widest bg-blue-600 text-zinc-950 hover:bg-blue-400 border-none shadow-[0_8px_30px_rgb(16,185,129,0.3)]">
                    {city.content.cta}
                 </Button>
               </Link>
               <Link to="/services">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto h-16 px-10 text-xs font-black uppercase tracking-widest border-white/30 text-white hover:bg-white/10 hover:border-white/60">
-                  View Bryan's Services
+                  View Services &amp; Pricing
                 </Button>
               </Link>
             </div>
@@ -102,7 +102,7 @@ export default function CityDetail() {
         <div className="container mx-auto px-6">
           <div className="mb-16">
             <h2 className="text-3xl font-black italic tracking-tighter text-zinc-900 mb-4">{city.content.servicesLabel}</h2>
-            <div className="w-20 h-1 bg-emerald-500" />
+            <div className="w-20 h-1 bg-blue-600" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -118,12 +118,12 @@ export default function CityDetail() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group p-8 rounded-3xl border border-zinc-100 bg-white hover:border-emerald-500/20 hover:shadow-2xl hover:shadow-zinc-200/50 transition-all duration-500 relative flex flex-col justify-between"
+                className="group p-8 rounded-3xl border border-zinc-100 bg-white hover:border-blue-600/20 hover:shadow-2xl hover:shadow-zinc-200/50 transition-all duration-500 relative flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">0{index + 1}</span>
-                    <Link to={`/services/${service.id}`} className="text-zinc-300 group-hover:text-emerald-500 transition-colors">
+                    <Link to={`/services/${service.id}`} className="text-zinc-300 group-hover:text-blue-600 transition-colors">
                       <ArrowRight className="h-5 w-5" />
                     </Link>
                   </div>
@@ -132,7 +132,7 @@ export default function CityDetail() {
                     {service.shortDescription}
                   </p>
                 </div>
-                <Link to={`/services/${service.id}`} className="text-[10px] font-black uppercase tracking-widest text-emerald-600 group-hover:translate-x-2 transition-transform inline-flex items-center">
+                <Link to={`/services/${service.id}`} className="text-[10px] font-black uppercase tracking-widest text-blue-600 group-hover:translate-x-2 transition-transform inline-flex items-center">
                   Learn More <ArrowRight className="h-3 w-3 ml-2" />
                 </Link>
               </motion.div>
@@ -150,8 +150,8 @@ export default function CityDetail() {
               <div className="space-y-6">
                 {city.content.whyPoints.map((point, idx) => (
                   <div key={idx} className="flex items-start gap-4">
-                    <div className="mt-1 bg-emerald-100 p-1 rounded-lg">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                    <div className="mt-1 bg-blue-100 p-1 rounded-lg">
+                      <CheckCircle2 className="h-4 w-4 text-blue-600" />
                     </div>
                     <p className="text-lg font-bold text-zinc-800 italic">{point}</p>
                   </div>
@@ -166,17 +166,17 @@ export default function CityDetail() {
                <h3 className="text-2xl font-black italic tracking-tighter mb-8">Service Areas Near {city.name}</h3>
                <ul className="grid grid-cols-2 gap-y-4 gap-x-8">
                  {city.content.serviceAreas.map((area, idx) => (
-                   <li key={idx} className="flex items-center gap-3 text-zinc-400 hover:text-emerald-500 transition-colors">
+                   <li key={idx} className="flex items-center gap-3 text-zinc-400 hover:text-blue-600 transition-colors">
                      <MapPin className="h-4 w-4" />
                      <span className="text-sm font-black italic">{area}</span>
                    </li>
                  ))}
                </ul>
                <div className="mt-12 flex items-center gap-4 p-6 bg-zinc-800/50 rounded-2xl border border-zinc-800">
-                 <ShieldCheck className="h-6 w-6 text-emerald-500" />
+                 <ShieldCheck className="h-6 w-6 text-blue-600" />
                  <div>
                    <p className="text-xs font-black uppercase tracking-widest text-zinc-200">The right service for your vehicle</p>
-                   <p className="text-[10px] text-zinc-500 font-medium">Bryan reviews your vehicle and explains the recommended work before starting.</p>
+                   <p className="text-[10px] text-zinc-500 font-medium">I review your vehicle and explain the work before I start.</p>
                  </div>
                </div>
             </div>
@@ -188,15 +188,15 @@ export default function CityDetail() {
       <section className="py-20 bg-white border-t border-zinc-100">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl">
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-600 mb-3">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-600 mb-3">
               Popular {city.name} searches
             </p>
             <h2 className="text-3xl md:text-4xl font-black tracking-tight text-zinc-950 mb-5">
               Detailing services for {city.name} drivers
             </h2>
             <p className="text-lg leading-8 text-zinc-600 mb-8">
-              Start with the service that matches the vehicle's condition. Bryan's offers mobile detailing
-              where practical, plus Bellevue drop-off for intensive paint and protection work.
+              Start with the service that matches what your vehicle needs. I offer mobile detailing
+              where practical, plus Bellevue drop-off for longer paint and protection work.
             </p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {(city.content.featuredServiceIds || []).slice(0, 6).map((serviceId) => {
@@ -206,7 +206,7 @@ export default function CityDetail() {
                   <Link
                     key={service.id}
                     to={`/services/${service.id}`}
-                    className="rounded-2xl border border-zinc-200 p-5 hover:border-emerald-400 hover:shadow-lg transition-all"
+                    className="rounded-2xl border border-zinc-200 p-5 hover:border-blue-400 hover:shadow-lg transition-all"
                   >
                     <span className="block font-black text-zinc-900">{service.name}</span>
                     <span className="mt-2 block text-sm leading-6 text-zinc-500">{service.shortDescription}</span>
@@ -222,14 +222,13 @@ export default function CityDetail() {
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">How it works</p>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">How it works</p>
               <h2 className="mt-3 text-3xl md:text-4xl font-black tracking-tight text-zinc-950">
                 A straightforward detailing process for {city.name}
               </h2>
               <p className="mt-5 text-lg leading-8 text-zinc-600">
-                Start with the vehicle's condition and the result you want. Choose an online appointment when the
-                service is straightforward, or send photos for help choosing between packages when the condition is
-                harder to judge from a service name alone.
+                Choose an online appointment when you know the service you want, or text me photos when you need help.
+                I will look at the vehicle and tell you which option makes sense.
               </p>
             </div>
             <div className="grid gap-4">
@@ -237,7 +236,7 @@ export default function CityDetail() {
                 ['1', 'Choose the right service', 'Compare interior, full-detail, paint-correction, ceramic-coating, and maintenance options.'],
                 ['2', 'Confirm the appointment', 'Use online booking for available dates and times.'],
                 ['3', 'Prepare the vehicle', 'For mobile service, make sure the vehicle is accessible and there is enough safe working space.'],
-                ['4', 'Review the result', "For restoration and protection work, Bryan explains what can improve based on the vehicle's actual condition."],
+                ['4', 'Review the work', "For restoration and protection work, I explain what can improve based on the vehicle's actual condition."],
               ].map(([number, title, body]) => (
                 <div key={number} className="flex gap-4 rounded-2xl border border-zinc-200 bg-white p-5">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-zinc-950 text-sm font-black text-white">{number}</span>
@@ -254,7 +253,7 @@ export default function CityDetail() {
 
       <section className="py-20 bg-white border-t border-zinc-200">
         <div className="container mx-auto px-6 max-w-4xl">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Local FAQ</p>
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Local FAQ</p>
           <h2 className="mt-3 text-3xl md:text-4xl font-black tracking-tight text-zinc-950">
             {city.name} detailing questions
           </h2>
@@ -270,7 +269,7 @@ export default function CityDetail() {
               },
               {
                 q: `Can I get paint correction or ceramic coating near ${city.name}?`,
-                a: `Yes. Paint correction and System X ceramic-coating services are available through Bryan's Bellevue operation, with the exact process based on the vehicle's condition and the protection goal.`
+                a: `Yes. I offer paint correction and System X ceramic coating through my Bellevue operation. I confirm the work after inspecting the paint.`
               }
             ].map((faq) => (
               <article key={faq.q} className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6">
@@ -297,7 +296,7 @@ export default function CityDetail() {
               const matchingCity = CITIES.find(c => c.name.includes(area));
               if (matchingCity && matchingCity.slug !== city.slug) {
                 return (
-                  <Link key={area} to={`/areas/${matchingCity.slug}`} className="text-xs font-black italic text-zinc-600 hover:text-emerald-500 transition-colors">
+                  <Link key={area} to={`/areas/${matchingCity.slug}`} className="text-xs font-black italic text-zinc-600 hover:text-blue-600 transition-colors">
                     Detailing in {area}
                   </Link>
                 );

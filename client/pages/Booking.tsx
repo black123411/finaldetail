@@ -87,7 +87,6 @@ const LEGACY_SERVICE_IDS: Record<string, string> = {
 };
 const isRealSquareVariationId = (id?: string) => !!id && !id.startsWith('local-') && !id.startsWith('addon-var-') && !id.includes('-var-');
 
-const GOOGLE_REVIEWS_URL = "https://www.google.com/search?q=Bryan%27s+Showroom+Quality+Mobile+Detailing#lrd=0x879389b489395555:0x82615171e79faed,1,,,";
 
 const getSizeLabel = (sizeId: string | null) => {
   const map: Record<string, string> = {
@@ -193,6 +192,7 @@ export default function Booking() {
   const [searchParams] = useSearchParams();
   const requestedServiceId = searchParams.get('serviceId');
   const preSelectedServiceId = requestedServiceId ? LEGACY_SERVICE_IDS[requestedServiceId] || requestedServiceId : null;
+  const isDirectBooking = Boolean(preSelectedServiceId && SERVICES.some((service) => service.id === preSelectedServiceId));
   const preSelectedAddonId = searchParams.get('addonId');
 
   const [step, setStep] = useState<Step>('service');
@@ -469,7 +469,7 @@ export default function Booking() {
       setStep('size');
     }
     else if (step === 'size') {
-      setStep('addons');
+      setStep(isDirectBooking ? 'datetime' : 'addons');
     }
     else if (step === 'addons') {
       trackEvent('booking_addons_complete', {
@@ -482,9 +482,9 @@ export default function Booking() {
   };
 
   const prevStep = () => {
-    if (step === 'size') setStep('service');
+    if (step === 'size' && !isDirectBooking) setStep('service');
     else if (step === 'addons') setStep('size');
-    else if (step === 'datetime') setStep('addons');
+    else if (step === 'datetime') setStep(isDirectBooking ? 'size' : 'addons');
     else if (step === 'details') setStep('datetime');
   };
 
@@ -529,36 +529,27 @@ export default function Booking() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 pt-24 pb-20">
+    <div className={`min-h-screen bg-zinc-50 pb-20 ${isDirectBooking ? 'pt-10' : 'pt-24'}`}>
       <div className="container mx-auto px-4 max-w-5xl">
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-black text-zinc-900 mb-3 tracking-tighter italic">Book Your Detail</h1>
-          <p className="text-zinc-500 font-medium max-w-xl mx-auto">Select your service, choose a convenient time, and lock in your appointment.</p>
+          <p className="text-zinc-500 font-medium max-w-xl mx-auto">{isDirectBooking ? 'Your service is selected. Choose your vehicle size, then pick an available time and enter your contact information.' : 'Choose a service, vehicle size, and an available appointment time.'}</p>
         </div>
 
-        {/* Trust Banner */}
-        <div className="max-w-3xl mx-auto mb-8 px-4">
-          <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 py-3 px-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2 font-bold text-sm shadow-sm animate-in fade-in zoom-in duration-500 mb-4">
+        {/* Trust and process summary for the general booking entry */}
+        {!isDirectBooking && <div className="max-w-3xl mx-auto mb-8 px-4">
+          <div className="mb-4 flex items-center justify-center gap-2 border border-blue-100 bg-blue-50 px-4 py-3 text-center text-sm font-bold text-blue-800 animate-in fade-in duration-500">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 shrink-0" />
-              Current customer reviews are available on Google • Mobile and Bellevue drop-off options
+              Owner-operated since 2017 • Mobile and Bellevue drop-off options
             </div>
-            <a
-              href={GOOGLE_REVIEWS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent('click_google_reviews', { location: 'booking_page' })}
-              className="text-emerald-900 underline font-bold"
-            >
-              Read reviews
-            </a>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+          <div className="grid grid-cols-1 gap-3 text-left sm:grid-cols-3">
             {[
               { title: '1. Pick package', copy: 'Choose the service and vehicle size that match your condition.' },
               { title: '2. See pricing', copy: 'Add-ons and the running total stay visible before confirmation.' },
-              { title: '3. Confirm time', copy: 'Bryan reviews the booking and sends appointment details.' },
+              { title: '3. Confirm time', copy: 'I review the booking and send the appointment details.' },
             ].map((item) => (
               <div key={item.title} className="bg-white border border-zinc-100 rounded-2xl p-4 shadow-sm">
                 <p className="text-[10px] font-black uppercase tracking-widest text-zinc-900">{item.title}</p>
@@ -566,20 +557,26 @@ export default function Booking() {
               </div>
             ))}
           </div>
-        </div>
+        </div>}
 
         {/* Progress Tracker */}
-        <div className="relative mb-16 max-w-3xl mx-auto px-4">
+        <div className={`relative max-w-3xl mx-auto px-4 ${isDirectBooking ? 'mb-8' : 'mb-16'}`}>
           <div className="absolute top-1/2 left-0 w-full h-1 bg-zinc-200 -translate-y-1/2 rounded-full hidden sm:block"></div>
           <div className="relative flex justify-between">
-            {['Service', 'Details', 'Success'].map((label, i) => {
-              const steps = ['service', 'details', 'success'];
+            {(isDirectBooking ? ['Vehicle Size', 'Date & Time', 'Contact', 'Confirm'] : ['Service', 'Details', 'Confirm']).map((label, i) => {
               let currentIndex = 0;
-              if (step === 'details' || step === 'datetime') currentIndex = 1;
-              if (step === 'success') currentIndex = 2;
+              if (isDirectBooking) {
+                if (step === 'datetime') currentIndex = 1;
+                if (step === 'details') currentIndex = 2;
+                if (step === 'success') currentIndex = 3;
+              } else {
+                if (step === 'size' || step === 'addons' || step === 'datetime' || step === 'details') currentIndex = 1;
+                if (step === 'success') currentIndex = 2;
+              }
 
-              const isCompleted = currentIndex > i;
-              const isCurrent = currentIndex === i;
+              const displayIndex = isDirectBooking && step === 'success' ? 3 : currentIndex;
+              const isCompleted = displayIndex > i;
+              const isCurrent = displayIndex === i;
               const isActive = isCompleted || isCurrent;
 
               return (
@@ -638,7 +635,7 @@ export default function Booking() {
                             {index + 1}
                           </span>
                           <span>
-                            <span className="block text-lg font-black text-zinc-900 group-hover:text-emerald-700">{path.label}</span>
+                            <span className="block text-lg font-black text-zinc-900 group-hover:text-blue-700">{path.label}</span>
                             <span className="mt-2 block text-xs leading-relaxed text-zinc-500">{path.description}</span>
                             <span className="mt-4 inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-zinc-700">
                               View options <ChevronRight className="h-3.5 w-3.5" />
@@ -666,8 +663,8 @@ export default function Booking() {
                       </div>
 
                       {selectedPath === 'specialty' && (
-                        <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-relaxed text-emerald-950">
-                          Not sure which service fits? <Link to="/quote" className="font-black underline underline-offset-2">Send vehicle details and photos for Bryan's recommendation.</Link>
+                        <div className="rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm leading-relaxed text-blue-950">
+                          Not sure which service fits? <Link to="/quote" className="font-black underline underline-offset-2">Send vehicle details and photos for my recommendation.</Link>
                         </div>
                       )}
 
@@ -751,9 +748,7 @@ export default function Booking() {
                   className="space-y-4"
                 >
                   <div className="flex items-center gap-2 mb-4">
-                    <Button variant="ghost" size="icon" onClick={prevStep}>
-                      <ChevronLeft className="h-5 w-5" />
-                    </Button>
+                    {!isDirectBooking && <Button variant="ghost" size="icon" onClick={prevStep} aria-label="Back to service selection"><ChevronLeft className="h-5 w-5" /></Button>}
                     <h2 className="text-xl font-bold text-zinc-900">Vehicle Size</h2>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
@@ -986,7 +981,7 @@ export default function Booking() {
                             </div>
                             <div className="rounded-2xl border border-amber-100 bg-amber-50 p-4 text-amber-900 text-sm">
                               <p className="font-bold">Need help finding a time?</p>
-                              <p className="mt-1">Call Bryan at <a href="tel:712-305-6313" className="underline font-semibold" onClick={() => trackEvent('click_call', { location: 'booking_no_slots' })}>712-305-6313</a> and we’ll help you lock in the next available appointment.</p>
+                              <p className="mt-1">Call me at <a href="tel:712-305-6313" className="underline font-semibold" onClick={() => trackEvent('click_call', { location: 'booking_no_slots' })}>712-305-6313</a> and I will help you find the next available appointment.</p>
                             </div>
                           </div>
                         )}
@@ -1160,8 +1155,8 @@ export default function Booking() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="bg-white rounded-3xl p-10 text-center shadow-xl border border-zinc-100"
                 >
-                  <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle2 className="h-10 w-10 text-green-600" />
+                    <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle2 className="h-10 w-10 text-blue-600" />
                   </div>
                   <h2 className="text-2xl font-bold text-zinc-900 mb-2">Booking Confirmed!</h2>
                   <p className="text-zinc-500 mb-8 max-w-sm mx-auto">
@@ -1234,8 +1229,8 @@ export default function Booking() {
                         <span className="text-lg font-black text-zinc-900">{formatCurrency(priceBreakdown.total)}</span>
                     </div>
                     <p className="text-[10px] text-zinc-400 mt-4 leading-relaxed bg-zinc-50 p-3 rounded-lg border border-zinc-100 flex items-start gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                        <span>No upfront payment is required online. Final price may vary with vehicle size, condition, and approved add-ons. Bryan will confirm any changes before work begins.</span>
+                        <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
+                        <span>No upfront payment is required online. Final price may vary with vehicle size, condition, and approved add-ons. I will confirm any changes before work begins.</span>
                     </p>
                     <div className="mt-4 pt-4 border-t border-zinc-100 flex items-center justify-center gap-2">
                       <div className="flex -space-x-2">

@@ -65,24 +65,24 @@ export default function BookingCalendar({ onSelect, selectedDate, selectedTime, 
 
   return (
     <div className="space-y-6">
-      <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+      <div className="bg-blue-50 border border-blue-100 p-6 rounded-[2rem] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-emerald-200 rotate-3">
+          <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-200 rotate-3">
             <Clock className="h-7 w-7" />
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 mb-1 italic">Square Availability</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-1 italic">Square Availability</p>
             <p className="text-lg font-black text-zinc-900 tracking-tight leading-none">Choose an available appointment</p>
           </div>
         </div>
-        <div className="text-left sm:text-right w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-emerald-100/50">
-          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 bg-white px-3 py-1.5 rounded-full border border-emerald-200 inline-block rotate-[-2deg]">
+        <div className="text-left sm:text-right w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-blue-100/50">
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 bg-white px-3 py-1.5 rounded-full border border-blue-200 inline-block rotate-[-2deg]">
             Live Schedule
           </p>
           <p className="text-xs font-bold text-zinc-500 mt-3 flex items-center sm:justify-end gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
             </span>
             Times below come directly from the booking calendar
           </p>

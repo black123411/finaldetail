@@ -268,14 +268,14 @@ export default function CeramicCoating() {
           <div className="max-w-2xl space-y-8">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <div className="flex items-center gap-3 mb-6">
-                <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-full">
-                  <Award className="h-4 w-4 text-emerald-400" />
-                  <span className="text-xs font-black uppercase tracking-widest text-emerald-400">System X Certified Installer</span>
+                <div className="flex items-center gap-2 bg-blue-600/10 border border-blue-600/30 px-4 py-2 rounded-full">
+                  <Award className="h-4 w-4 text-blue-400" />
+                  <span className="text-xs font-black uppercase tracking-widest text-blue-400">System X Certified Installer</span>
                 </div>
               </div>
               <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white leading-none">
                 Ceramic Coating<br />
-                <span className="text-emerald-400 italic font-normal">Omaha & Bellevue</span>
+                <span className="text-blue-400 italic font-normal">Omaha & Bellevue</span>
               </h1>
             </motion.div>
             <motion.p
@@ -292,7 +292,7 @@ export default function CeramicCoating() {
               transition={{ delay: 0.25 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Button asChild className="h-16 px-10 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-base uppercase tracking-widest rounded-2xl shadow-xl shadow-emerald-500/30">
+              <Button asChild className="h-16 px-10 bg-blue-600 hover:bg-blue-400 text-black font-black text-base uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-600/30">
                 <Link to="/book?serviceId=system-x-pro-plus">Book Pro+ Signature</Link>
               </Button>
               <Button asChild variant="outline" className="h-16 px-10 border-white/30 bg-zinc-950/70 text-white hover:border-white hover:bg-white hover:text-zinc-950 font-black text-sm uppercase tracking-widest rounded-2xl">
@@ -319,7 +319,7 @@ export default function CeramicCoating() {
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 mb-4 block">What It Is</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-4 block">What It Is</span>
               <h2 className="text-4xl font-black tracking-tighter text-white mb-6 leading-tight">
                 Not wax. Not a quick spray.<br />
                 <span className="text-zinc-400 italic font-normal">Long-term paint protection.</span>
@@ -339,8 +339,8 @@ export default function CeramicCoating() {
                   ['Consumer Ceramic', '1 Year'],
                   ['Crystal+ / Pro+', '2–6 Years ✅'],
                 ].map(([type, duration]) => (
-                  <div key={type} className={`p-4 rounded-xl border ${type === 'Crystal+ / Pro+' ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-zinc-800/50 border-zinc-700'}`}>
-                    <p className={`text-xs font-black uppercase tracking-widest mb-1 ${type === 'Crystal+ / Pro+' ? 'text-emerald-400' : 'text-zinc-500'}`}>{type}</p>
+                  <div key={type} className={`p-4 rounded-xl border ${type === 'Crystal+ / Pro+' ? 'bg-blue-600/10 border-blue-600/30' : 'bg-zinc-800/50 border-zinc-700'}`}>
+                    <p className={`text-xs font-black uppercase tracking-widest mb-1 ${type === 'Crystal+ / Pro+' ? 'text-blue-400' : 'text-zinc-500'}`}>{type}</p>
                     <p className={`font-black text-lg ${type === 'System X Pro' ? 'text-white' : 'text-zinc-300'}`}>{duration}</p>
                   </div>
                 ))}
@@ -353,7 +353,7 @@ export default function CeramicCoating() {
                 className="rounded-3xl w-full object-cover aspect-square shadow-2xl"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute -bottom-4 -left-4 bg-emerald-500 rounded-2xl px-6 py-4 shadow-xl">
+              <div className="absolute -bottom-4 -left-4 bg-blue-600 rounded-2xl px-6 py-4 shadow-xl">
                 <p className="text-black font-black text-sm uppercase tracking-wider">System X Certified</p>
                 <p className="text-black/70 text-xs font-bold">Professional Grade Only</p>
               </div>
@@ -366,7 +366,7 @@ export default function CeramicCoating() {
       <section className="py-24 bg-zinc-950">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 mb-4 block">Why Ceramic</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-4 block">Why Ceramic</span>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white">What You Actually Get</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -377,10 +377,10 @@ export default function CeramicCoating() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 hover:border-emerald-500/30 transition-colors duration-300"
+                className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 hover:border-blue-600/30 transition-colors duration-300"
               >
-                <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6">
-                  <b.icon className="h-6 w-6 text-emerald-400" />
+                <div className="w-12 h-12 bg-blue-600/10 rounded-2xl flex items-center justify-center mb-6">
+                  <b.icon className="h-6 w-6 text-blue-400" />
                 </div>
                 <h3 className="text-lg font-black text-white mb-3 tracking-tight">{b.title}</h3>
                 <p className="text-sm text-zinc-400 font-medium leading-relaxed">{b.desc}</p>
@@ -394,7 +394,7 @@ export default function CeramicCoating() {
       <section className="py-24 bg-zinc-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 mb-4 block">Pricing</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-4 block">Pricing</span>
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white">Ceramic Coating Packages</h2>
             <p className="text-zinc-400 mt-4 font-medium">Starting prices by package are shown below. Choose your vehicle size during booking; paint condition is confirmed before work begins.</p>
           </div>
@@ -402,11 +402,11 @@ export default function CeramicCoating() {
             {PACKAGES.map((pkg) => (
               <div
                 key={pkg.name}
-                className={`rounded-[2.5rem] p-10 relative flex flex-col ${pkg.highlight ? 'bg-zinc-900 border-2 border-emerald-500/40 shadow-2xl shadow-emerald-500/10' : 'bg-zinc-800/50 border border-zinc-700'}`}
+                className={`rounded-[2.5rem] p-10 relative flex flex-col ${pkg.highlight ? 'bg-zinc-900 border-2 border-blue-600/40 shadow-2xl shadow-blue-600/10' : 'bg-zinc-800/50 border border-zinc-700'}`}
               >
                 {pkg.badge && (
                   <div className="absolute -top-4 left-10">
-                    <span className="bg-emerald-500 text-black text-xs font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
+                    <span className="bg-blue-600 text-black text-xs font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg">
                       {pkg.badge}
                     </span>
                   </div>
@@ -425,14 +425,14 @@ export default function CeramicCoating() {
                 <ul className="space-y-3 mb-10 flex-grow">
                   {pkg.features.map((f) => (
                     <li key={f} className="flex items-center gap-3">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 text-blue-400 shrink-0" />
                       <span className="text-zinc-300 font-medium text-sm">{f}</span>
                     </li>
                   ))}
                 </ul>
                 <Button
                   asChild
-                  className={`w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm ${pkg.highlight ? 'bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20' : 'bg-zinc-700 text-white hover:bg-zinc-600'}`}
+                  className={`w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm ${pkg.highlight ? 'bg-blue-600 text-black hover:bg-blue-400 shadow-lg shadow-blue-600/20' : 'bg-zinc-700 text-white hover:bg-zinc-600'}`}
                 >
                   <Link to={`/book?serviceId=${pkg.serviceId}`} className="flex items-center justify-center gap-2">
                     Book This Package <ArrowRight className="h-4 w-4" />
@@ -448,13 +448,13 @@ export default function CeramicCoating() {
       <section className="py-24 bg-zinc-950 border-y border-zinc-900">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="max-w-3xl mb-16">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 mb-4 block">Certified Product Line</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-4 block">Certified Product Line</span>
             <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white leading-none">
               The right System X coating.<br />
               <span className="text-zinc-500 italic font-normal">Not one coating for every car.</span>
             </h2>
             <p className="mt-6 text-lg text-zinc-400 font-medium leading-relaxed">
-              Bryan can install the current System X automotive and specialty lineup. Paint condition is inspected first so the coating, correction work, warranty term, and final quote match the vehicle.
+              I install the current System X automotive and specialty lineup. I inspect the paint first, then explain the coating, correction work, warranty term, and price that fit the vehicle.
             </p>
           </div>
 
@@ -466,22 +466,22 @@ export default function CeramicCoating() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06 }}
-                className={`grid grid-cols-1 md:grid-cols-[0.8fr_1.4fr_auto] gap-5 md:gap-10 items-center py-9 border-b border-zinc-800 transition-colors ${product.highlight ? 'bg-emerald-500/[0.06] -mx-4 px-4 md:-mx-8 md:px-8' : ''}`}
+                className={`grid grid-cols-1 md:grid-cols-[0.8fr_1.4fr_auto] gap-5 md:gap-10 items-center py-9 border-b border-zinc-800 transition-colors ${product.highlight ? 'bg-blue-600/[0.06] -mx-4 px-4 md:-mx-8 md:px-8' : ''}`}
               >
                 <div>
                   <div className="flex items-center gap-3">
                     <h3 className="text-3xl font-black tracking-tight text-white">{product.name}</h3>
                     {product.highlight && (
-                      <span className="rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-black">Recommended</span>
+                      <span className="rounded-full bg-blue-600 px-3 py-1 text-[10px] font-black uppercase tracking-widest text-black">Recommended</span>
                     )}
                   </div>
-                  <p className="mt-2 text-sm font-black uppercase tracking-widest text-emerald-400">{product.term}</p>
+                  <p className="mt-2 text-sm font-black uppercase tracking-widest text-blue-400">{product.term}</p>
                 </div>
                 <div>
                   <p className="font-black text-zinc-200">{product.fit}</p>
                   <p className="mt-2 text-sm leading-relaxed text-zinc-400">{product.description}</p>
                 </div>
-                <Button asChild variant="outline" className="h-12 border-zinc-700 text-white hover:bg-zinc-800 hover:border-emerald-500/50 rounded-xl">
+                <Button asChild variant="outline" className="h-12 border-zinc-700 text-white hover:bg-zinc-800 hover:border-blue-600/50 rounded-xl">
                   <Link to="/quote" className="flex items-center gap-2">
                     Get My Quote <ArrowRight className="h-4 w-4" />
                   </Link>
@@ -507,12 +507,12 @@ export default function CeramicCoating() {
             ))}
           </div>
 
-          <div className="mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-l-4 border-emerald-500 pl-6">
+          <div className="mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-l-4 border-blue-600 pl-6">
             <div>
               <p className="text-xl font-black text-white">Not sure which coating fits?</p>
-              <p className="mt-1 text-zinc-400">Text photos or request a quote. Bryan will match the product to the vehicle instead of overselling the longest warranty.</p>
+              <p className="mt-1 text-zinc-400">Text photos or request a quote. I will match the product to the vehicle instead of pushing the longest warranty.</p>
             </div>
-            <Button asChild className="h-14 shrink-0 bg-emerald-500 hover:bg-emerald-400 text-black font-black uppercase tracking-widest rounded-xl">
+            <Button asChild className="h-14 shrink-0 bg-blue-600 hover:bg-blue-400 text-black font-black uppercase tracking-widest rounded-xl">
               <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%27d%20like%20a%20System%20X%20coating%20quote.%20My%20vehicle%20is%3A%20">Text Photos</a>
             </Button>
           </div>
@@ -524,7 +524,7 @@ export default function CeramicCoating() {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.4fr] lg:gap-20">
             <div className="lg:sticky lg:top-32 lg:self-start">
-              <span className="mb-4 block text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Certified upgrades</span>
+              <span className="mb-4 block text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Certified upgrades</span>
               <h2 className="text-4xl font-black tracking-tighter text-white md:text-5xl">Protect the surfaces you touch and clean most.</h2>
               <p className="mt-5 max-w-md text-base font-medium leading-relaxed text-zinc-400">Add only what your vehicle needs. The package notes make it clear when Glass+ or Wheel+ is already included.</p>
             </div>
@@ -542,12 +542,12 @@ export default function CeramicCoating() {
                   <div>
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
                       <h3 className="text-2xl font-black tracking-tight text-white">{addon.name}</h3>
-                      <span className="text-lg font-black text-emerald-400">{addon.price}</span>
+                      <span className="text-lg font-black text-blue-400">{addon.price}</span>
                     </div>
                     <p className="mt-3 max-w-2xl text-sm font-medium leading-6 text-zinc-400">{addon.description}</p>
                     <p className="mt-3 text-[10px] font-black uppercase tracking-[0.16em] text-zinc-500">{addon.included}</p>
                   </div>
-                  <Button asChild variant="outline" className="h-12 shrink-0 rounded-xl border-zinc-700 text-white hover:border-emerald-500/50 hover:bg-zinc-800">
+                  <Button asChild variant="outline" className="h-12 shrink-0 rounded-xl border-zinc-700 text-white hover:border-blue-600/50 hover:bg-zinc-800">
                     <Link to={`/book?addonId=${addon.serviceId}`} className="flex items-center gap-2">
                       Add to Booking <ArrowRight className="h-4 w-4" />
                     </Link>
@@ -630,14 +630,14 @@ export default function CeramicCoating() {
         <div className="container mx-auto px-4 max-w-3xl text-center">
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-6 leading-tight">
             Ready to protect<br />
-            <span className="text-emerald-400 italic font-normal">your investment?</span>
+            <span className="text-blue-400 italic font-normal">your paint?</span>
           </h2>
           <p className="text-zinc-400 font-medium mb-10 text-lg">
             Request a ceramic-coating inspection. I'll review your paint, answer your questions, and
             recommend the preparation and System X package that fits your vehicle.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild className="h-16 px-12 bg-emerald-500 hover:bg-emerald-400 text-black font-black text-base uppercase tracking-widest rounded-2xl shadow-xl shadow-emerald-500/30">
+            <Button asChild className="h-16 px-12 bg-blue-600 hover:bg-blue-400 text-black font-black text-base uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-600/30">
               <Link to="/book?serviceId=system-x-pro-plus">Book Pro+ Signature</Link>
             </Button>
             <Button asChild variant="outline" className="h-16 px-12 border-zinc-600 text-white hover:bg-zinc-800 font-black text-sm uppercase tracking-widest rounded-2xl">

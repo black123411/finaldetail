@@ -12,7 +12,7 @@ export default function Membership() {
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Maintenance Detailing</h1>
           <p className="text-lg text-zinc-600">
-            Maintenance plans start at $119 and are reserved for returning or recently detailed vehicles. Bryan confirms eligibility, what is included, scheduling, and billing before enrollment.
+            Maintenance plans start at $119 and are for returning or recently detailed vehicles. I confirm what is included, scheduling, and billing before enrollment.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ export default function Membership() {
 
           {/* Bi-Weekly Plan */}
           <div className="bg-zinc-900 text-white rounded-[2rem] p-8 shadow-2xl border border-zinc-800 flex flex-col relative scale-105 z-10">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-500 text-white px-4 py-1 rounded-full text-[10px] font-black tracking-[0.2em] uppercase">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-[10px] font-black tracking-[0.2em] uppercase">
               Showroom Club
             </div>
             <div className="flex items-center gap-3 mb-6">
@@ -69,11 +69,11 @@ export default function Membership() {
               </div>
               <div>
                 <h2 className="text-xl font-bold">Bi-Weekly</h2>
-                <p className="text-xs text-emerald-400 uppercase tracking-widest font-bold">Bi-Weekly Care</p>
+                <p className="text-xs text-blue-400 uppercase tracking-widest font-bold">Bi-Weekly Care</p>
               </div>
             </div>
             
-            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For drivers who want regular interior upkeep and safe exterior washing. Bryan will confirm what is included and how often your vehicle should be serviced before enrollment.</p>
+            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For drivers who want regular interior upkeep and safe exterior washing. I will confirm what is included and how often the vehicle should be serviced before enrollment.</p>
             
             <div className="mb-8 p-4 bg-zinc-800/50 rounded-2xl border border-zinc-700">
               <div className="flex items-baseline gap-1">
@@ -91,7 +91,7 @@ export default function Membership() {
                 "Mobile or Bellevue drop-off, depending on the service and weather"
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-300">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                  <CheckCircle2 className="h-4 w-4 text-blue-600" />
                   <span>{feature}</span>
                 </div>
               ))}
@@ -153,7 +153,7 @@ export default function Membership() {
             To qualify for a maintenance plan, your vehicle must first undergo a Full Detail Package or higher to establish a baseline of cleanliness and protection.
           </p>
           <p className="text-zinc-600">
-            Bryan will confirm plan availability, vehicle eligibility, scheduling, cancellation terms, and Square billing details with you before enrollment.
+            I will confirm plan availability, vehicle eligibility, scheduling, cancellation terms, and Square billing details before enrollment.
           </p>
         </div>
         {/* SEO Content Block */}

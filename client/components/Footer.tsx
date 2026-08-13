@@ -4,16 +4,16 @@ import { trackEvent } from '../lib/analytics';
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-950 text-zinc-400 py-12 border-t border-zinc-800">
-      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-8">
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-zinc-100">Bryan's Showroom Quality Mobile Detailing</h3>
+    <footer className="bg-slate-950 text-slate-400 py-14 border-t border-slate-800 pb-28 md:pb-14">
+      <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-x-8 gap-y-10">
+        <div className="space-y-4 min-w-0">
+          <h3 className="text-lg font-black text-white">Bryan's Detailing</h3>
           <p className="text-sm leading-relaxed">
             Auto detailing services based in Bellevue, Nebraska. Interior detailing, full car details, paint correction, ceramic coating, and mobile detailing options for Omaha, Bellevue, Papillion, La Vista, and Council Bluffs.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Services</h4>
           <ul className="space-y-2 text-sm">
             <li><Link to="/services/category/interior-detailing" className="block py-1 hover:text-zinc-100 transition-colors">Interior Detailing</Link></li>
@@ -25,7 +25,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Service Areas</h4>
           <ul className="space-y-2 text-sm">
             <li><Link to="/areas/omaha-ne" className="block py-1 hover:text-zinc-100 transition-colors">Omaha, NE</Link></li>
@@ -36,7 +36,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Helpful Guides</h4>
           <ul className="space-y-2 text-sm">
             <li><Link to="/blog/car-detailing-cost-omaha-2026" className="block py-1 hover:text-zinc-100 transition-colors">2026 Detailing Price Guide</Link></li>
@@ -49,7 +49,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Company</h4>
           <ul className="space-y-2 text-sm">
             <li><Link to="/about" className="block py-1 hover:text-zinc-100 transition-colors">Meet Bryan</Link></li>
@@ -57,11 +57,11 @@ export default function Footer() {
             <li><Link to="/blog" className="block py-1 hover:text-zinc-100 transition-colors">Blog & Tips</Link></li>
             <li><Link to="/gift-cards" className="block py-1 hover:text-zinc-100 transition-colors">Gift Cards</Link></li>
             <li><Link to="/faq" className="block py-1 hover:text-zinc-100 transition-colors">FAQ</Link></li>
-            <li><Link to="/review" className="block py-1 text-emerald-500 hover:text-emerald-400 font-bold transition-colors">Leave a Review</Link></li>
+            <li><Link to="/review" className="block py-1 text-blue-400 hover:text-blue-300 font-bold transition-colors">Leave a Review</Link></li>
           </ul>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 min-w-0">
           <h4 className="text-zinc-100 font-medium tracking-wide uppercase text-sm">Contact</h4>
           <ul className="space-y-3 text-sm">
             <li className="flex items-start gap-3">
@@ -78,11 +78,11 @@ export default function Footer() {
                 (712) 305-6313
               </a>
             </li>
-            <li className="flex items-center gap-3">
+            <li className="flex min-w-0 items-start gap-3">
               <Mail className="h-4 w-4 shrink-0" />
               <a
                 href="mailto:bryansmobiledetailing@gmail.com"
-                className="hover:text-zinc-100 transition-colors"
+                className="min-w-0 break-all hover:text-zinc-100 transition-colors"
                 onClick={() => trackEvent('click_email', { location: 'footer' })}
               >
                 bryansmobiledetailing@gmail.com

@@ -12,7 +12,18 @@ import {
 const SITE_ORIGIN = 'https://bryansdetailingomaha.com';
 const DIST_DIR = join(process.cwd(), 'dist');
 const BLOG_API_URL = 'https://bryans-detailing-api.bryansmobiledetailing.workers.dev/api/blog/posts';
+const BLOG_FALLBACK_MANIFEST = join(process.cwd(), 'content', 'blog-seo-20260808', 'manifest.json');
 const DEFAULT_IMAGE = '/20211009_025807-COLLAGE.jpg';
+
+const EXTRA_FALLBACK_BLOG_POSTS = [
+  {
+    title: 'Car Detailing Cost in Omaha (2026)',
+    slug: 'car-detailing-cost-omaha-2026',
+    excerpt: 'See current Omaha car detailing prices for interior cleaning, full details, paint correction, and ceramic coating, plus what can change the final price.',
+    featuredImage: DEFAULT_IMAGE,
+    published: true,
+  },
+];
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -255,14 +266,8 @@ function buildStaticRoutes(blogRoutes = []) {
   return routes;
 }
 
-async function loadBlogRoutes() {
-  try {
-    const response = await fetch(BLOG_API_URL, { signal: AbortSignal.timeout(10_000) });
-    if (!response.ok) throw new Error(`Blog API returned ${response.status}`);
-    const posts = await response.json();
-    if (!Array.isArray(posts)) throw new Error('Blog API did not return an array');
-
-    return posts
+function mapBlogRoutes(posts) {
+  return posts
       .filter((post) => post?.published !== false && typeof post?.slug === 'string' && /^[a-z0-9-]+$/.test(post.slug))
       .map((post) => {
         const title = typeof post.title === 'string' ? post.title : 'Auto Detailing Guide';
@@ -283,9 +288,28 @@ async function loadBlogRoutes() {
           }),
         };
       });
+}
+
+async function loadBlogRoutes() {
+  try {
+    const response = await fetch(BLOG_API_URL, { signal: AbortSignal.timeout(10_000) });
+    if (!response.ok) throw new Error(`Blog API returned ${response.status}`);
+    const posts = await response.json();
+    if (!Array.isArray(posts)) throw new Error('Blog API did not return an array');
+
+    return mapBlogRoutes(posts);
   } catch (error) {
-    console.warn(`Skipped blog route metadata: ${error instanceof Error ? error.message : error}`);
-    return [];
+    const reason = error instanceof Error ? error.message : String(error);
+
+    try {
+      const localPosts = JSON.parse(await readFile(BLOG_FALLBACK_MANIFEST, 'utf8'));
+      if (!Array.isArray(localPosts)) throw new Error('local manifest did not return an array');
+      console.warn(`Blog API unavailable (${reason}); using ${localPosts.length + EXTRA_FALLBACK_BLOG_POSTS.length} local blog routes.`);
+      return mapBlogRoutes([...localPosts, ...EXTRA_FALLBACK_BLOG_POSTS]);
+    } catch (fallbackError) {
+      console.warn(`Skipped blog route metadata: ${reason}; local fallback failed: ${fallbackError instanceof Error ? fallbackError.message : fallbackError}`);
+      return [];
+    }
   }
 }
 

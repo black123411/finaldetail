@@ -78,8 +78,8 @@ export default function CategoryDetail() {
               {category.description}
             </p>
             {category.slug === 'interior-detailing' ? (
-              <div className="mt-6 rounded-3xl border border-emerald-500/20 bg-emerald-500/5 p-6 text-emerald-100">
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-emerald-300 mb-2">New Lower Entry Option</p>
+              <div className="mt-6 rounded-3xl border border-blue-600/20 bg-blue-600/5 p-6 text-blue-100">
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-300 mb-2">New Lower Entry Option</p>
                 <p className="text-lg font-semibold text-white leading-relaxed">
                   Maintenance Interior starts at <strong>${maintenanceService?.price.car ?? 139}</strong> for well-kept vehicles that need a light cabin refresh before stepping up to Signature Interior Detail or Deep Interior Restoration.
                 </p>
@@ -91,18 +91,18 @@ export default function CategoryDetail() {
                 Online availability is updated live. Select the open date and time that works for your vehicle and schedule.
               </p>
               <div className="mt-5">
-                <Button asChild className="inline-flex h-14 items-center justify-center rounded-md bg-emerald-500 px-7 font-black text-zinc-950 hover:bg-emerald-400">
+                <Button asChild className="inline-flex h-14 items-center justify-center rounded-md bg-blue-600 px-7 font-black text-zinc-950 hover:bg-blue-400">
                   <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'category_hero', category: category.slug })}>Book a Detail</Link>
                 </Button>
               </div>
             </div>
             <div className="flex flex-wrap gap-4 pt-2">
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
-                <ShieldCheck className="h-5 w-5 text-emerald-400" />
+                <ShieldCheck className="h-5 w-5 text-blue-400" />
                 Clear service details
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
-                <Sparkles className="h-5 w-5 text-emerald-400" />
+                <Sparkles className="h-5 w-5 text-blue-400" />
                 Matched to your vehicle
               </div>
             </div>
@@ -114,12 +114,12 @@ export default function CategoryDetail() {
         <div className="container mx-auto px-4">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] items-center">
             <div className="max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">Local service guide</p>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Local service guide</p>
               <h2 className="mt-3 text-3xl md:text-4xl font-black tracking-tight text-zinc-950">
                 {category.name} for Omaha and Bellevue drivers
               </h2>
               <p className="mt-4 text-lg leading-8 text-zinc-600">
-                Compare the options below by vehicle condition, desired result, starting price, and time.
+                Compare the options below by what your vehicle needs, starting price, and time.
                 Mobile service is available when the job and workspace allow; Bellevue drop-off is recommended
                 for intensive paint correction, ceramic coating, and other longer services.
               </p>
@@ -207,13 +207,13 @@ export default function CategoryDetail() {
 
                     {/* Service Fit Logic */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8">
-                      <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-100">
-                        <h4 className="text-xs font-bold uppercase tracking-widest text-emerald-600 mb-3 flex items-center gap-2">
+                      <div className="p-5 rounded-2xl bg-blue-50 border border-blue-100">
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3 flex items-center gap-2">
                           <CheckCircle2 className="h-3 w-3" /> Best For
                         </h4>
                         <ul className="space-y-2 text-xs text-zinc-700 font-medium">
                           <li>• Vehicles with {category.name.toLowerCase()} concerns</li>
-                          <li>• Drivers looking for this specific result</li>
+                          <li>• Drivers who need this type of work</li>
                           <li>• Vehicles that match what this service is designed to handle</li>
                         </ul>
                       </div>
@@ -253,7 +253,7 @@ export default function CategoryDetail() {
       <RelatedGuides
         topic={guideTopicForCategory(category.id)}
         heading={`${category.name} guides and comparisons`}
-        intro="Understand the process, expected results, and maintenance considerations before selecting a package."
+        intro="See how the work is done, what it can improve, and how to care for the vehicle afterward."
       />
 
       {/* Trust Bar */}
@@ -297,7 +297,7 @@ export default function CategoryDetail() {
         <div className="container mx-auto px-4 max-w-3xl space-y-8">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to choose the right service?</h2>
           <p className="text-xl text-zinc-400">
-            Compare what each service includes, then view current appointment availability. Bryan provides owner-operated detailing with mobile service and Bellevue drop-off options.
+            Compare what each service includes, then view current appointment availability. I offer mobile service and appointment-only Bellevue drop-off.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="h-14 px-10 text-lg bg-white text-zinc-950 hover:bg-zinc-200" asChild>

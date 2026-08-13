@@ -1,31 +1,36 @@
-import { ExternalLink, Star } from 'lucide-react';
-import { Button } from './ui/button';
-import { trackEvent } from '../lib/analytics';
+import { Star } from 'lucide-react';
 
-const GOOGLE_REVIEWS_URL = "https://www.google.com/search?q=Bryan%27s+Showroom+Quality+Mobile+Detailing#lrd=0x879389b489395555:0x82615171e79faed,1,,,";
+const reviews = [
+  {
+    name: 'Jason Meredith',
+    quote: 'Amazing job done detailing the inside of my car. Outstanding results. Fantastic communication.',
+  },
+  {
+    name: 'Karl M.',
+    quote: 'Great service! Car always looks new after coming here.',
+  },
+  {
+    name: 'Melinda F.',
+    quote: "Bryan did an amazing job detailing our son's car. The car looks brand new.",
+  },
+];
 
 export default function Testimonials() {
   return (
-    <div className="mx-auto max-w-3xl rounded-[2rem] border border-zinc-200 bg-zinc-50 p-8 md:p-12">
-      <div className="mb-6 flex justify-center gap-1" role="img" aria-label="Five stars; customer reviews are available on Google">
-        {[...Array(5)].map((_, index) => (
-          <Star key={index} className="h-6 w-6 fill-yellow-400 text-yellow-400" aria-hidden="true" />
-        ))}
-      </div>
-      <h3 className="mb-4 text-2xl font-black text-zinc-900">Read verified customer feedback</h3>
-      <p className="mx-auto mb-8 max-w-xl leading-relaxed text-zinc-600">
-        See current ratings, customer photos, and reviews directly on Bryan's Google Business Profile.
-      </p>
-      <Button size="lg" className="h-14 rounded-2xl bg-[#1a73e8] px-8 font-bold text-white hover:bg-[#1557b0]" asChild>
-        <a
-          href={GOOGLE_REVIEWS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackEvent('click_google_reviews', { location: 'testimonials' })}
-        >
-          View Reviews on Google <ExternalLink className="ml-2 h-4 w-4" />
-        </a>
-      </Button>
+    <div className="grid gap-5 md:grid-cols-3">
+      {reviews.map((review) => (
+        <figure key={review.name} className="flex h-full flex-col border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="mb-5 flex gap-1" role="img" aria-label="Five-star customer review">
+            {[...Array(5)].map((_, index) => (
+              <Star key={index} className="h-5 w-5 fill-amber-400 text-amber-400" aria-hidden="true" />
+            ))}
+          </div>
+          <blockquote className="flex-1 text-base leading-7 text-slate-700">“{review.quote}”</blockquote>
+          <figcaption className="mt-6 border-t border-slate-200 pt-4 text-sm font-black text-slate-950">
+            {review.name}
+          </figcaption>
+        </figure>
+      ))}
     </div>
   );
 }
