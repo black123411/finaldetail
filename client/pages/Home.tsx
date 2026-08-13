@@ -37,7 +37,7 @@ export default function Home() {
               </Link>
             </div>
             <a href={textHref} onClick={() => trackEvent('click_text_quote', { location: 'home_hero' })} className="mt-5 inline-flex min-h-11 items-center gap-2 font-bold text-blue-200 underline decoration-blue-400 underline-offset-4 hover:text-white">
-              Not sure? Text Bryan photos. <MessageSquare className="h-4 w-4" />
+              Not sure? Text me photos. <MessageSquare className="h-4 w-4" />
             </a>
             <p className="mt-5 text-sm text-slate-300">Mobile service across the metro and appointment-only drop-off in Bellevue.</p>
           </div>

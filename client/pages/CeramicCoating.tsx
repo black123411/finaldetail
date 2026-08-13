@@ -132,7 +132,7 @@ const SYSTEM_X_LINEUP = [
   {
     name: 'Crystal+',
     term: '2-Year Warranty',
-    fit: 'Accessible professional protection',
+    fit: 'Longer-lasting paint protection',
     description: 'A slick, self-cleaning System X coating with CARFAX registration for drivers ready to move beyond wax and short-term sealants.',
     highlight: false,
   },
@@ -154,7 +154,7 @@ const SYSTEM_X_LINEUP = [
     name: 'Phantom 2K',
     term: 'Flagship Two-Part Coating',
     fit: 'Maximum-strength ceramic protection',
-    description: 'System X\'s professional two-part coating for customers seeking its strongest cross-linked ceramic system and premium finish.',
+    description: 'System X\'s strongest two-part automotive coating for owners who want its flagship finish and protection.',
     highlight: false,
   },
 ];
@@ -180,15 +180,15 @@ const SPECIALTY_COATINGS = [
 const FAQS = [
   {
     q: 'How long does ceramic coating last?',
-    a: 'System X offers multiple professional coatings. Crystal+ carries a 2-year warranty and Pro+ offers up to 6 years, while MAX G+ and Phantom 2K serve premium applications. The right product depends on the surface, paint preparation, maintenance plan, and protection goal.',
+    a: 'Crystal+ carries a 2-year warranty and Pro+ offers up to 6 years. MAX G+ and Phantom 2K are the higher-end options. I can explain the differences after I see the paint and learn how you use the vehicle.',
   },
   {
     q: 'Does my car need paint correction before ceramic coating?',
-    a: 'Every package includes the preparation listed for that tier. Pro+ includes a paint enhancement, MAX G+ includes single-stage correction, and Phantom 2K receives a vehicle-specific one- or two-stage correction plan after inspection.',
+    a: 'Every package includes the preparation listed for that tier. Pro+ includes a paint enhancement, MAX G+ includes single-stage correction, and Phantom 2K includes one or two polishing stages after I inspect the paint.',
   },
   {
     q: 'How much does ceramic coating cost in Omaha?',
-    a: 'System X Crystal+ Essential starts at $699 for a sedan, Pro+ Signature at $1,099, MAX G+ Ultimate at $1,599, and Phantom 2K Bespoke at $1,999. Vehicle size and paint condition determine the final price and prep work.',
+    a: 'Crystal+ Essential starts at $699 for a sedan, Pro+ Signature at $1,099, MAX G+ Ultimate at $1,599, and Phantom 2K Bespoke at $1,999. Larger vehicles or paint that needs more correction will cost more, and I confirm that before the appointment.',
   },
   {
     q: 'How do I maintain a ceramic-coated vehicle?',
@@ -196,7 +196,7 @@ const FAQS = [
   },
   {
     q: 'Are you a certified ceramic coating installer?',
-    a: 'Yes — Bryan is a System X certified installer and can recommend automotive, marine, glass, wheel, trim, leather, vinyl, plastic, carpet, and fabric protection options from the current System X product line.',
+    a: 'Yes. I am a System X certified installer. I offer coatings for paint, wheels, glass, trim, boats, and interior surfaces.',
   },
 ];
 
@@ -355,7 +355,7 @@ export default function CeramicCoating() {
               />
               <div className="absolute -bottom-4 -left-4 bg-blue-600 rounded-2xl px-6 py-4 shadow-xl">
                 <p className="text-black font-black text-sm uppercase tracking-wider">System X Certified</p>
-                <p className="text-black/70 text-xs font-bold">Professional Grade Only</p>
+                <p className="text-black/70 text-xs font-bold">Certified System X Products</p>
               </div>
             </div>
           </div>
@@ -651,16 +651,16 @@ export default function CeramicCoating() {
       <section className="py-24 bg-zinc-950 border-t border-zinc-900">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <h2 className="text-3xl font-black tracking-tight text-white mb-6">
-            The Science Behind System X Ceramic Coatings
+            How System X Ceramic Coating Protects Your Vehicle
           </h2>
           <p className="text-zinc-400 leading-relaxed font-medium mb-4 text-left">
-            Wax and synthetic sealants provide shorter-term protection. A professional ceramic coating is applied to properly prepared paint to create a more durable protective layer with different maintenance and aftercare requirements.
+            Wax and sealants provide shorter-term protection. A ceramic coating bonds to properly prepared paint and lasts longer, but it still needs safe washing and routine care.
           </p>
           <p className="text-zinc-400 leading-relaxed font-medium mb-4 text-left">
-            As a certified System X installer in Bellevue, Nebraska, Bryan's Showroom Quality Mobile Detailing can match the current System X product line to automotive paint, marine surfaces, wheels, glass, trim, leather, vinyl, plastic, carpet, and fabric. Each surface receives the preparation and product intended for that application instead of a one-size-fits-all spray.
+            I am a certified System X installer in Bellevue. I offer coatings for automotive paint, boats, wheels, glass, trim, leather, vinyl, carpet, and fabric, depending on what you want protected.
           </p>
           <p className="text-zinc-400 leading-relaxed font-medium text-left">
-            A professional ceramic coating can improve gloss, water behavior, chemical resistance, and routine maintenance when the paint is properly prepared. It does not replace safe washing, prevent every defect, or guarantee a flawless finish.
+            Ceramic coating can improve gloss, water behavior, chemical resistance, and ease of washing. It does not prevent every scratch or replace proper maintenance.
           </p>
         </div>
       </section>

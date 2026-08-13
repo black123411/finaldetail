@@ -16,14 +16,14 @@ export default function ChatAssistant() {
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             className="mb-4 w-[calc(100vw-2rem)] max-w-sm rounded-2xl border border-zinc-200 bg-white p-6 shadow-2xl"
           >
-            <h2 className="mb-2 text-lg font-black text-zinc-900">Ask Bryan directly</h2>
+            <h2 className="mb-2 text-lg font-black text-zinc-900">Ask me directly</h2>
             <p className="mb-5 text-sm leading-relaxed text-zinc-600">
-              Send a few vehicle photos and a short description for a service recommendation, or call with a quick question.
+              Send a few vehicle photos and tell me what you want done, or call with a quick question.
             </p>
             <div className="grid gap-3">
               <Button asChild>
                 <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detailing%20service.%20Here%20are%20my%20vehicle%20details%20and%20photos%3A%20">
-                  <MessageSquare className="mr-2 h-4 w-4" /> Text Bryan
+                  <MessageSquare className="mr-2 h-4 w-4" /> Text Me
                 </a>
               </Button>
               <Button variant="outline" asChild>

@@ -59,7 +59,7 @@ const BOOKING_PATHS: Array<{
   {
     id: 'specialty',
     label: 'Specialty / Not Sure',
-    description: 'RV, boat, tractor, equipment, or help choosing the right service for your vehicle.',
+    description: 'RV, boat, tractor, equipment, or another job that needs photos before booking.',
     categoryIds: ['rv-boat-detailing', 'tractor-detailing'],
   },
 ];

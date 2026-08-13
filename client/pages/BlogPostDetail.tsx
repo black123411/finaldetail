@@ -317,7 +317,7 @@ export default function BlogPostDetail() {
             <div className="relative z-10">
               <h3 className="text-2xl font-black italic tracking-tight mb-4">Not Sure What to Book?</h3>
               <p className="text-emerald-100 text-sm font-medium mb-8 leading-relaxed">
-                Send a few clear photos. I’ll look at the condition and point you toward the service that makes sense.
+                Send me a few clear photos and tell me what you want done. I’ll take a look and give you a straight answer.
               </p>
               <Button asChild className="w-full h-14 bg-zinc-900 hover:bg-black text-white rounded-2xl font-black italic tracking-tight shadow-xl">
                 <Link to="/quote">Send Photos</Link>

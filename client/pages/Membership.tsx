@@ -86,7 +86,7 @@ export default function Membership() {
               {[
                 "2 Maintenance Details / mo (Bi-Weekly)",
                 "Repeat-service scheduling",
-                "Service matched to your vehicle",
+                "A plan we agree on before enrollment",
                 "Add-ons discussed before work",
                 "Mobile or Bellevue drop-off, depending on the service and weather"
               ].map((feature, i) => (
@@ -114,7 +114,7 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For vehicles that need seasonal restoration and protection refreshes after a qualifying detail.</p>
+            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For vehicles that need a deeper seasonal cleanup and a fresh layer of protection.</p>
             
             <div className="mb-8 p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
               <div className="flex items-baseline gap-1">
@@ -127,7 +127,7 @@ export default function Membership() {
               {[
                 "1 Full Detail Refresh / Quarter",
                 "Seasonal Sealant Refresh",
-                "Service matched to your vehicle",
+                "A plan we agree on before enrollment",
                 "Protection refresh when needed"
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-700">
@@ -150,17 +150,17 @@ export default function Membership() {
             <h3 className="text-xl font-bold text-zinc-900">Membership Requirements</h3>
           </div>
           <p className="text-zinc-600 mb-4">
-            To qualify for a maintenance plan, your vehicle must first undergo a Full Detail Package or higher to establish a baseline of cleanliness and protection.
+            Maintenance plans work best after I have completed a full detail and brought the vehicle to a clean starting point.
           </p>
           <p className="text-zinc-600">
-            I will confirm plan availability, vehicle eligibility, scheduling, cancellation terms, and Square billing details before enrollment.
+            Before you enroll, I will explain what is included, the schedule, cancellation terms, and how billing works.
           </p>
         </div>
         {/* SEO Content Block */}
         <div className="max-w-3xl mx-auto mt-16 bg-zinc-50 p-8 rounded-2xl border border-zinc-200">
-          <h2 className="text-2xl font-black text-zinc-900 mb-4">The Importance of Consistent Car Care</h2>
+          <h2 className="text-2xl font-black text-zinc-900 mb-4">Why Regular Detailing Helps</h2>
           <p className="text-zinc-600 leading-relaxed mb-4">
-            Routine vehicle maintenance extends beyond oil changes and tire rotations. Maintaining your vehicle's exterior clear coat and interior surfaces helps preserve resale value and driving comfort. Auto detailing membership plans in Bellevue and Omaha provide scheduled cleaning for vehicles that have already been professionally detailed.
+            Regular cleaning keeps everyday dirt, road salt, spills, and buildup from turning into a much bigger job. It also helps protect the paint and keeps the interior more comfortable between full details.
           </p>
           <p className="text-zinc-600 leading-relaxed">
             Monthly or bi-weekly maintenance helps remove dust, road film, salt, and light interior mess before it becomes a full reset. Maintenance visits include safe washing, quick interior upkeep, glass cleaning, tire dressing, and protection refreshes when appropriate.

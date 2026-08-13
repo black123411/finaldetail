@@ -39,7 +39,7 @@ export default function TermsOfService() {
                 2. Weather Policy
               </h2>
               <p className="text-zinc-600 font-medium">
-                If weather conditions prevent me from working safely at your location, I may need to reschedule. Bellevue drop-off appointments can proceed when controlled working conditions are available.
+                If weather makes it unsafe to work at your location, I may need to reschedule. Drop-off appointments in Bellevue are less likely to be affected by weather.
               </p>
             </section>
 

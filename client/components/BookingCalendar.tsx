@@ -71,7 +71,7 @@ export default function BookingCalendar({ onSelect, selectedDate, selectedTime, 
             <Clock className="h-7 w-7" />
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-1 italic">Square Availability</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-1 italic">Available Appointments</p>
             <p className="text-lg font-black text-zinc-900 tracking-tight leading-none">Choose an available appointment</p>
           </div>
         </div>

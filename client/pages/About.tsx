@@ -43,7 +43,7 @@ export default function About() {
         <div className="absolute inset-x-0 top-0 h-px bg-blue-600/70" />
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-7">
               <p className="text-xs font-black uppercase tracking-[0.28em] text-blue-400">
                 Owner-operated since 2017
               </p>
@@ -84,14 +84,15 @@ export default function About() {
               </div>
             </div>
 
-            <figure className="lg:col-span-7 lg:translate-x-4">
+            <figure className="mx-auto w-full max-w-md lg:col-span-5 lg:justify-self-end">
               <div className="border border-white/15 bg-zinc-900 p-2 shadow-2xl shadow-black/30 sm:p-3">
                 <img
-                  src="/meet-bryan-2021.jpg"
-                  alt="Bryan standing behind a clean white sports car"
-                  width="960"
-                  height="432"
-                  className="h-auto w-full"
+                  src="/bryan-professional-headshot.webp"
+                  alt="Bryan, owner of Bryan's Showroom Quality Detailing"
+                  width="1136"
+                  height="1808"
+                  fetchPriority="high"
+                  className="aspect-[4/5] w-full object-cover object-top"
                 />
               </div>
               <figcaption className="mt-3 border-l-2 border-blue-600 pl-3 text-xs font-bold uppercase tracking-[0.16em] text-zinc-400">

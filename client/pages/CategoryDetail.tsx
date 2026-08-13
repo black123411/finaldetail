@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { CheckCircle2, ArrowLeft, Calendar, ShieldCheck, Sparkles, Clock, MapPin, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowLeft, Calendar, ShieldCheck, Sparkles, Clock, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { SERVICES, CATEGORIES } from '@/shared/data/services';
 import { BOOKING_LINK } from '../lib/constants';
@@ -45,7 +45,7 @@ export default function CategoryDetail() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center overflow-hidden">
+      <section className="relative isolate flex min-h-[60vh] items-center overflow-hidden bg-zinc-950 py-14 sm:py-16 lg:py-20">
         <div className="absolute inset-0 z-0">
           <img 
             src={category.image} 
@@ -60,7 +60,7 @@ export default function CategoryDetail() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl space-y-6"
+            className="max-w-4xl space-y-5 sm:space-y-6"
           >
             <Button variant="ghost" className="text-white hover:bg-white/10 -ml-4" asChild>
               <Link to="/services">
@@ -68,30 +68,30 @@ export default function CategoryDetail() {
                 Back to Services
               </Link>
             </Button>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tight">
+            <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
               {category.name}
-              <span className="block text-2xl md:text-4xl text-zinc-500 font-medium italic mt-2">
+              <span className="mt-3 block text-xl font-medium italic leading-tight text-zinc-300 sm:text-2xl lg:text-3xl">
                 Owner-operated detailing in Bellevue & Omaha
               </span>
             </h1>
-            <p className="text-xl text-zinc-300 leading-relaxed">
+            <p className="max-w-3xl text-lg leading-8 text-zinc-200 sm:text-xl">
               {category.description}
             </p>
-            {category.slug === 'interior-detailing' ? (
-              <div className="mt-6 rounded-3xl border border-blue-600/20 bg-blue-600/5 p-6 text-blue-100">
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-blue-300 mb-2">New Lower Entry Option</p>
-                <p className="text-lg font-semibold text-white leading-relaxed">
-                  Maintenance Interior starts at <strong>${maintenanceService?.price.car ?? 139}</strong> for well-kept vehicles that need a light cabin refresh before stepping up to Signature Interior Detail or Deep Interior Restoration.
+            <div className={`grid gap-4 ${category.slug === 'interior-detailing' ? 'lg:grid-cols-2' : 'max-w-2xl'}`}>
+              {category.slug === 'interior-detailing' ? (
+                <div className="rounded-2xl border border-blue-500/30 bg-blue-950/45 p-5 text-blue-100 sm:p-6">
+                  <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-blue-300">Lower-priced option</p>
+                  <p className="text-base font-semibold leading-7 text-white sm:text-lg">
+                    Maintenance Interior starts at <strong>${maintenanceService?.price.car ?? 139}</strong> for well-kept vehicles that need a light cabin refresh.
+                  </p>
+                </div>
+              ) : null}
+              <div className="rounded-2xl border border-white/15 bg-black/55 p-5 text-zinc-200 sm:p-6">
+                <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-zinc-400">Check current availability</p>
+                <p className="text-base font-semibold leading-7 sm:text-lg">
+                  Choose an open date and time that works for you.
                 </p>
-              </div>
-            ) : null}
-            <div className="mt-6 rounded-3xl border border-zinc-800 bg-zinc-950/75 p-6 text-zinc-200">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-zinc-400 mb-2">Check current availability</p>
-              <p className="text-lg font-semibold leading-relaxed">
-                Online availability is updated live. Select the open date and time that works for your vehicle and schedule.
-              </p>
-              <div className="mt-5">
-                <Button asChild className="inline-flex h-14 items-center justify-center rounded-md bg-blue-600 px-7 font-black text-zinc-950 hover:bg-blue-400">
+                <Button asChild className="mt-4 h-12 w-full bg-blue-600 px-6 font-black text-white hover:bg-blue-500 sm:w-auto">
                   <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'category_hero', category: category.slug })}>Book a Detail</Link>
                 </Button>
               </div>
@@ -99,11 +99,11 @@ export default function CategoryDetail() {
             <div className="flex flex-wrap gap-4 pt-2">
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <ShieldCheck className="h-5 w-5 text-blue-400" />
-                Clear service details
+                See exactly what is included
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-zinc-300">
                 <Sparkles className="h-5 w-5 text-blue-400" />
-                Matched to your vehicle
+                I handle the work myself
               </div>
             </div>
           </motion.div>
@@ -114,14 +114,14 @@ export default function CategoryDetail() {
         <div className="container mx-auto px-4">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] items-center">
             <div className="max-w-3xl">
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Local service guide</p>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Services and pricing</p>
               <h2 className="mt-3 text-3xl md:text-4xl font-black tracking-tight text-zinc-950">
                 {category.name} for Omaha and Bellevue drivers
               </h2>
               <p className="mt-4 text-lg leading-8 text-zinc-600">
-                Compare the options below by what your vehicle needs, starting price, and time.
-                Mobile service is available when the job and workspace allow; Bellevue drop-off is recommended
-                for intensive paint correction, ceramic coating, and other longer services.
+                See what each service includes, how long it usually takes, and where pricing starts.
+                I can come to you for many jobs. Longer services such as paint correction and ceramic coatings
+                are completed at my Bellevue drop-off location.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
@@ -137,7 +137,7 @@ export default function CategoryDetail() {
       </section>
 
       {/* Services Listing */}
-      <section className="py-24">
+      <section className="overflow-hidden py-24">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 gap-24">
             {categoryServices.map((service, index) => (
@@ -190,44 +190,21 @@ export default function CategoryDetail() {
                       </div>
                     </div>
 
-                    <div className="pt-4 flex flex-col sm:flex-row gap-4">
-                      <Button size="lg" className="h-14 px-10 text-lg flex gap-2" asChild>
+                    <div className="grid grid-cols-1 gap-3 pt-4 sm:grid-cols-2">
+                      <Button size="lg" className="h-auto min-h-14 w-full whitespace-normal px-5 py-3 text-base sm:text-lg" asChild>
                         <Link to={`/book?serviceId=${service.id}`} onClick={() => trackEvent('begin_booking', { location: 'category_card', service_id: service.id, category: category.slug })}>
                           <Calendar className="h-5 w-5" />
                           Book This Service
                         </Link>
                       </Button>
-                      <Button size="lg" variant="outline" className="h-14 px-10 text-lg" asChild>
+                      <Button size="lg" variant="outline" className="h-auto min-h-14 w-full whitespace-normal px-5 py-3 text-base sm:text-lg" asChild>
                         <Link to={`/services/${service.id}`}>Learn More</Link>
                       </Button>
-                      <Button variant="ghost" className="h-14 px-6 text-zinc-500" asChild>
+                      <Button variant="ghost" className="h-12 w-full text-zinc-600 sm:col-span-2" asChild>
                         <Link to="/quote">Custom Quote</Link>
                       </Button>
                     </div>
 
-                    {/* Service Fit Logic */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8">
-                      <div className="p-5 rounded-2xl bg-blue-50 border border-blue-100">
-                        <h4 className="text-xs font-bold uppercase tracking-widest text-blue-600 mb-3 flex items-center gap-2">
-                          <CheckCircle2 className="h-3 w-3" /> Best For
-                        </h4>
-                        <ul className="space-y-2 text-xs text-zinc-700 font-medium">
-                          <li>• Vehicles with {category.name.toLowerCase()} concerns</li>
-                          <li>• Drivers who need this type of work</li>
-                          <li>• Vehicles that match what this service is designed to handle</li>
-                        </ul>
-                      </div>
-                      <div className="p-5 rounded-2xl bg-zinc-50 border border-zinc-100">
-                        <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-3 flex items-center gap-2">
-                          <ArrowRight className="h-3 w-3" /> Consider a different package if
-                        </h4>
-                        <ul className="space-y-2 text-xs text-zinc-500 font-medium">
-                          <li>• Your vehicle only needs routine maintenance cleaning</li>
-                          <li>• Surface damage requires a body-shop repair</li>
-                          <li>• The condition needs a custom inspection before booking</li>
-                        </ul>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
@@ -272,21 +249,21 @@ export default function CategoryDetail() {
                 <ShieldCheck className="h-6 w-6 text-zinc-900" />
               </div>
               <h4 className="font-bold text-zinc-900">Owner-Operated</h4>
-              <p className="text-xs text-zinc-500">Direct quality control</p>
+              <p className="text-xs text-zinc-500">I do the work myself</p>
             </div>
             <div className="text-center space-y-2">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-zinc-100">
                 <Calendar className="h-6 w-6 text-zinc-900" />
               </div>
               <h4 className="font-bold text-zinc-900">Easy Booking</h4>
-              <p className="text-xs text-zinc-500">View current Square availability</p>
+              <p className="text-xs text-zinc-500">Choose an available time online</p>
             </div>
             <div className="text-center space-y-2">
               <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-sm border border-zinc-100">
                 <Sparkles className="h-6 w-6 text-zinc-900" />
               </div>
-              <h4 className="font-bold text-zinc-900">Premium Products</h4>
-              <p className="text-xs text-zinc-500">Products matched to each material</p>
+              <h4 className="font-bold text-zinc-900">Since 2017</h4>
+              <p className="text-xs text-zinc-500">Years of hands-on detailing experience</p>
             </div>
           </div>
         </div>
@@ -295,9 +272,9 @@ export default function CategoryDetail() {
       {/* Closing CTA */}
       <section className="py-24 bg-zinc-900 text-white text-center">
         <div className="container mx-auto px-4 max-w-3xl space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to choose the right service?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to book?</h2>
           <p className="text-xl text-zinc-400">
-            Compare what each service includes, then view current appointment availability. I offer mobile service and appointment-only Bellevue drop-off.
+            Choose a service and view available appointments. If you are unsure, send me a few photos and I will help.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="h-14 px-10 text-lg bg-white text-zinc-950 hover:bg-zinc-200" asChild>

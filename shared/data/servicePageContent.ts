@@ -30,16 +30,16 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "What it does not cover",
-        body: "Heavy stains, embedded pet hair, major spills, strong odors, biohazards, and neglected interiors require Signature Interior Detail, Interior Restoration, or photos before Bryan can quote the work."
+        body: "Heavy stains, embedded pet hair, major spills, strong odors, biohazards, and neglected interiors need a deeper service. Text me photos and I will tell you which option fits."
       },
       {
         title: "Best time to book",
-        body: "Choose it when the cabin is generally cared for but needs a more complete professional upkeep visit than a quick vacuum and wipe."
+        body: "Choose it when the cabin is generally cared for but needs more than a quick vacuum and wipe."
       }
     ],
     processTitle: "Maintenance interior process",
     process: [
-      "Inspect the interior condition and confirm it qualifies for maintenance-level cleaning.",
+      "Check the interior to make sure this lighter service is enough.",
       "Air purge and vacuum the seats, carpet, trunk, cracks, mats, and accessible storage areas.",
       "Clean the dash, console, doors, plastics, mats, and interior glass.",
       "Treat light spots and complete a final interior quality check."
@@ -60,14 +60,14 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Can I send photos before booking?",
-        answer: "Yes. Texting clear interior photos helps Bryan confirm whether the vehicle fits Maintenance Interior pricing before the appointment."
+        answer: "Yes. Text me clear interior photos and I will confirm whether the lighter Maintenance Interior service is enough."
       }
     ],
     internalServiceIds: ["interior-detail", "interior-reset", "odor-elimination", "full-detail-package"]
   },
   "interior-detail": {
     headline: "Signature Interior Detail for maintained daily drivers",
-    intro: "The Signature Interior Detail is for Bellevue and Omaha drivers with normal dirt, crumbs, dust, fingerprints, light staining, and everyday interior buildup. It focuses on the touch points, cracks, plastics, mats, glass, and surfaces that need a professional cleanup without full extraction.",
+    intro: "The Signature Interior Detail is for normal dirt, crumbs, dust, fingerprints, light staining, and everyday interior buildup. I clean the touch points, cracks, plastics, mats, glass, and other areas that need attention without automatically charging for a full restoration.",
     sections: [
       {
         title: "What this service solves",
@@ -75,7 +75,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "What makes it different",
-        body: "Bryan works through the cabin one area at a time instead of doing only a quick vacuum and wipe. Air purging, detail brushes, cleaners chosen for each material, mat cleaning, and interior dressing are used as needed."
+        body: "I work through the cabin one area at a time instead of stopping at a quick vacuum and wipe. I blow out tight areas, use detail brushes, clean the mats, and finish the surfaces that need attention."
       },
       {
         title: "Best time to book",
@@ -91,7 +91,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     ],
     buyerNotes: [
       "Choose Interior Restoration instead if you have heavy pet hair, major spills, or severe stains.",
-      "Remove personal items before the appointment so Bryan can clean storage pockets and compartments.",
+      "Remove personal items before the appointment so I can clean storage pockets and compartments.",
       "Light stains are treated, but dyed or permanently damaged fabric may not fully return to new."
     ],
     faq: [
@@ -105,7 +105,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Can you clean leather safely?",
-        answer: "Yes. Bryan uses material-appropriate cleaners and avoids harsh scrubbing that can damage leather, vinyl, plastics, or delicate trim."
+        answer: "Yes. I use safe cleaners and avoid harsh scrubbing that can damage leather, vinyl, plastics, or delicate trim."
       },
       {
         question: "Will the interior smell better after this detail?",
@@ -145,12 +145,12 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     buyerNotes: [
       "Severe biohazard, mold, or water damage may need a custom quote before work starts.",
       "Some stains permanently dye fibers and can improve without disappearing completely.",
-      "Send photos when possible so Bryan can estimate the time and recommend the right service."
+      "Send photos when possible so I can estimate the time and tell you which service I would use."
     ],
     faq: [
       {
         question: "Can you remove all pet hair?",
-        answer: "Bryan removes heavy pet hair with specialized tools and repeated vacuum passes. Some deeply woven hair in worn carpet may remain slightly visible, but the improvement is usually dramatic."
+        answer: "I remove heavy pet hair with specialized tools and repeated vacuum passes. Some deeply woven hair in worn carpet may remain slightly visible, but the improvement is usually dramatic."
       },
       {
         question: "Does this remove smoke smell?",
@@ -158,11 +158,11 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "How dry will the seats and carpets be afterward?",
-        answer: "Dry time depends on fabric, temperature, humidity, and how much extraction is required. Bryan avoids over-soaking and can advise how long to leave windows cracked or airflow moving."
+        answer: "Dry time depends on the fabric, temperature, humidity, and how much extraction is needed. I avoid over-soaking and will tell you how much drying time to expect."
       },
       {
         question: "Is this safe for older interiors?",
-        answer: "Yes, but older fabric, weak headliners, peeling coatings, and brittle trim are handled carefully. Bryan will point out risky areas before stronger cleaning begins."
+        answer: "Yes, but older fabric, weak headliners, peeling coatings, and brittle trim need extra care. I will point out any risky areas before stronger cleaning begins."
       },
       {
         question: "Should I book this before selling my car?",
@@ -234,7 +234,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Why one stage works",
-        body: "A single-stage polish can create a major improvement when defects are light to moderate. Bryan chooses the pad and polish to improve the finish while preserving clear coat."
+        body: "A single-stage polish can make a major difference when the defects are light to moderate. I choose the pad and polish that improve the finish without removing more clear coat than necessary."
       },
       {
         title: "Best time to book",
@@ -272,7 +272,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Is it safe for clear coat?",
-        answer: "Bryan uses controlled machine polishing and inspects the surface so the goal is improvement without unnecessary clear-coat removal."
+        answer: "Yes. I inspect the paint and polish it carefully so I can improve the finish without removing more clear coat than necessary."
       }
     ],
     internalServiceIds: ["paint-correction-l1", "system-x-crystal-plus", "pre-sale-detail", "system-x-pro-plus"]
@@ -374,7 +374,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Do I need a paint inspection first?",
-        answer: "Yes. Bryan inspects the vehicle and can recommend whether Level 1, Level 2, or another package makes the most sense."
+        answer: "Yes. I inspect the paint first and explain whether Level 1, Level 2, or a lighter service is the better choice."
       },
       {
         question: "What should I do after correction?",
@@ -393,7 +393,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Prep is the difference",
-        body: "Ceramic coating is only as good as the surface underneath it. Bryan decontaminates and prepares the paint so the coating bonds correctly instead of being layered over dirt or haze."
+        body: "Ceramic coating is only as good as the surface underneath it. I clean and prepare the paint first so the coating is not applied over bonded dirt or haze."
       },
       {
         title: "Best time to book",
@@ -409,13 +409,13 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     ],
     buyerNotes: [
       "Ceramic coating is not scratch-proof, but it does make cleaning easier and adds chemical resistance.",
-      "Avoid harsh washing during the cure window Bryan gives you after the service.",
+      "Avoid harsh washing during the cure period I explain after the service.",
       "Best results come from safe maintenance washes after coating."
     ],
     faq: [
       {
         question: "Is ceramic coating better than wax?",
-        answer: "Yes for durability and ease of cleaning. Wax is short-term protection; a professional ceramic coating bonds to the paint and lasts much longer when maintained correctly."
+        answer: "Yes, if you want longer-lasting protection and easier washing. Wax is short term; ceramic coating bonds to the paint and lasts much longer when it is cared for correctly."
       },
       {
         question: "Does ceramic coating stop scratches?",
@@ -423,7 +423,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Do you polish before coating?",
-        answer: "Bryan inspects the paint and recommends the right prep. Many vehicles benefit from at least a light polish before coating because the coating locks in the finish underneath."
+        answer: "I inspect the paint first and explain what preparation it needs. Many vehicles benefit from at least a light polish because the coating locks in the finish underneath."
       },
       {
         question: "How do I wash a coated car?",
@@ -442,7 +442,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     sections: [
       {
         title: "What this service solves",
-        body: "It fixes the common mistake of coating over swirled or contaminated paint. Bryan improves the finish first, then applies durable ceramic protection."
+        body: "It avoids the common mistake of coating over swirled or contaminated paint. I improve the finish first, then apply the ceramic coating."
       },
       {
         title: "Why bundling works",
@@ -472,7 +472,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Is this better for new cars or used cars?",
-        answer: "Both can benefit. New cars often have dealer prep marks, and used cars often need correction before coating. Bryan will inspect and recommend the right prep level."
+        answer: "Both can benefit. New cars often have dealer prep marks, and used cars may need correction first. I inspect the paint and explain what should be done before coating."
       },
       {
         question: "How long should I leave the car with you?",
@@ -480,7 +480,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Does this include wheels and windshield?",
-        answer: "The package includes exterior prep and protection steps listed on the service page. Bryan can confirm exact coating coverage before booking."
+        answer: "The package includes the preparation and protection listed on the service page. I can confirm the exact coating coverage before you book."
       },
       {
         question: "How do I maintain it?",
@@ -503,7 +503,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Best time to book",
-        body: "Book it twice a year, before a road trip, after winter, before a special event, or whenever the vehicle needs a full professional reset."
+        body: "Book it twice a year, before a road trip, after winter, before a special event, or whenever the whole vehicle needs a thorough cleanup."
       }
     ],
     processTitle: "Full detail process",
@@ -582,7 +582,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Does it include engine bay cleaning?",
-        answer: "The package includes an engine bay restoration feature as listed. Bryan will confirm condition and any sensitive areas before cleaning."
+        answer: "Yes. I check the engine bay and point out any sensitive areas before cleaning."
       },
       {
         question: "Will it remove every scratch?",
@@ -596,8 +596,8 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     internalServiceIds: ["pre-sale-detail", "paint-correction-l1", "odor-elimination", "full-detail-package"]
   },
   "maintenance-detail": {
-    headline: "Maintenance Plan for vehicles that have already been professionally reset",
-    intro: "Maintenance Plan is not a first-time rescue detail. It is ongoing care for vehicles Bryan has already detailed, corrected, or coated so the finish stays cleaner and the interior does not slide backward.",
+    headline: "Maintenance Plan for vehicles I have already detailed",
+    intro: "A Maintenance Plan is ongoing care after I have already detailed, corrected, or coated the vehicle. It keeps the finish cleaner and prevents the interior from sliding backward.",
     sections: [
       {
         title: "What this service solves",
@@ -627,7 +627,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     faq: [
       {
         question: "Can I book Maintenance Plan as my first service?",
-        answer: "Usually no. It is designed for vehicles that have already been reset by a professional detail so the visit can stay efficient."
+        answer: "Usually no. Maintenance pricing is for vehicles I have already brought to a clean starting point."
       },
       {
         question: "How often should I schedule maintenance?",
@@ -643,7 +643,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "What happens if my car gets too dirty?",
-        answer: "Bryan may recommend Signature Full Detail, Interior Restoration, or another reset before returning to maintenance pricing."
+        answer: "I may suggest a Signature Full Detail or Interior Restoration first so the vehicle starts from a clean baseline."
       }
     ],
     internalServiceIds: ["full-detail-package", "system-x-crystal-plus", "system-x-pro-plus", "interior-detail"]
@@ -658,7 +658,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Why photos help",
-        body: "RV and boat condition varies wildly. Photos help Bryan quote fairly for height, oxidation, length, access, decals, and surface condition."
+        body: "RV and boat condition varies widely. Photos help me account for height, oxidation, length, access, decals, and the condition of the surface."
       },
       {
         title: "Best time to book",
@@ -684,7 +684,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Can you wash the roof?",
-        answer: "Roof cleaning depends on safe access, material, condition, and weather. Bryan will confirm what is safe before the job."
+        answer: "Roof cleaning depends on safe access, material, condition, and weather. I will confirm what I can safely clean before the job."
       },
       {
         question: "Does this remove oxidation?",
@@ -692,7 +692,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Do I need to provide water or power?",
-        answer: "Bryan will confirm job requirements before booking. Large vehicles often need access planning."
+        answer: "I will confirm access, water, power, and workspace before booking a large vehicle."
       },
       {
         question: "Should I send photos?",
@@ -733,7 +733,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     faq: [
       {
         question: "Can you fully restore badly oxidized gel coat?",
-        answer: "Many oxidized surfaces improve significantly, but extremely weathered or failing gel coat may not return to a new look. Bryan will explain how much improvement is possible after inspection."
+        answer: "Many oxidized surfaces improve significantly, but extremely weathered or failing gel coat may not return to a new look. I will explain what improvement is realistic after I inspect it."
       },
       {
         question: "How is this different from wash and wax?",
@@ -790,7 +790,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Does this include engine degreasing?",
-        answer: "Heavy-duty degreasing is part of the service where safe and appropriate. Bryan will review sensitive areas before cleaning."
+        answer: "Heavy-duty degreasing is included where it can be done safely. I check sensitive areas before cleaning."
       },
       {
         question: "Can you clean the cab interior?",
@@ -817,7 +817,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Why new does not mean perfect",
-        body: "Dealership washes, transport, lot storage, and quick prep can leave marks. Bryan inspects and prepares the vehicle so protection is applied to a cleaner surface."
+        body: "Dealership washes, transport, lot storage, and quick prep can leave marks. I inspect and clean the paint before applying protection."
       },
       {
         title: "Best time to book",
@@ -847,11 +847,11 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Will this void any warranty?",
-        answer: "Professional exterior cleaning and protection should not void a vehicle warranty. Bryan uses safe methods and will avoid anything inappropriate for the vehicle."
+        answer: "Exterior detailing and paint protection should not void a vehicle warranty. I use safe methods and avoid anything that could harm the finish."
       },
       {
         question: "Does it remove dealer stickers or adhesive?",
-        answer: "Light adhesive and residue can often be addressed safely. Mention it before booking so Bryan can plan time."
+        answer: "Light adhesive and residue can often be removed safely. Mention it before booking so I can allow enough time."
       },
       {
         question: "How soon after buying should I book?",
@@ -870,7 +870,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Why presentation matters",
-        body: "A cleaner vehicle feels better cared for. Buyers make quick judgments, and a professional detail can make the car easier to trust."
+        body: "A cleaner vehicle looks better cared for. Buyers make quick judgments, and a thorough detail can make the car easier to trust."
       },
       {
         title: "Best time to book",
@@ -908,7 +908,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Can you help me choose photos after the detail?",
-        answer: "The service prepares the vehicle for better photos. Bryan can point out clean angles and presentation details during pickup."
+        answer: "The service gets the vehicle ready for better photos. I can also point out a few clean angles when you pick it up."
       }
     ],
     internalServiceIds: ["showroom-package", "paint-enhancement-polish", "odor-elimination", "interior-reset"]
@@ -923,7 +923,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         title: "Why source removal matters",
-        body: "Odor treatment works best after the physical source is cleaned. Bryan pairs cleaning, enzyme treatment when needed, and ozone treatment for a more complete result."
+        body: "Odor treatment works best after the physical source is cleaned. I combine cleaning, enzyme treatment when needed, and ozone treatment instead of covering the smell with fragrance."
       },
       {
         title: "Best time to book",
@@ -954,7 +954,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
       },
       {
         question: "Will odor come back?",
-        answer: "Odor can return if the source remains, such as moisture intrusion, mold, or ongoing smoking. Bryan will point out any issues that could cause recurrence."
+        answer: "Odor can return if the source remains, such as a water leak, mold, or ongoing smoking. I will point out anything I find that could make the smell return."
       },
       {
         question: "Do I need an interior detail too?",
@@ -1028,7 +1028,7 @@ Object.assign(SERVICE_PAGE_CONTENT, {
     intro: "Crystal+ Essential is the entry point to certified System X protection. It pairs careful decontamination and light gloss enhancement with a registered 2-year coating package for newer or well-kept daily drivers.",
     sections: [
       { title: "What is included", body: "A safe wash, iron removal, clay decontamination, light gloss-enhancement polish, panel prep, System X Crystal+ on painted surfaces, warranty registration, and a clear aftercare guide." },
-      { title: "Who it fits", body: "Choose Crystal+ when the paint is already in good condition and you want easier washing, stronger gloss, and professional protection at the most accessible System X price." }
+      { title: "Who it fits", body: "Choose Crystal+ when the paint is already in good condition and you want easier washing, stronger gloss, and longer-lasting protection at the lowest System X package price." }
     ],
     processTitle: "How Crystal+ Essential is installed",
     process: ["Inspect the paint and agree on the prep plan", "Wash and chemically decontaminate the exterior", "Clay and lightly polish the paint", "Panel-wipe and install Crystal+", "Cure, inspect, register, and explain aftercare"],
@@ -1073,7 +1073,7 @@ Object.assign(SERVICE_PAGE_CONTENT, {
   },
   "system-x-phantom-2k": {
     headline: "Phantom 2K Bespoke is the flagship System X finish for specialty and high-end vehicles",
-    intro: "Phantom 2K Bespoke starts with a paint inspection because the flagship coating deserves a correction plan matched to the actual vehicle. The plan may use one or two correction stages before the two-part coating system is installed.",
+    intro: "Phantom 2K Bespoke starts with a paint inspection. Depending on the finish, I use one or two polishing stages before installing the two-part coating system.",
     sections: [
       { title: "What is included", body: "A vehicle-specific correction plan, Phantom 2K on paint and applicable exterior surfaces, Wheel+ on wheel faces, Glass+ on the windshield, registration, cure inspection, and detailed aftercare." },
       { title: "Why the plan is tailored", body: "Collector cars, black paint, repainted panels, and specialty finishes do not all need the same polishing process. Inspection protects the finish and keeps the quote honest." }
@@ -1083,7 +1083,7 @@ Object.assign(SERVICE_PAGE_CONTENT, {
     buyerNotes: ["The final correction plan is confirmed after inspection.", "The starting price assumes a standard-size sedan with correctable paint."],
     faq: [
       { question: "Why does Phantom 2K require an inspection?", answer: "Its buyers usually expect the highest finish quality. Inspection determines the safe correction steps before coating locks in the final appearance." },
-      { question: "Can I book it online?", answer: "Yes, you can start the booking request online. Bryan confirms the paint condition, correction plan, and final price before the appointment." }
+      { question: "Can I book it online?", answer: "Yes. You can start the booking request online, and I will confirm the paint condition, polishing steps, and price before the appointment." }
     ],
     internalServiceIds: ["system-x-max-g-plus", "paint-correction-l2", "maintenance-detail"]
   }

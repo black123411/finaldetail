@@ -202,11 +202,11 @@ export default function Blog() {
               Not Sure What Your Vehicle <span className="text-emerald-500 underline decoration-4 underline-offset-8">Needs?</span>
             </h2>
             <p className="text-zinc-400 text-lg mb-10 font-medium leading-relaxed">
-              Send a few photos and a short description. Bryan can recommend the right service before you schedule.
+              Send me a few photos and tell me what you want done. I will take a look before you schedule.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row">
               <Button className="h-14 rounded-2xl bg-emerald-500 px-10 font-black text-white hover:bg-emerald-600" asChild>
-                <Link to="/quote">Request a Recommendation</Link>
+                <Link to="/quote">Text Me Photos</Link>
               </Button>
               <Button variant="outline" className="h-14 rounded-2xl border-zinc-700 bg-transparent px-10 font-black text-white hover:bg-zinc-800 hover:text-white" asChild>
                 <Link to="/services">Compare Services</Link>

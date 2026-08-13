@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
-import { MapPin, CheckCircle2, ArrowRight, ShieldCheck } from 'lucide-react';
+import { MapPin, CheckCircle2, ArrowRight } from 'lucide-react';
 import { CITIES } from '@/shared/data/cities';
 import { SERVICES } from '@/shared/data/services';
 import { Button } from "../components/ui/button";
@@ -172,13 +172,6 @@ export default function CityDetail() {
                    </li>
                  ))}
                </ul>
-               <div className="mt-12 flex items-center gap-4 p-6 bg-zinc-800/50 rounded-2xl border border-zinc-800">
-                 <ShieldCheck className="h-6 w-6 text-blue-600" />
-                 <div>
-                   <p className="text-xs font-black uppercase tracking-widest text-zinc-200">The right service for your vehicle</p>
-                   <p className="text-[10px] text-zinc-500 font-medium">I review your vehicle and explain the work before I start.</p>
-                 </div>
-               </div>
             </div>
           </div>
         </div>
@@ -195,8 +188,8 @@ export default function CityDetail() {
               Detailing services for {city.name} drivers
             </h2>
             <p className="text-lg leading-8 text-zinc-600 mb-8">
-              Start with the service that matches what your vehicle needs. I offer mobile detailing
-              where practical, plus Bellevue drop-off for longer paint and protection work.
+              Choose the service you are interested in, or text me photos if you are not sure.
+              I can come to you for many services, and longer jobs can be dropped off in Bellevue.
             </p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {(city.content.featuredServiceIds || []).slice(0, 6).map((serviceId) => {

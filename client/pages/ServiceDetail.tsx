@@ -24,6 +24,24 @@ import RelatedGuides, { guideTopicForCategory } from '../components/RelatedGuide
 import { Button } from '../components/ui/button';
 import { formatCurrency } from '../lib/utils';
 
+const INTERIOR_COMPARISON = [
+  {
+    label: 'Best for',
+    signature: 'Normal daily buildup, light stains, and a cabin that needs a thorough refresh.',
+    restoration: 'Heavy pet hair, embedded stains, smoke, spills, and neglected interiors.',
+  },
+  {
+    label: 'Stain and odor care',
+    signature: 'Spot treatment and a cabin refresh for lighter stains and smells.',
+    restoration: 'Deeper stain treatment, odor-source cleaning, and fabric extraction.',
+  },
+  {
+    label: 'Cleaning method',
+    signature: 'Thorough vacuuming, interior cleaning, glass, mats, and trim detailing.',
+    restoration: 'Hot-water extraction, steam cleaning, shampooing, and repeated debris removal.',
+  },
+] as const;
+
 const PROOF_BY_SERVICE: Record<string, number> = {
   'interior-detail': 1,
   'interior-reset': 2,
@@ -79,7 +97,7 @@ export default function ServiceDetail() {
 
   if (!service || !category) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
+      <div className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
         <div className="max-w-md text-center">
           <AlertTriangle className="mx-auto h-10 w-10 text-zinc-400" />
           <h1 className="mt-5 text-3xl font-black">Service not found</h1>
@@ -88,7 +106,7 @@ export default function ServiceDetail() {
             <Link to="/services">View all services</Link>
           </Button>
         </div>
-      </main>
+      </div>
     );
   }
 
@@ -138,7 +156,7 @@ export default function ServiceDetail() {
   };
 
   return (
-    <main className="min-h-screen bg-white pb-20 text-zinc-950 md:pb-0">
+    <div className="min-h-screen bg-white pb-20 text-zinc-950 md:pb-0">
       <Helmet>
         {service.image && <meta property="og:image" content={`https://bryansdetailingomaha.com${service.image}`} />}
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
@@ -209,7 +227,7 @@ export default function ServiceDetail() {
                 onClick={() => trackEvent('click_text_quote', { location: 'service_detail', service_id: service.id })}
                 className="inline-flex h-14 items-center justify-center rounded-md border border-white/40 bg-black/20 px-7 font-bold text-white hover:bg-white hover:text-zinc-950"
               >
-                <MessageSquare className="mr-2 h-5 w-5" /> Text photos to Bryan
+                <MessageSquare className="mr-2 h-5 w-5" /> Text Me Photos
               </a>
             </div>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
@@ -249,7 +267,7 @@ export default function ServiceDetail() {
             <p className="text-xl font-bold leading-relaxed text-zinc-800">{service.bestFor || guide?.headline || service.shortDescription}</p>
           </div>
           <div className="grid gap-14 lg:grid-cols-[1.25fr_0.75fr]">
-            <div>
+            <div className="min-w-0">
             <h2 className="text-4xl font-black tracking-tight md:text-5xl">{guide?.headline || service.name}</h2>
             <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-600">{guide?.intro || service.longDescription}</p>
             <div className="mt-12 grid gap-10 md:grid-cols-3">
@@ -262,33 +280,41 @@ export default function ServiceDetail() {
             </div>
 
             {(service.id === 'interior-detail' || service.id === 'interior-reset') && (
-              <section className="mt-16 overflow-hidden rounded-4xl border border-zinc-200 bg-white shadow-sm">
-                <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px bg-zinc-200 text-xs uppercase tracking-[0.24em] text-zinc-500">
-                  <div className="bg-zinc-950 px-5 py-4 text-white">Compare</div>
-                  <div className="bg-zinc-950 px-5 py-4 text-white">Signature Interior Detail</div>
-                  <div className="bg-zinc-950 px-5 py-4 text-white">Deep Interior Restoration</div>
+              <section className="mt-16 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+                <h3 className="bg-zinc-950 px-5 py-4 text-lg font-black text-white">Compare interior services</h3>
+                <div className="hidden bg-zinc-50 md:block">
+                  <div className="grid grid-cols-[0.7fr_1fr_1fr] gap-px bg-zinc-200 text-sm">
+                    <div className="bg-zinc-950 px-5 py-4 font-bold text-zinc-300">What changes</div>
+                    <div className="bg-zinc-950 px-5 py-4 font-black text-white">Signature Interior</div>
+                    <div className="bg-zinc-950 px-5 py-4 font-black text-white">Deep Restoration</div>
+                  </div>
+                  {INTERIOR_COMPARISON.map((row) => (
+                    <div key={row.label} className="grid grid-cols-[0.7fr_1fr_1fr] gap-px border-t border-zinc-200 text-sm text-zinc-700">
+                      <div className="bg-zinc-100 px-5 py-5 font-bold">{row.label}</div>
+                      <div className="bg-white px-5 py-5">{row.signature}</div>
+                      <div className="bg-white px-5 py-5">{row.restoration}</div>
+                    </div>
+                  ))}
                 </div>
-                <div className="bg-zinc-50">
-                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700">
-                    <div className="px-5 py-5 font-bold">Best for</div>
-                    <div className="px-5 py-5">Normal daily buildup, light stains, and a refreshed cabin.</div>
-                    <div className="px-5 py-5">Heavy pet hair, embedded stains, smoke, and neglected interiors.</div>
-                  </div>
-                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700 bg-white">
-                    <div className="px-5 py-5 font-bold">Stain + odor care</div>
-                    <div className="px-5 py-5">Spot treatment and cabin refresh; fresher smell for lighter contamination.</div>
-                    <div className="px-5 py-5">Intensive stain treatment, odor-source cleaning, and deeper fabric extraction.</div>
-                  </div>
-                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700">
-                    <div className="px-5 py-5 font-bold">Cleaning method</div>
-                    <div className="px-5 py-5">Thorough vacuuming, interior wipe-downs, glass and trim detailing.</div>
-                    <div className="px-5 py-5">Hot water extraction, steam cleaning, shampooing, and repeated debris removal.</div>
-                  </div>
-                  <div className="grid grid-cols-[1.1fr_1fr_1fr] gap-px text-sm text-zinc-700 bg-white">
-                    <div className="px-5 py-5 font-bold">Result</div>
-                    <div className="px-5 py-5">A cleaner cabin with refreshed surfaces and improved everyday appearance.</div>
-                    <div className="px-5 py-5">A deep restored interior with heavier contamination under control.</div>
-                  </div>
+                <div className="grid gap-4 bg-zinc-100 p-4 md:hidden">
+                  <article className="rounded-2xl bg-white p-5">
+                    <h4 className="text-lg font-black">Signature Interior Detail</h4>
+                    {INTERIOR_COMPARISON.map((row) => (
+                      <div key={row.label} className="mt-4 border-t border-zinc-200 pt-4">
+                        <p className="text-xs font-black uppercase tracking-wider text-blue-700">{row.label}</p>
+                        <p className="mt-2 text-sm leading-6 text-zinc-700">{row.signature}</p>
+                      </div>
+                    ))}
+                  </article>
+                  <article className="rounded-2xl bg-white p-5">
+                    <h4 className="text-lg font-black">Deep Interior Restoration</h4>
+                    {INTERIOR_COMPARISON.map((row) => (
+                      <div key={row.label} className="mt-4 border-t border-zinc-200 pt-4">
+                        <p className="text-xs font-black uppercase tracking-wider text-blue-700">{row.label}</p>
+                        <p className="mt-2 text-sm leading-6 text-zinc-700">{row.restoration}</p>
+                      </div>
+                    ))}
+                  </article>
                 </div>
               </section>
             )}
@@ -324,7 +350,7 @@ export default function ServiceDetail() {
               ))}
             </div>
             <p className="mt-4 text-sm leading-relaxed text-zinc-500">
-              Final price depends on vehicle condition, selected add-ons, access, and any additional restoration work approved before the service begins.
+              Larger vehicles, heavier cleanup, and selected add-ons can change the price. I will explain any change before the work begins.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">
               Preferred time slots are limited. Book online now to reserve the best available appointment.
@@ -457,6 +483,6 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }

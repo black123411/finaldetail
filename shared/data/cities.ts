@@ -33,7 +33,7 @@ export const CITIES: CityPage[] = [
       whyPoints: [
         'Owner-operated service with clear communication',
         'System X certified ceramic coating installer',
-        'Paint correction that reduces or removes eligible swirls and scratches',
+        'Paint correction for light to moderate swirls and scratches',
         'Mobile service in Omaha when access and conditions allow',
         'Bellevue drop-off options for intensive work'
       ],
@@ -85,7 +85,7 @@ export const CITIES: CityPage[] = [
         'Paint correction based on the finish and defects that can be safely improved',
         'Ceramic coating with the paint prep the vehicle needs',
         'Interior services for pet hair, stains, spills, and odors',
-        'Online booking plus photo-based recommendations'
+        'Online booking, or text me photos if you need help'
       ],
       serviceAreas: ['Papillion', 'Shadow Lake area', 'La Vista', 'Bellevue', 'Sarpy County'],
       cta: 'Book your Papillion auto detail and choose mobile or Bellevue drop-off.'
@@ -133,7 +133,7 @@ export const CITIES: CityPage[] = [
       whyPoints: [
         'Mobile scheduling for Ralston residents',
         'Interior restoration for stains, pet hair, and odor sources',
-        'Paint correction to reduce eligible wash marks and swirls',
+        'Paint correction for wash marks and swirls',
         'Starting prices with the included work explained before work begins',
         'Owner-operated service with mobile and Bellevue options'
       ],
@@ -152,13 +152,13 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'pre-sale-detail', 'system-x-crystal-plus'],
       title: 'Auto Detailing in Gretna, NE',
-      intro: "Gretna drivers can book Bryan's Showroom Quality Mobile Detailing for road grime, interior buildup, paint care, and pre-sale preparation. I provide mobile appointments when weather and workspace allow, with Bellevue drop-off and pickup available for longer services.",
+      intro: "I serve Gretna drivers who need help with road grime, interior buildup, paint care, and pre-sale cleanup. I can come to you for many services, with Bellevue drop-off available for longer jobs.",
       servicesLabel: 'Detailing Services for Gretna & Sarpy County:',
       whyLabel: "Why Gretna drivers choose Bryan's:",
       whyPoints: [
         'Mobile service at a home or office with enough safe working space',
         'Interior and exterior cleaning for road grime and family vehicles',
-        'SUV and truck detailing matched to vehicle condition',
+        'Interior and exterior detailing for SUVs and trucks',
         'Pre-sale detail packages that improve presentation',
         'Ceramic coating with paint prep based on what I find'
       ],
@@ -202,7 +202,7 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus'],
       title: 'Auto Detailing in Council Bluffs, IA',
-      intro: "Bryan's Showroom Quality Mobile Detailing serves Council Bluffs with mobile interior, exterior, paint-correction, and ceramic-coating appointments when weather and workspace allow. Bellevue drop-off and pickup are also available for longer or weather-sensitive services.",
+      intro: "I serve Council Bluffs with interior detailing, exterior detailing, and paint care. I can come to you for many services, with Bellevue drop-off available for longer jobs and ceramic coatings.",
       servicesLabel: 'Council Bluffs Detailing Services:',
       whyLabel: 'What Council Bluffs customers get:',
       whyPoints: [
