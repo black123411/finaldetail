@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, Calendar, Sparkles, HelpCircle, Image, Compass, ChevronRight } from 'lucide-react';
+import { BOOKING_LINK } from '../lib/constants';
 
 export default function NotFound() {
   return (
@@ -43,13 +44,13 @@ export default function NotFound() {
             <Home className="w-4 h-4 shrink-0" />
             Return Home
           </Link>
-          <Link
-            to="/book"
+          <a
+            href={BOOKING_LINK}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-bold uppercase tracking-wider text-xs px-8 py-4 rounded-xl border border-zinc-800 hover:border-zinc-700 transition-all duration-300 transform hover:-translate-y-0.5"
           >
             <Calendar className="w-4 h-4 shrink-0 text-emerald-500" />
             Book a Detail
-          </Link>
+          </a>
         </div>
 
         {/* Quick Links */}

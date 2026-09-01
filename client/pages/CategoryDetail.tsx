@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { CheckCircle2, ArrowLeft, Calendar, ShieldCheck, Sparkles, Clock, MapPin } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { SERVICES, CATEGORIES } from '@/shared/data/services';
-import { BOOKING_LINK } from '../lib/constants';
+import { BOOKING_LINK, getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { formatCurrency } from '../lib/utils';
 import { trackEvent } from '../lib/analytics';
 import RelatedGuides, { guideTopicForCategory } from '../components/RelatedGuides';
@@ -28,6 +28,7 @@ export default function CategoryDetail() {
 
   const categoryServices = SERVICES.filter(s => s.categoryId === category.id);
   const maintenanceService = SERVICES.find(s => s.id === 'maintenance-interior');
+  const isQuoteCategory = category.id === 'tractor-detailing';
 
   const localHeadingByCategory: Record<string, string> = {
     'interior-detailing': 'Interior Car Detailing in Omaha & Bellevue',
@@ -87,12 +88,16 @@ export default function CategoryDetail() {
                 </div>
               ) : null}
               <div className="rounded-2xl border border-white/15 bg-black/55 p-5 text-zinc-200 sm:p-6">
-                <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-zinc-400">Check current availability</p>
+                <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-zinc-400">{isQuoteCategory ? 'Get an accurate quote' : 'Check current availability'}</p>
                 <p className="text-base font-semibold leading-7 sm:text-lg">
-                  Choose an open date and time that works for you.
+                  {isQuoteCategory ? 'Text a few clear photos so I can review the equipment and access before pricing the work.' : 'Choose an open date and time that works for you.'}
                 </p>
                 <Button asChild className="mt-4 h-12 w-full bg-blue-600 px-6 font-black text-white hover:bg-blue-500 sm:w-auto">
-                  <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'category_hero', category: category.slug })}>Book a Detail</Link>
+                  {isQuoteCategory ? (
+                    <Link to="/quote" onClick={() => trackEvent('begin_quote', { location: 'category_hero', category: category.slug })}>Text Photos / Request Quote</Link>
+                  ) : (
+                    <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'category_hero', category: category.slug })}>Book a Detail</a>
+                  )}
                 </Button>
               </div>
             </div>
@@ -192,10 +197,17 @@ export default function CategoryDetail() {
 
                     <div className="grid grid-cols-1 gap-3 pt-4 sm:grid-cols-2">
                       <Button size="lg" className="h-auto min-h-14 w-full whitespace-normal px-5 py-3 text-base sm:text-lg" asChild>
-                        <Link to={`/book?serviceId=${service.id}`} onClick={() => trackEvent('begin_booking', { location: 'category_card', service_id: service.id, category: category.slug })}>
-                          <Calendar className="h-5 w-5" />
-                          Book This Service
-                        </Link>
+                        {isInquiryOnlyService(service.id) ? (
+                          <Link to="/quote" onClick={() => trackEvent('begin_quote', { location: 'category_card', service_id: service.id, category: category.slug })}>
+                            <Calendar className="h-5 w-5" />
+                            Request Quote
+                          </Link>
+                        ) : (
+                          <a href={getSquareBookingLink(service.id)} onClick={() => trackEvent('begin_booking', { location: 'category_card', service_id: service.id, category: category.slug })}>
+                            <Calendar className="h-5 w-5" />
+                            Book This Service
+                          </a>
+                        )}
                       </Button>
                       <Button size="lg" variant="outline" className="h-auto min-h-14 w-full whitespace-normal px-5 py-3 text-base sm:text-lg" asChild>
                         <Link to={`/services/${service.id}`}>Learn More</Link>
@@ -272,13 +284,17 @@ export default function CategoryDetail() {
       {/* Closing CTA */}
       <section className="py-24 bg-zinc-900 text-white text-center">
         <div className="container mx-auto px-4 max-w-3xl space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Ready to book?</h2>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">{isQuoteCategory ? 'Ready for an accurate quote?' : 'Ready to book?'}</h2>
           <p className="text-xl text-zinc-400">
-            Choose a service and view available appointments. If you are unsure, send me a few photos and I will help.
+            {isQuoteCategory ? 'Send clear photos of the equipment, buildup, and work area so I can review the job before giving you a price.' : 'Choose a service and view available appointments. If you are unsure, send me a few photos and I will help.'}
           </p>
           <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
             <Button size="lg" className="h-14 px-10 text-lg bg-white text-zinc-950 hover:bg-zinc-200" asChild>
-              <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'category_footer', category: category.slug })}>Book Appointment Now</Link>
+              {isQuoteCategory ? (
+                <Link to="/quote" onClick={() => trackEvent('begin_quote', { location: 'category_footer', category: category.slug })}>Text Photos / Request Quote</Link>
+              ) : (
+                <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'category_footer', category: category.slug })}>Book Appointment Now</a>
+              )}
             </Button>
             <Button size="lg" variant="outline" className="h-14 px-10 text-lg border-zinc-700 hover:bg-zinc-800" asChild>
               <Link to="/services">Explore More Services</Link>

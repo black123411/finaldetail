@@ -756,7 +756,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
   },
   "tractor-detailing-service": {
     headline: "Tractor and Equipment Cleanup for heavy-duty work vehicles",
-    intro: "Tractor and Equipment Cleanup is for agricultural and work equipment that needs mud, grease, grime, cab dirt, glass film, and buildup removed so it looks better and is easier to inspect.",
+    intro: "I offer Tractor and Equipment Cleanup for agricultural and work equipment that needs mud, grease, grime, cab dirt, glass film, and buildup removed so it looks better and is easier to inspect.",
     sections: [
       {
         title: "What this service solves",
@@ -767,8 +767,8 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Clean equipment is easier to inspect, nicer to operate, and better presented for resale, trade-in, or seasonal maintenance."
       },
       {
-        title: "Best time to book",
-        body: "Book after harvest, before sale, before storage, after field work, or when cab visibility and comfort need attention."
+        title: "Best time to request a quote",
+        body: "Request a quote after harvest, before sale, before storage, after field work, or when cab visibility and comfort need attention."
       }
     ],
     processTitle: "Equipment cleanup process",

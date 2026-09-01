@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, MessageSquare } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { trackEvent } from '../lib/analytics';
+import { BOOKING_LINK } from '../lib/constants';
 
 const TEXT_PHOTOS_LINK =
   'sms:+17123056313?body=Hi%20Bryan%2C%20I%27d%20like%20help%20choosing%20a%20detailing%20service.%20Here%20are%20photos%20of%20my%20vehicle%3A';
@@ -62,10 +63,10 @@ export default function About() {
                   className="h-14 bg-blue-600 px-7 font-black text-white hover:bg-blue-500"
                   asChild
                 >
-                  <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'about_hero' })}>
+                  <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'about_hero' })}>
                     <Calendar className="mr-2 h-5 w-5" aria-hidden="true" />
                     View Availability
-                  </Link>
+                  </a>
                 </Button>
                 <Button
                   size="lg"
@@ -254,10 +255,10 @@ export default function About() {
                   </a>
                 </Button>
                 <Button size="lg" variant="outline" className="h-14 border-zinc-300 px-7 font-black" asChild>
-                  <Link to="/book" onClick={() => trackEvent('begin_booking', { location: 'about_closing' })}>
+                  <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'about_closing' })}>
                     View Availability
                     <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
-                  </Link>
+                  </a>
                 </Button>
               </div>
               <nav aria-label="Learn more about Bryan's detailing work" className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold">

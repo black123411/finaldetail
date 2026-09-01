@@ -6,6 +6,7 @@ import { Button } from '../components/ui/button';
 import { PHOTOS } from '@/shared/data/photos';
 import { formatCurrency } from '../lib/utils';
 import RelatedGuides from '../components/RelatedGuides';
+import { getSquareBookingLink } from '../lib/constants';
 
 const BENEFITS = [
   {
@@ -293,7 +294,7 @@ export default function CeramicCoating() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Button asChild className="h-16 px-10 bg-blue-600 hover:bg-blue-400 text-black font-black text-base uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-600/30">
-                <Link to="/book?serviceId=system-x-pro-plus">Book Pro+ Signature</Link>
+                <a href={getSquareBookingLink('system-x-pro-plus')}>Book Pro+ Signature</a>
               </Button>
               <Button asChild variant="outline" className="h-16 px-10 border-white/30 bg-zinc-950/70 text-white hover:border-white hover:bg-white hover:text-zinc-950 font-black text-sm uppercase tracking-widest rounded-2xl">
                 <Link to="/gallery">View Real Results →</Link>
@@ -434,9 +435,9 @@ export default function CeramicCoating() {
                   asChild
                   className={`w-full h-14 rounded-2xl font-black uppercase tracking-widest text-sm ${pkg.highlight ? 'bg-blue-600 text-black hover:bg-blue-400 shadow-lg shadow-blue-600/20' : 'bg-zinc-700 text-white hover:bg-zinc-600'}`}
                 >
-                  <Link to={`/book?serviceId=${pkg.serviceId}`} className="flex items-center justify-center gap-2">
+                  <a href={getSquareBookingLink(pkg.serviceId)} className="flex items-center justify-center gap-2">
                     Book This Package <ArrowRight className="h-4 w-4" />
-                  </Link>
+                  </a>
                 </Button>
               </div>
             ))}
@@ -548,9 +549,9 @@ export default function CeramicCoating() {
                     <p className="mt-3 text-[10px] font-black uppercase tracking-[0.16em] text-zinc-500">{addon.included}</p>
                   </div>
                   <Button asChild variant="outline" className="h-12 shrink-0 rounded-xl border-zinc-700 text-white hover:border-blue-600/50 hover:bg-zinc-800">
-                    <Link to={`/book?addonId=${addon.serviceId}`} className="flex items-center gap-2">
+                    <a href={getSquareBookingLink(addon.serviceId)} className="flex items-center gap-2">
                       Add to Booking <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    </a>
                   </Button>
                 </motion.div>
               ))}
@@ -638,7 +639,7 @@ export default function CeramicCoating() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild className="h-16 px-12 bg-blue-600 hover:bg-blue-400 text-black font-black text-base uppercase tracking-widest rounded-2xl shadow-xl shadow-blue-600/30">
-              <Link to="/book?serviceId=system-x-pro-plus">Book Pro+ Signature</Link>
+              <a href={getSquareBookingLink('system-x-pro-plus')}>Book Pro+ Signature</a>
             </Button>
             <Button asChild variant="outline" className="h-16 px-12 border-zinc-600 text-white hover:bg-zinc-800 font-black text-sm uppercase tracking-widest rounded-2xl">
               <a href="tel:7123056313">(712) 305-6313</a>

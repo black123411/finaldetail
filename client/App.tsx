@@ -27,7 +27,7 @@ const Gallery = lazy(() => import('./pages/Gallery'));
 const Quote = lazy(() => import('./pages/Quote'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const FAQManager = lazy(() => import('./pages/FAQManager'));
-const Booking = lazy(() => import('./pages/Booking'));
+const Booking = lazy(() => import('./pages/SquareBookingRedirect'));
 const Admin = lazy(() => import('./pages/Admin'));
 const AdminServiceManager = lazy(() => import('./pages/AdminServiceManager'));
 const AdminReviewRequests = lazy(() => import('./pages/AdminReviewRequests'));

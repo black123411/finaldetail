@@ -42,7 +42,7 @@ export type SeoRoute = {
 export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
   '/': {
     title: "Mobile Car Detailing Omaha & Bellevue | Bryan's Detailing",
-    description: 'Owner-operated mobile and drop-off car detailing in Bellevue and Omaha. Interior details from $179, full details, paint correction, and ceramic coatings.',
+    description: 'Owner-operated mobile and drop-off car detailing in Bellevue and Omaha. Interior detailing from $139, full details, paint correction, and ceramic coatings.',
   },
   '/services': {
     title: 'Auto Detailing Services & Prices | Bellevue and Omaha',
@@ -54,18 +54,18 @@ export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
   },
   '/book': {
     title: 'Book Auto Detailing Online | Omaha & Bellevue NE',
-    description: 'Choose a detailing service, vehicle size, add-ons, and appointment time online for Bryan\'s Detailing in Bellevue and the Omaha metro.',
+    description: 'Choose a detailing service on Bryan\'s website, then select your vehicle option and an available appointment time securely with Square.',
     robots: 'noindex,follow',
   },
   '/booking': {
     title: 'Book Auto Detailing Online | Omaha & Bellevue NE',
-    description: 'Choose a detailing service, vehicle size, add-ons, and appointment time online for Bryan\'s Detailing in Bellevue and the Omaha metro.',
+    description: 'Choose a detailing service on Bryan\'s website, then select your vehicle option and an available appointment time securely with Square.',
     canonicalPath: '/book',
     robots: 'noindex,follow',
   },
   '/quote': {
     title: 'Get an Auto Detailing Quote | Omaha & Bellevue NE',
-    description: 'Send photos for an accurate quote on heavy interior restoration, odor treatment, pet hair, paint correction, ceramic coating, RVs, boats, or specialty equipment.',
+    description: 'Text Bryan clear vehicle photos for the quickest detailing recommendation, or send a short contact request for a personally reviewed quote.',
   },
   '/gallery': {
     title: 'Car Detailing Before & After Gallery | Omaha & Bellevue',

@@ -16,6 +16,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
+import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, type Service } from '@/shared/data/services';
 import { SERVICE_PAGE_CONTENT } from '@/shared/data/servicePageContent';
 import { BEFORE_AFTERS } from '@/shared/data/photos';
@@ -122,9 +123,13 @@ export default function ServiceDetail() {
     .map(({ price }) => price)
     .filter((price): price is number => typeof price === 'number' && price > 0);
   const faqItems = guide?.faq || [];
-  const isInquiryOnly = service.id === 'ppf-inquiry';
-  const primaryTarget = isInquiryOnly ? '/quote' : `/book?serviceId=${service.id}`;
-  const primaryLabel = isInquiryOnly ? 'Request a PPF quote' : 'Check availability';
+  const isInquiryOnly = isInquiryOnlyService(service.id);
+  const primaryTarget = isInquiryOnly ? '/quote' : getSquareBookingLink(service.id);
+  const primaryLabel = service.id === 'ppf-inquiry'
+    ? 'Request a PPF quote'
+    : isInquiryOnly
+      ? 'Text Photos / Request Quote'
+      : 'Check availability';
   const textMessage = encodeURIComponent(`Hi Bryan, I have a question about ${service.name}. Here are photos of my vehicle:`);
 
   const schema = {
@@ -215,13 +220,23 @@ export default function ServiceDetail() {
               </div>
             </div>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to={primaryTarget}
-                onClick={() => trackEvent('begin_booking', { location: 'service_detail', service_id: service.id })}
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-blue-600 px-7 font-black text-zinc-950 hover:bg-blue-400"
-              >
-                <Calendar className="h-5 w-5" /> {primaryLabel}
-              </Link>
+              {isInquiryOnly ? (
+                <Link
+                  to={primaryTarget}
+                  onClick={() => trackEvent('begin_quote', { location: 'service_detail', service_id: service.id })}
+                  className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-blue-600 px-7 font-black text-zinc-950 hover:bg-blue-400"
+                >
+                  <Calendar className="h-5 w-5" /> {primaryLabel}
+                </Link>
+              ) : (
+                <a
+                  href={primaryTarget}
+                  onClick={() => trackEvent('begin_booking', { location: 'service_detail', service_id: service.id })}
+                  className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-blue-600 px-7 font-black text-zinc-950 hover:bg-blue-400"
+                >
+                  <Calendar className="h-5 w-5" /> {primaryLabel}
+                </a>
+              )}
               <a
                 href={`sms:+17123056313?body=${textMessage}`}
                 onClick={() => trackEvent('click_text_quote', { location: 'service_detail', service_id: service.id })}
@@ -231,11 +246,15 @@ export default function ServiceDetail() {
               </a>
             </div>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
-              Live availability updates during booking. Reserve your preferred date and time now—Saturday and evening appointments often fill up first.
+              {isInquiryOnly
+                ? 'Send clear photos and job details so I can review the condition, access, and scope before giving you a price.'
+                : 'Live availability updates during booking. Reserve your preferred date and time now—Saturday and evening appointments often fill up first.'}
             </p>
-            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
-              I confirm what is included and anything specific to your vehicle before the service begins. Book online to see current availability.
-            </p>
+            {!isInquiryOnly && (
+              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
+                I confirm what is included and anything specific to your vehicle before the service begins. Book online to see current availability.
+              </p>
+            )}
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-300">
               Prefer a quick answer? <a href="tel:712-305-6313" onClick={() => trackEvent('click_call', { location: 'service_detail', service_id: service.id })} className="font-bold underline">Call me</a> for availability or help choosing a service.
             </p>
@@ -307,7 +326,7 @@ export default function ServiceDetail() {
                     ))}
                   </article>
                   <article className="rounded-2xl bg-white p-5">
-                    <h4 className="text-lg font-black">Deep Interior Restoration</h4>
+                    <h4 className="text-lg font-black">Interior Restoration</h4>
                     {INTERIOR_COMPARISON.map((row) => (
                       <div key={row.label} className="mt-4 border-t border-zinc-200 pt-4">
                         <p className="text-xs font-black uppercase tracking-wider text-blue-700">{row.label}</p>
@@ -353,7 +372,9 @@ export default function ServiceDetail() {
               Larger vehicles, heavier cleanup, and selected add-ons can change the price. I will explain any change before the work begins.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-zinc-500">
-              Preferred time slots are limited. Book online now to reserve the best available appointment.
+              {isInquiryOnly
+                ? 'Send photos before scheduling so I can confirm the scope and give you an accurate quote.'
+                : 'Preferred time slots are limited. Book online now to reserve the best available appointment.'}
             </p>
             <Link to={primaryTarget} className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-zinc-950 px-6 font-black text-white hover:bg-zinc-800">
               {primaryLabel} <ArrowRight className="h-4 w-4" />
@@ -475,7 +496,7 @@ export default function ServiceDetail() {
         <div className="container mx-auto flex flex-col items-start justify-between gap-7 px-4 md:flex-row md:items-center">
           <div>
             <h2 className="text-3xl font-black tracking-tight md:text-4xl">{isInquiryOnly ? `Want a quote for ${service.name}?` : `Ready to book ${service.name}?`}</h2>
-            <p className="mt-3 max-w-2xl font-semibold">{isInquiryOnly ? 'Send vehicle details and the coverage areas you want protected.' : 'Choose your vehicle size, available add-ons, and appointment time online.'}</p>
+            <p className="mt-3 max-w-2xl font-semibold">{service.id === 'tractor-detailing-service' ? 'Send photos of the equipment and work area so I can price the condition and access accurately.' : isInquiryOnly ? 'Send vehicle details and the coverage areas you want protected.' : 'Choose your vehicle size, available add-ons, and appointment time online.'}</p>
           </div>
           <Link to={primaryTarget} className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-zinc-950 px-7 font-black text-white hover:bg-zinc-800">
             {primaryLabel} <ArrowRight className="h-5 w-5" />

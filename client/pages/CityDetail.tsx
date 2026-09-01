@@ -6,6 +6,7 @@ import { CITIES } from '@/shared/data/cities';
 import { SERVICES } from '@/shared/data/services';
 import { Button } from "../components/ui/button";
 import RelatedGuides from '../components/RelatedGuides';
+import { BOOKING_LINK } from '../lib/constants';
 
 export default function CityDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -82,11 +83,11 @@ export default function CityDetail() {
               {city.content.intro}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/book">
+              <a href={BOOKING_LINK}>
                 <Button size="lg" className="w-full sm:w-auto h-16 px-10 text-xs font-black uppercase tracking-widest bg-blue-600 text-zinc-950 hover:bg-blue-400 border-none shadow-[0_8px_30px_rgb(16,185,129,0.3)]">
                    {city.content.cta}
                 </Button>
-              </Link>
+              </a>
               <Link to="/services">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto h-16 px-10 text-xs font-black uppercase tracking-widest border-white/30 text-white hover:bg-white/10 hover:border-white/60">
                   View Services &amp; Pricing

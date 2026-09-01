@@ -3,6 +3,8 @@ import { dirname, join } from 'node:path';
 
 import { CITIES } from '../shared/data/cities.ts';
 import { CATEGORIES, SERVICES } from '../shared/data/services.ts';
+import { CUSTOMER_SERVICE_GROUPS, SPECIALTY_SERVICE_OPTIONS } from '../shared/data/customerServiceHierarchy.ts';
+import { BOOKING_LINK, getSquareBookingLink, isInquiryOnlyService } from '../client/lib/constants.ts';
 import {
   STATIC_PAGE_SEO,
   getBlogSeoDescription,
@@ -59,8 +61,16 @@ function priceMarkup(service) {
     return service.pricingType === 'custom' ? '<p><strong>Pricing:</strong> Quote after photos and condition review.</p>' : '';
   }
   const suffix = service.pricingType === 'variable' ? '/ft' : '';
-  const qualifier = service.pricingType === 'custom' ? 'Starting prices:' : 'Current pricing:';
-  return `<p><strong>${qualifier}</strong> ${entries.map(([size, price]) => `${escapeHtml(VEHICLE_SIZE_LABELS[size] || size)} ${formatPrice(price)}${suffix}`).join(' · ')}. Final price is confirmed after Bryan reviews the vehicle photos and condition.</p>`;
+  const minimum = Math.min(...entries.map(([, price]) => price));
+  const startingPrice = `${formatPrice(minimum)}${suffix}`;
+  const priceRows = entries.length > 1
+    ? `<p><strong>Vehicle-size prices:</strong> ${entries.map(([size, price]) => `${escapeHtml(VEHICLE_SIZE_LABELS[size] || size)} ${formatPrice(price)}${suffix}`).join(' · ')}.</p>`
+    : '';
+  return `<p><strong>Starting at ${startingPrice}.</strong></p>${priceRows}<p>Additional work caused by condition is discussed before I begin.</p>`;
+}
+
+function withIndefiniteArticle(phrase) {
+  return `${/^[aeiou]/i.test(String(phrase).trim()) ? 'an' : 'a'} ${phrase}`;
 }
 
 function linkListMarkup(items) {
@@ -85,14 +95,14 @@ function staticHeading(path, title) {
   const headings = {
     '/': 'Mobile Car Detailing in Omaha & Bellevue, NE',
     '/services': 'Auto Detailing Services and Pricing',
-    '/about': 'Meet Bryan, Your Local Auto Detailer',
+    '/about': 'Meet Bryan',
     '/book': 'Book Your Auto Detail',
     '/gallery': 'Auto Detailing Before & After Gallery',
     '/ceramic-coating': 'System X Ceramic Coating in Bellevue & Omaha',
     '/membership': 'Car Care Membership Plans',
     '/gift-cards': 'Auto Detailing Gift Cards',
     '/faq': 'Auto Detailing Frequently Asked Questions',
-    '/quote': 'Request an Auto Detailing Quote',
+    '/quote': 'Tell Me About Your Vehicle',
     '/blog': 'Auto Detailing Tips & Guides',
     '/review': 'Enjoyed your detail?',
     '/sitemap': 'Sitemap',
@@ -100,6 +110,67 @@ function staticHeading(path, title) {
     '/privacy': 'Privacy Policy',
   };
   return headings[path] || title.split('|')[0].trim();
+}
+
+// Category pages were prerendering as little more than a heading and a list of
+// service names, well under half the depth of the city pages. This builds the
+// same level of detail from data already defined in shared/data/services.ts —
+// every figure below comes from the service records, nothing is asserted here.
+function categoryDetailsMarkup(category, categoryServices) {
+  const categoryName = category.name.toLowerCase();
+  const isPlural = /(?:packages|plans)$/.test(categoryName);
+  const singularOption = categoryName.replace(/packages$/, 'package').replace(/plans$/, 'plan');
+  const optionTitle = category.name.replace(/Packages$/, 'Package').replace(/Plans$/, 'Plan');
+  const choiceLabel = isPlural ? singularOption : `${categoryName} option`;
+  const allPrices = categoryServices.flatMap((service) => Object.values(service.price || {}))
+    .filter((price) => Number.isFinite(price) && price > 0);
+  const startingLine = allPrices.length
+    ? `<p><strong>${escapeHtml(category.name)} in the Omaha metro ${isPlural ? 'start' : 'starts'} at ${formatPrice(Math.min(...allPrices))}.</strong> Final pricing depends on vehicle size and current condition.</p>`
+    : '';
+
+  const serviceSections = categoryServices.map((service) => {
+    const prices = Object.values(service.price || {}).filter((price) => Number.isFinite(price) && price > 0);
+    const heading = prices.length
+      ? `${service.name} — from ${formatPrice(Math.min(...prices))}`
+      : `${service.name} — custom quote`;
+    return [
+      `<h3>${escapeHtml(heading)}</h3>`,
+      `<p>${escapeHtml(service.longDescription || service.shortDescription || '')}</p>`,
+      service.bestFor ? `<p><strong>Best for:</strong> ${escapeHtml(service.bestFor)}</p>` : '',
+      priceMarkup(service),
+      service.features?.length ? `<h4>What ${escapeHtml(service.name)} includes</h4>${listMarkup(service.features)}` : '',
+    ].filter(Boolean).join('');
+  }).join('');
+
+  const comparisonRows = categoryServices.map((service) => {
+    const prices = Object.values(service.price || {}).filter((price) => Number.isFinite(price) && price > 0);
+    const price = prices.length ? `from ${formatPrice(Math.min(...prices))}` : 'custom quote';
+    return `${service.name} (${price}): ${service.shortDescription || ''}`;
+  });
+
+  const process = [
+    'Compare the options below and pick the one matching the vehicle condition and the result you want.',
+    'Book an available appointment online, or send photos if you are unsure which level fits.',
+    'Choose mobile service at your location, or a drop-off appointment in Bellevue.',
+    'Review the finished work together along with maintenance recommendations.',
+  ];
+
+  const faqQuestions = [
+    `How much ${isPlural ? 'do' : 'does'} ${categoryName} cost in Omaha and Bellevue?`,
+    `Which ${choiceLabel} should I choose?`,
+    `${isPlural ? 'Are' : 'Is'} ${categoryName} available for mobile service or Bellevue drop-off?`,
+    `How long ${isPlural ? 'do' : 'does'} ${categoryName} take?`,
+    'Does vehicle size change the price?',
+  ];
+
+  return [
+    startingLine,
+    `<h2>${escapeHtml(optionTitle)} options and pricing</h2>`,
+    serviceSections,
+    `<h2>Comparing ${escapeHtml(isPlural ? categoryName : `${categoryName} options`)}</h2>${listMarkup(comparisonRows)}`,
+    `<h2>How an appointment works</h2><ol>${process.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol>`,
+    `<h2>Common questions</h2>${listMarkup(faqQuestions)}`,
+  ].filter(Boolean).join('');
 }
 
 function buildStaticRoutes(blogRoutes = []) {
@@ -113,7 +184,7 @@ function buildStaticRoutes(blogRoutes = []) {
     let details = '';
     let links = [];
 
-    if (path === '/' || path === '/services') {
+    if (path === '/') {
       const featuredServices = SERVICES
         .filter((service) => ['maintenance-interior', 'interior-detail', 'interior-reset', 'full-detail-package', 'showroom-package', 'system-x-pro-plus'].includes(service.id))
         .map((service) => ({
@@ -125,11 +196,63 @@ function buildStaticRoutes(blogRoutes = []) {
         href: `/areas/${city.slug}`,
         label: `Auto detailing in ${city.name}`,
       }));
-    } else if (path === '/book') {
-      details = `<h2>Available packages</h2>${linkListMarkup(SERVICES.map((service) => ({
-        href: `/services/${service.id}`,
-        label: service.name,
-      })))}`;
+    } else if (path === '/services') {
+      const groupSections = CUSTOMER_SERVICE_GROUPS.map((group) => {
+        const serviceLinks = group.services.map((option) => {
+          const service = SERVICES.find((item) => item.id === option.serviceId);
+          if (!service) return null;
+          const prices = Object.values(service.price || {}).filter((price) => Number.isFinite(price) && price > 0);
+          const priceLabel = prices.length ? `from ${formatPrice(Math.min(...prices))}` : 'quote after review';
+          return {
+            href: `/services/${service.id}`,
+            label: `${option.displayName || service.name} — ${option.fitLabel} — ${priceLabel}`,
+          };
+        }).filter(Boolean);
+        return `<h2>${escapeHtml(group.title)}</h2><p>${escapeHtml(group.description)}</p>${linkListMarkup(serviceLinks)}`;
+      }).join('');
+      const specialtyLinks = SPECIALTY_SERVICE_OPTIONS.map((option) => ({
+        href: option.serviceId ? `/services/${option.serviceId}` : '/quote',
+        label: `${option.title} — text photos or request a quote`,
+      }));
+      details = `${groupSections}<h2>Specialty / Restoration</h2><p>Condition-dependent work is reviewed from photos before pricing or scheduling.</p>${linkListMarkup(specialtyLinks)}<p><a href="/quote">Text photos or request a quote</a></p><h2>More service information</h2>${linkListMarkup(categoryLinks)}`;
+      links = CITIES.filter((city) => city.type === 'primary').map((city) => ({
+        href: `/areas/${city.slug}`,
+        label: `Auto detailing in ${city.name}`,
+      }));
+    } else if (path === '/book' || path === '/booking') {
+      details = '<h2>Booking is handled securely by Square</h2><p>Choose a service on this website, then select the vehicle option and an available appointment time on Square. Specialty jobs that need photos are quoted before scheduling.</p>';
+      links = [
+        { href: BOOKING_LINK, label: 'Continue to Square booking' },
+        { href: '/services', label: 'Compare detailing services' },
+        { href: '/quote', label: 'Text photos or request a quote' },
+      ];
+    } else if (path === '/about') {
+      details = [
+        '<h2>Owner-operated since 2017</h2>',
+        '<p>I’m Bryan, the owner and detailer behind Bryan’s Showroom Quality Detailing. Before starting the business, I worked in a collision center doing detailing, vehicle preparation, and paint prep. That experience taught me how differently paint, trim, fabric, and other surfaces need to be handled.</p>',
+        '<h2>Why I started the business</h2>',
+        '<p>After my mother passed away, I took guardianship of my two younger siblings. I needed a way to support my family, so in 2017 I turned the detailing work I already knew and cared about into my own business.</p>',
+        '<h2>How I approach the work</h2>',
+        '<p>I inspect the vehicle, recommend the service, perform the detail, and check the result myself. I explain what I see, what I expect can be improved safely, and any price change before adding work. The person you talk to is the person doing the work.</p>',
+      ].join('');
+      links = [
+        { href: '/services', label: 'View detailing services' },
+        { href: BOOKING_LINK, label: 'View appointment availability' },
+        { href: '/quote', label: 'Text photos or contact Bryan' },
+      ];
+    } else if (path === '/quote') {
+      details = [
+        '<h2>Text photos for the quickest answer</h2>',
+        '<p>Send a few clear photos of the vehicle and the areas that need attention. You can also use the short contact form. I review every request myself before recommending a service or confirming a price.</p>',
+        '<h2>What to include</h2>',
+        listMarkup(['Year, make, model, and vehicle size', 'The interior, paint, odor, stain, or specialty work you want done', 'Pet hair, spills, oxidation, access limitations, or other condition details']),
+        '<p>Photos are sent by text so I can view them clearly on my phone; they are not uploaded through the contact form.</p>',
+      ].join('');
+      links = [
+        { href: 'sms:+17123056313', label: 'Text photos to Bryan' },
+        { href: 'tel:+17123056313', label: 'Call (712) 305-6313' },
+        { href: '/services', label: 'Compare detailing services' },
+      ];
     } else if (path === '/ceramic-coating') {
       const coatingServices = SERVICES.filter((service) => service.categoryId === 'protection');
       details = `<h2>Ceramic protection options</h2>${linkListMarkup(coatingServices.map((service) => ({
@@ -174,11 +297,19 @@ function buildStaticRoutes(blogRoutes = []) {
       fallback: fallbackMarkup({
         heading: `${category.name} in Omaha & Bellevue`,
         description: category.description,
-        details: `<h2>Available ${escapeHtml(category.name)} services</h2>${linkListMarkup(categoryServices.map((service) => ({
-          href: `/services/${service.id}`,
-          label: service.name,
-        })))}`,
-        links: [{ href: '/book', label: 'Book auto detailing' }],
+        details: categoryDetailsMarkup(category, categoryServices),
+        links: [
+          ...categoryServices.map((service) => ({
+            href: `/services/${service.id}`,
+            label: service.name,
+          })),
+          ...CITIES.filter((city) => city.type === 'primary').slice(0, 4).map((city) => ({
+            href: `/areas/${city.slug}`,
+            label: `${category.name} in ${city.name}`,
+          })),
+          { href: '/quote', label: `Get ${withIndefiniteArticle(category.name.toLowerCase())} quote` },
+          ...(category.id === 'tractor-detailing' ? [] : [{ href: BOOKING_LINK, label: 'Book auto detailing with Square' }]),
+        ],
       }),
     });
   }
@@ -186,11 +317,6 @@ function buildStaticRoutes(blogRoutes = []) {
   for (const service of SERVICES) {
     const path = `/services/${service.id}`;
     const prices = Object.values(service.price).filter((price) => Number.isFinite(price) && price > 0);
-    const priceText = prices.length === 0
-      ? 'Custom quote based on vehicle size and condition.'
-      : service.pricingType === 'custom'
-        ? `Starting prices are ${formatPrice(Math.min(...prices))}; the final price is confirmed after Bryan reviews the vehicle photos and condition.`
-        : `Pricing starts at ${formatPrice(Math.min(...prices))}.`;
     routes.set(path, {
       path,
       title: service.seo.title,
@@ -200,14 +326,15 @@ function buildStaticRoutes(blogRoutes = []) {
         heading: service.name,
         description: service.longDescription,
         details: [
-          `<p>${escapeHtml(priceText)}</p>`,
-          priceMarkup(service),
+          /\$\d/.test(service.longDescription) ? '' : priceMarkup(service),
           service.bestFor ? `<p><strong>Best for:</strong> ${escapeHtml(service.bestFor)}</p>` : '',
           `<h2>What is included</h2>${listMarkup(service.features)}`,
         ].filter(Boolean).join(''),
         links: [
           { href: `/services/category/${CATEGORIES.find((category) => category.id === service.categoryId)?.slug || ''}`, label: 'Compare related services' },
-          { href: `/book?serviceId=${service.id}`, label: `Book ${service.name}` },
+          isInquiryOnlyService(service.id)
+            ? { href: '/quote', label: `Text photos / request a quote for ${service.name}` }
+            : { href: getSquareBookingLink(service.id), label: `Book ${service.name} with Square` },
         ],
       }),
     });
@@ -257,7 +384,7 @@ function buildStaticRoutes(blogRoutes = []) {
         links: [
           ...areaLinks,
           ...serviceLinks.slice(0, 6),
-          { href: '/quote', label: `Get a ${city.name} detailing quote` },
+          { href: '/quote', label: `Get ${withIndefiniteArticle(city.name)} detailing quote` },
         ],
       }),
     });
