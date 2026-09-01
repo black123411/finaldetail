@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Calendar, MessageSquare } from 'lucide-react';
-import { trackEvent } from '../lib/analytics';
+import { trackBookingHandoff, trackEvent } from '../lib/analytics';
 import { BOOKING_LINK, getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 
 export default function StickyBookingBar() {
@@ -23,7 +23,7 @@ export default function StickyBookingBar() {
             <Calendar className="h-4 w-4 shrink-0" /> {label}
           </Link>
         ) : (
-          <a href={target} onClick={() => trackEvent('begin_booking', { location: 'sticky_mobile_bar', service_id: serviceId })} className="flex min-h-12 flex-1 items-center justify-center gap-2 bg-blue-600 px-3 text-center text-sm font-black text-white">
+          <a href={target} onClick={(event) => trackBookingHandoff(event, { location: 'sticky_mobile_bar', service_id: serviceId })} className="flex min-h-12 flex-1 items-center justify-center gap-2 bg-blue-600 px-3 text-center text-sm font-black text-white">
             <Calendar className="h-4 w-4 shrink-0" /> {label}
           </a>
         )}

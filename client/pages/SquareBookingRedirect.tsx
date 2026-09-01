@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Calendar } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
+import { redirectToBookingAfterTracking } from '../lib/analytics';
 
 const LEGACY_SERVICE_IDS: Record<string, string> = {
   'ceramic-3yr': 'system-x-crystal-plus',
@@ -15,8 +16,16 @@ export default function SquareBookingRedirect() {
   const target = isInquiryOnlyService(serviceId) ? '/quote' : getSquareBookingLink(serviceId);
 
   useEffect(() => {
-    window.location.replace(target);
-  }, [target]);
+    if (target === '/quote') {
+      window.location.replace(target);
+      return;
+    }
+
+    return redirectToBookingAfterTracking(target, {
+      location: 'legacy_book_route',
+      service_id: serviceId,
+    });
+  }, [serviceId, target]);
 
   return (
     <main className="flex min-h-[65vh] items-center justify-center bg-slate-50 px-4 py-20">

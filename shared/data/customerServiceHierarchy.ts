@@ -15,6 +15,13 @@ export interface CustomerServiceGroup {
   services: CustomerServiceOption[];
 }
 
+export interface SpecialtyServiceOption {
+  id: string;
+  title: string;
+  description: string;
+  serviceId?: string;
+}
+
 export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
   {
     id: 'interior',
@@ -126,7 +133,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
   },
 ];
 
-export const SPECIALTY_SERVICE_OPTIONS = [
+export const SPECIALTY_SERVICE_OPTIONS: readonly SpecialtyServiceOption[] = [
   {
     id: 'odor-treatment',
     title: 'Odor treatment',

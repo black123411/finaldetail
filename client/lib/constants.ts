@@ -1,4 +1,13 @@
-export const BOOKING_LINK = "https://app.squareup.com/appointments/book/L30DXARY07J67/start";
+const BOOKING_BASE_LINK = "https://app.squareup.com/appointments/book/L30DXARY07J67/start";
+
+const generalBookingParams = new URLSearchParams({
+  utm_source: 'bryansdetailingomaha.com',
+  utm_medium: 'website',
+  utm_campaign: 'online_booking',
+  utm_content: 'general',
+});
+
+export const BOOKING_LINK = `${BOOKING_BASE_LINK}?${generalBookingParams.toString()}`;
 
 const INQUIRY_ONLY_SERVICE_IDS = new Set([
   'ppf-inquiry',
@@ -53,7 +62,11 @@ export function getSquareBookingLink(serviceId?: string) {
     service_id: squareServiceId,
     locale: 'en',
     referrer: 'website',
+    utm_source: 'bryansdetailingomaha.com',
+    utm_medium: 'website',
+    utm_campaign: 'online_booking',
+    utm_content: serviceId,
   });
 
-  return `${BOOKING_LINK}?${params.toString()}`;
+  return `${BOOKING_BASE_LINK}?${params.toString()}`;
 }

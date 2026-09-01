@@ -7,6 +7,7 @@ import { SERVICES } from '@/shared/data/services';
 import { Button } from "../components/ui/button";
 import RelatedGuides from '../components/RelatedGuides';
 import { BOOKING_LINK } from '../lib/constants';
+import { trackBookingHandoff } from '../lib/analytics';
 
 export default function CityDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -83,7 +84,7 @@ export default function CityDetail() {
               {city.content.intro}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href={BOOKING_LINK}>
+              <a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'city_hero', city: city.slug })}>
                 <Button size="lg" className="w-full sm:w-auto h-16 px-10 text-xs font-black uppercase tracking-widest bg-blue-600 text-zinc-950 hover:bg-blue-400 border-none shadow-[0_8px_30px_rgb(16,185,129,0.3)]">
                    {city.content.cta}
                 </Button>

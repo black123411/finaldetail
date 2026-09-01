@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, MessageSquare } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { trackEvent } from '../lib/analytics';
+import { trackBookingHandoff, trackEvent } from '../lib/analytics';
 import { BOOKING_LINK } from '../lib/constants';
 
 const TEXT_PHOTOS_LINK =
@@ -63,7 +63,7 @@ export default function About() {
                   className="h-14 bg-blue-600 px-7 font-black text-white hover:bg-blue-500"
                   asChild
                 >
-                  <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'about_hero' })}>
+                  <a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'about_hero' })}>
                     <Calendar className="mr-2 h-5 w-5" aria-hidden="true" />
                     View Availability
                   </a>
@@ -255,7 +255,7 @@ export default function About() {
                   </a>
                 </Button>
                 <Button size="lg" variant="outline" className="h-14 border-zinc-300 px-7 font-black" asChild>
-                  <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'about_closing' })}>
+                  <a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'about_closing' })}>
                     View Availability
                     <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
                   </a>

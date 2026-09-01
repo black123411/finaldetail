@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button';
 import { SERVICES, CATEGORIES } from '@/shared/data/services';
 import { BOOKING_LINK, getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { formatCurrency } from '../lib/utils';
-import { trackEvent } from '../lib/analytics';
+import { trackBookingHandoff, trackEvent } from '../lib/analytics';
 import RelatedGuides, { guideTopicForCategory } from '../components/RelatedGuides';
 
 export default function CategoryDetail() {
@@ -96,7 +96,7 @@ export default function CategoryDetail() {
                   {isQuoteCategory ? (
                     <Link to="/quote" onClick={() => trackEvent('begin_quote', { location: 'category_hero', category: category.slug })}>Text Photos / Request Quote</Link>
                   ) : (
-                    <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'category_hero', category: category.slug })}>Book a Detail</a>
+                    <a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'category_hero', category: category.slug })}>Book a Detail</a>
                   )}
                 </Button>
               </div>
@@ -203,7 +203,7 @@ export default function CategoryDetail() {
                             Request Quote
                           </Link>
                         ) : (
-                          <a href={getSquareBookingLink(service.id)} onClick={() => trackEvent('begin_booking', { location: 'category_card', service_id: service.id, category: category.slug })}>
+                          <a href={getSquareBookingLink(service.id)} onClick={(event) => trackBookingHandoff(event, { location: 'category_card', service_id: service.id, category: category.slug })}>
                             <Calendar className="h-5 w-5" />
                             Book This Service
                           </a>
@@ -293,7 +293,7 @@ export default function CategoryDetail() {
               {isQuoteCategory ? (
                 <Link to="/quote" onClick={() => trackEvent('begin_quote', { location: 'category_footer', category: category.slug })}>Text Photos / Request Quote</Link>
               ) : (
-                <a href={BOOKING_LINK} onClick={() => trackEvent('begin_booking', { location: 'category_footer', category: category.slug })}>Book Appointment Now</a>
+                <a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'category_footer', category: category.slug })}>Book Appointment Now</a>
               )}
             </Button>
             <Button size="lg" variant="outline" className="h-14 px-10 text-lg border-zinc-700 hover:bg-zinc-800" asChild>

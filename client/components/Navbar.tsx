@@ -3,7 +3,7 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
-import { trackEvent } from '../lib/analytics';
+import { trackBookingHandoff } from '../lib/analytics';
 import { BOOKING_LINK } from '../lib/constants';
 
 const serviceLinks = [
@@ -77,7 +77,7 @@ export default function Navbar() {
           {isAdmin && <Link to="/admin" className={linkClass('/admin')}>Admin</Link>}
           <a
             href={BOOKING_LINK}
-            onClick={() => trackEvent('begin_booking', { location: 'desktop_nav' })}
+            onClick={(event) => trackBookingHandoff(event, { location: 'desktop_nav' })}
             className="my-3 inline-flex min-h-11 items-center justify-center bg-blue-600 px-6 text-sm font-black text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             Book Now

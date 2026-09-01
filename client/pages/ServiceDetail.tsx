@@ -15,7 +15,7 @@ import {
   MessageSquare,
   ShieldCheck,
 } from 'lucide-react';
-import { trackEvent } from '../lib/analytics';
+import { trackBookingHandoff, trackEvent } from '../lib/analytics';
 import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, type Service } from '@/shared/data/services';
 import { SERVICE_PAGE_CONTENT } from '@/shared/data/servicePageContent';
@@ -231,7 +231,7 @@ export default function ServiceDetail() {
               ) : (
                 <a
                   href={primaryTarget}
-                  onClick={() => trackEvent('begin_booking', { location: 'service_detail', service_id: service.id })}
+                  onClick={(event) => trackBookingHandoff(event, { location: 'service_detail', service_id: service.id })}
                   className="inline-flex h-14 items-center justify-center gap-2 rounded-md bg-blue-600 px-7 font-black text-zinc-950 hover:bg-blue-400"
                 >
                   <Calendar className="h-5 w-5" /> {primaryLabel}
