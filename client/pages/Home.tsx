@@ -43,7 +43,7 @@ export default function Home() {
             <p className="mt-5 text-sm text-slate-300">Mobile service across the metro and appointment-only drop-off in Bellevue.</p>
           </div>
         </div>
-      </section>
+      <nav aria-label="Compare detailing services" className="container mx-auto flex flex-wrap gap-x-6 gap-y-3 px-4 py-6 text-base font-bold"><Link className="underline underline-offset-4" to="/services">Auto detailing services &amp; prices</Link><Link className="underline underline-offset-4" to="/services/category/interior-detailing">Interior car detailing</Link><Link className="underline underline-offset-4" to="/services/category/paint-correction">Paint correction services</Link><Link className="underline underline-offset-4" to="/ceramic-coating">Ceramic coatings</Link></nav></section>
 
       <section aria-label="Why customers trust Bryan" className="border-b border-slate-200 bg-white">
         <div className="container mx-auto grid px-4 sm:grid-cols-2 lg:grid-cols-5">
