@@ -85,7 +85,7 @@ function SEO() {
       pageSeo = {
         title: category.seo?.title || `${category.name} | Bryan's Showroom Quality Mobile Detailing`,
         description: category.seo?.description || category.description,
-        canonicalPath: `/services/category/${category.slug}`,
+        canonicalPath: category.slug === 'ceramic-coating' ? '/ceramic-coating' : `/services/category/${category.slug}`,
         imagePath: category.image,
       };
     }
@@ -216,7 +216,8 @@ export default function App() {
                 <Route path="/services/ceramic-3yr" element={<Navigate replace to="/services/system-x-crystal-plus" />} />
                 <Route path="/services/protection-package" element={<Navigate replace to="/services/system-x-pro-plus" />} />
                 <Route path="/services/:serviceId" element={<ServiceDetail />} />
-                <Route path="/services/category/:slug" element={<CategoryDetail />} />
+                <Route path="/services/category/ceramic-coating" element={<Navigate to="/ceramic-coating" replace />} />
+              <Route path="/services/category/:slug" element={<CategoryDetail />} />
                 <Route path="/areas/:slug" element={<CityDetail />} />
                 <Route path="/membership" element={<Membership />} />
                 <Route path="/gift-cards" element={<GiftCards />} />
