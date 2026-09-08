@@ -50,7 +50,7 @@
       },
       {
         "source": "/services/ceramic-coating",
-        "destination": "/services/category/ceramic-coating",
+        "destination": "/ceramic-coating",
         "type": 301
       },
       {
@@ -136,6 +136,11 @@
       {
         "source": "/blog/how-to-protect-new-car-paint",
         "destination": "/services/new-car-detail",
+        "type": 301
+      },
+      {
+        "source": "/services/category/ceramic-coating",
+        "destination": "/ceramic-coating",
         "type": 301
       }
     ],
