@@ -188,7 +188,7 @@ const getRouteSeo = async (requestPath: string): Promise<RouteSeo> => {
       return {
         title: category.seo?.title || `${category.name} | Bryan's Showroom Quality Mobile Detailing`,
         description: category.seo?.description || category.description,
-        canonicalPath: `/services/category/${category.slug}`,
+        canonicalPath: category.slug === 'ceramic-coating' ? '/ceramic-coating' : `/services/category/${category.slug}`,
         schema: businessSchema()
       };
     }
@@ -330,7 +330,8 @@ async function startServer() {
       '/exterior-wash-and-wax': '/services/exterior-enhancement',
       '/s/gift-cards': '/gift-cards',
       '/tractor-ceramic-coating': '/services/tractor-detailing-service',
-      '/services/ceramic-coating': '/services/category/ceramic-coating',
+      '/services/ceramic-coating': '/ceramic-coating',
+      '/services/category/ceramic-coating': '/ceramic-coating',
       '/services/interior-detailing': '/services/category/interior-detailing',
       '/services/full-detail': '/services/category/full-detailing',
       '/services/paint-correction': '/services/category/paint-correction',
@@ -672,7 +673,7 @@ async function startServer() {
     ];
 
     const serviceUrls = SERVICES.map(s => `/services/${s.id}`);
-    const categoryUrls = CATEGORIES.map(c => `/services/category/${c.slug}`);
+    const categoryUrls = CATEGORIES.filter(c => c.slug !== 'ceramic-coating').map(c => `/services/category/${c.slug}`);
     const cityUrls = CITIES.map(c => `/areas/${c.slug}`);
     let blogUrls: string[] = [];
     try {
