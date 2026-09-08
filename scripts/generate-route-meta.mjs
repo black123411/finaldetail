@@ -176,7 +176,7 @@ function categoryDetailsMarkup(category, categoryServices) {
 function buildStaticRoutes(blogRoutes = []) {
   const routes = new Map();
   const categoryLinks = CATEGORIES.map((category) => ({
-    href: `/services/category/${category.slug}`,
+    href: category.slug === 'ceramic-coating' ? '/ceramic-coating' : `/services/category/${category.slug}`,
     label: category.name,
   }));
 
@@ -291,6 +291,7 @@ function buildStaticRoutes(blogRoutes = []) {
     const categoryServices = SERVICES.filter((service) => service.categoryId === category.id);
     routes.set(path, {
       path,
+      canonicalPath: category.slug === 'ceramic-coating' ? '/ceramic-coating' : path,
       title: category.seo?.title || `${category.name} | Bryan's Showroom Quality Mobile Detailing`,
       description: category.seo?.description || category.description,
       imagePath: category.image || DEFAULT_IMAGE,
