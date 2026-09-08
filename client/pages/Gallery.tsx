@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Camera, Award } from 'lucide-react';
@@ -76,7 +77,7 @@ export default function Gallery() {
             <span>System X Certified</span>
           </motion.div>
         </div>
-      </section>
+      <nav aria-label="Compare detailing services" className="container mx-auto flex flex-wrap gap-x-6 gap-y-3 px-4 py-6 text-base font-bold"><Link className="underline underline-offset-4" to="/services">Auto detailing services &amp; prices</Link><Link className="underline underline-offset-4" to="/services/category/interior-detailing">Interior car detailing</Link><Link className="underline underline-offset-4" to="/services/category/paint-correction">Paint correction services</Link><Link className="underline underline-offset-4" to="/ceramic-coating">Ceramic coatings</Link></nav></section>
 
       {/* Before & After Sliders */}
       <section className="mb-24 bg-zinc-900/50">
