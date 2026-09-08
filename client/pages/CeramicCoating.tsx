@@ -314,7 +314,7 @@ export default function CeramicCoating() {
             </motion.div>
           </div>
         </div>
-      </section>
+      <nav aria-label="Compare detailing services" className="container mx-auto flex flex-wrap gap-x-6 gap-y-3 px-4 py-6 text-base font-bold"><Link className="underline underline-offset-4" to="/services">Auto detailing services &amp; prices</Link><Link className="underline underline-offset-4" to="/services/category/interior-detailing">Interior car detailing</Link><Link className="underline underline-offset-4" to="/services/category/paint-correction">Paint correction services</Link><Link className="underline underline-offset-4" to="/ceramic-coating">Ceramic coatings</Link></nav></section>
 
       {/* What is Ceramic Coating */}
       <section className="py-24 bg-zinc-900">
