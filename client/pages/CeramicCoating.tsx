@@ -7,7 +7,7 @@ import { PHOTOS } from '@/shared/data/photos';
 import { formatCurrency } from '../lib/utils';
 import RelatedGuides from '../components/RelatedGuides';
 import { getSquareBookingLink } from '../lib/constants';
-import { trackBookingHandoff } from '../lib/analytics';
+import { trackBookingHandoff, trackEvent } from '../lib/analytics';
 
 const BENEFITS = [
   {
@@ -515,7 +515,7 @@ export default function CeramicCoating() {
               <p className="mt-1 text-zinc-400">Text photos or request a quote. I will match the product to the vehicle instead of pushing the longest warranty.</p>
             </div>
             <Button asChild className="h-14 shrink-0 bg-blue-600 hover:bg-blue-400 text-black font-black uppercase tracking-widest rounded-xl">
-              <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%27d%20like%20a%20System%20X%20coating%20quote.%20My%20vehicle%20is%3A%20">Text Photos</a>
+              <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%27d%20like%20a%20System%20X%20coating%20quote.%20My%20vehicle%20is%3A%20" onClick={() => trackEvent('click_text_quote', { location: 'ceramic_consultation' })}>Text Photos</a>
             </Button>
           </div>
         </div>
@@ -643,7 +643,7 @@ export default function CeramicCoating() {
               <a href={getSquareBookingLink('system-x-pro-plus')} onClick={(event) => trackBookingHandoff(event, { location: 'ceramic_final_cta', service_id: 'system-x-pro-plus' })}>Book Pro+ Signature</a>
             </Button>
             <Button asChild variant="outline" className="h-16 px-12 border-zinc-600 text-white hover:bg-zinc-800 font-black text-sm uppercase tracking-widest rounded-2xl">
-              <a href="tel:7123056313">(712) 305-6313</a>
+              <a href="tel:7123056313" onClick={() => trackEvent('click_call', { location: 'ceramic_final_cta' })}>(712) 305-6313</a>
             </Button>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { ChevronDown, HelpCircle, Loader2 } from 'lucide-react';
 import { FAQAPI } from '../services/api';
 import RelatedGuides from '../components/RelatedGuides';
+import { trackEvent } from '../lib/analytics';
 
 const DEFAULT_FAQS = [
   {
@@ -132,7 +133,7 @@ export default function FAQ() {
           <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
           <p className="text-zinc-400 mb-6">I'm here to help. Contact me directly for personalized advice about your vehicle.</p>
           <div className="flex justify-center gap-4">
-            <a href="tel:712-305-6313" className="px-6 py-3 bg-white text-zinc-900 rounded-lg font-medium hover:bg-zinc-200 transition-colors">
+            <a href="tel:712-305-6313" onClick={() => trackEvent('click_call', { location: 'faq_footer' })} className="px-6 py-3 bg-white text-zinc-900 rounded-lg font-medium hover:bg-zinc-200 transition-colors">
               Call Me
             </a>
             <a href="mailto:bryansmobiledetailing@gmail.com" className="px-6 py-3 border border-zinc-700 text-white rounded-lg font-medium hover:bg-zinc-800 transition-colors">

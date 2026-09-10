@@ -42,7 +42,7 @@ export type SeoRoute = {
 export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
   '/': {
     title: "Mobile Car Detailing Omaha & Bellevue | Bryan's Detailing",
-    description: 'Owner-operated mobile and drop-off car detailing in Bellevue and Omaha. Interior detailing from $139, full details, paint correction, and ceramic coatings.',
+    description: 'Owner-operated mobile detailing across Omaha and Bellevue drop-off. Interior cleaning from $139, full details, paint correction, and System X coatings.',
   },
   '/services': {
     title: 'Auto Detailing Services & Prices | Bellevue and Omaha',

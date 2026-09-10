@@ -22,7 +22,7 @@ export const CITIES: CityPage[] = [
     type: 'primary',
     seo: {
       title: 'Car Detailing Omaha, NE | Mobile Auto Detailing | Bryan\'s',
-      description: 'Professional mobile car detailing in Omaha. Interior detailing, complete details, paint correction, and Bellevue drop-off ceramic coating options.'
+      description: 'Owner-operated mobile car detailing in Omaha. View interior and full-detail prices, paint correction, and System X coating options with Bellevue drop-off.'
     },
     content: {
       featuredServiceIds: ['maintenance-detail', 'interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'pre-sale-detail'],
@@ -47,7 +47,7 @@ export const CITIES: CityPage[] = [
     type: 'primary',
     seo: {
       title: 'Car Detailing Bellevue, NE | Mobile & Drop-Off Options',
-      description: 'Owner-operated car detailing in Bellevue, Nebraska. Mobile detailing, interior cleaning, full details, paint correction, and ceramic coating.'
+      description: 'Owner-operated Bellevue car detailing since 2017. Interior cleaning, full details, paint correction, System X coatings, mobile and drop-off options.'
     },
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'new-car-detail', 'maintenance-detail'],
@@ -72,7 +72,7 @@ export const CITIES: CityPage[] = [
     type: 'secondary',
     seo: {
       title: 'Mobile Car Detailing Papillion NE | Bryan\'s Detailing',
-      description: 'Auto detailing for Papillion drivers, including interior cleaning, exterior wash and wax, paint correction, ceramic coating, and full details.'
+      description: 'Owner-operated mobile car detailing in Papillion. View interior and full-detail prices, paint correction, ceramic coating, and Bellevue drop-off options.'
     },
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'pre-sale-detail', 'maintenance-detail'],
@@ -197,7 +197,7 @@ export const CITIES: CityPage[] = [
     type: 'secondary',
     seo: {
       title: 'Mobile Car Detailing Council Bluffs IA | Bryan\'s',
-      description: 'Mobile auto detailing in Council Bluffs for interior cleaning, exterior protection, paint correction, ceramic coating, and full-detail packages.'
+      description: 'Owner-operated mobile car detailing in Council Bluffs. View interior and full-detail prices, paint correction, ceramic coating, and current availability.'
     },
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus'],

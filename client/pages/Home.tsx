@@ -28,19 +28,19 @@ export default function Home() {
           <div className="max-w-3xl">
             <p className="mb-5 text-sm font-black uppercase tracking-[0.2em] text-blue-300">Owner-operated since 2017</p>
             <h1 className="max-w-3xl text-5xl font-black leading-[.96] tracking-tight sm:text-6xl lg:text-7xl">Mobile Car Detailing in Omaha &amp; Bellevue</h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">Interior detailing, full details, paint correction, and ceramic coatings—done carefully and priced clearly before any additional work.</p>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">Interior detailing from $139, full details, paint correction, and System X ceramic coatings—done carefully with clear pricing before any additional work.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_hero' })} className="inline-flex min-h-14 items-center justify-center gap-2 bg-blue-600 px-7 font-black text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">
-                View Services &amp; Pricing <ArrowRight className="h-5 w-5" />
+                Choose a Service &amp; Price <ArrowRight className="h-5 w-5" />
               </Link>
               <a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'home_hero' })} className="inline-flex min-h-14 items-center justify-center gap-2 border border-white/50 bg-slate-950/40 px-7 font-black text-white hover:bg-white hover:text-slate-950">
-                <Calendar className="h-5 w-5" /> Book Now
+                <Calendar className="h-5 w-5" /> Check Availability
               </a>
             </div>
             <a href={textHref} onClick={() => trackEvent('click_text_quote', { location: 'home_hero' })} className="mt-5 inline-flex min-h-11 items-center gap-2 font-bold text-blue-200 underline decoration-blue-400 underline-offset-4 hover:text-white">
               Not sure? Text me photos. <MessageSquare className="h-4 w-4" />
             </a>
-            <p className="mt-5 text-sm text-slate-300">Mobile service across the metro and appointment-only drop-off in Bellevue.</p>
+            <p className="mt-5 text-sm text-slate-300">No deposit required to book. Mobile service across the metro and appointment-only drop-off in Bellevue.</p>
           </div>
         </div>
       <nav aria-label="Compare detailing services" className="container mx-auto flex flex-wrap gap-x-6 gap-y-3 px-4 py-6 text-base font-bold"><Link className="underline underline-offset-4" to="/services">Auto detailing services &amp; prices</Link><Link className="underline underline-offset-4" to="/services/category/interior-detailing">Interior car detailing</Link><Link className="underline underline-offset-4" to="/services/category/paint-correction">Paint correction services</Link><Link className="underline underline-offset-4" to="/ceramic-coating">Ceramic coatings</Link></nav></section>

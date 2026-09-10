@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { MessageSquare, Phone, X } from 'lucide-react';
 import { Button } from './ui/button';
+import { trackEvent } from '../lib/analytics';
 
 export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,12 +23,12 @@ export default function ChatAssistant() {
             </p>
             <div className="grid gap-3">
               <Button asChild>
-                <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detailing%20service.%20Here%20are%20my%20vehicle%20details%20and%20photos%3A%20">
+                <a href="sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detailing%20service.%20Here%20are%20my%20vehicle%20details%20and%20photos%3A%20" onClick={() => trackEvent('click_text_quote', { location: 'contact_assistant' })}>
                   <MessageSquare className="mr-2 h-4 w-4" /> Text Me
                 </a>
               </Button>
               <Button variant="outline" asChild>
-                <a href="tel:+17123056313"><Phone className="mr-2 h-4 w-4" /> Call (712) 305-6313</a>
+                <a href="tel:+17123056313" onClick={() => trackEvent('click_call', { location: 'contact_assistant' })}><Phone className="mr-2 h-4 w-4" /> Call (712) 305-6313</a>
               </Button>
             </div>
           </motion.div>
