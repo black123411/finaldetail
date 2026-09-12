@@ -10,11 +10,15 @@ A GET request to that URL reports whether the two required secrets are configure
 
 ## What is sent to GA4
 
-- `booking_confirmed` when Square sends `booking.created`
+- `booking_confirmed` for buyer-created Square bookings, including the Square Online Booking Site
+- `booking_created_manual` for bookings created by the seller in Square Appointments
+- `booking_created_api` for bookings created through the Bookings API
 - `booking_cancelled` when a booking update is cancelled or declined
 - `booking_no_show` when the Square booking status is `NO_SHOW`
 
-No customer names, phone numbers, email addresses, notes, or other PII are sent to GA4. The events include only Square booking/event IDs, status, location ID, and the first service variation ID.
+This separation is intentional: `booking_confirmed` can be used as the customer-booking key event without a manually entered appointment inflating website conversion totals.
+
+No customer names, phone numbers, email addresses, notes, or other PII are sent to GA4. The events include only Square booking/event IDs, booking status/source, location ID, and the first service variation ID.
 
 Square retries are deduplicated in the existing D1 database by Square `event_id`. Failed GA4 sends remain retryable.
 
