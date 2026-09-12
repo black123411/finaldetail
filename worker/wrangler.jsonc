@@ -1,12 +1,14 @@
 {
   "$schema": "../node_modules/wrangler/config-schema.json",
   "name": "bryans-detailing-api",
-  "main": "src/index.ts",
+  "main": "src/entry.ts",
   "compatibility_date": "2026-07-15",
   "workers_dev": true,
   "vars": {
     "SQUARE_ENVIRONMENT": "production",
-    "ALLOWED_ORIGINS": "https://bryansdetailingomaha.com,https://www.bryansdetailingomaha.com,http://localhost:5173"
+    "ALLOWED_ORIGINS": "https://bryansdetailingomaha.com,https://www.bryansdetailingomaha.com,http://localhost:5173",
+    "GA4_MEASUREMENT_ID": "G-2QGCVR4JJX",
+    "SQUARE_WEBHOOK_NOTIFICATION_URL": "https://bryans-detailing-api.bryansmobiledetailing.workers.dev/api/webhooks/square/bookings"
   },
   "d1_databases": [
     {
