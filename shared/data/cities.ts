@@ -21,24 +21,24 @@ export const CITIES: CityPage[] = [
     name: 'Omaha, NE',
     type: 'primary',
     seo: {
-      title: 'Car Detailing Omaha, NE | Mobile Auto Detailing | Bryan\'s',
-      description: 'Owner-operated mobile car detailing in Omaha. View interior and full-detail prices, paint correction, and System X coating options with Bellevue drop-off.'
+      title: 'Car Detailing Omaha NE | Mobile Detailing | Bryan\'s',
+      description: 'Car detailing in Omaha, NE with interior detailing from $179, full details from $279, paint correction, System X coatings, mobile service, and Bellevue drop-off.'
     },
     content: {
       featuredServiceIds: ['maintenance-detail', 'interior-detail', 'full-detail-package', 'paint-correction-l1', 'system-x-crystal-plus', 'pre-sale-detail'],
-      title: 'Mobile Car Detailing in Omaha, NE',
-      intro: "I provide mobile auto detailing throughout Omaha and the surrounding metro, including interior details, complete inside-and-out details, paint enhancement, paint correction, and ceramic coating. Mobile availability depends on the work, weather, access, distance, and vehicle condition. Bellevue drop-off and pickup are available for longer or weather-sensitive services.",
-      servicesLabel: 'Auto Detailing Services Available in Omaha:',
-      whyLabel: "Why Omaha drivers choose Bryan's:",
+      title: 'Car Detailing in Omaha, NE',
+      intro: "I provide car detailing throughout Omaha, including West Omaha, Midtown, South Omaha, and the surrounding metro. Signature Interior Detail starts at $179 and Signature Full Detail starts at $279. I also offer paint enhancement, paint correction, and System X ceramic coatings. Mobile service depends on the service, weather, access, distance, and vehicle condition, with Bellevue drop-off and pickup available for longer or weather-sensitive work.",
+      servicesLabel: 'Car Detailing Services & Starting Prices in Omaha',
+      whyLabel: "Why Omaha drivers choose Bryan:",
       whyPoints: [
-        'Owner-operated service with clear communication',
-        'System X certified ceramic coating installer',
-        'Paint correction for light to moderate swirls and scratches',
-        'Mobile service in Omaha when access and conditions allow',
-        'Bellevue drop-off options for intensive work'
+        'Owner-operated detailing service serving the Omaha metro since 2017',
+        'Clear starting prices with any additional work discussed before I begin',
+        'Mobile service throughout Omaha when the service, access, and weather allow',
+        'System X certified ceramic coating installation and professional paint correction',
+        'Bellevue drop-off and pickup options for longer or weather-sensitive work'
       ],
       serviceAreas: ['West Omaha', 'Midtown Omaha', 'South Omaha', 'Bellevue', 'Papillion', 'La Vista'],
-      cta: 'Book your Omaha auto detail online and choose a current available time.'
+      cta: 'Check Omaha Times & Book'
     }
   },
   {
