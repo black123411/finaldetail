@@ -47,7 +47,7 @@ export default function Home() {
 
       <section aria-label="Why customers trust Bryan" className="border-b border-slate-200 bg-white">
         <div className="container mx-auto grid px-4 sm:grid-cols-2 lg:grid-cols-5">
-          {['Owner-operated since 2017', '45+ Google reviews', 'System X Certified', 'Mobile + Bellevue drop-off', 'Honest pricing before additional work'].map((item) => (
+          {['Owner-operated since 2017', '48 Google reviews', 'System X Certified', 'Mobile + Bellevue drop-off', 'Honest pricing before additional work'].map((item) => (
             <div key={item} className="flex min-h-20 items-center gap-3 border-b border-slate-200 py-4 last:border-b-0 sm:border-r sm:px-4 lg:border-b-0 first:pl-0 last:border-r-0">
               <Check className="h-5 w-5 shrink-0 text-blue-600" /><span className="text-sm font-black text-slate-800">{item}</span>
             </div>
