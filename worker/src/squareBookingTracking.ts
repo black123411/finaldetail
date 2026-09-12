@@ -91,6 +91,7 @@ async function ensureWebhookTable(env: SquareBookingTrackingEnv): Promise<void> 
 type SquareBooking = {
   id?: string;
   status?: string;
+  source?: string;
   start_at?: string;
   location_id?: string;
   appointment_segments?: Array<{
@@ -112,8 +113,13 @@ type SquareBookingWebhook = {
   };
 };
 
-function analyticsEventName(eventType: string, bookingStatus: string): string | null {
-  if (eventType === "booking.created") return "booking_confirmed";
+function analyticsEventName(eventType: string, bookingStatus: string, bookingSource: string): string | null {
+  if (eventType === "booking.created") {
+    if (bookingSource === "FIRST_PARTY_MERCHANT") return "booking_created_manual";
+    if (bookingSource === "API") return "booking_created_api";
+    return "booking_confirmed";
+  }
+
   if (eventType !== "booking.updated") return null;
 
   if (bookingStatus === "NO_SHOW") return "booking_no_show";
@@ -153,6 +159,7 @@ async function sendGa4Event(
     booking_provider: "square",
     event_source: "square_webhook",
     booking_status: booking.status || "UNKNOWN",
+    booking_source: booking.source || "UNKNOWN",
     square_booking_id: bookingId.slice(0, 100),
     square_event_id: (payload.event_id || "").slice(0, 100),
   };
@@ -229,7 +236,8 @@ export async function handleSquareBookingWebhook(
   const booking = payload.data?.object?.booking || {};
   const bookingId = booking.id || payload.data?.id || "";
   const bookingStatus = booking.status || "UNKNOWN";
-  const ga4EventName = analyticsEventName(eventType, bookingStatus) || "";
+  const bookingSource = booking.source || "UNKNOWN";
+  const ga4EventName = analyticsEventName(eventType, bookingStatus, bookingSource) || "";
   const receivedAt = new Date().toISOString();
 
   await ensureWebhookTable(env);
