@@ -117,7 +117,10 @@ function analyticsEventName(eventType: string, bookingStatus: string, bookingSou
   if (eventType === "booking.created") {
     if (bookingSource === "FIRST_PARTY_MERCHANT") return "booking_created_manual";
     if (bookingSource === "API") return "booking_created_api";
-    return "booking_confirmed";
+    if (bookingSource === "FIRST_PARTY_BUYER" || bookingSource === "THIRD_PARTY_BUYER") {
+      return "booking_confirmed";
+    }
+    return "booking_created_unknown";
   }
 
   if (eventType !== "booking.updated") return null;

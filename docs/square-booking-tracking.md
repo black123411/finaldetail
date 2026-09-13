@@ -13,10 +13,11 @@ A GET request to that URL reports whether the two required secrets are configure
 - `booking_confirmed` for buyer-created Square bookings, including the Square Online Booking Site
 - `booking_created_manual` for bookings created by the seller in Square Appointments
 - `booking_created_api` for bookings created through the Bookings API
+- `booking_created_unknown` when Square omits the source or supplies an unrecognized source, including source-less Developer Console test payloads
 - `booking_cancelled` when a booking update is cancelled or declined
 - `booking_no_show` when the Square booking status is `NO_SHOW`
 
-This separation is intentional: `booking_confirmed` can be used as the customer-booking key event without a manually entered appointment inflating website conversion totals.
+This separation is intentional: only explicit `FIRST_PARTY_BUYER` and `THIRD_PARTY_BUYER` sources emit `booking_confirmed`. Manual, API, and unknown-source appointments cannot inflate the customer-booking key event.
 
 No customer names, phone numbers, email addresses, notes, or other PII are sent to GA4. The events include only Square booking/event IDs, booking status/source, location ID, and the first service variation ID.
 
