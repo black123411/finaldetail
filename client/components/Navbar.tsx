@@ -3,8 +3,7 @@ import { ChevronDown, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
-import { trackBookingHandoff } from '../lib/analytics';
-import { BOOKING_LINK } from '../lib/constants';
+import { trackEvent } from '../lib/analytics';
 
 const serviceLinks = [
   ['Interior Detailing', '/services/category/interior-detailing'],
@@ -75,13 +74,13 @@ export default function Navbar() {
           <Link to="/about" className={linkClass('/about')}>About</Link>
           <Link to="/quote" className={linkClass('/quote')}>Contact</Link>
           {isAdmin && <Link to="/admin" className={linkClass('/admin')}>Admin</Link>}
-          <a
-            href={BOOKING_LINK}
-            onClick={(event) => trackBookingHandoff(event, { location: 'desktop_nav' })}
+          <Link
+            to="/services"
+            onClick={() => trackEvent('view_services', { location: 'desktop_nav' })}
             className="my-3 inline-flex min-h-11 items-center justify-center bg-blue-600 px-6 text-sm font-black text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
-            Book Now
-          </a>
+            Choose &amp; Book
+          </Link>
         </nav>
 
         <button type="button" aria-label="Toggle menu" aria-expanded={mobileOpen} onClick={() => setMobileOpen((open) => !open)} className="flex h-11 w-11 items-center justify-center text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 lg:hidden">
