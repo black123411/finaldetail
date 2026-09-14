@@ -6,7 +6,7 @@ import { SERVICES } from '@/shared/data/services';
 import { BEFORE_AFTERS } from '@/shared/data/photos';
 import { formatCurrency } from '../lib/utils';
 import { trackBookingHandoff, trackEvent } from '../lib/analytics';
-import { BOOKING_LINK, getSquareBookingLink } from '../lib/constants';
+import { getSquareBookingLink } from '../lib/constants';
 
 const results = BEFORE_AFTERS.filter(({ id }) => [1, 2, 6, 7].includes(id));
 const textHref = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%27m%20not%20sure%20which%20detail%20I%20need.%20Here%20are%20photos%20of%20my%20vehicle%3A';
@@ -28,11 +28,11 @@ export default function Home() {
           <div className="max-w-3xl">
             <p className="mb-5 text-sm font-black uppercase tracking-[0.2em] text-blue-300">Owner-operated since 2017</p>
             <h1 className="max-w-3xl text-5xl font-black leading-[.96] tracking-tight sm:text-6xl lg:text-7xl">Mobile Car Detailing in Omaha &amp; Bellevue</h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">Signature Interior Detailing from $179, full details, paint correction, and System X ceramic coatings with clear pricing before any additional work.</p>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-200 sm:text-xl">Interior detailing from $139, full details from $279, paint correction, and System X ceramic coatings with clear pricing before any additional work.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'home_hero' })} className="inline-flex min-h-14 items-center justify-center gap-2 bg-blue-600 px-7 font-black text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">
-                <Calendar className="h-5 w-5" /> Check Times &amp; Book
-              </a>
+              <Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_hero_primary' })} className="inline-flex min-h-14 items-center justify-center gap-2 bg-blue-600 px-7 font-black text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-300">
+                <Calendar className="h-5 w-5" /> Choose a Service &amp; Book
+              </Link>
               <Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_hero' })} className="inline-flex min-h-14 items-center justify-center gap-2 border border-white/50 bg-slate-950/40 px-7 font-black text-white hover:bg-white hover:text-slate-950">
                 Compare Services &amp; Prices <ArrowRight className="h-5 w-5" />
               </Link>
@@ -95,7 +95,7 @@ export default function Home() {
 
       <section className="py-20 lg:py-24"><div className="container mx-auto grid gap-12 px-4 lg:grid-cols-[1.25fr_.75fr] lg:items-center"><div><p className="text-sm font-black uppercase tracking-[0.18em] text-blue-700">Service area</p><h2 className="mt-3 text-4xl font-black tracking-tight">Mobile detailing across the Omaha metro</h2><p className="mt-5 text-lg leading-8 text-slate-600">I provide mobile detailing in Omaha, Bellevue, Papillion, La Vista, Council Bluffs, and nearby communities. Appointment-only vehicle drop-off is also available in Bellevue.</p><div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-bold text-blue-700"><Link to="/areas/omaha-ne">Omaha</Link><Link to="/areas/bellevue-ne">Bellevue</Link><Link to="/areas/papillion-ne">Papillion</Link><Link to="/areas/la-vista-ne">La Vista</Link><Link to="/areas/council-bluffs-ia">Council Bluffs</Link></div></div><aside className="border-l-4 border-blue-600 bg-slate-50 p-7"><h3 className="text-xl font-black">Mobile or Bellevue drop-off</h3><p className="mt-3 leading-7 text-slate-600">Mobile appointments depend on the service, weather, access, and a safe place to work. Longer paint and coating services are usually better suited to drop-off.</p><Link to="/quote" className="mt-5 inline-flex min-h-11 items-center gap-2 font-black text-blue-700">Ask about your location <ArrowRight className="h-4 w-4" /></Link></aside></div></section>
 
-      <section className="bg-slate-900 py-20 text-white"><div className="container mx-auto flex flex-col justify-between gap-8 px-4 lg:flex-row lg:items-center"><div className="max-w-2xl"><h2 className="text-4xl font-black tracking-tight sm:text-5xl">Ready to get your vehicle cleaned up?</h2><p className="mt-4 text-lg text-slate-300">Choose a service and check availability, or text me photos if you want help deciding.</p></div><div className="flex flex-col gap-3 sm:flex-row"><a href={BOOKING_LINK} onClick={(event) => trackBookingHandoff(event, { location: 'home_final_cta' })} className="inline-flex min-h-14 items-center justify-center bg-blue-600 px-7 font-black text-white hover:bg-blue-700">Check Times &amp; Book</a><a href={textHref} onClick={() => trackEvent('click_text_quote', { location: 'home_final_cta' })} className="inline-flex min-h-14 items-center justify-center border border-slate-600 px-7 font-black text-white hover:border-blue-400">Text Photos</a></div></div></section>
+      <section className="bg-slate-900 py-20 text-white"><div className="container mx-auto flex flex-col justify-between gap-8 px-4 lg:flex-row lg:items-center"><div className="max-w-2xl"><h2 className="text-4xl font-black tracking-tight sm:text-5xl">Ready to get your vehicle cleaned up?</h2><p className="mt-4 text-lg text-slate-300">Choose a service and check availability, or text me photos if you want help deciding.</p></div><div className="flex flex-col gap-3 sm:flex-row"><Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_final_cta' })} className="inline-flex min-h-14 items-center justify-center bg-blue-600 px-7 font-black text-white hover:bg-blue-700">Choose a Service &amp; Book</Link><a href={textHref} onClick={() => trackEvent('click_text_quote', { location: 'home_final_cta' })} className="inline-flex min-h-14 items-center justify-center border border-slate-600 px-7 font-black text-white hover:border-blue-400">Text Photos</a></div></div></section>
     </div>
   );
 }
