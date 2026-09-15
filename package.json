@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "npx tsx server/index.ts",
+    "seo:check": "tsx scripts/check-seo.mjs",
+    "prebuild": "npm run seo:check",
     "build": "vite build",
     "postbuild": "tsx scripts/generate-route-meta.mjs",
     "typecheck": "tsc --noEmit && tsc -p worker/tsconfig.json",
@@ -44,7 +46,7 @@
     "@types/node": "^20.12.11",
     "@types/nodemailer": "^8.0.1",
     "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
+    "@types/react-dom": "^18.3.2",
     "@typescript-eslint/eslint-plugin": "^8.59.3",
     "@typescript-eslint/parser": "^8.59.3",
     "@vitejs/plugin-react": "^5.0.0",
