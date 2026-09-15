@@ -41,102 +41,102 @@ export type SeoRoute = {
 
 export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
   '/': {
-    title: "Mobile Car Detailing Omaha & Bellevue | Bryan's Detailing",
-    description: 'Owner-operated mobile detailing across Omaha and Bellevue drop-off. Signature Interior Detail from $179, full details, paint correction, and System X coatings.',
+    title: "Car Detailing Bellevue & Omaha, NE | Bryan's Detailing",
+    description: 'Professional car detailing in Bellevue and Omaha, NE. Interior details, full details, paint correction, ceramic coatings, mobile service and Bellevue drop-off.',
   },
   '/services': {
-    title: 'Auto Detailing Services & Prices | Bellevue and Omaha',
-    description: "Compare interior detailing, full details, paint correction, and ceramic coating prices from Bryan's Detailing in Bellevue and the Omaha metro.",
+    title: 'Car Detailing Services & Prices | Bellevue & Omaha',
+    description: 'Compare car detailing prices in Bellevue and Omaha for interior detailing, full details, exterior detailing, paint correction, ceramic coatings and more.',
   },
   '/about': {
-    title: "Meet Bryan | Owner of Bryan's Detailing in Bellevue, NE",
-    description: "Meet Bryan, the owner and detailer behind Bryan's Showroom Quality Mobile Detailing. Serving Bellevue and the Omaha metro since 2017.",
+    title: "About Bryan's Detailing | Bellevue, NE Detailer",
+    description: "Meet Bryan, the owner and detailer behind Bryan's Showroom Quality Detailing in Bellevue, NE, with owner-operated service and paint-prep experience.",
   },
   '/book': {
-    title: 'Book Auto Detailing Online | Omaha & Bellevue NE',
-    description: 'Choose a detailing service on Bryan\'s website, then select your vehicle option and an available appointment time securely with Square.',
+    title: "Book Car Detailing Bellevue & Omaha, NE | Bryan's",
+    description: 'Book car detailing in Bellevue and Omaha. Compare services, choose your vehicle size and select an available appointment for mobile or drop-off detailing.',
     robots: 'noindex,follow',
   },
   '/booking': {
-    title: 'Book Auto Detailing Online | Omaha & Bellevue NE',
-    description: 'Choose a detailing service on Bryan\'s website, then select your vehicle option and an available appointment time securely with Square.',
+    title: "Book Car Detailing Bellevue & Omaha, NE | Bryan's",
+    description: 'Book car detailing in Bellevue and Omaha. Compare services, choose your vehicle size and select an available appointment for mobile or drop-off detailing.',
     canonicalPath: '/book',
     robots: 'noindex,follow',
   },
   '/quote': {
-    title: 'Get an Auto Detailing Quote | Omaha & Bellevue NE',
-    description: 'Text Bryan clear vehicle photos for the quickest detailing recommendation, or send a short contact request for a personally reviewed quote.',
+    title: "Auto Detailing Quote Bellevue & Omaha, NE | Bryan's",
+    description: 'Request an auto detailing quote in Bellevue or Omaha. Text vehicle photos for the fastest recommendation, or send your year, make, model and service needs.',
   },
   '/gallery': {
-    title: 'Car Detailing Before & After Gallery | Omaha & Bellevue',
-    description: 'See real detailing results from interior restoration, full details, paint correction, ceramic coating, and specialty-vehicle work around Omaha and Bellevue.',
+    title: 'Car Detailing Before & After | Bellevue & Omaha',
+    description: "See car detailing before-and-after results from Bryan's Detailing in Bellevue and Omaha, including interior restoration, paint correction and exterior details.",
   },
   '/ceramic-coating': {
-    title: 'Ceramic Coating Omaha & Bellevue | System X Certified',
-    description: 'Certified System X ceramic coating installation in Bellevue for Omaha-area vehicles. Paint preparation, correction, coating, and aftercare included.',
+    title: 'Ceramic Coating Bellevue & Omaha | System X Certified',
+    description: 'Certified System X ceramic coating in Bellevue for Omaha-area vehicles. Compare coating packages, paint preparation, correction, protection and aftercare.',
   },
   '/membership': {
-    title: 'Car Care Membership | Omaha & Bellevue NE',
-    description: 'Keep a recently detailed vehicle clean with scheduled maintenance washes, interior upkeep, and protection refreshes in the Omaha metro.',
+    title: 'Car Care Membership | Bellevue & Omaha, NE',
+    description: 'Keep a professionally detailed vehicle looking its best with scheduled maintenance detailing in Bellevue and Omaha, including safe washing and interior upkeep.',
   },
   '/gift-cards': {
-    title: 'Auto Detailing Gift Cards | Omaha & Bellevue NE',
-    description: 'Give professional auto detailing in Bellevue and Omaha, from interior and full details to paint correction and ceramic coating.',
+    title: 'Car Detailing Gift Cards | Bellevue & Omaha, NE',
+    description: 'Buy car detailing gift cards for services in Bellevue and Omaha. Give professional interior, exterior or full detailing without choosing the package for them.',
   },
   '/faq': {
-    title: 'Auto Detailing FAQ | Omaha & Bellevue NE',
-    description: 'Answers about detailing prices, mobile service, Bellevue drop-off, booking, vehicle condition, paint correction, and ceramic coating.',
+    title: 'Car Detailing FAQ | Bellevue & Omaha, NE',
+    description: 'Get answers about car detailing prices, mobile service, Bellevue drop-off, vehicle condition, booking, paint correction, ceramic coatings and service times.',
   },
   '/blog': {
-    title: 'Auto Detailing Tips | Omaha & Bellevue NE',
-    description: 'Practical guides about interior detailing, paint correction, ceramic coating, Nebraska weather, maintenance, and vehicle care.',
+    title: 'Auto Detailing Tips | Bellevue & Omaha, NE',
+    description: 'Practical Bellevue and Omaha car detailing guides covering interior care, paint correction, ceramic coating, Nebraska weather and vehicle maintenance.',
   },
   '/review': {
-    title: "Leave a Review | Bryan's Showroom Quality Mobile Detailing",
+    title: "Leave a Review | Bryan's Showroom Quality Detailing",
     description: 'Share your experience after an auto detailing, paint correction, or ceramic coating appointment with Bryan.',
     robots: 'noindex,follow',
   },
   '/sitemap': {
-    title: "Website Sitemap | Bryan's Showroom Quality Mobile Detailing",
+    title: "Website Sitemap | Bryan's Showroom Quality Detailing",
     description: 'Browse detailing services, service areas, pricing, booking information, the before-and-after gallery, and customer resources.',
   },
   '/terms': {
-    title: "Terms of Service | Bryan's Showroom Quality Mobile Detailing",
+    title: "Terms of Service | Bryan's Showroom Quality Detailing",
     description: "Read policies for estimates, vehicle condition, appointments, payments, cancellations, weather, and use of Bryan's detailing website.",
   },
   '/privacy': {
-    title: "Privacy Policy | Bryan's Showroom Quality Mobile Detailing",
+    title: "Privacy Policy | Bryan's Showroom Quality Detailing",
     description: "Learn how website, quote, booking, and customer information is collected, used, protected, and retained.",
   },
   '/login': {
-    title: "Admin Login | Bryan's Showroom Quality Mobile Detailing",
+    title: "Admin Login | Bryan's Showroom Quality Detailing",
     description: 'Private staff login.',
     robots: 'noindex,nofollow',
   },
   '/admin': {
-    title: "Admin | Bryan's Showroom Quality Mobile Detailing",
+    title: "Admin | Bryan's Showroom Quality Detailing",
     description: 'Private staff administration area.',
     robots: 'noindex,nofollow',
   },
   '/admin/services': {
-    title: "Service Admin | Bryan's Showroom Quality Mobile Detailing",
+    title: "Service Admin | Bryan's Showroom Quality Detailing",
     description: 'Private service administration area.',
     robots: 'noindex,nofollow',
   },
   '/admin/blog': {
-    title: "Blog Admin | Bryan's Showroom Quality Mobile Detailing",
+    title: "Blog Admin | Bryan's Showroom Quality Detailing",
     description: 'Private blog administration area.',
     robots: 'noindex,nofollow',
   },
   '/admin/faq': {
-    title: "FAQ Admin | Bryan's Showroom Quality Mobile Detailing",
+    title: "FAQ Admin | Bryan's Showroom Quality Detailing",
     description: 'Private FAQ administration area.',
     robots: 'noindex,nofollow',
   },
 };
 
 export const NOT_FOUND_SEO: SeoRoute = {
-  title: "Page Not Found | Bryan's Showroom Quality Mobile Detailing",
+  title: "Page Not Found | Bryan's Showroom Quality Detailing",
   description: "The requested page could not be found. Browse Bryan's detailing services or return to the homepage.",
   robots: 'noindex,follow',
 };
