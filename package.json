@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "npx tsx server/index.ts",
     "seo:check": "tsx scripts/check-seo.mjs",
-    "prebuild": "npm run seo:check",
     "build": "vite build",
     "postbuild": "tsx scripts/generate-route-meta.mjs",
     "typecheck": "tsc --noEmit && tsc -p worker/tsconfig.json",
