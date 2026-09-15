@@ -1,27 +1,44 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ChevronDown, HelpCircle, Loader2 } from 'lucide-react';
+import { ChevronDown, Loader2, MessageSquare } from 'lucide-react';
 import { FAQAPI } from '../services/api';
 import RelatedGuides from '../components/RelatedGuides';
 import { trackEvent } from '../lib/analytics';
 
+const textPhotosLink = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%20have%20a%20question%20about%20detailing%20my%20vehicle.%20Here%20are%20photos%3A';
+
 const DEFAULT_FAQS = [
   {
+    question: 'How much does car detailing cost?',
+    answer: 'Pricing depends on the service, vehicle size and condition. Maintenance Interior starts at $139, Signature Interior Detail starts at $179, Interior Restoration starts at $249 and Signature Full Detail starts at $279. Paint correction and ceramic coating are priced separately because the paint condition and preparation required can vary.',
+    order: 1,
+  },
+  {
+    question: 'Do you offer mobile car detailing?',
+    answer: 'Yes. Mobile detailing is available throughout Bellevue, Omaha and surrounding communities when the selected service, weather, access and work area are suitable. Appointment-only Bellevue drop-off is available for longer or weather-sensitive services.',
+    order: 2,
+  },
+  {
     question: 'How long does auto detailing take?',
-    answer: 'Timing depends on the service package, vehicle size, and condition. Interior services commonly take 2 to 6 hours, full details commonly take 4 to 6 hours, and paint correction or ceramic coating may require the vehicle for one to three days when preparation and curing time are needed.',
-    order: 1
+    answer: 'Timing depends on the service, vehicle size and condition. Interior services commonly take about 2 to 6 hours, full details commonly take 4 to 6 hours, and paint correction or ceramic coating may require the vehicle for one to three days when preparation and curing time are needed.',
+    order: 3,
   },
   {
-    question: 'What is your rain or weather policy for mobile detailing?',
-    answer: 'Mobile appointments depend on the weather. If rain, snow, or extreme temperatures are forecast, I will contact you to reschedule. Interior or limited exterior work may still be possible with a safe covered work area. Bellevue drop-off is available for longer or weather-sensitive services.',
-    order: 2
+    question: 'How do I know which interior detail to choose?',
+    answer: 'Maintenance Interior is for an already well-kept vehicle. Signature Interior Detail is intended for normal daily use. Interior Restoration is designed for heavier buildup, stains, pet hair and interiors that need shampooing or extraction. Send photos if you are unsure.',
+    order: 4,
   },
   {
-    question: 'Do I need to provide water or electricity for mobile detailing?',
-    answer: 'For most mobile appointments, I bring the equipment and water needed for the service. The vehicle must be parked in a safe, accessible location with enough room to work. Bellevue drop-off and pickup are available for longer or weather-sensitive services.',
-    order: 3
-  }
+    question: 'Can every stain or scratch be removed?',
+    answer: 'No. Stain results depend on the material, substance, age of the stain and previous cleaning attempts. Paint correction can reduce many clear-coat defects, but scratches that are too deep may only improve rather than disappear completely.',
+    order: 5,
+  },
+  {
+    question: 'What is your weather policy for mobile detailing?',
+    answer: 'Mobile appointments depend on weather and a safe place to work. If rain, snow or extreme temperatures make the service impractical, the appointment may need to move or be rescheduled. Bellevue drop-off is available for longer or weather-sensitive work.',
+    order: 6,
+  },
 ];
 
 interface FaqItem {
@@ -37,116 +54,67 @@ export default function FAQ() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFaqs = async () => {
-      try {
-        const data = await FAQAPI.getFaqs();
-        setFaqs(Array.isArray(data) && data.length > 0 ? data : DEFAULT_FAQS);
-      } catch (error) {
-        console.error("Error fetching FAQs:", error);
-        setFaqs(DEFAULT_FAQS);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFaqs();
+    FAQAPI.getFaqs()
+      .then((data) => setFaqs(Array.isArray(data) && data.length > 0 ? data : DEFAULT_FAQS))
+      .catch(() => setFaqs(DEFAULT_FAQS))
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) {
-     return (
-        <div className="min-h-screen bg-zinc-50 py-16 flex items-center justify-center">
-            <Loader2 className="w-8 h-8 animate-spin text-zinc-900" />
-        </div>
-     );
+    return <div className="flex min-h-[65vh] items-center justify-center bg-white" role="status" aria-label="Loading frequently asked questions"><Loader2 className="h-8 w-8 animate-spin text-blue-700" /></div>;
   }
 
   const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-16">
-      <Helmet>
-        {faqs.length > 0 && (
-          <script type="application/ld+json">
-            {JSON.stringify(faqSchema)}
-          </script>
-        )}
-      </Helmet>
-      <div className="container mx-auto px-4 max-w-3xl">
-        <div className="text-center mb-16 space-y-4">
-          <div className="mx-auto w-16 h-16 bg-zinc-100 text-zinc-900 rounded-full flex items-center justify-center mb-6">
-            <HelpCircle className="h-8 w-8" />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Auto Detailing FAQ</h1>
-          <p className="text-lg text-zinc-600">
-            Everything you need to know about my car detailing services, paint correction processes, and ceramic coating policies for Bellevue and Omaha.
-          </p>
-        </div>
+    <div className="min-h-screen bg-white text-slate-950">
+      <Helmet>{faqs.length > 0 && <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>}</Helmet>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div 
-              key={index} 
-              className="bg-white border border-zinc-200 rounded-2xl overflow-hidden shadow-sm"
-            >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
-              >
-                <span className="text-lg font-semibold text-zinc-900 pr-8">{faq.question}</span>
-                <ChevronDown 
-                  className={`h-5 w-5 text-zinc-500 shrink-0 transition-transform duration-300 ${
-                    openIndex === index ? 'rotate-180' : ''
-                  }`} 
-                />
-              </button>
-              
-              <AnimatePresence>
-                {openIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="p-6 pt-0 text-zinc-600 leading-relaxed border-t border-zinc-100 mt-2">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+      <section className="border-b border-slate-200 bg-white">
+        <div className="container mx-auto grid gap-8 px-4 py-14 lg:grid-cols-[.8fr_1.2fr] lg:items-end lg:py-20">
+          <div><h1 className="text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">Car Detailing FAQ</h1></div>
+          <p className="max-w-2xl text-lg leading-8 text-slate-600">Answers about detailing prices, mobile service, Bellevue drop-off, vehicle condition, paint correction, ceramic coating and choosing the right service.</p>
         </div>
+      </section>
 
-        <div className="mt-16 text-center bg-zinc-900 text-white rounded-2xl p-8 shadow-xl">
-          <h2 className="text-2xl font-bold mb-4">Still have questions?</h2>
-          <p className="text-zinc-400 mb-6">I'm here to help. Contact me directly for personalized advice about your vehicle.</p>
-          <div className="flex justify-center gap-4">
-            <a href="tel:712-305-6313" onClick={() => trackEvent('click_call', { location: 'faq_footer' })} className="px-6 py-3 bg-white text-zinc-900 rounded-lg font-medium hover:bg-zinc-200 transition-colors">
-              Call Me
-            </a>
-            <a href="mailto:bryansmobiledetailing@gmail.com" className="px-6 py-3 border border-zinc-700 text-white rounded-lg font-medium hover:bg-zinc-800 transition-colors">
-              Email Me
-            </a>
+      <section className="py-14 lg:py-20">
+        <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.65fr_1.35fr]">
+          <aside>
+            <h2 className="text-3xl font-black tracking-tight">Need an answer about your vehicle?</h2>
+            <p className="mt-4 leading-7 text-slate-600">If the answer depends on stains, pet hair, odor, paint condition or another visible problem, photos usually help more than a long description.</p>
+            <a href={textPhotosLink} onClick={() => trackEvent('click_text_quote', { location: 'faq_intro' })} className="mt-6 inline-flex min-h-12 items-center gap-2 bg-blue-600 px-5 font-black text-white hover:bg-blue-700"><MessageSquare className="h-5 w-5" /> Text Vehicle Photos</a>
+          </aside>
+
+          <div className="divide-y divide-slate-200 border-y border-slate-200">
+            {faqs.map((faq, index) => (
+              <div key={faq.id || faq.question}>
+                <button type="button" onClick={() => setOpenIndex(openIndex === index ? null : index)} className="flex w-full items-center justify-between gap-6 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2" aria-expanded={openIndex === index}>
+                  <span className="text-lg font-black">{faq.question}</span>
+                  <ChevronDown className={`h-5 w-5 shrink-0 transition-transform ${openIndex === index ? 'rotate-180' : ''}`} />
+                </button>
+                {openIndex === index && <p className="pb-6 pr-8 leading-7 text-slate-600">{faq.answer}</p>}
+              </div>
+            ))}
           </div>
         </div>
-      </div>
-      <RelatedGuides
-        topic="all"
-        heading="Detailed answers beyond the FAQ"
-        intro="Read the complete guides for service comparisons, maintenance timing, seasonal care, and the results different services can deliver."
-      />
+      </section>
+
+      <section className="border-y border-slate-200 bg-slate-50 py-14">
+        <div className="container mx-auto flex flex-col justify-between gap-7 px-4 md:flex-row md:items-center">
+          <div><h2 className="text-3xl font-black tracking-tight">Ready to compare services?</h2><p className="mt-3 max-w-2xl leading-7 text-slate-600">See current service descriptions, starting prices and the vehicle conditions each package is designed for.</p></div>
+          <Link to="/services" className="inline-flex min-h-14 shrink-0 items-center justify-center bg-slate-950 px-7 font-black text-white hover:bg-blue-700">View Services &amp; Pricing</Link>
+        </div>
+      </section>
+
+      <RelatedGuides topic="all" heading="Detailed answers beyond the FAQ" intro="Read the full guides for service comparisons, maintenance timing, seasonal care and the results different services can deliver." />
     </div>
   );
 }
