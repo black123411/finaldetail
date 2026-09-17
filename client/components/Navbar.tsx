@@ -9,7 +9,7 @@ const serviceLinks = [
   ['Interior Detailing', '/services/category/interior-detailing'],
   ['Full Details', '/services/category/full-detailing'],
   ['Paint Correction', '/services/category/paint-correction'],
-  ['Ceramic Coating', '/services/category/ceramic-coating'],
+  ['Ceramic Coating', '/ceramic-coating'],
   ['Specialty Vehicles', '/services/category/rv-boat-detailing'],
 ] as const;
 
