@@ -94,6 +94,9 @@ type SquareBooking = {
   source?: string;
   start_at?: string;
   location_id?: string;
+  creator_details?: {
+    creator_type?: string;
+  };
   appointment_segments?: Array<{
     service_variation_id?: string;
   }>;
@@ -113,13 +116,28 @@ type SquareBookingWebhook = {
   };
 };
 
-function analyticsEventName(eventType: string, bookingStatus: string, bookingSource: string): string | null {
+function analyticsEventName(
+  eventType: string,
+  bookingStatus: string,
+  bookingSource: string,
+  creatorType: string,
+): string | null {
   if (eventType === "booking.created") {
     if (bookingSource === "FIRST_PARTY_MERCHANT") return "booking_created_manual";
-    if (bookingSource === "API") return "booking_created_api";
+    if (bookingSource === "API") {
+      if (creatorType === "CUSTOMER") return "booking_confirmed";
+      return "booking_created_api";
+    }
     if (bookingSource === "FIRST_PARTY_BUYER" || bookingSource === "THIRD_PARTY_BUYER") {
       return "booking_confirmed";
     }
+
+    // Square documents creator_details.creator_type as a seller-visible way to
+    // distinguish customer-created bookings from team-member-created bookings.
+    // Use it as a fallback when source is omitted from the webhook payload.
+    if (creatorType === "CUSTOMER") return "booking_confirmed";
+    if (creatorType === "TEAM_MEMBER") return "booking_created_manual";
+
     return "booking_created_unknown";
   }
 
@@ -163,6 +181,7 @@ async function sendGa4Event(
     event_source: "square_webhook",
     booking_status: booking.status || "UNKNOWN",
     booking_source: booking.source || "UNKNOWN",
+    booking_creator_type: booking.creator_details?.creator_type || "UNKNOWN",
     square_booking_id: bookingId.slice(0, 100),
     square_event_id: (payload.event_id || "").slice(0, 100),
   };
@@ -240,7 +259,8 @@ export async function handleSquareBookingWebhook(
   const bookingId = booking.id || payload.data?.id || "";
   const bookingStatus = booking.status || "UNKNOWN";
   const bookingSource = booking.source || "UNKNOWN";
-  const ga4EventName = analyticsEventName(eventType, bookingStatus, bookingSource) || "";
+  const creatorType = booking.creator_details?.creator_type || "UNKNOWN";
+  const ga4EventName = analyticsEventName(eventType, bookingStatus, bookingSource, creatorType) || "";
   const receivedAt = new Date().toISOString();
 
   await ensureWebhookTable(env);
