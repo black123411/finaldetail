@@ -63,6 +63,12 @@ export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
     canonicalPath: '/book',
     robots: 'noindex,follow',
   },
+  '/account': {
+    title: "Account | Bryan's Showroom Quality Detailing",
+    description: 'Customer account access for Bryan\'s Showroom Quality Detailing.',
+    canonicalPath: '/account',
+    robots: 'noindex,follow',
+  },
   '/quote': {
     title: "Auto Detailing Quote Bellevue & Omaha, NE | Bryan's",
     description: 'Request an auto detailing quote in Bellevue or Omaha. Text vehicle photos for the fastest recommendation, or send your year, make, model and service needs.',
