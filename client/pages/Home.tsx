@@ -49,8 +49,8 @@ export default function Home() {
       </section>
 
       <section aria-label="Why customers choose Bryan" className="border-b border-slate-200 bg-slate-950 text-white">
-        <div className="container mx-auto grid px-4 sm:grid-cols-2 lg:grid-cols-4">
-          {['Owner-operated service', 'Clear pricing before added work', '48 Google reviews', 'Mobile + Bellevue drop-off'].map((item) => (
+        <div className="container mx-auto grid px-4 sm:grid-cols-3">
+          {['Owner-operated service', '48 Google reviews', 'Mobile + Bellevue drop-off'].map((item) => (
             <div key={item} className="flex min-h-20 items-center gap-3 border-b border-slate-800 py-4 last:border-b-0 sm:border-r sm:px-5 lg:border-b-0 first:pl-0 last:border-r-0">
               <Check className="h-5 w-5 shrink-0 text-blue-400" />
               <span className="text-sm font-black text-slate-100">{item}</span>
