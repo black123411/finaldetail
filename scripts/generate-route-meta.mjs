@@ -93,7 +93,7 @@ function fallbackMarkup({ heading, description, details = '', links = [] }) {
 
 function staticHeading(path, title) {
   const headings = {
-    '/': 'Mobile Car Detailing in Omaha & Bellevue, NE',
+    '/': 'Car Detailing in Bellevue & Omaha, NE',
     '/services': 'Auto Detailing Services and Pricing',
     '/about': 'Meet Bryan',
     '/book': 'Book Your Auto Detail',
@@ -332,7 +332,7 @@ function buildStaticRoutes(blogRoutes = []) {
           `<h2>What is included</h2>${listMarkup(service.features)}`,
         ].filter(Boolean).join(''),
         links: [
-          { href: `/services/category/${CATEGORIES.find((category) => category.id === service.categoryId)?.slug || ''}`, label: 'Compare related services' },
+          { href: CATEGORIES.find((category) => category.id === service.categoryId)?.slug === 'ceramic-coating' ? '/ceramic-coating' : `/services/category/${CATEGORIES.find((category) => category.id === service.categoryId)?.slug || ''}`, label: 'Compare related services' },
           isInquiryOnlyService(service.id)
             ? { href: '/quote', label: `Text photos / request a quote for ${service.name}` }
             : { href: getSquareBookingLink(service.id), label: `Book ${service.name} with Square` },
