@@ -95,7 +95,6 @@ export default function Footer() {
         <div className="flex flex-wrap justify-center md:justify-start gap-4">
           <Link to="/terms" className="hover:text-zinc-100 transition-colors">Terms of Service</Link>
           <Link to="/privacy" className="hover:text-zinc-100 transition-colors">Privacy Policy</Link>
-          <Link to="/account" className="hover:text-zinc-100 transition-colors">My account</Link>
           <Link to="/sitemap" className="hover:text-zinc-100 transition-colors">Sitemap</Link>
         </div>
         
