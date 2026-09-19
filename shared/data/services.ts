@@ -106,7 +106,7 @@ export const CATEGORIES: Category[] = [
     description: 'Routine upkeep for vehicles I have already detailed or vehicles that were recently cleaned, corrected, or ceramic coated. Includes a safe hand wash, quick interior cleanup, glass, tires, and a protection refresh.',
     image: '/gallery/takeout/20230420_162911.webp',
     seo: {
-      title: 'Maintenance Car Detailing Omaha & Bellevue | Bryan\'s Detailing',
+      title: 'Maintenance Detailing Omaha & Bellevue | Bryan\'s',
       description: 'Routine maintenance detailing in Omaha and Bellevue for recently detailed or ceramic-coated vehicles, including safe washing and interior upkeep.'
     }
   },
@@ -197,7 +197,7 @@ export const SERVICES: Service[] = [
     squareName: 'Maintenance Interior',
     seo: {
       title: 'Maintenance Interior Cleaning | Bellevue & Omaha From $139',
-      description: 'Maintenance interior cleaning in Bellevue and Omaha from $139 for regularly maintained vehicles that need vacuuming, wipe-down, mats, glass, and light spot cleaning.'
+      description: 'Maintenance interior cleaning in Bellevue and Omaha from $139 for regularly maintained vehicles needing vacuuming, mats, glass, and light spot cleaning.'
     },
     features: [
       'Thorough interior and trunk vacuum',

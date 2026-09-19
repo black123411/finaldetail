@@ -2,6 +2,7 @@
   "hosting": {
     "public": "dist",
     "cleanUrls": true,
+    "rewrites": [{ "source": "/account", "destination": "/index.html" }],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -193,11 +194,20 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://bryans-detailing-api.bryansmobiledetailing.workers.dev https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.google-analytics.com https://analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://api.open-meteo.com https://*.squareup.com https://*.squarecdn.com; frame-src https://www.google.com https://www.googletagmanager.com https://*.squareup.com https://*.squarecdn.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://bryans-detailing-api.bryansmobiledetailing.workers.dev https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://*.google-analytics.com https://analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://api.open-meteo.com https://*.squareup.com https://*.squarecdn.com; frame-src https://showroom-app-e5ff5.firebaseapp.com https://www.google.com https://www.googletagmanager.com https://*.squareup.com https://*.squarecdn.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
           }
         ]
       }
     ]
+  },
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Bryan's Showroom Quality Detailing",
+        "supportEmail": "bryansmobiledetailing@gmail.com"
+      }
+    }
   },
   "firestore": {
     "rules": "firestore.rules"

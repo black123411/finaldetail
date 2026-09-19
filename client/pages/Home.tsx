@@ -10,6 +10,7 @@ import { getSquareBookingLink } from '../lib/constants';
 
 const results = BEFORE_AFTERS.filter(({ id }) => [1, 2, 6, 7].includes(id));
 const textHref = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%27m%20not%20sure%20which%20detail%20I%20need.%20Here%20are%20photos%20of%20my%20vehicle%3A';
+const googleReviewsHref = "https://www.google.com/maps/search/?api=1&query=Bryan%27s%20Showroom%20Quality%20Mobile%20Detailing&query_place_id=ChIJVVU5ibSJk4cRCK2ex-dRYIg";
 
 const popular = [
   { id: 'interior-detail', label: 'Signature Interior Detail', fit: 'Normal daily use', fallback: 'Dust, crumbs, dirty mats, light stains and everyday interior buildup.' },
@@ -50,10 +51,14 @@ export default function Home() {
 
       <section aria-label="Why customers choose Bryan" className="border-b border-slate-200 bg-slate-950 text-white">
         <div className="container mx-auto grid px-4 sm:grid-cols-3">
-          {['Owner-operated service', '48 Google reviews', 'Mobile + Bellevue drop-off'].map((item) => (
+          {['Owner-operated service', '4.8 rating from 48 Google reviews', 'Mobile + Bellevue drop-off'].map((item) => (
             <div key={item} className="flex min-h-20 items-center gap-3 border-b border-slate-800 py-4 last:border-b-0 sm:border-r sm:px-5 lg:border-b-0 first:pl-0 last:border-r-0">
               <Check className="h-5 w-5 shrink-0 text-blue-400" />
-              <span className="text-sm font-black text-slate-100">{item}</span>
+              {item.includes('Google reviews') ? (
+                <a href={googleReviewsHref} target="_blank" rel="noreferrer" className="text-sm font-black text-slate-100 underline decoration-slate-600 underline-offset-4 hover:text-blue-300">{item}</a>
+              ) : (
+                <span className="text-sm font-black text-slate-100">{item}</span>
+              )}
             </div>
           ))}
         </div>
@@ -122,7 +127,7 @@ export default function Home() {
 
       <section className="border-y border-slate-200 bg-white py-16 lg:py-20">
         <div className="container mx-auto px-4">
-          <div className="mb-9 flex items-center gap-3"><Star className="h-6 w-6 fill-amber-400 text-amber-400" /><h2 className="text-3xl font-black">Customer Reviews</h2></div>
+          <div className="mb-9 flex flex-wrap items-center gap-3"><Star className="h-6 w-6 fill-amber-400 text-amber-400" /><h2 className="text-3xl font-black">4.8 on Google from 48 reviews</h2><a href={googleReviewsHref} target="_blank" rel="noreferrer" className="ml-auto font-black text-blue-700 underline decoration-blue-200 underline-offset-4 hover:text-blue-900">Read Google reviews</a></div>
           <Testimonials />
         </div>
       </section>

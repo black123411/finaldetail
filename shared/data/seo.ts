@@ -64,8 +64,8 @@ export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
     robots: 'noindex,follow',
   },
   '/account': {
-    title: "Account | Bryan's Showroom Quality Detailing",
-    description: 'Customer account access for Bryan\'s Showroom Quality Detailing.',
+    title: "Customer Account | Bryan's Showroom Quality Detailing",
+    description: 'Sign in to your optional customer account or continue to booking without an account.',
     canonicalPath: '/account',
     robots: 'noindex,follow',
   },

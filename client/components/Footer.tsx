@@ -19,7 +19,7 @@ export default function Footer() {
             <li><Link to="/services/category/interior-detailing" className="block py-1 hover:text-zinc-100 transition-colors">Interior Detailing</Link></li>
             <li><Link to="/services/category/exterior-detailing" className="block py-1 hover:text-zinc-100 transition-colors">Exterior Detailing</Link></li>
             <li><Link to="/services/category/paint-correction" className="block py-1 hover:text-zinc-100 transition-colors">Paint Correction</Link></li>
-            <li><Link to="/services/category/ceramic-coating" className="block py-1 hover:text-zinc-100 transition-colors">Ceramic Coating</Link></li>
+            <li><Link to="/ceramic-coating" className="block py-1 hover:text-zinc-100 transition-colors">Ceramic Coating</Link></li>
             <li><Link to="/services/category/full-detailing" className="block py-1 hover:text-zinc-100 transition-colors">Full Detailing Packages</Link></li>
             <li><Link to="/services/category/rv-boat-detailing" className="block py-1 hover:text-zinc-100 transition-colors">RV, Boat & Equipment Detailing</Link></li>
           </ul>
@@ -95,6 +95,7 @@ export default function Footer() {
         <div className="flex flex-wrap justify-center md:justify-start gap-4">
           <Link to="/terms" className="hover:text-zinc-100 transition-colors">Terms of Service</Link>
           <Link to="/privacy" className="hover:text-zinc-100 transition-colors">Privacy Policy</Link>
+          <Link to="/account" className="hover:text-zinc-100 transition-colors">My account</Link>
           <Link to="/sitemap" className="hover:text-zinc-100 transition-colors">Sitemap</Link>
         </div>
         

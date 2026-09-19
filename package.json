@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "npx tsx server/index.ts",
-    "seo:check": "tsx scripts/check-seo.mjs",
+    "seo:check": "node scripts/check-seo.mjs",
     "build": "vite build",
-    "postbuild": "tsx scripts/generate-route-meta.mjs",
+    "postbuild": "node scripts/generate-route-meta.mjs",
     "typecheck": "tsc --noEmit && tsc -p worker/tsconfig.json",
     "start": "npx tsx --tsconfig tsconfig.server.json server/index.ts",
     "worker:dev": "npx --yes wrangler dev --config worker/wrangler.jsonc",

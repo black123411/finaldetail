@@ -35,6 +35,7 @@ const Blog = lazy(() => import('./pages/Blog'));
 const BlogPostDetail = lazy(() => import('./pages/BlogPostDetail'));
 const BlogManager = lazy(() => import('./pages/BlogManager'));
 const Login = lazy(() => import('./pages/Login'));
+const Account = lazy(() => import('./pages/Account'));
 const Sitemap = lazy(() => import('./pages/Sitemap'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
@@ -230,6 +231,7 @@ export default function App() {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPostDetail />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/account" element={<Account />} />
                 <Route 
                   path="/admin" 
                   element={
