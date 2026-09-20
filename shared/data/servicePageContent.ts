@@ -25,7 +25,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Maintenance Interior is the lower-cost interior option for Bellevue and Omaha drivers whose vehicle is already in reasonably maintained condition. It provides a proper vacuum, air blowout, surface cleaning, mats, glass, and light spot cleaning without charging for full shampooing or extraction the vehicle does not need.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It handles normal dust, crumbs, fingerprints, light floor-mat soil, and everyday interior buildup before they turn into a larger reset."
       },
       {
@@ -33,7 +33,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Heavy stains, embedded pet hair, major spills, strong odors, biohazards, and neglected interiors need a deeper service. Text me photos and I will tell you which option fits."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Choose it when the cabin is generally cared for but needs more than a quick vacuum and wipe."
       }
     ],
@@ -70,7 +70,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "The Signature Interior Detail is for normal dirt, crumbs, dust, fingerprints, light staining, and everyday interior buildup. I clean the touch points, cracks, plastics, mats, glass, and other areas that need attention without automatically charging for a full restoration.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It removes normal daily-driver mess: dust in vents, crumbs in seat seams, film on glass, sticky cupholders, dirty mats, and light fabric staining. It is built for the vehicle you still care about and want to keep comfortable."
       },
       {
@@ -78,7 +78,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "I work through the cabin one area at a time instead of stopping at a quick vacuum and wipe. I blow out tight areas, use detail brushes, clean the mats, and finish the surfaces that need attention."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book this before road trips, after winter, before family visits, or any time the inside has started to feel dusty, sticky, or stale but does not need heavy extraction."
       }
     ],
@@ -123,7 +123,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Interior Restoration is for interiors that need more than a tidy-up. It is built for family vehicles, used-car purchases, pet vehicles, work vehicles, and cabins with embedded dirt, heavy staining, odor sources, or years of buildup.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It targets the mess that sits below the surface: pet hair woven into carpet, sticky spills, deep fabric stains, dirty seat tracks, grime around buttons, and odors trapped in upholstery."
       },
       {
@@ -131,7 +131,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Hot water extraction, steam, brushing, vacuuming, and safe chemical treatment help lift contamination instead of just wiping over it. This is the service for getting the cabin back under control."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it after buying a used car, before selling a vehicle, after a spill, after pet use, or when the interior has reached the point where regular cleaning no longer works."
       }
     ],
@@ -176,7 +176,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Premium Wash and Wax is for vehicles that need more than a drive-through wash. It removes road film, bug residue, bonded contamination, brake dust, and rough paint feel, then adds hydrophobic protection for Nebraska weather.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It addresses rough paint, dull shine, dirty wheels, trim fade, bug residue, and contamination that normal soap does not remove. The goal is clean, smooth, protected paint."
       },
       {
@@ -184,7 +184,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Iron fallout and bonded grit can make paint feel sandpapery and reduce gloss. Chemical decontamination and clay treatment help clean the surface before sealant is applied."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it before winter salt, after spring pollen, before a road trip, or any time the paint feels rough after washing."
       }
     ],
@@ -229,7 +229,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Paint Enhancement Polish is the visual upgrade for paint that looks tired but does not need heavy correction. It is ideal for daily drivers with wash haze, light swirls, oxidation, and a lack of depth.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It improves gloss, reflection, and clarity by polishing away light defects that wax cannot fix. It is the bridge between a wash and true correction."
       },
       {
@@ -237,7 +237,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "A single-stage polish can make a major difference when the defects are light to moderate. I choose the pad and polish that improve the finish without removing more clear coat than necessary."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it before ceramic coating, before photos, after years of automatic car washes, or when the paint looks flat in sunlight."
       }
     ],
@@ -282,7 +282,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Level 1 Paint Correction is a dedicated single-stage correction for newer or well-maintained vehicles with wash swirls, towel marks, light scratches, and haze. The goal is real defect removal, not glaze or filler.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It corrects the kind of defects you see in direct sun: circular wash marks, light marring, cloudy reflection, and fine scratches that make paint look older than it is."
       },
       {
@@ -290,7 +290,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Paint Enhancement is a gloss upgrade. Level 1 Correction is more focused on measurable defect reduction with inspection lighting and a correction-minded process."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it before ceramic coating, after automatic wash damage, before car shows, or when you want the paint to look genuinely corrected instead of just shiny."
       }
     ],
@@ -335,7 +335,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Level 2 Paint Correction is for paint that needs a more intensive restoration process. It combines a cutting step and a finishing step to reduce heavier defects while bringing back clarity, depth, and gloss.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It targets severe wash swirls, oxidation haze, deeper marring, neglected paint, and the dull finish that makes a vehicle look older in sunlight."
       },
       {
@@ -343,7 +343,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "The first stage cuts defects; the second stage refines the paint so the finish is not left hazy. That extra step is why Level 2 is reserved for vehicles that need real restoration."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it for older vehicles, black paint with heavy swirls, pre-ceramic restoration, or any vehicle where Level 1 is not enough."
       }
     ],
@@ -388,7 +388,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "The 3-Year Ceramic Coating is for drivers who want a cleaner-looking vehicle with less work. It adds durable hydrophobic protection after the paint is properly washed, decontaminated, inspected, and prepared.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It helps protect against UV exposure, road grime, salt, bug residue, water spotting risk, and the constant dirt that sticks to unprotected paint."
       },
       {
@@ -396,7 +396,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Ceramic coating is only as good as the surface underneath it. I clean and prepare the paint first so the coating is not applied over bonded dirt or haze."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it for new vehicles, freshly corrected paint, daily drivers you plan to keep, or any vehicle you want to maintain with easier washes."
       }
     ],
@@ -441,7 +441,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "The Protection Package combines paint correction and ceramic coating so your paint is not just protected, but prepared correctly first. It is the right package when you want a serious exterior result in one plan.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It avoids the common mistake of coating over swirled or contaminated paint. I improve the finish first, then apply the ceramic coating."
       },
       {
@@ -449,7 +449,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Correction and coating belong together because coating locks in the surface. Bundling gives the job enough time for decontamination, polishing, prep, coating, and inspection."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it for a new vehicle you want protected, a corrected daily driver, or a vehicle you plan to keep looking sharp for years."
       }
     ],
@@ -494,7 +494,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Signature Full Detail is the practical full reset for most Bellevue and Omaha drivers. It combines the interior clean people notice when they sit down with the exterior wash, decontamination, and protection people notice from the curb.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It handles the vehicle as a whole: dusty cabin, dirty mats, glass film, road grime, wheels, rough paint feel, dull tires, and the lack of protection after months of driving."
       },
       {
@@ -502,7 +502,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Most customers do not need a separate interior and exterior visit. Bundling them gives better value and a cleaner, more balanced result."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it twice a year, before a road trip, after winter, before a special event, or whenever the whole vehicle needs a thorough cleanup."
       }
     ],
@@ -547,7 +547,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "The Showroom Package is for vehicles that need the bigger transformation: stained interior, tired paint, dull gloss, engine bay grime, odor-prone fabric, or pre-sale presentation where first impressions matter.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It combines deep interior restoration with machine paint enhancement, making it ideal for neglected daily drivers, used-car purchases, and vehicles being prepared for sale."
       },
       {
@@ -555,7 +555,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "The cabin gets deeper cleaning, the paint gets gloss correction, and the vehicle is prepared for a stronger overall presentation."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it before selling, after buying used, after a rough season of family use, or when a regular full detail will not be enough."
       }
     ],
@@ -600,7 +600,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "A Maintenance Plan is ongoing care after I have already detailed, corrected, or coated the vehicle. It keeps the finish cleaner and prevents the interior from sliding backward.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It prevents buildup from becoming a big expensive reset again. Regular safe washing, quick interior care, glass cleaning, and protection refreshes keep the vehicle presentable."
       },
       {
@@ -608,7 +608,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Maintenance pricing only works when the vehicle starts from a known clean baseline. That keeps visits efficient and fair."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it after a full detail, paint correction, ceramic coating, or new-car protection package."
       }
     ],
@@ -653,7 +653,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "RV and Boat Wash and Wax is quoted by size, access, exterior material, bug buildup, road grime, water spotting, and sun exposure. Large vehicles take more time and need a careful process.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It cleans large exterior surfaces, removes road film and bugs, improves appearance, and adds UV-focused wax or sealant protection."
       },
       {
@@ -661,7 +661,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "RV and boat condition varies widely. Photos help me account for height, oxidation, length, access, decals, and the condition of the surface."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book before storage, after travel season, before lake season, or when the surface feels dirty, chalky, or unprotected."
       }
     ],
@@ -706,7 +706,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Oxidation Removal is for RVs and boats that no longer respond to a normal wash. It uses machine compounding and polishing to restore color, gloss, and a cleaner surface before sealing.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It targets chalky gel coat, faded color, cloudy reflection, sun damage, and the white residue that returns after simple washing."
       },
       {
@@ -714,7 +714,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Oxidized surfaces need cutting, polishing, and protection. The worse the oxidation, the more testing and controlled passes are needed."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book it before selling, before boating season, after long outdoor storage, or when wash and wax no longer improves the surface."
       }
     ],
@@ -759,7 +759,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "I offer Tractor and Equipment Cleanup for agricultural and work equipment that needs mud, grease, grime, cab dirt, glass film, and buildup removed so it looks better and is easier to inspect.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It cleans the mess that comes from real work: mud, grease, dust, dirty cabs, cloudy glass, and exterior buildup around machinery surfaces."
       },
       {
@@ -812,7 +812,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "New vehicles often arrive with transport contamination, light dealer wash swirls, adhesive residue, and unprotected paint. New Car Detail and Protection gives the vehicle a cleaner start before daily driving adds wear.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It removes bonded contamination and light defects that can be present even on brand-new cars. It also adds protection before Nebraska roads, bugs, salt, and sun start working on the paint."
       },
       {
@@ -820,7 +820,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Dealership washes, transport, lot storage, and quick prep can leave marks. I inspect and clean the paint before applying protection."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book as soon as possible after purchase, ideally before repeated washes or long daily driving."
       }
     ],
@@ -865,7 +865,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Pre-Sale Detail Package is built for sellers who want stronger first impressions. It focuses on the details buyers notice immediately: clean seats, fresh cabin, glossy paint, engine bay presentation, clear glass, tires, and photos.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It reduces the visual reasons buyers hesitate: dirty interior, stained fabric, dull paint, odors, engine bay grime, cloudy headlights, and poor listing photos."
       },
       {
@@ -873,7 +873,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "A cleaner vehicle looks better cared for. Buyers make quick judgments, and a thorough detail can make the car easier to trust."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book before taking listing photos, before trade-in appraisal, or before showing the vehicle to private buyers."
       }
     ],
@@ -918,7 +918,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Odor Elimination Treatment is a Bellevue drop-off-only service for vehicles where air fresheners have failed. I clean the odor source first, then treat the cabin and ventilation areas so smells are neutralized instead of covered up.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "It targets smoke, pet accidents, mildew, food spills, musty carpet, and stale cabin smells that live in fabric, foam, vents, headliners, and hidden debris."
       },
       {
@@ -926,7 +926,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
         body: "Odor treatment works best after the physical source is cleaned. I combine cleaning, enzyme treatment when needed, and ozone treatment instead of covering the smell with fragrance."
       },
       {
-        title: "Best time to book",
+        title: "When to book it",
         body: "Book after buying a used car, after smoke exposure, after pet accidents, after leaks or mildew smell, or before selling a vehicle with odor history."
       }
     ],
@@ -972,7 +972,7 @@ export const SERVICE_PAGE_CONTENT: Record<string, ServicePageContent> = {
     intro: "Paint Protection Film, or PPF, is for drivers who want physical paint protection in high-impact areas. It is different from ceramic coating because the film absorbs road debris and rock-chip abuse.",
     sections: [
       {
-        title: "What this service solves",
+        title: "When this service makes sense",
         body: "PPF helps protect bumpers, hoods, mirrors, fenders, and other high-impact areas from chips, scuffs, and road debris."
       },
       {
@@ -1028,7 +1028,7 @@ Object.assign(SERVICE_PAGE_CONTENT, {
     intro: "Crystal+ Essential is the entry point to certified System X protection. It pairs careful decontamination and light gloss enhancement with a registered 2-year coating package for newer or well-kept daily drivers.",
     sections: [
       { title: "What is included", body: "A safe wash, iron removal, clay decontamination, light gloss-enhancement polish, panel prep, System X Crystal+ on painted surfaces, warranty registration, and a clear aftercare guide." },
-      { title: "Who it fits", body: "Choose Crystal+ when the paint is already in good condition and you want easier washing, stronger gloss, and longer-lasting protection at the lowest System X package price." }
+      { title: "Good fit for", body: "Choose Crystal+ when the paint is already in good condition and you want easier washing, stronger gloss, and longer-lasting protection at the lowest System X package price." }
     ],
     processTitle: "How Crystal+ Essential is installed",
     process: ["Inspect the paint and agree on the prep plan", "Wash and chemically decontaminate the exterior", "Clay and lightly polish the paint", "Panel-wipe and install Crystal+", "Cure, inspect, register, and explain aftercare"],
@@ -1040,11 +1040,11 @@ Object.assign(SERVICE_PAGE_CONTENT, {
     internalServiceIds: ["system-x-pro-plus", "paint-enhancement-polish", "maintenance-detail"]
   },
   "system-x-pro-plus": {
-    headline: "System X Pro+ is the best balance of correction, warranty, and daily-driver value",
-    intro: "Pro+ Signature is the recommended package for a vehicle you plan to keep. It adds single-stage paint enhancement and Glass+ windshield protection before the Pro+ coating is registered to the vehicle.",
+    headline: "System X Pro+ for daily drivers that need paint improvement and longer-term protection",
+    intro: "Pro+ Signature is a good fit when you plan to keep the vehicle and want more than an entry-level coating. I prep and machine-polish the paint, coat it with Pro+, and add Glass+ to the windshield.",
     sections: [
       { title: "What is included", body: "Full decontamination, single-stage paint enhancement, panel prep, System X Pro+ on painted surfaces, Glass+ on the windshield, CARFAX registration, and aftercare guidance." },
-      { title: "Why it is most popular", body: "It corrects the wash haze and light swirls most daily drivers have while giving a longer protection term without jumping to the lifetime-package price." }
+      { title: "Why people choose Pro+", body: "It includes the paint enhancement most daily drivers need and adds a longer coating term without moving all the way to the MAX G+ package." }
     ],
     processTitle: "How Pro+ Signature is installed",
     process: ["Inspect paint and document existing defects", "Wash, iron-decontaminate, and clay", "Machine-polish for gloss and defect reduction", "Panel-wipe and install Pro+ and Glass+", "Cure, inspect, register, and review aftercare"],
@@ -1056,11 +1056,11 @@ Object.assign(SERVICE_PAGE_CONTENT, {
     internalServiceIds: ["system-x-crystal-plus", "system-x-max-g-plus", "maintenance-detail"]
   },
   "system-x-max-g-plus": {
-    headline: "MAX G+ Ultimate protects the complete exterior with lifetime-warranty eligibility",
+    headline: "MAX G+ Ultimate for long-term exterior protection",
     intro: "MAX G+ Ultimate is for long-term owners who want paint correction plus coordinated protection for paint, wheel faces, and windshield in one certified System X package.",
     sections: [
       { title: "What is included", body: "Single-stage paint correction, System X MAX G+ on paint and applicable exterior surfaces, Wheel+ on wheel faces, Glass+ on the windshield, registration, and a tailored aftercare plan." },
-      { title: "Who should choose MAX G+", body: "It fits high-value vehicles, black paint, and long-term ownership when maximum gloss and a complete exterior system matter more than the lowest upfront price." }
+      { title: "Good fit for MAX G+", body: "It makes sense for long-term ownership, black paint, and vehicles where you want the paint, wheel faces, and windshield handled together." }
     ],
     processTitle: "How MAX G+ Ultimate is installed",
     process: ["Inspect and measure the finish", "Deep-clean and decontaminate", "Complete single-stage paint correction", "Install MAX G+, Wheel+, and Glass+", "Cure, inspect, register, and hand off the care plan"],
@@ -1072,7 +1072,7 @@ Object.assign(SERVICE_PAGE_CONTENT, {
     internalServiceIds: ["system-x-pro-plus", "system-x-phantom-2k", "paint-correction-l2"]
   },
   "system-x-phantom-2k": {
-    headline: "Phantom 2K Bespoke is the flagship System X finish for specialty and high-end vehicles",
+    headline: "Phantom 2K for specialty finishes and vehicles that need a more involved correction plan",
     intro: "Phantom 2K Bespoke starts with a paint inspection. Depending on the finish, I use one or two polishing stages before installing the two-part coating system.",
     sections: [
       { title: "What is included", body: "A vehicle-specific correction plan, Phantom 2K on paint and applicable exterior surfaces, Wheel+ on wheel faces, Glass+ on the windshield, registration, cure inspection, and detailed aftercare." },
