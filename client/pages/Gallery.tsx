@@ -30,7 +30,7 @@ export default function Gallery() {
             <div className="flex items-center gap-2 text-sm font-black text-blue-700"><Camera className="h-4 w-4" /> Real customer vehicles</div>
             <h1 className="mt-4 text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">Car Detailing Before &amp; After</h1>
           </div>
-          <p className="max-w-2xl text-lg leading-8 text-slate-600">See actual interior detailing, paint correction, exterior detailing and specialty-vehicle work from Bellevue and the Omaha metro. The before-and-after examples use matching photos from the same vehicle and work area.</p>
+          <p className="max-w-2xl text-lg leading-8 text-slate-600">These are vehicles I actually worked on in Bellevue and around Omaha. Use the before-and-after sliders to see the starting condition and the finished result on the same vehicle.</p>
         </div>
       </section>
 
@@ -80,8 +80,8 @@ export default function Gallery() {
 
       <section className="border-y border-slate-200 bg-slate-50 py-14 lg:py-20">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[1fr_.8fr] lg:items-start">
-          <div><h2 className="text-3xl font-black tracking-tight">What these photos can tell you</h2><p className="mt-4 max-w-2xl leading-7 text-slate-600">Results depend on the starting condition, material, paint thickness and defect depth. The gallery is useful for seeing the type of work I perform, but it is not a promise that every stain or paint defect can be removed completely.</p></div>
-          <aside className="border-l-4 border-blue-600 bg-white p-7"><h3 className="text-xl font-black">Want a recommendation for your vehicle?</h3><p className="mt-3 leading-7 text-slate-600">Compare the services or send photos of your vehicle so I can recommend the appropriate level of work.</p><div className="mt-5 flex flex-wrap gap-2"><Link to="/services" className="inline-flex min-h-11 items-center bg-blue-600 px-5 font-black text-white hover:bg-blue-700">View Services &amp; Pricing</Link><Link to="/quote" className="inline-flex min-h-11 items-center border border-slate-300 px-5 font-black hover:border-blue-600 hover:text-blue-700">Send Vehicle Details</Link></div></aside>
+          <div><h2 className="text-3xl font-black tracking-tight">What these photos can tell you</h2><p className="mt-4 max-w-2xl leading-7 text-slate-600">Every vehicle starts in a different place. Some stains come out, some only improve, and some paint defects are too deep to chase safely. These photos show my work, not a promise that every vehicle will finish exactly the same.</p></div>
+          <aside className="border-l-4 border-blue-600 bg-white p-7"><h3 className="text-xl font-black">Want a recommendation for your vehicle?</h3><p className="mt-3 leading-7 text-slate-600">Send me a few photos and I will tell you which service I would book for it.</p><div className="mt-5 flex flex-wrap gap-2"><Link to="/services" className="inline-flex min-h-11 items-center bg-blue-600 px-5 font-black text-white hover:bg-blue-700">View Services &amp; Pricing</Link><Link to="/quote" className="inline-flex min-h-11 items-center border border-slate-300 px-5 font-black hover:border-blue-600 hover:text-blue-700">Send Vehicle Details</Link></div></aside>
         </div>
       </section>
 
