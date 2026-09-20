@@ -147,10 +147,12 @@ export const SPECIALTY_SIZES = [
 ];
 
 export const ADD_ONS: AddOn[] = [
-  { id: 'pet-hair', name: 'Pet Hair Removal', price: 50, duration: '30 mins', description: 'Starts at $50 and includes up to 30 minutes of pet-hair removal. Final pricing is confirmed after texted photos because embedded hair, vehicle size, and cargo-area condition can require additional time.' },
-  { id: 'smoke-odor', name: 'Ozone Odor Elimination', price: 125, duration: '3.5 hours', description: 'Bellevue drop-off only. Ozone odor treatment for smoke, pet, mildew, and food smells after the odor source has been cleaned.' },
-  { id: 'engine-bay', name: 'Engine Bay Detail', price: 50, duration: '45 mins', description: 'Safe low-pressure degreasing, steam cleaning, and dressing of the engine compartment. Makes leaks easier to spot and runs cooler.' },
-  { id: 'headlight', name: 'Headlight Restoration', price: 100, duration: '60-90 mins', description: 'Multi-stage wet sanding, polishing, and UV sealant coating restores clarity and nighttime visibility to yellowed, hazy headlights.' },
+  { id: 'pet-hair', name: 'Pet Hair Removal', price: 45, duration: '30 mins', description: 'Starts at $45 for light to moderate pet hair. Embedded hair, large cargo areas, or heavily covered interiors are quoted after I see photos.' },
+  { id: 'smoke-odor', name: 'Odor Treatment', price: 75, duration: '1-3.5 hours', description: 'Starts at $75. Bellevue drop-off only. I clean the odor source first, then use the treatment that fits the problem. Smoke, urine, mildew, and severe odors can require more time.' },
+  { id: 'engine-bay', name: 'Engine Bay Detail', price: 60, duration: '45 mins', description: 'Low-pressure cleaning and degreasing with careful attention around sensitive components, followed by dressing where appropriate.' },
+  { id: 'headlight', name: 'Headlight Restoration', price: 90, duration: '60-90 mins', description: 'Starts at $90 per pair. Wet sanding and polishing are used when needed, then the lenses are protected against UV exposure.' },
+  { id: 'targeted-extraction', name: 'Targeted Stain / Extraction', price: 35, duration: '30 mins', description: 'Starts at $35 for a small carpet or upholstery problem area. Larger spills, multiple seats, or heavily soiled fabric may need Interior Restoration instead.' },
+  { id: 'clay-decon', name: 'Clay & Decontamination Upgrade', price: 75, duration: '45-75 mins', description: 'Starts at $75. Adds iron removal and clay treatment when paint feels rough or has bonded contamination that a normal wash will not remove.' },
   {
     id: 'system-x-glass-plus',
     name: 'System X Glass+ Windshield Protection',
@@ -399,7 +401,7 @@ export const SERVICES: Service[] = [
     id: 'system-x-pro-plus',
     categoryId: 'protection',
     name: 'System X Pro+ Signature',
-    shortDescription: 'Best-value System X protection with paint enhancement, Pro+, Glass+ windshield coating, and up to 6 years of coverage.',
+    shortDescription: 'System X Pro+ with paint enhancement, Glass+ windshield protection, and up to 6 years of coverage.',
     longDescription: 'This is the System X package I recommend for a daily driver you plan to keep. I fully decontaminate the vehicle, perform a single-stage paint enhancement, prepare the panels, install Pro+ on the painted surfaces, and add Glass+ to the windshield. Pro+ is an ultra-hydrophobic 9H coating offering up to 6 years of registered protection.',
     price: { car: 1099, suv: 1249, truck: 1399, largeSuv: 1549 },
     pricingType: 'fixed',
@@ -417,7 +419,7 @@ export const SERVICES: Service[] = [
       'Full decontamination, panel prep, and aftercare guide'
     ],
     duration: '1-2 Days',
-    bestFor: 'Daily drivers, newer luxury vehicles, and owners who want the strongest balance of price, gloss, correction, and warranty length.',
+    bestFor: 'Daily drivers and newer vehicles whose owners want paint improvement, longer-term coating protection, and windshield protection in one package.',
     badge: 'Most Popular',
     highlight: true,
     image: '/gallery/takeout/20260502_192629.webp'
@@ -452,7 +454,7 @@ export const SERVICES: Service[] = [
     id: 'system-x-phantom-2k',
     categoryId: 'protection',
     name: 'System X Phantom 2K Bespoke',
-    shortDescription: 'Flagship two-part System X protection paired with deeper correction, Wheel+, Glass+, and a vehicle-specific finish plan.',
+    shortDescription: 'Two-part System X protection paired with a vehicle-specific correction plan, Wheel+, and Glass+.',
     longDescription: 'I plan Phantom 2K Bespoke around the specific vehicle and finish. After inspecting the paint, I choose the appropriate one- or two-stage correction, then install Phantom 2K on the paint, badges, and applicable trim, Wheel+ on the wheel faces, and Glass+ on the windshield. Severe defects and specialty finishes receive an individual preparation plan.',
     price: { car: 1999, suv: 2199, truck: 2399, largeSuv: 2599 },
     pricingType: 'custom',
@@ -686,7 +688,7 @@ export const SERVICES: Service[] = [
       'Full exterior dress & tire shine'
     ],
     duration: '6-8 hours',
-    bestFor: 'Anyone listing a vehicle privately or at a dealership who wants to maximize sale price.',
+    bestFor: 'Vehicles being prepared for private sale, trade-in, or listing photos where presentation matters.'
     badge: 'Boost Resale Value',
     image: '/gallery/takeout/20250823_084022.webp'
   },
