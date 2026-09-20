@@ -12,7 +12,7 @@ export default function Membership() {
         <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-zinc-900">Maintenance Detailing</h1>
           <p className="text-lg text-zinc-600">
-            Maintenance plans start at $119 and are for returning or recently detailed vehicles. I confirm what is included, scheduling, and billing before enrollment.
+            These plans are for vehicles I have already detailed or vehicles that are still in good condition. They start at $119 and are meant to keep the vehicle from getting back to square one between appointments.
           </p>
         </div>
 
@@ -29,7 +29,7 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For daily drivers that need consistent care after a full detail.</p>
+            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For a daily driver that needs one solid upkeep visit each month.</p>
             
             <div className="mb-8 p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
               <div className="flex items-baseline gap-1">
@@ -73,7 +73,7 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For drivers who want regular interior upkeep and safe exterior washing. I will confirm what is included and how often the vehicle should be serviced before enrollment.</p>
+            <p className="text-sm text-zinc-400 mb-8 leading-relaxed">For vehicles that get used hard enough to need attention about every two weeks. I set the plan around the vehicle instead of pretending every car needs the exact same checklist.</p>
             
             <div className="mb-8 p-4 bg-zinc-800/50 rounded-2xl border border-zinc-700">
               <div className="flex items-baseline gap-1">
@@ -114,7 +114,7 @@ export default function Membership() {
               </div>
             </div>
             
-            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For vehicles that need a deeper seasonal cleanup and a fresh layer of protection.</p>
+            <p className="text-sm text-zinc-600 mb-8 leading-relaxed">For vehicles that stay fairly clean but need a bigger cleanup and protection refresh a few times a year.</p>
             
             <div className="mb-8 p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
               <div className="flex items-baseline gap-1">
@@ -147,23 +147,23 @@ export default function Membership() {
         <div className="max-w-3xl mx-auto mt-16 bg-white p-8 rounded-2xl border border-zinc-200 shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <Shield className="h-6 w-6 text-zinc-900" />
-            <h3 className="text-xl font-bold text-zinc-900">Membership Requirements</h3>
+            <h3 className="text-xl font-bold text-zinc-900">Before starting a maintenance plan</h3>
           </div>
           <p className="text-zinc-600 mb-4">
-            Maintenance plans work best after I have completed a full detail and brought the vehicle to a clean starting point.
+            Maintenance only works when the vehicle starts clean. If it needs a full detail first, I will tell you before putting it on a plan.
           </p>
           <p className="text-zinc-600">
-            Before you enroll, I will explain what is included, the schedule, cancellation terms, and how billing works.
+            Before anything is recurring, I will go over the price, schedule, what is included, and how cancellation works.
           </p>
         </div>
         {/* SEO Content Block */}
         <div className="max-w-3xl mx-auto mt-16 bg-zinc-50 p-8 rounded-2xl border border-zinc-200">
-          <h2 className="text-2xl font-black text-zinc-900 mb-4">Why Regular Detailing Helps</h2>
+          <h2 className="text-2xl font-black text-zinc-900 mb-4">Why maintenance is cheaper than starting over</h2>
           <p className="text-zinc-600 leading-relaxed mb-4">
-            Regular cleaning keeps everyday dirt, road salt, spills, and buildup from turning into a much bigger job. It also helps protect the paint and keeps the interior more comfortable between full details.
+            A little upkeep keeps salt, spills, pet hair, road film, and everyday mess from turning into another restoration job.
           </p>
           <p className="text-zinc-600 leading-relaxed">
-            Monthly or bi-weekly maintenance helps remove dust, road film, salt, and light interior mess before it becomes a full reset. Maintenance visits include safe washing, quick interior upkeep, glass cleaning, tire dressing, and protection refreshes when appropriate.
+            Monthly or bi-weekly visits are for staying ahead of the mess. What I do each visit depends on the plan we agreed on and what the vehicle actually needs that day.
           </p>
         </div>
       </div>
