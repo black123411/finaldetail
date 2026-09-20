@@ -2,7 +2,7 @@ export const SITE_ORIGIN = 'https://bryansdetailingomaha.com';
 export const DEFAULT_SOCIAL_IMAGE = '/20211009_025807-COLLAGE.jpg';
 
 export const BUSINESS = {
-  name: "Bryan's Showroom Quality Mobile Detailing",
+  name: "Bryan's Showroom Quality Detailing",
   url: SITE_ORIGIN,
   telephone: '+1-712-305-6313',
   email: 'bryansmobiledetailing@gmail.com',
@@ -143,11 +143,11 @@ export const NOT_FOUND_SEO: SeoRoute = {
 
 const BLOG_SEO_TITLES: Record<string, string> = {
   'car-detailing-cost-omaha-2026': "Car Detailing Cost in Omaha (2026) | Bryan's",
-  'ceramic-coating-cost-omaha': "Ceramic Coating Cost in Omaha NE | Bryan's Detailing",
-  'paint-correction-vs-ceramic-coating': "Paint Correction vs Ceramic Coating | Bryan's Detailing",
-  'best-car-detailing-bellevue-ne': "Choosing a Bellevue Auto Detailer | Bryan's Detailing",
-  'pre-sale-detail-omaha': "Detailing a Car Before Selling in Omaha | Bryan's Detailing",
-  'how-to-protect-new-car-paint': "How to Protect New Car Paint in Nebraska | Bryan's Detailing",
+  'ceramic-coating-cost-omaha': "Ceramic Coating Cost in Omaha NE | Bryan's Showroom Quality Detailing",
+  'paint-correction-vs-ceramic-coating': "Paint Correction vs Ceramic Coating | Bryan's Showroom Quality Detailing",
+  'best-car-detailing-bellevue-ne': "Choosing a Bellevue Auto Detailer | Bryan's Showroom Quality Detailing",
+  'pre-sale-detail-omaha': "Detailing a Car Before Selling in Omaha | Bryan's Showroom Quality Detailing",
+  'how-to-protect-new-car-paint': "How to Protect New Car Paint in Nebraska | Bryan's Showroom Quality Detailing",
 };
 
 const BLOG_SEO_DESCRIPTIONS: Record<string, string> = {
@@ -162,7 +162,7 @@ const BLOG_SEO_DESCRIPTIONS: Record<string, string> = {
 export function getBlogSeoTitle(slug: string, articleTitle: string) {
   const curatedTitle = BLOG_SEO_TITLES[slug];
   if (curatedTitle) return curatedTitle;
-  const suffix = " | Bryan's Detailing";
+  const suffix = " | Bryan's Showroom Quality Detailing";
   const availableLength = 60 - suffix.length;
   if (articleTitle.length <= availableLength) return `${articleTitle}${suffix}`;
   const shortened = articleTitle.slice(0, availableLength - 1).replace(/\s+\S*$/, '').trim();
