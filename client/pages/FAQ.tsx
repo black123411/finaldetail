@@ -81,7 +81,7 @@ export default function FAQ() {
       <section className="border-b border-slate-200 bg-white">
         <div className="container mx-auto grid gap-8 px-4 py-14 lg:grid-cols-[.8fr_1.2fr] lg:items-end lg:py-20">
           <div><h1 className="text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">Car Detailing FAQ</h1></div>
-          <p className="max-w-2xl text-lg leading-8 text-slate-600">Answers about detailing prices, mobile service, Bellevue drop-off, vehicle condition, paint correction, ceramic coating and choosing the right service.</p>
+          <p className="max-w-2xl text-lg leading-8 text-slate-600">Straight answers to the questions I get most about prices, mobile appointments, drop-off work, interiors, paint correction, and ceramic coatings.</p>
         </div>
       </section>
 
@@ -89,7 +89,7 @@ export default function FAQ() {
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.65fr_1.35fr]">
           <aside>
             <h2 className="text-3xl font-black tracking-tight">Need an answer about your vehicle?</h2>
-            <p className="mt-4 leading-7 text-slate-600">If the answer depends on stains, pet hair, odor, paint condition or another visible problem, photos usually help more than a long description.</p>
+            <p className="mt-4 leading-7 text-slate-600">For stains, pet hair, odors, scratches, or paint condition, a few photos usually tell me more than a long message.</p>
             <a href={textPhotosLink} onClick={() => trackEvent('click_text_quote', { location: 'faq_intro' })} className="mt-6 inline-flex min-h-12 items-center gap-2 bg-blue-600 px-5 font-black text-white hover:bg-blue-700"><MessageSquare className="h-5 w-5" /> Text Vehicle Photos</a>
           </aside>
 
@@ -109,7 +109,7 @@ export default function FAQ() {
 
       <section className="border-y border-slate-200 bg-slate-50 py-14">
         <div className="container mx-auto flex flex-col justify-between gap-7 px-4 md:flex-row md:items-center">
-          <div><h2 className="text-3xl font-black tracking-tight">Ready to compare services?</h2><p className="mt-3 max-w-2xl leading-7 text-slate-600">See current service descriptions, starting prices and the vehicle conditions each package is designed for.</p></div>
+          <div><h2 className="text-3xl font-black tracking-tight">Ready to compare services?</h2><p className="mt-3 max-w-2xl leading-7 text-slate-600">See the current prices and what each service actually includes.</p></div>
           <Link to="/services" className="inline-flex min-h-14 shrink-0 items-center justify-center bg-slate-950 px-7 font-black text-white hover:bg-blue-700">View Services &amp; Pricing</Link>
         </div>
       </section>
