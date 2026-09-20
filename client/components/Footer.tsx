@@ -7,9 +7,9 @@ export default function Footer() {
     <footer className="bg-slate-950 text-slate-400 py-14 border-t border-slate-800 pb-28 md:pb-14">
       <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-x-8 gap-y-10">
         <div className="space-y-4 min-w-0">
-          <h3 className="text-lg font-black text-white">Bryan's Detailing</h3>
+          <h3 className="text-lg font-black text-white">Bryan's Showroom Quality Detailing</h3>
           <p className="text-sm leading-relaxed">
-            Auto detailing services based in Bellevue, Nebraska. Interior detailing, full car details, paint correction, ceramic coating, and mobile detailing options for Omaha, Bellevue, Papillion, La Vista, and Council Bluffs.
+            Owner-operated auto detailing based in Bellevue, Nebraska. I handle interior detailing, full details, paint correction, ceramic coatings, and select mobile appointments throughout the Omaha metro.
           </p>
         </div>
 
@@ -98,7 +98,7 @@ export default function Footer() {
           <Link to="/sitemap" className="hover:text-zinc-100 transition-colors">Sitemap</Link>
         </div>
         
-        <p>&copy; {new Date().getFullYear()} Bryan's Showroom Quality Mobile Detailing. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Bryan's Showroom Quality Detailing. All rights reserved.</p>
         
       </div>
     </footer>
