@@ -10,7 +10,7 @@ import { getSquareBookingLink } from '../lib/constants';
 
 const results = BEFORE_AFTERS.filter(({ id }) => [1, 2, 6, 7].includes(id));
 const textHref = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%27m%20not%20sure%20which%20detail%20I%20need.%20Here%20are%20photos%20of%20my%20vehicle%3A';
-const googleReviewsHref = "https://www.google.com/maps/search/?api=1&query=Bryan%27s%20Showroom%20Quality%20Mobile%20Detailing&query_place_id=ChIJVVU5ibSJk4cRCK2ex-dRYIg";
+const googleReviewsHref = "https://www.google.com/maps/search/?api=1&query=Bryan%27s%20Showroom%20Quality%20Detailing&query_place_id=ChIJVVU5ibSJk4cRCK2ex-dRYIg";
 
 const popular = [
   { id: 'interior-detail', label: 'Signature Interior Detail', fit: 'Normal daily use', fallback: 'Dust, crumbs, dirty mats, light stains and everyday interior buildup.' },
@@ -26,7 +26,7 @@ export default function Home() {
         <div className="container mx-auto grid min-h-[620px] gap-10 px-4 py-16 lg:grid-cols-[1.02fr_.98fr] lg:items-center lg:py-20">
           <div className="max-w-3xl">
             <h1 className="text-5xl font-black leading-[.96] tracking-tight sm:text-6xl lg:text-7xl">Car Detailing in Bellevue &amp; Omaha, NE</h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">Professional interior detailing, complete full details, paint correction and certified System X ceramic coatings. Mobile service is available throughout the metro, with appointment-only Bellevue drop-off for longer or weather-sensitive work.</p>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">I detail vehicles in Bellevue and across the Omaha area, from everyday interior cleanups to paint correction and System X ceramic coatings. Some jobs can be done mobile, while longer paint and coating work is handled by appointment in Bellevue.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_hero_primary' })} className="inline-flex min-h-14 items-center justify-center gap-2 bg-blue-600 px-7 font-black text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                 <Calendar className="h-5 w-5" /> View Services &amp; Pricing
@@ -69,7 +69,7 @@ export default function Home() {
           <div className="grid gap-8 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
             <div>
               <h2 className="text-4xl font-black tracking-tight sm:text-5xl">Choose by what your vehicle needs</h2>
-              <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">You do not need to diagnose the package yourself. Start with the result you want, compare the service details, then check live availability in Square.</p>
+              <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">You do not need to know the package name before you book. Start with what bothers you about the vehicle, then compare the options and prices.</p>
               <Link to="/services" className="mt-6 inline-flex min-h-11 items-center gap-2 font-black text-blue-700 hover:text-blue-900">Compare every service <ArrowRight className="h-4 w-4" /></Link>
             </div>
             <div className="grid border-l border-t border-slate-300 md:grid-cols-2">
@@ -102,7 +102,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl">
             <h2 className="text-4xl font-black tracking-tight sm:text-5xl">Real detailing results</h2>
-            <p className="mt-4 text-lg leading-8 text-slate-600">Before-and-after photos from actual vehicles make it easier to judge the kind of improvement a service can realistically deliver.</p>
+            <p className="mt-4 text-lg leading-8 text-slate-600">These are real vehicles I have worked on. The photos show the kind of improvement you can expect without pretending every stain, scratch, or paint defect will disappear.</p>
           </div>
           <div className="mt-10 grid gap-8 md:grid-cols-2">
             {results.map((item) => <article key={item.id}><BeforeAfterSlider beforeImage={item.before} afterImage={item.after} /><h3 className="mt-4 text-lg font-black">{item.label}</h3></article>)}
@@ -113,14 +113,14 @@ export default function Home() {
 
       <section className="py-16 lg:py-24">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
-          <img src="/bryan-professional-headshot.webp" alt="Bryan, owner of Bryan's Showroom Quality Detailing in Bellevue Nebraska" className="aspect-[4/3] w-full object-cover object-center" />
+          <img src="/bryan-professional-headshot.webp" alt="Bryan, owner of Bryan's Showroom Quality Detailing in Bellevue Nebraska" className="aspect-[4/3] w-full object-cover object-[center_22%]" />
           <div>
             <h2 className="text-4xl font-black tracking-tight sm:text-5xl">The person you contact does the work</h2>
-            <p className="mt-6 text-lg leading-8 text-slate-600">I inspect the vehicle, recommend the service, perform the detail and check the finished result myself. Before opening the business in 2017, I worked around collision-center detailing, vehicle preparation and paint prep, experience that still guides how I approach paint and interior materials today.</p>
+            <p className="mt-6 text-lg leading-8 text-slate-600">I handle the job from the first message to the final walk-around. I started the business in 2017, and I still do the detailing myself, including the paint work, interior work, and final inspection.</p>
             <div className="mt-7 grid gap-3 sm:grid-cols-2">
               {['Direct communication with the owner', 'Condition-based service recommendations', 'No surprise condition-related upgrades', 'Realistic expectations for stains and paint defects'].map((item) => <div key={item} className="flex gap-3 border-t border-slate-200 pt-4"><ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-blue-700" /><span className="font-bold text-slate-800">{item}</span></div>)}
             </div>
-            <Link to="/about" className="mt-8 inline-flex min-h-12 items-center gap-2 bg-slate-950 px-6 font-black text-white hover:bg-blue-700">About Bryan's Detailing <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/about" className="mt-8 inline-flex min-h-12 items-center gap-2 bg-slate-950 px-6 font-black text-white hover:bg-blue-700">About Bryan <ArrowRight className="h-4 w-4" /></Link>
           </div>
         </div>
       </section>
@@ -136,7 +136,7 @@ export default function Home() {
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
           <div>
             <h2 className="text-4xl font-black tracking-tight sm:text-5xl">Mobile detailing across Bellevue and Omaha</h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">I serve Bellevue, Omaha, Papillion, La Vista, Council Bluffs and nearby communities. Mobile availability depends on the service, weather, access and a safe place to work. Longer paint and coating services are usually better suited to Bellevue drop-off.</p>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">I serve Bellevue, Omaha, Papillion, La Vista, Council Bluffs and nearby areas. Mobile appointments depend on the job, weather, and a safe place to work. Paint correction and coating jobs are usually better handled as Bellevue drop-off appointments.</p>
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-bold text-blue-300"><Link to="/areas/bellevue-ne">Bellevue</Link><Link to="/areas/omaha-ne">Omaha</Link><Link to="/areas/papillion-ne">Papillion</Link><Link to="/areas/la-vista-ne">La Vista</Link><Link to="/areas/council-bluffs-ia">Council Bluffs</Link></div>
           </div>
           <div className="border-l-4 border-blue-500 bg-slate-900 p-7"><h3 className="text-2xl font-black">Ready to schedule?</h3><p className="mt-3 leading-7 text-slate-300">Choose a service and check current availability, or send photos first if you want a recommendation.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row"><Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_final_cta' })} className="inline-flex min-h-12 items-center justify-center bg-blue-600 px-6 font-black text-white hover:bg-blue-700">View Services &amp; Pricing</Link><a href={textHref} onClick={() => trackEvent('click_text_quote', { location: 'home_final_cta' })} className="inline-flex min-h-12 items-center justify-center border border-slate-600 px-6 font-black text-white hover:border-blue-400">Text Photos</a></div></div>
