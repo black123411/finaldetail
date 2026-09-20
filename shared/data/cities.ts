@@ -1,3 +1,30 @@
+export interface CityProjectImage {
+  src: string;
+  alt: string;
+}
+
+export interface CityProject {
+  title: string;
+  intro: string;
+  vehicle?: string;
+  service: string;
+  location: string;
+  images: CityProjectImage[];
+  links: Array<{ label: string; href: string }>;
+}
+
+export interface CityServiceSection {
+  title: string;
+  body: string;
+  href: string;
+  linkLabel: string;
+}
+
+export interface CityFaq {
+  question: string;
+  answer: string;
+}
+
 export interface CityPage {
   slug: string;
   name: string;
@@ -12,6 +39,9 @@ export interface CityPage {
     whyPoints: string[];
     serviceAreas: string[];
     cta: string;
+    serviceSections?: CityServiceSection[];
+    projects?: CityProject[];
+    faqs?: CityFaq[];
   };
 }
 
@@ -27,7 +57,7 @@ export const CITIES: CityPage[] = [
     content: {
       featuredServiceIds: ['interior-detail', 'full-detail-package', 'paint-enhancement-polish', 'paint-correction-l1', 'system-x-crystal-plus', 'pre-sale-detail'],
       title: 'Mobile Car Detailing in Omaha, NE',
-      intro: 'I provide professional mobile car detailing throughout Omaha for cars, trucks and SUVs. Services include interior detailing, complete inside-and-out details, paint enhancement, paint correction and System X ceramic coating preparation. Mobile appointments are available when the service, weather and work area are suitable, with appointment-only Bellevue drop-off available for longer or weather-sensitive work.',
+      intro: 'I provide professional car detailing throughout Omaha for cars, trucks and SUVs, with mobile appointments available when the service, weather and work area are suitable. Services range from interior detailing and complete inside-and-out details to paint enhancement, paint correction and System X ceramic coatings. For longer paint-correction, ceramic-coating or weather-sensitive appointments, Bellevue drop-off is also available by appointment.',
       servicesLabel: 'Popular Car Detailing Services in Omaha',
       whyLabel: 'Why Omaha customers choose Bryan',
       whyPoints: [
@@ -38,7 +68,113 @@ export const CITIES: CityPage[] = [
         'Certified System X ceramic coating with Bellevue drop-off available for longer services'
       ],
       serviceAreas: ['West Omaha', 'Midtown Omaha', 'South Omaha', 'Bellevue', 'Papillion', 'La Vista'],
-      cta: 'Check Omaha Availability'
+      cta: 'Check Omaha Availability',
+      serviceSections: [
+        {
+          title: 'Interior Detailing in Omaha',
+          body: 'For daily-driver interiors with dust, crumbs, dirty mats and normal buildup, I match the cleaning level to the vehicle condition. Deeper restoration options are available for heavier stains, pet hair, spills and neglected interiors.',
+          href: '/services/category/interior-detailing',
+          linkLabel: 'Compare Interior Detailing in Omaha'
+        },
+        {
+          title: 'Paint Correction in Omaha',
+          body: 'Swirl marks, wash haze, oxidation and light scratches can reduce gloss even when the vehicle is otherwise clean. I inspect the paint and perform a test spot before recommending the appropriate level of correction.',
+          href: '/services/category/paint-correction',
+          linkLabel: 'Learn about Paint Correction in Omaha'
+        },
+        {
+          title: 'Ceramic Coating in Omaha',
+          body: 'I install System X ceramic coatings after completing the paint preparation appropriate for the vehicle. Depending on the condition of the paint, preparation may include decontamination, polishing or paint correction before the coating is applied.',
+          href: '/ceramic-coating',
+          linkLabel: 'Compare Ceramic Coating in Omaha'
+        },
+        {
+          title: 'Mobile Detailing in Omaha or Bellevue Drop-Off',
+          body: 'Many interior and general detailing services can be completed at your Omaha location when there is suitable access, weather and a safe place to work. Longer paint-correction, ceramic-coating and weather-sensitive services may be better suited to my appointment-only Bellevue drop-off location.',
+          href: '/services',
+          linkLabel: 'View all detailing services'
+        }
+      ],
+      projects: [
+        {
+          title: 'Ram 1500 Exterior Detailing in Omaha',
+          vehicle: 'Ram 1500 Big Horn',
+          service: 'Exterior detailing',
+          location: 'Omaha, Nebraska',
+          intro: 'This Ram 1500 Big Horn received exterior detailing focused on cleaning up the paint, wheels, trim and exterior surfaces while restoring a cleaner, glossier overall appearance. Trucks can accumulate substantial road film, dirt and contamination around the lower panels, wheel areas and bodywork, so those areas received particular attention during the detail. The finished truck had a noticeably cleaner and more reflective exterior while maintaining the paint and trim appropriately.',
+          images: [
+            { src: '/omaha/omaha-truck-detailing-before.jpg', alt: 'Ram 1500 Big Horn before exterior detailing in Omaha Nebraska' },
+            { src: '/omaha/omaha-truck-detailing-before-2.jpg', alt: 'Ram 1500 Big Horn paint and wheel condition before detailing in Omaha' },
+            { src: '/omaha/omaha-truck-detailing-after.jpg', alt: 'Ram 1500 Big Horn after exterior detailing in Omaha Nebraska' },
+            { src: '/omaha/omaha-truck-detailing-after-2.jpg', alt: 'Ram 1500 Big Horn finished exterior after Omaha detailing' }
+          ],
+          links: [{ label: 'View Exterior Detailing', href: '/services/category/exterior-detailing' }]
+        },
+        {
+          title: 'Mazda CX-9 Interior Detailing in Omaha',
+          vehicle: 'Mazda CX-9',
+          service: 'Interior detailing',
+          location: 'Omaha, Nebraska',
+          intro: 'This Mazda CX-9 received interior detailing throughout the passenger compartment. The service focused on the seating areas, carpeting, floor mats, center console, door panels and other high-contact surfaces that collect dirt during normal family use. The lighter interior makes contamination especially noticeable, so careful cleaning around the seats, carpeting and trim helped restore a fresher, more uniform appearance.',
+          images: [
+            { src: '/omaha/omaha-interior-detailing-before.jpg', alt: 'Mazda CX-9 interior before detailing in Omaha Nebraska' },
+            { src: '/omaha/omaha-interior-cleaning-before.jpg', alt: 'Mazda CX-9 interior and floor mats before cleaning in Omaha' },
+            { src: '/omaha/omaha-interior-detailing-after.jpg', alt: 'Mazda CX-9 interior after professional detailing in Omaha Nebraska' },
+            { src: '/omaha/omaha-interior-cleaning-after.jpg', alt: 'Mazda CX-9 cleaned interior after Omaha detailing' }
+          ],
+          links: [{ label: 'View Interior Detailing in Omaha', href: '/services/category/interior-detailing' }]
+        },
+        {
+          title: 'Omaha Car Detailing Results',
+          service: 'Professional car detailing',
+          location: 'Omaha, Nebraska',
+          intro: 'These photos show additional vehicles after professional detailing work in Omaha. They are included as visual proof of finished work rather than presented as a dramatic before-and-after claim. Every vehicle gets a process matched to its materials, condition and the owner’s goals.',
+          images: [
+            { src: '/omaha/omaha-auto-detailing-finished-vehicle.jpg', alt: 'Finished vehicle after auto detailing in Omaha Nebraska' },
+            { src: '/omaha/omaha-car-detailing-finished.jpg', alt: 'Professional car detailing result in Omaha Nebraska' },
+            { src: '/omaha/omaha-detailing-results.jpg', alt: 'Vehicle after professional detailing service in Omaha' }
+          ],
+          links: [{ label: 'View Car Detailing Services', href: '/services' }]
+        },
+        {
+          title: 'Premium and Performance Vehicle Detailing in Omaha',
+          vehicle: 'Aston Martin Vantage S and Subaru WRX',
+          service: 'Premium vehicle detailing',
+          location: 'Omaha, Nebraska',
+          intro: 'These Omaha projects show experience with enthusiast and premium vehicles, including an Aston Martin Vantage S and Subaru WRX. The work focused on safely cleaning and refining paint, wheels, trim and detailed interior surfaces. I adjust the process to the specific vehicle rather than applying the same procedure to every car, and I only recommend paint correction or ceramic coating when the actual condition and service call for it.',
+          images: [
+            { src: '/omaha/omaha-premium-car-detailing.jpg', alt: 'Subaru WRX wheel after professional detailing in Omaha' },
+            { src: '/omaha/omaha-performance-car-detailing.jpg', alt: 'Premium vehicle interior detail from an Omaha detailing project' },
+            { src: '/omaha/omaha-exterior-detailing-result.jpg', alt: 'Aston Martin Vantage S after exterior detailing in Omaha Nebraska' },
+            { src: '/omaha/omaha-car-detailing-paint-finish.jpg', alt: 'Clean paint finish after premium Omaha car detailing' }
+          ],
+          links: [
+            { label: 'View Exterior Detailing', href: '/services/category/exterior-detailing' },
+            { label: 'View Paint Correction', href: '/services/category/paint-correction' },
+            { label: 'View Ceramic Coating', href: '/ceramic-coating' }
+          ]
+        },
+        {
+          title: 'Deep Interior Cleaning in Omaha',
+          service: 'Deep interior detailing',
+          location: 'Omaha, Nebraska',
+          intro: 'This Omaha interior started with visible debris and buildup around the carpeting, seat mounting areas, center console and other difficult-to-reach spaces. For interiors in this condition, the service goes beyond simply wiping down visible surfaces. Detailed cleaning focuses on the areas where dirt collects over time, including around and beneath seating areas, along carpet edges, inside cup holders and around interior trim. The result is a substantially cleaner cabin and a better starting point for maintaining the vehicle going forward.',
+          images: [
+            { src: '/omaha/omaha-deep-interior-cleaning-before.jpg', alt: 'Vehicle interior before deep interior detailing in Omaha Nebraska' },
+            { src: '/omaha/omaha-deep-interior-cleaning-after.jpg', alt: 'Interior after deep detailing service in Omaha Nebraska' },
+            { src: '/omaha/omaha-interior-restoration-result.jpg', alt: 'Finished interior after professional restoration in Omaha' }
+          ],
+          links: [{ label: 'View Interior Restoration', href: '/services/category/interior-detailing' }]
+        }
+      ],
+      faqs: [
+        { question: 'Do you offer mobile car detailing in Omaha?', answer: 'Yes. Mobile appointments are available throughout Omaha when the service, weather, access and work area are suitable. Some longer or weather-sensitive services may be better completed through Bellevue drop-off.' },
+        { question: 'How much does car detailing cost in Omaha?', answer: 'Pricing depends on the service, vehicle size and condition. Current starting prices are shown on each service page, with additional restoration work discussed before it is performed.' },
+        { question: 'Do you offer interior detailing in Omaha?', answer: 'Yes. Interior services range from maintenance cleaning for regularly maintained vehicles to deeper restoration for stains, pet hair, spills and heavily soiled interiors.' },
+        { question: 'Do you offer paint correction in Omaha?', answer: 'Yes. Paint correction is available for eligible swirl marks, wash haze, oxidation and light scratches. I inspect the paint and perform a test spot before determining the appropriate correction process.' },
+        { question: 'Do you install ceramic coatings for Omaha customers?', answer: 'Yes. I am a System X certified installer and offer several ceramic-coating packages. Paint preparation is determined by the vehicle’s condition before coating installation.' },
+        { question: 'Should I choose mobile detailing or Bellevue drop-off?', answer: 'Mobile service works well for many detailing appointments when conditions are suitable. Bellevue drop-off is often better for longer paint-correction, ceramic-coating and weather-sensitive work.' }
+      ]
     }
   },
   {

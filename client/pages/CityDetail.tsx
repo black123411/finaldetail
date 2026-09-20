@@ -128,6 +128,72 @@ export default function CityDetail() {
         </div>
       </section>
 
+
+      {city.content.serviceSections?.length ? (
+        <section className="border-y border-slate-200 bg-white py-14 lg:py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl">
+              <h2 className="text-4xl font-black tracking-tight">Helpful detailing services in {city.name}</h2>
+              <p className="mt-4 text-lg leading-8 text-slate-600">Choose the service that matches your vehicle’s condition, or text photos if you want help deciding.</p>
+            </div>
+            <div className="mt-10 grid gap-5 md:grid-cols-2">
+              {city.content.serviceSections.map((section) => (
+                <article key={section.title} className="border border-slate-200 bg-slate-50 p-6">
+                  <h3 className="text-2xl font-black tracking-tight">{section.title}</h3>
+                  <p className="mt-3 leading-7 text-slate-600">{section.body}</p>
+                  <Link to={section.href} className="mt-5 inline-flex items-center gap-2 font-black text-blue-700 hover:text-blue-900">{section.linkLabel} <ArrowRight className="h-4 w-4" /></Link>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {city.content.projects?.length ? (
+        <section className="bg-slate-50 py-14 lg:py-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl">
+              <h2 className="text-4xl font-black tracking-tight">Recent Car Detailing Work in {city.name}</h2>
+              <p className="mt-4 text-lg leading-8 text-slate-600">These are examples of real vehicles I have detailed for customers in Omaha. Every vehicle is different, so I match the process to its condition, the areas that need attention and the owner’s goals.</p>
+            </div>
+            <div className="mt-10 space-y-8">
+              {city.content.projects.map((project) => (
+                <article key={project.title} className="border border-slate-200 bg-white p-5 sm:p-7">
+                  <div className="grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+                    <div>
+                      <h3 className="text-3xl font-black tracking-tight">{project.title}</h3>
+                      <p className="mt-4 leading-7 text-slate-600">{project.intro}</p>
+                      <dl className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
+                        {project.vehicle && <div><dt className="font-black text-slate-950">Vehicle</dt><dd className="text-slate-600">{project.vehicle}</dd></div>}
+                        <div><dt className="font-black text-slate-950">Service</dt><dd className="text-slate-600">{project.service}</dd></div>
+                        <div><dt className="font-black text-slate-950">Location</dt><dd className="text-slate-600">{project.location}</dd></div>
+                      </dl>
+                      <div className="mt-6 flex flex-wrap gap-3">
+                        {project.links.map((link) => <Link key={link.href} to={link.href} className="inline-flex min-h-11 items-center gap-2 bg-blue-600 px-4 font-black text-white hover:bg-blue-700">{link.label} <ArrowRight className="h-4 w-4" /></Link>)}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {project.images.map((image) => <figure key={image.src} className="overflow-hidden border border-slate-200 bg-slate-100"><img src={image.src} alt={image.alt} loading="lazy" decoding="async" className="aspect-[4/3] h-full w-full object-cover" /><figcaption className="sr-only">{image.alt}</figcaption></figure>)}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {city.content.faqs?.length ? (
+        <section className="border-y border-slate-200 bg-white py-14 lg:py-20">
+          <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.7fr_1.3fr]">
+            <div><h2 className="text-4xl font-black tracking-tight">{city.name} Car Detailing Questions</h2><p className="mt-4 text-lg leading-8 text-slate-600">Straight answers about service options, pricing, mobile availability and Bellevue drop-off.</p></div>
+            <div className="divide-y divide-slate-200 border-y border-slate-200">
+              {city.content.faqs.map((faq) => <details key={faq.question} className="group py-5"><summary className="cursor-pointer list-none pr-8 text-lg font-black marker:hidden">{faq.question}</summary><p className="mt-3 max-w-3xl leading-7 text-slate-600">{faq.answer}</p></details>)}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="border-y border-slate-200 bg-slate-50 py-14 lg:py-20">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[1fr_.85fr] lg:items-start">
           <div>
