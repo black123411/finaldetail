@@ -27,12 +27,12 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
     id: 'interior',
     label: 'Interior',
     title: 'Interior Detailing',
-    description: 'Already clean? Choose Maintenance. Normal daily dirt and light spots? Choose Signature. Need shampoo, extraction, or heavy cleanup? Choose Restoration.',
+    description: 'If the interior is already pretty clean, Maintenance is enough. Signature is for normal daily mess. Restoration is for the jobs with stains, extraction, pet hair, spills, or heavier buildup.',
     services: [
       {
         serviceId: 'maintenance-interior',
         fitLabel: 'Already clean — upkeep only',
-        customerDescription: 'Choose this only when the interior is already in good condition. It is a thorough vacuum and surface wipe-down—not a deep clean—and does not include shampoo, extraction, heavy stains, spills, odors, or pet-hair cleanup.',
+        customerDescription: 'This is for an interior that is already in good shape and just needs upkeep. I vacuum thoroughly, blow out tight areas, and clean the main surfaces and glass. Shampoo, extraction, heavy stains, odors, and major pet hair are not part of this service.',
         customerHighlights: [
           'Thorough vacuum and compressed-air blowout',
           'Dash, console, doors, plastics, mats, and glass wiped clean',
@@ -42,7 +42,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
       {
         serviceId: 'interior-detail',
         fitLabel: 'Normal daily use — recommended',
-        customerDescription: 'Choose this for a regularly used vehicle that needs a complete interior clean, not just upkeep. It adds detailed cleaning of cupholders, pockets, door panels, mats, and light stain spot treatment, but not full carpet or seat extraction.',
+        customerDescription: 'This is the interior service I recommend most often. It handles the normal dust, crumbs, dirty mats, cupholders, door panels, pockets, and light spots that build up in a daily driver.',
         customerHighlights: [
           'Everything needed for normal dust, crumbs, dirty mats, and buildup',
           'Detailed cupholders, console, door panels, pockets, and jambs',
@@ -53,7 +53,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
       {
         serviceId: 'interior-reset',
         fitLabel: 'Neglected or heavily soiled',
-        customerDescription: 'Choose this when Signature is not enough. It adds shampoo and hot-water extraction for spills, fabric stains, embedded dirt, and typical heavy pet hair, with several extra hours for deeper cleaning.',
+        customerDescription: 'This is for the interiors that need more time. I add shampoo and hot-water extraction for fabric stains, spills, embedded dirt, and heavier pet hair.',
         customerHighlights: [
           'Includes the Signature Interior Detail cleaning steps',
           'Carpet and upholstery shampoo with hot-water extraction',
@@ -66,7 +66,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
     id: 'full-detail',
     label: 'Full Details',
     title: 'Full Details',
-    description: 'Two clear inside-and-out choices: a complete routine detail or the larger restoration and paint-improvement package.',
+    description: 'Two inside-and-out options: one for a normal full detail and one for vehicles that need a much bigger cleanup plus paint improvement.',
     services: [
       {
         serviceId: 'full-detail-package',
@@ -85,7 +85,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
     id: 'paint',
     label: 'Paint',
     title: 'Paint Correction',
-    description: 'Choose an enhancement for gloss and light swirls, or paint correction for more visible defects after a safe paint assessment.',
+    description: 'Paint Enhancement is for gloss, haze, and light swirls. Paint Correction is for more visible defects and starts with checking what can be improved safely.',
     services: [
       {
         serviceId: 'paint-enhancement-polish',
@@ -106,7 +106,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
     id: 'ceramic',
     label: 'Ceramic',
     title: 'Ceramic Coating',
-    description: 'Current certified System X packages, preparation, coverage, and pricing remain unchanged.',
+    description: 'Four System X options, starting with a straightforward 2-year coating and moving up to longer-term packages with more correction and exterior coverage.',
     services: [
       {
         serviceId: 'system-x-crystal-plus',
@@ -116,7 +116,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
       {
         serviceId: 'system-x-pro-plus',
         fitLabel: 'Most popular System X package',
-        customerDescription: 'The strongest balance of paint enhancement, gloss, warranty length, and everyday protection.',
+        customerDescription: 'A popular middle option with paint enhancement, longer-term coating protection, and Glass+ on the windshield.',
         recommended: true,
       },
       {
@@ -127,7 +127,7 @@ export const CUSTOMER_SERVICE_GROUPS: CustomerServiceGroup[] = [
       {
         serviceId: 'system-x-phantom-2k',
         fitLabel: 'Flagship coating package',
-        customerDescription: 'A vehicle-specific flagship System X package for specialty finishes and high-end builds.',
+        customerDescription: 'A vehicle-specific two-part coating package for specialty finishes, black paint, and higher-end vehicles.',
       },
     ],
   },
