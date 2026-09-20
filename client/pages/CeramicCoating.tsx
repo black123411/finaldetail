@@ -56,7 +56,7 @@ export default function CeramicCoating() {
     provider: {
       '@type': 'AutomotiveBusiness',
       '@id': 'https://bryansdetailingomaha.com/#business',
-      name: "Bryan's Showroom Quality Mobile Detailing",
+      name: "Bryan's Showroom Quality Detailing",
     },
     areaServed: ['Bellevue, NE', 'Omaha, NE', 'Papillion, NE', 'La Vista, NE'],
     offers: packages.map((service) => ({
@@ -87,7 +87,7 @@ export default function CeramicCoating() {
           <div className="max-w-3xl">
             <p className="font-black text-blue-700">System X Certified Installer</p>
             <h1 className="mt-4 text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">Ceramic Coating in Bellevue &amp; Omaha</h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">Certified System X ceramic coating for drivers who want longer-lasting paint protection, stronger water behavior, easier maintenance and improved gloss. I inspect and prepare the paint before coating it so the protection is installed over a properly prepared surface.</p>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">I install System X ceramic coatings in Bellevue for customers around the Omaha area. The important part is the prep: I clean and inspect the paint first, then polish or correct what the selected package calls for before the coating goes on.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a href="#packages" className="inline-flex min-h-14 items-center justify-center bg-blue-600 px-7 font-black text-white hover:bg-blue-700">Compare Coating Packages</a>
               <a href={textPhotosLink} onClick={() => trackEvent('click_text_quote', { location: 'ceramic_hero' })} className="inline-flex min-h-14 items-center justify-center gap-2 border border-slate-300 px-7 font-black text-slate-900 hover:border-blue-600 hover:text-blue-700"><MessageSquare className="h-5 w-5" /> Text Paint Photos</a>
@@ -111,7 +111,7 @@ export default function CeramicCoating() {
 
       <section className="py-14 lg:py-20">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.78fr_1.22fr]">
-          <div><h2 className="text-4xl font-black tracking-tight">What ceramic coating does</h2><p className="mt-4 text-lg leading-8 text-slate-600">A professionally installed coating becomes the protective surface over prepared paint. It is designed to improve gloss retention, water behavior and resistance to common environmental contamination while making routine washing easier.</p></div>
+          <div><h2 className="text-4xl font-black tracking-tight">What ceramic coating does</h2><p className="mt-4 text-lg leading-8 text-slate-600">Ceramic coating will not make paint scratch-proof, but it does give properly prepared paint a slicker, more chemical-resistant surface that is easier to wash and maintain.</p></div>
           <div className="grid gap-px bg-slate-200 sm:grid-cols-2">
             {[
               ['Water behavior', 'Water beads and releases more readily from the coated surface, helping reduce how strongly routine road film clings.'],
@@ -127,7 +127,7 @@ export default function CeramicCoating() {
         <div className="container mx-auto px-4">
           <div className="grid gap-7 border-b-2 border-slate-950 pb-7 lg:grid-cols-[.72fr_1.28fr]">
             <h2 className="text-4xl font-black tracking-tight">System X Ceramic Coating Packages</h2>
-            <p className="max-w-2xl text-lg leading-8 text-slate-600">Choose the level of preparation and protection that fits the vehicle. Every package has its own service page with vehicle-size pricing and the work included.</p>
+            <p className="max-w-2xl text-lg leading-8 text-slate-600">The main difference between these packages is how much paint prep is included, how long the coating is covered, and whether glass and wheel protection are part of the job.</p>
           </div>
 
           <div className="divide-y divide-slate-300 border-b border-slate-300">
@@ -156,7 +156,7 @@ export default function CeramicCoating() {
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[1fr_.85fr] lg:items-start">
           <div>
             <h2 className="text-4xl font-black tracking-tight">Paint preparation comes first</h2>
-            <p className="mt-5 text-lg leading-8 text-slate-600">Ceramic coating should not be used to hide defects. I wash and decontaminate the paint, inspect the finish and use the polishing or correction appropriate for the selected package and the actual condition of the vehicle.</p>
+            <p className="mt-5 text-lg leading-8 text-slate-600">I do not coat over dirty, rough, or obviously swirled paint and call it finished. The vehicle gets washed and decontaminated first, then I polish or correct the finish according to the package and what the paint can safely handle.</p>
             <div className="mt-7 divide-y divide-slate-200 border-y border-slate-200">
               {[
                 'Wash and remove bonded contamination before coating.',
