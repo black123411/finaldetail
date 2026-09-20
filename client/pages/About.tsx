@@ -15,7 +15,7 @@ export default function About() {
     worksFor: {
       '@type': 'LocalBusiness',
       '@id': 'https://bryansdetailingomaha.com/#business',
-      name: "Bryan's Showroom Quality Mobile Detailing",
+      name: "Bryan's Showroom Quality Detailing",
     },
     knowsAbout: [
       'Interior car detailing',
@@ -32,9 +32,9 @@ export default function About() {
       <section className="border-b border-slate-200 bg-white">
         <div className="container mx-auto grid gap-10 px-4 py-14 lg:grid-cols-[1fr_.82fr] lg:items-center lg:py-20">
           <div className="max-w-3xl">
-            <h1 className="text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">About Bryan's Detailing</h1>
+            <h1 className="text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">About Bryan</h1>
             <p className="mt-6 text-xl font-semibold leading-8 text-slate-900">I'm Bryan, the owner and detailer behind Bryan's Showroom Quality Detailing in Bellevue, Nebraska.</p>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">I opened the business in 2017 after years of collision-center detailing, vehicle preparation and paint-prep work. That experience still affects how I approach paint, trim, fabric and other vehicle surfaces today.</p>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">I started the business in 2017 and have been doing the work myself ever since. I care about doing the job correctly, being clear about what can and cannot be fixed, and giving people a result that matches what they paid for.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link to="/services" className="inline-flex min-h-14 items-center justify-center bg-blue-600 px-7 font-black text-white hover:bg-blue-700">View Services &amp; Pricing</Link>
               <a href={textPhotosLink} onClick={() => trackEvent('click_text_quote', { location: 'about_hero' })} className="inline-flex min-h-14 items-center justify-center gap-2 border border-slate-300 px-7 font-black text-slate-900 hover:border-blue-600 hover:text-blue-700"><MessageSquare className="h-5 w-5" /> Text Vehicle Photos</a>
@@ -49,11 +49,11 @@ export default function About() {
 
       <section className="py-16 lg:py-24">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.75fr_1.25fr]">
-          <div><h2 className="text-4xl font-black tracking-tight">Why I started the business</h2></div>
+          <div><h2 className="text-4xl font-black tracking-tight">Why I run it this way</h2></div>
           <div className="max-w-3xl text-lg leading-8 text-slate-600">
-            <p className="font-semibold text-slate-950">Starting the business was personal.</p>
-            <p className="mt-5">After my mother passed away, I took guardianship of my two younger siblings. I needed a way to support my family, and detailing was work I already knew.</p>
-            <p className="mt-5">In 2017, I turned that experience into my own business. What started as a way to provide for my family became the owner-operated detailing business I still run today.</p>
+            <p className="font-semibold text-slate-950">I would rather do fewer jobs correctly than rush through a packed schedule.</p>
+            <p className="mt-5">I am the person answering your questions, looking at the condition of the vehicle, doing the work, and checking it before it goes back to you.</p>
+            <p className="mt-5">That also means I can tell you when a cheaper service is enough, when a job needs more time, or when a defect should be left alone instead of chased too far.</p>
           </div>
         </div>
       </section>
@@ -61,8 +61,8 @@ export default function About() {
       <section className="border-y border-slate-200 bg-slate-50 py-16 lg:py-24">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
           <div>
-            <h2 className="text-4xl font-black tracking-tight">Owner-operated means direct accountability</h2>
-            <p className="mt-5 text-lg leading-8 text-slate-600">I inspect the vehicle, recommend the service, perform the work and check the result myself. If the condition changes the job, I can explain it directly instead of passing information between a salesperson and technician.</p>
+            <h2 className="text-4xl font-black tracking-tight">You deal with me from start to finish</h2>
+            <p className="mt-5 text-lg leading-8 text-slate-600">There is no salesperson handing your vehicle off to somebody else. I inspect it, do the work, and check the result. If I find something that changes the job, I talk to you before adding time or cost.</p>
           </div>
           <div className="divide-y divide-slate-300 border-y border-slate-300">
             {[
@@ -78,14 +78,14 @@ export default function About() {
       <section className="py-16 lg:py-24">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
           <div>
-            <h2 className="text-4xl font-black tracking-tight">How I approach detailing</h2>
-            <p className="mt-5 text-lg leading-8 text-slate-600">Different materials and paint conditions need different methods. I would rather explain what can realistically be improved than chase a result that requires unnecessary risk.</p>
-            <p className="mt-5 text-lg leading-8 text-slate-600">That applies to interior restoration, stain treatment, paint polishing, paint correction and ceramic-coating preparation.</p>
+            <h2 className="text-4xl font-black tracking-tight">How I decide what a vehicle needs</h2>
+            <p className="mt-5 text-lg leading-8 text-slate-600">Not every stain needs the same chemical, and not every scratch should be chased with more aggressive polishing. I look at the condition first and use the least aggressive process that gets the result safely.</p>
+            <p className="mt-5 text-lg leading-8 text-slate-600">That is how I handle interiors, stains, polishing, paint correction, and coating prep.</p>
           </div>
           <aside className="border-l-4 border-blue-600 bg-slate-950 p-8 text-white">
             <ShieldCheck className="h-8 w-8 text-blue-400" />
-            <h3 className="mt-5 text-2xl font-black">Clear communication before more work</h3>
-            <p className="mt-4 leading-7 text-slate-300">Vehicle size, pet hair, stains, odors, spills, oxidation and previous damage can all change the amount of work involved. If I find something unexpected, I discuss it before changing the service or price.</p>
+            <h3 className="mt-5 text-2xl font-black">If the job changes, I tell you first</h3>
+            <p className="mt-4 leading-7 text-slate-300">Pet hair, spills, odors, oxidation, previous damage, or a bigger-than-expected cleanup can add time. If I run into something that changes the price, I contact you before doing extra work.</p>
           </aside>
         </div>
       </section>
