@@ -5,8 +5,23 @@ type AnalyticsParams = Record<string, string | number | boolean | null | undefin
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
+    gtag?: (...args: unknown[]) => void;
   }
 }
+
+const GA4_MEASUREMENT_ID = import.meta.env.VITE_GOOGLE_ANALYTICS_ID || 'G-2QGCVR4JJX';
+
+export const trackPageView = (pagePath: string) => {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
+
+  const normalizedPath = pagePath.startsWith('/') ? pagePath : `/${pagePath}`;
+  window.gtag('event', 'page_view', {
+    send_to: GA4_MEASUREMENT_ID,
+    page_path: normalizedPath,
+    page_location: new URL(normalizedPath, window.location.origin).toString(),
+    page_title: document.title,
+  });
+};
 
 export const trackEvent = (eventName: string, params: AnalyticsParams = {}) => {
   if (typeof window === 'undefined') return;
