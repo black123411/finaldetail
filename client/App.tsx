@@ -18,7 +18,7 @@ import {
   BUSINESS,
   type SeoRoute,
 } from '@/shared/data/seo';
-import { trackEvent } from './lib/analytics';
+import { trackPageView } from './lib/analytics';
 
 const Services = lazy(() => import('./pages/Services'));
 const Membership = lazy(() => import('./pages/Membership'));
@@ -54,7 +54,11 @@ function ScrollToTop() {
   }, [pathname, search]);
 
   useEffect(() => {
-    trackEvent('route_view', { page_path: `${pathname}${search}` });
+    const timeoutId = window.setTimeout(() => {
+      trackPageView(`${pathname}${search}`);
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, [pathname, search]);
 
   return null;
