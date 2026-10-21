@@ -38,31 +38,9 @@ export default function CityDetail() {
     .map((id) => SERVICES.find((service) => service.id === id))
     .filter((service): service is typeof SERVICES[number] => Boolean(service));
 
-  const citySchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: `Auto Detailing in ${city.name}`,
-    serviceType: 'Auto detailing',
-    description: city.seo.description,
-    url: `https://bryansdetailingomaha.com/areas/${city.slug}`,
-    provider: {
-      '@type': ['LocalBusiness', 'AutomotiveBusiness'],
-      '@id': 'https://bryansdetailingomaha.com/#business',
-      name: "Bryan's Showroom Quality Mobile Detailing",
-    },
-    areaServed: {
-      '@type': 'City',
-      name: city.name.replace(/, (NE|IA)$/, ''),
-      addressRegion: region,
-      addressCountry: 'US',
-    },
-  };
 
   return (
     <div className="min-h-screen bg-white text-slate-950">
-      <Helmet>
-        <script type="application/ld+json">{JSON.stringify(citySchema)}</script>
-      </Helmet>
 
       <section className="border-b border-slate-200 bg-white">
         <div className="container mx-auto grid gap-10 px-4 py-14 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:py-20">
