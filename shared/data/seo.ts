@@ -64,7 +64,7 @@ export const STATIC_PAGE_SEO: Record<string, SeoRoute> = {
     robots: 'noindex,follow',
   },
   '/quote': {
-    title: "Auto Detailing Quote Bellevue & Omaha, NE | Bryan's",
+    title: "Auto Detailing Quote | Omaha & Bellevue | Bryan's",
     description: 'Request an auto detailing quote in Bellevue or Omaha. Text vehicle photos for the fastest recommendation, or send your year, make, model and service needs.',
   },
   '/gallery': {
