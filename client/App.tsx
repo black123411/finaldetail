@@ -14,7 +14,8 @@ import {
   DEFAULT_SOCIAL_IMAGE,
   NOT_FOUND_SEO,
   SITE_ORIGIN,
-  STATIC_PAGE_SEO,  type SeoRoute,
+  STATIC_PAGE_SEO,
+  type SeoRoute,
 } from '@/shared/data/seo';
 import { trackEvent } from './lib/analytics';
 
