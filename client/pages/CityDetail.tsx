@@ -32,11 +32,9 @@ export default function CityDetail() {
     );
   }
 
-  const region = city.name.includes('Council Bluffs') ? 'IA' : 'NE';
   const featured = (city.content.featuredServiceIds || [])
     .map((id) => SERVICES.find((service) => service.id === id))
     .filter((service): service is typeof SERVICES[number] => Boolean(service));
-
 
   return (
     <div className="min-h-screen bg-white text-slate-950">
