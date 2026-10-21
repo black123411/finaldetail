@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { ArrowRight, Calendar, Check, MapPin, MessageSquare } from 'lucide-react';
 import { CITIES } from '@/shared/data/cities';
 import { SERVICES } from '@/shared/data/services';
