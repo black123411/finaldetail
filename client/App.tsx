@@ -15,7 +15,6 @@ import {
   NOT_FOUND_SEO,
   SITE_ORIGIN,
   STATIC_PAGE_SEO,
-  BUSINESS,
   type SeoRoute,
 } from '@/shared/data/seo';
 import { trackPageView } from './lib/analytics';
