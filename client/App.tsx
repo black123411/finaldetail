@@ -15,7 +15,6 @@ import {
   NOT_FOUND_SEO,
   SITE_ORIGIN,
   STATIC_PAGE_SEO,
-  BUSINESS,
   type SeoRoute,
 } from '@/shared/data/seo';
 import { trackPageView } from './lib/analytics';
@@ -129,50 +128,6 @@ function SEO() {
   const url = `${domain}${current.canonicalPath || pathname}`;
   const image = `${domain}${current.imagePath || DEFAULT_SOCIAL_IMAGE}`;
 
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': ['LocalBusiness', 'AutomotiveBusiness'],
-    '@id': `${SITE_ORIGIN}/#business`,
-    name: BUSINESS.name,
-    url: BUSINESS.url,
-    telephone: BUSINESS.telephone,
-    email: BUSINESS.email,
-    priceRange: BUSINESS.priceRange,
-    image,
-    address: {
-      '@type': 'PostalAddress',
-      ...BUSINESS.address,
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: BUSINESS.geo.latitude,
-      longitude: BUSINESS.geo.longitude,
-    },
-    areaServed: BUSINESS.areaServed.map((name) => ({
-      '@type': 'Place',
-      name,
-    })),
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Auto Detailing Services',
-      itemListElement: SERVICES.map((s) => ({
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: s.name,
-          description: s.shortDescription,
-          areaServed: BUSINESS.areaServed.map((name) => ({ '@type': 'Place', name })),
-         },
-       })),
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '07:00',
-      closes: '19:00',
-    },
-  };
-
   return (
     <Helmet>
       <title>{current.title}</title>
@@ -194,10 +149,6 @@ function SEO() {
       <meta property="twitter:description" content={current.description} />
       <meta property="twitter:image" content={image} />
 
-      {/* JSON-LD Schema */}
-      <script type="application/ld+json">
-        {JSON.stringify(schema)}
-      </script>
     </Helmet>
   );
 }
