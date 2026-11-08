@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { trackEvent } from '../lib/analytics';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
         <div className="space-y-4 min-w-0">
           <h3 className="text-lg font-black text-white">Bryan's Showroom Quality Detailing</h3>
           <p className="text-sm leading-relaxed">
-            Owner-operated auto detailing based in Bellevue, Nebraska. I handle interior detailing, full details, paint correction, ceramic coatings, and select mobile appointments throughout the Omaha metro.
+            {WINTER_DROP_OFF_ONLY ? 'Owner-operated auto detailing based in Bellevue, Nebraska. During the winter months, all appointments are drop-off only in Bellevue. Mobile appointments are paused until weather allows them to return.' : 'Owner-operated auto detailing based in Bellevue, Nebraska. I handle interior detailing, full details, paint correction, ceramic coatings, and select mobile appointments throughout the Omaha metro.'}
           </p>
         </div>
 
