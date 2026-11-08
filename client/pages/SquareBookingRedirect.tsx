@@ -3,6 +3,7 @@ import { Calendar } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { redirectToBookingAfterTracking } from '../lib/analytics';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 const LEGACY_SERVICE_IDS: Record<string, string> = {
   'ceramic-3yr': 'system-x-crystal-plus',
@@ -33,7 +34,7 @@ export default function SquareBookingRedirect() {
         <Calendar className="mx-auto h-10 w-10 text-blue-600" aria-hidden="true" />
         <h1 className="mt-5 text-3xl font-black tracking-tight text-slate-950">Opening secure Square booking</h1>
         <p className="mt-4 leading-7 text-slate-600">
-          Choose your vehicle option and an available appointment time directly with Square.
+          {WINTER_DROP_OFF_ONLY ? 'Winter appointments are Bellevue drop-off only. Mobile appointments are paused for the season. Choose your vehicle option and an available appointment time directly with Square.' : 'Choose your vehicle option and an available appointment time directly with Square.'}
         </p>
         <a href={target} className="mt-7 inline-flex min-h-12 items-center justify-center bg-blue-600 px-6 font-black text-white hover:bg-blue-700">
           Continue to Square
