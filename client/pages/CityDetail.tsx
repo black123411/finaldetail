@@ -35,7 +35,7 @@ export default function CityDetail() {
   }
 
   const region = city.name.includes('Council Bluffs') ? 'IA' : 'NE';
-  const pageTitle = WINTER_DROP_OFF_ONLY ? city.content.title.replace(/^Mobile\\s+/i, '').replace(/\\s*\\|\\s*Mobile.*$/i, '') : city.content.title;
+  const pageTitle = WINTER_DROP_OFF_ONLY ? city.content.title.replace(/^Mobile\s+/i, '').replace(/\s*\|\s*Mobile.*$/i, '') : city.content.title;
   const pageIntro = WINTER_DROP_OFF_ONLY
     ? `I provide interior detailing, full details, exterior paint care, paint correction and certified System X ceramic coatings for vehicles in ${city.name}. During the winter months, all appointments are by drop-off in Bellevue. Mobile appointments are paused until weather allows them to return.`
     : city.content.intro;
