@@ -1,6 +1,7 @@
 import { CheckCircle2, Shield, Star, Crown, MessageSquare } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import RelatedGuides from '../components/RelatedGuides';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 const membershipTextLink = (plan: string) =>
   `sms:+17123056313?body=${encodeURIComponent(`Hi Bryan, I'm interested in the ${plan} maintenance plan. Can you confirm availability, eligibility, and billing details?`)}`;
@@ -88,7 +89,7 @@ export default function Membership() {
                 "Repeat-service scheduling",
                 "A plan we agree on before enrollment",
                 "Add-ons discussed before work",
-                "Mobile or Bellevue drop-off, depending on the service and weather"
+                WINTER_DROP_OFF_ONLY ? 'Winter appointments are Bellevue drop-off only' : 'Mobile or Bellevue drop-off, depending on the service and weather'
               ].map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 text-sm text-zinc-300">
                   <CheckCircle2 className="h-4 w-4 text-blue-600" />

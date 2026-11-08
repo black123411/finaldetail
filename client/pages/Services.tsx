@@ -9,6 +9,7 @@ import { formatCurrency } from '../lib/utils';
 import RelatedGuides from '../components/RelatedGuides';
 import { trackBookingHandoff, trackEvent } from '../lib/analytics';
 import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 interface SquareService {
   id: string;
@@ -85,6 +86,7 @@ export default function Services() {
             <div className="mt-5 space-y-4 text-slate-700">
               {[
                 'Square shows current appointment availability and vehicle-size options.',
+                ...(WINTER_DROP_OFF_ONLY ? ['During the winter months, all appointments are Bellevue drop-off only. Mobile appointments are paused for the season.'] : []),
                 'Standard detailing appointments do not require a deposit.',
                 'Ceramic coating appointments require a deposit.',
                 'If the vehicle needs work beyond the selected package, I discuss it before adding it.',

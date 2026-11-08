@@ -8,6 +8,8 @@ import { AuthProvider } from './context/AuthContext';
 import { AdminGuard } from './components/AdminGuard';
 import ChatAssistant from './components/ChatAssistant';
 import StickyBookingBar from './components/StickyBookingBar';
+import WinterNotice from './components/WinterNotice';
+import { WINTER_DROP_OFF_ONLY } from './lib/seasonal';
 import { CATEGORIES, SERVICES } from '@/shared/data/services';
 import { CITIES } from '@/shared/data/cities';
 import {
@@ -210,6 +212,7 @@ export default function App() {
           <ScrollToTop />
           <SEO />
           <div className="min-h-screen flex flex-col bg-zinc-50 text-zinc-900 font-sans">
+            <WinterNotice />
             <Navbar />
             <main className="flex-grow">
               <Suspense fallback={<div className="flex min-h-[50vh] items-center justify-center" role="status" aria-label="Loading page"><div className="h-10 w-10 animate-spin rounded-full border-4 border-zinc-200 border-t-zinc-900" /></div>}>

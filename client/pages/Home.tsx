@@ -7,6 +7,7 @@ import { BEFORE_AFTERS } from '@/shared/data/photos';
 import { formatCurrency } from '../lib/utils';
 import { trackBookingHandoff, trackEvent } from '../lib/analytics';
 import { getSquareBookingLink } from '../lib/constants';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 const results = BEFORE_AFTERS.filter(({ id }) => [1, 2, 6, 7].includes(id));
 const textHref = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%27m%20not%20sure%20which%20detail%20I%20need.%20Here%20are%20photos%20of%20my%20vehicle%3A';
@@ -26,7 +27,7 @@ export default function Home() {
         <div className="container mx-auto grid min-h-[620px] gap-10 px-4 py-16 lg:grid-cols-[1.02fr_.98fr] lg:items-center lg:py-20">
           <div className="max-w-3xl">
             <h1 className="text-5xl font-black leading-[.96] tracking-tight sm:text-6xl lg:text-7xl">Car Detailing in Bellevue &amp; Omaha, NE</h1>
-            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">I detail vehicles in Bellevue and across the Omaha area, from everyday interior cleanups to paint correction and System X ceramic coatings. Some jobs can be done mobile, while longer paint and coating work is handled by appointment in Bellevue.</p>
+            <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">{WINTER_DROP_OFF_ONLY ? 'I detail vehicles in Bellevue and across the Omaha area, from everyday interior cleanups to paint correction and System X ceramic coatings. During the winter months, all appointments are drop-off only in Bellevue. Mobile appointments are paused until weather allows them to return.' : 'I detail vehicles in Bellevue and across the Omaha area, from everyday interior cleanups to paint correction and System X ceramic coatings. Some jobs can be done mobile, while longer paint and coating work is handled by appointment in Bellevue.'}</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_hero_primary' })} className="inline-flex min-h-14 items-center justify-center gap-2 bg-blue-600 px-7 font-black text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                 <Calendar className="h-5 w-5" /> View Services &amp; Pricing
@@ -42,7 +43,7 @@ export default function Home() {
             <img src="/hero-detailing-optimized.webp" alt="Professionally detailed vehicle in Bellevue Nebraska" className="aspect-[4/3] w-full object-cover" />
             <div className="grid border-x border-b border-slate-200 bg-slate-50 sm:grid-cols-3">
               <div className="border-b border-slate-200 p-5 sm:border-b-0 sm:border-r"><p className="text-xs font-black uppercase tracking-[.14em] text-slate-500">Serving the metro</p><p className="mt-1 font-black">Since 2017</p></div>
-              <div className="border-b border-slate-200 p-5 sm:border-b-0 sm:border-r"><p className="text-xs font-black uppercase tracking-[.14em] text-slate-500">Service options</p><p className="mt-1 font-black">Mobile + Drop-Off</p></div>
+              <div className="border-b border-slate-200 p-5 sm:border-b-0 sm:border-r"><p className="text-xs font-black uppercase tracking-[.14em] text-slate-500">Service options</p><p className="mt-1 font-black">{WINTER_DROP_OFF_ONLY ? 'Bellevue Drop-Off Only' : 'Mobile + Drop-Off'}</p></div>
               <div className="p-5"><p className="text-xs font-black uppercase tracking-[.14em] text-slate-500">Coatings</p><p className="mt-1 font-black">System X Certified</p></div>
             </div>
           </div>
@@ -51,7 +52,7 @@ export default function Home() {
 
       <section aria-label="Why customers choose Bryan" className="border-b border-slate-200 bg-slate-950 text-white">
         <div className="container mx-auto grid px-4 sm:grid-cols-3">
-          {['Owner-operated service', '4.8 rating from 48 Google reviews', 'Mobile + Bellevue drop-off'].map((item) => (
+          {['Owner-operated service', '4.8 rating from 48 Google reviews', WINTER_DROP_OFF_ONLY ? 'Winter drop-off appointments' : 'Mobile + Bellevue drop-off'].map((item) => (
             <div key={item} className="flex min-h-20 items-center gap-3 border-b border-slate-800 py-4 last:border-b-0 sm:border-r sm:px-5 lg:border-b-0 first:pl-0 last:border-r-0">
               <Check className="h-5 w-5 shrink-0 text-blue-400" />
               {item.includes('Google reviews') ? (
@@ -135,8 +136,8 @@ export default function Home() {
       <section className="bg-slate-950 py-16 text-white lg:py-20">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
           <div>
-            <h2 className="text-4xl font-black tracking-tight sm:text-5xl">Mobile detailing across Bellevue and Omaha</h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">I serve Bellevue, Omaha, Papillion, La Vista, Council Bluffs and nearby areas. Mobile appointments depend on the job, weather, and a safe place to work. Paint correction and coating jobs are usually better handled as Bellevue drop-off appointments.</p>
+            <h2 className="text-4xl font-black tracking-tight sm:text-5xl">{WINTER_DROP_OFF_ONLY ? 'Detailing across Bellevue and Omaha' : 'Mobile detailing across Bellevue and Omaha'}</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">{WINTER_DROP_OFF_ONLY ? 'I serve Bellevue, Omaha, Papillion, La Vista, Council Bluffs and nearby areas. During the winter months, all appointments are by drop-off in Bellevue. Mobile appointments are paused until weather allows them to return.' : 'I serve Bellevue, Omaha, Papillion, La Vista, Council Bluffs and nearby areas. Mobile appointments depend on the job, weather, and a safe place to work. Paint correction and coating jobs are usually better handled as Bellevue drop-off appointments.'}</p>
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-bold text-blue-300"><Link to="/areas/bellevue-ne">Bellevue</Link><Link to="/areas/omaha-ne">Omaha</Link><Link to="/areas/papillion-ne">Papillion</Link><Link to="/areas/la-vista-ne">La Vista</Link><Link to="/areas/council-bluffs-ia">Council Bluffs</Link></div>
           </div>
           <div className="border-l-4 border-blue-500 bg-slate-900 p-7"><h3 className="text-2xl font-black">Ready to schedule?</h3><p className="mt-3 leading-7 text-slate-300">Choose a service and check current availability, or send photos first if you want a recommendation.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row"><Link to="/services" onClick={() => trackEvent('view_services', { location: 'home_final_cta' })} className="inline-flex min-h-12 items-center justify-center bg-blue-600 px-6 font-black text-white hover:bg-blue-700">View Services &amp; Pricing</Link><a href={textHref} onClick={() => trackEvent('click_text_quote', { location: 'home_final_cta' })} className="inline-flex min-h-12 items-center justify-center border border-slate-600 px-6 font-black text-white hover:border-blue-400">Text Photos</a></div></div>
