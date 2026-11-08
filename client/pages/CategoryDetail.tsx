@@ -4,6 +4,7 @@ import { SERVICES, CATEGORIES } from '@/shared/data/services';
 import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { formatCurrency } from '../lib/utils';
 import { trackBookingHandoff, trackEvent } from '../lib/analytics';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 import RelatedGuides, { guideTopicForCategory } from '../components/RelatedGuides';
 
 const photoTextLink = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detail.%20Here%20are%20photos%20of%20my%20vehicle%3A';
@@ -70,7 +71,7 @@ export default function CategoryDetail() {
           {[
             'Owner-operated since 2017',
             'Clear service descriptions and starting prices',
-            'Mobile options plus Bellevue drop-off',
+            WINTER_DROP_OFF_ONLY ? 'Winter appointments: Bellevue drop-off only' : 'Mobile options plus Bellevue drop-off',
           ].map((item) => <div key={item} className="flex min-h-20 items-center gap-3 border-b border-slate-800 py-4 last:border-b-0 sm:border-b-0 sm:border-r sm:px-5 first:pl-0 last:border-r-0"><Check className="h-5 w-5 shrink-0 text-blue-400" /><span className="text-sm font-black">{item}</span></div>)}
         </div>
       </section>
@@ -115,8 +116,8 @@ export default function CategoryDetail() {
       <section className="border-y border-slate-200 bg-slate-50 py-14 lg:py-20">
         <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[1fr_.8fr] lg:items-start">
           <div>
-            <h2 className="text-4xl font-black tracking-tight">Mobile service or Bellevue drop-off</h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">Many detailing appointments can be completed mobile when the service, weather and work area are suitable. Longer paint-correction, ceramic-coating and weather-sensitive services are usually better suited to appointment-only Bellevue drop-off.</p>
+            <h2 className="text-4xl font-black tracking-tight">{WINTER_DROP_OFF_ONLY ? 'Winter appointments are drop-off only' : 'Mobile service or Bellevue drop-off'}</h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">{WINTER_DROP_OFF_ONLY ? 'During the winter months, all appointments are by drop-off in Bellevue. Mobile appointments are paused until weather allows them to return.' : 'Many detailing appointments can be completed mobile when the service, weather and work area are suitable. Longer paint-correction, ceramic-coating and weather-sensitive services are usually better suited to appointment-only Bellevue drop-off.'}</p>
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-bold text-blue-700"><Link to="/areas/bellevue-ne">Car Detailing in Bellevue</Link><Link to="/areas/omaha-ne">Car Detailing in Omaha</Link><Link to="/areas/papillion-ne">Papillion Service Area</Link></div>
           </div>
           <aside className="border-l-4 border-blue-600 bg-white p-7"><h3 className="text-2xl font-black">Unsure which option fits?</h3><p className="mt-3 leading-7 text-slate-600">Send photos of the vehicle and tell me what you want improved. I will recommend the appropriate service before you book.</p><a href={photoTextLink} onClick={() => trackEvent('click_text_quote', { location: 'category_help', category: category.slug })} className="mt-6 inline-flex min-h-12 items-center gap-2 bg-slate-950 px-5 font-black text-white hover:bg-blue-700"><MessageSquare className="h-4 w-4" /> Text Vehicle Photos</a></aside>
