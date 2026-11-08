@@ -56,7 +56,9 @@ export default function CityDetail() {
     '@type': 'Service',
     name: `Auto Detailing in ${city.name}`,
     serviceType: 'Auto detailing',
-    description: WINTER_DROP_OFF_ONLY ? `${city.seo.description} Winter appointments are Bellevue drop-off only; mobile service is paused for the season.` : city.seo.description,
+    description: WINTER_DROP_OFF_ONLY
+      ? `Car detailing for ${city.name} drivers, with all winter appointments by drop-off in Bellevue. Interior detailing, full details, paint correction and System X ceramic coatings. Mobile appointments return when weather allows.`
+      : city.seo.description,
     url: `https://bryansdetailingomaha.com/areas/${city.slug}`,
     provider: {
       '@type': ['LocalBusiness', 'AutomotiveBusiness'],
