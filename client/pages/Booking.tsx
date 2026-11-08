@@ -22,6 +22,7 @@ import { BookingAPI, ServiceAPI } from '../services/api';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 import { trackEvent } from '../lib/analytics';
 import { formatCurrency } from '../lib/utils';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 type Step = 'service' | 'size' | 'addons' | 'datetime' | 'details' | 'success';
 type BookingPathId = 'interior' | 'full-detail' | 'exterior-paint' | 'ceramic' | 'specialty';
@@ -550,7 +551,7 @@ export default function Booking() {
           <div className="mb-4 flex items-center justify-center gap-2 border border-blue-100 bg-blue-50 px-4 py-3 text-center text-sm font-bold text-blue-800 animate-in fade-in duration-500">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 shrink-0" />
-              Owner-operated since 2017 • Mobile and Bellevue drop-off options
+              {WINTER_DROP_OFF_ONLY ? 'Owner-operated since 2017 • Winter drop-off appointments only' : 'Owner-operated since 2017 • Mobile and Bellevue drop-off options'}
             </div>
           </div>
           <div className="grid grid-cols-1 gap-3 text-left sm:grid-cols-3">
@@ -1054,7 +1055,12 @@ export default function Booking() {
                       
                       <div className="col-span-2 mt-4">
                         <label className="text-[10px] font-bold uppercase text-zinc-400 mb-2 block">Service Location</label>
-                        {requiresDropOff ? (
+                        {WINTER_DROP_OFF_ONLY ? (
+                          <div role="status" className="border border-blue-200 bg-blue-50 p-4 text-sm leading-6 text-blue-950">
+                            <p className="font-black">Winter appointments are drop-off only</p>
+                            <p className="mt-1">Mobile appointments are paused for the winter. Bring your vehicle to 1907 Arlington Cir, Bellevue, NE 68123 at your scheduled appointment time. Drop-off is by appointment only.</p>
+                          </div>
+                        ) : requiresDropOff ? (
                           <div role="status" className="border border-violet-200 bg-violet-50 p-4 text-sm leading-6 text-violet-950">
                             <p className="font-black">Bellevue drop-off required</p>
                             <p className="mt-1">Odor and ozone treatments cannot be completed as a mobile appointment. The vehicle must remain unoccupied during treatment and be aired out before pickup.</p>
