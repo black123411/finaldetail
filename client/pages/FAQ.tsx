@@ -64,7 +64,11 @@ export default function FAQ() {
           return faq;
         }) : source);
       })
-      .catch(() => setFaqs(DEFAULT_FAQS))
+      .catch(() => setFaqs(WINTER_DROP_OFF_ONLY ? DEFAULT_FAQS.map((faq) => {
+        if (/mobile/i.test(faq.question)) return { ...faq, answer: 'Mobile appointments are paused during the winter months. All winter appointments are Bellevue drop-off only by appointment at 1907 Arlington Cir, Bellevue, NE 68123. Mobile service will return when weather allows.' };
+        if (/weather/i.test(faq.question)) return { ...faq, answer: 'During the winter months, all appointments are Bellevue drop-off only. Mobile appointments are paused while cold temperatures, snow and changing conditions make outdoor work impractical. Mobile service will return when weather allows.' };
+        return faq;
+      }) : DEFAULT_FAQS))
       .finally(() => setLoading(false));
   }, []);
 
