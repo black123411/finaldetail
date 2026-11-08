@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { AlertTriangle, ArrowLeft, ArrowRight, Calendar, Check, ChevronDown, Clock, MapPin, MessageSquare, ShieldCheck } from 'lucide-react';
 import { trackBookingHandoff, trackEvent } from '../lib/analytics';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { SERVICES, CATEGORIES, VEHICLE_SIZES, SPECIALTY_SIZES, type Service } from '@/shared/data/services';
 import { SERVICE_PAGE_CONTENT } from '@/shared/data/servicePageContent';
@@ -62,6 +63,7 @@ function getPriceRows(service: Service) {
 
 function getServiceAvailability(service: Service) {
   if (service.id === 'ppf-inquiry') return 'Consultation required';
+  if (WINTER_DROP_OFF_ONLY) return 'Bellevue drop-off only during winter';
   if (service.id === 'odor-elimination') return 'Bellevue drop-off';
   if (service.isSpecialty) return 'Mobile service by quote';
   if (service.categoryId === 'paint-correction' || service.categoryId === 'protection') return 'Bellevue drop-off recommended';
@@ -160,7 +162,7 @@ export default function ServiceDetail() {
         <div className="container mx-auto grid px-4 md:grid-cols-3">
           <div className="flex gap-3 border-b border-slate-800 py-5 md:border-b-0 md:border-r md:px-6 first:pl-0"><ShieldCheck className="h-5 w-5 shrink-0 text-blue-400" /><div><p className="font-black">Owner-operated</p><p className="mt-1 text-sm text-slate-400">I handle the recommendation, work and final check.</p></div></div>
           <div className="flex gap-3 border-b border-slate-800 py-5 md:border-b-0 md:border-r md:px-6"><Check className="h-5 w-5 shrink-0 text-blue-400" /><div><p className="font-black">Clear service fit</p><p className="mt-1 text-sm text-slate-400">The page explains what the service is designed to handle.</p></div></div>
-          <div className="flex gap-3 py-5 md:px-6"><MapPin className="h-5 w-5 shrink-0 text-blue-400" /><div><p className="font-black">Bellevue &amp; Omaha metro</p><p className="mt-1 text-sm text-slate-400">Mobile options plus Bellevue drop-off.</p></div></div>
+          <div className="flex gap-3 py-5 md:px-6"><MapPin className="h-5 w-5 shrink-0 text-blue-400" /><div><p className="font-black">Bellevue &amp; Omaha metro</p><p className="mt-1 text-sm text-slate-400">{WINTER_DROP_OFF_ONLY ? 'Winter appointments are Bellevue drop-off only.' : 'Mobile options plus Bellevue drop-off.'}</p></div></div>
         </div>
       </section>
 
