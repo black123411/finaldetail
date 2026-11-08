@@ -7,6 +7,7 @@ import RelatedGuides from '../components/RelatedGuides';
 import { formatCurrency } from '../lib/utils';
 import { getSquareBookingLink, isInquiryOnlyService } from '../lib/constants';
 import { trackBookingHandoff, trackEvent } from '../lib/analytics';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 const photoTextLink = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%20need%20help%20choosing%20a%20detail.%20Here%20are%20photos%20of%20my%20vehicle%3A';
 
@@ -34,6 +35,18 @@ export default function CityDetail() {
   }
 
   const region = city.name.includes('Council Bluffs') ? 'IA' : 'NE';
+  const pageTitle = WINTER_DROP_OFF_ONLY ? city.content.title.replace(/^Mobile\\s+/i, '').replace(/\\s*\\|\\s*Mobile.*$/i, '') : city.content.title;
+  const pageIntro = WINTER_DROP_OFF_ONLY
+    ? `I provide interior detailing, full details, exterior paint care, paint correction and certified System X ceramic coatings for vehicles in ${city.name}. During the winter months, all appointments are by drop-off in Bellevue. Mobile appointments are paused until weather allows them to return.`
+    : city.content.intro;
+  const whyPoints = WINTER_DROP_OFF_ONLY
+    ? [...city.content.whyPoints.filter((point) => !/mobile/i.test(point)).slice(0, 3), 'Winter appointments are Bellevue drop-off only by appointment.']
+    : city.content.whyPoints;
+  const cityFaqs = WINTER_DROP_OFF_ONLY
+    ? city.content.faqs.map((faq) => /mobile|weather|drop-off/i.test(faq.question)
+      ? { ...faq, answer: 'Mobile appointments are paused during the winter months. All winter appointments are Bellevue drop-off only by appointment at 1907 Arlington Cir, Bellevue, NE 68123. Mobile service will return when weather allows.' }
+      : faq)
+    : city.content.faqs;
   const featured = (city.content.featuredServiceIds || [])
     .map((id) => SERVICES.find((service) => service.id === id))
     .filter((service): service is typeof SERVICES[number] => Boolean(service));
@@ -43,7 +56,7 @@ export default function CityDetail() {
     '@type': 'Service',
     name: `Auto Detailing in ${city.name}`,
     serviceType: 'Auto detailing',
-    description: city.seo.description,
+    description: WINTER_DROP_OFF_ONLY ? `${city.seo.description} Winter appointments are Bellevue drop-off only; mobile service is paused for the season.` : city.seo.description,
     url: `https://bryansdetailingomaha.com/areas/${city.slug}`,
     provider: {
       '@type': ['LocalBusiness', 'AutomotiveBusiness'],
@@ -68,8 +81,8 @@ export default function CityDetail() {
         <div className="container mx-auto grid gap-10 px-4 py-14 lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:py-20">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 text-sm font-bold text-blue-700"><MapPin className="h-4 w-4" /> Serving {city.name}</div>
-            <h1 className="mt-4 text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">{city.content.title}</h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">{city.content.intro}</p>
+            <h1 className="mt-4 text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">{pageTitle}</h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">{pageIntro}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link to="/services" onClick={() => trackEvent('view_services', { location: 'city_hero', city: city.slug })} className="inline-flex min-h-14 items-center justify-center gap-2 bg-blue-600 px-7 font-black text-white hover:bg-blue-700">
                 <Calendar className="h-5 w-5" /> View Services &amp; Pricing
@@ -83,7 +96,7 @@ export default function CityDetail() {
           <div className="border border-slate-200 bg-slate-50 p-7 sm:p-9">
             <h2 className="text-2xl font-black">What you can expect</h2>
             <div className="mt-6 space-y-4">
-              {city.content.whyPoints.slice(0, 4).map((point) => (
+              {whyPoints.slice(0, 4).map((point) => (
                 <div key={point} className="flex gap-3 border-t border-slate-200 pt-4 first:border-t-0 first:pt-0">
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-blue-700" />
                   <p className="font-semibold leading-7 text-slate-700">{point}</p>
@@ -186,9 +199,9 @@ export default function CityDetail() {
       {city.content.faqs?.length ? (
         <section className="border-y border-slate-200 bg-white py-14 lg:py-20">
           <div className="container mx-auto grid gap-10 px-4 lg:grid-cols-[.7fr_1.3fr]">
-            <div><h2 className="text-4xl font-black tracking-tight">{city.name} Car Detailing Questions</h2><p className="mt-4 text-lg leading-8 text-slate-600">Straight answers about service options, pricing, mobile availability and Bellevue drop-off.</p></div>
+            <div><h2 className="text-4xl font-black tracking-tight">{city.name} Car Detailing Questions</h2><p className="mt-4 text-lg leading-8 text-slate-600">{WINTER_DROP_OFF_ONLY ? 'Straight answers about service options, pricing and winter drop-off appointments in Bellevue.' : 'Straight answers about service options, pricing, mobile availability and Bellevue drop-off.'}</p></div>
             <div className="divide-y divide-slate-200 border-y border-slate-200">
-              {city.content.faqs.map((faq) => <details key={faq.question} className="group py-5"><summary className="cursor-pointer list-none pr-8 text-lg font-black marker:hidden">{faq.question}</summary><p className="mt-3 max-w-3xl leading-7 text-slate-600">{faq.answer}</p></details>)}
+              {cityFaqs.map((faq) => <details key={faq.question} className="group py-5"><summary className="cursor-pointer list-none pr-8 text-lg font-black marker:hidden">{faq.question}</summary><p className="mt-3 max-w-3xl leading-7 text-slate-600">{faq.answer}</p></details>)}
             </div>
           </div>
         </section>
@@ -199,7 +212,7 @@ export default function CityDetail() {
           <div>
             <h2 className="text-4xl font-black tracking-tight">{city.content.whyLabel}</h2>
             <div className="mt-7 grid gap-4 sm:grid-cols-2">
-              {city.content.whyPoints.map((point) => (
+              {whyPoints.map((point) => (
                 <div key={point} className="flex gap-3 border-t border-slate-300 pt-4">
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-blue-700" />
                   <p className="font-semibold leading-7 text-slate-700">{point}</p>
@@ -212,7 +225,7 @@ export default function CityDetail() {
             <div className="mt-5 flex flex-wrap gap-2">
               {city.content.serviceAreas.map((area) => <span key={area} className="border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700">{area}</span>)}
             </div>
-            <p className="mt-6 text-sm leading-6 text-slate-600">Mobile service depends on the selected service, weather, access and a safe work area. Bellevue drop-off is available by appointment for longer or weather-sensitive work.</p>
+            <p className="mt-6 text-sm leading-6 text-slate-600">{WINTER_DROP_OFF_ONLY ? 'During the winter months, all appointments are Bellevue drop-off only. Mobile appointments are paused until weather allows them to return.' : 'Mobile service depends on the selected service, weather, access and a safe work area. Bellevue drop-off is available by appointment for longer or weather-sensitive work.'}</p>
           </aside>
         </div>
       </section>
@@ -227,7 +240,7 @@ export default function CityDetail() {
             {[
               ['1', 'Choose the service', 'Compare the service description, starting price and the condition it is designed for.'],
               ['2', 'Check availability', 'Use the service-specific Square link to choose the appropriate vehicle option and an available time.'],
-              ['3', 'Confirm mobile or drop-off', 'The service, work area and weather determine whether mobile service or Bellevue drop-off is the better fit.'],
+              WINTER_DROP_OFF_ONLY ? ['3', 'Confirm drop-off', 'All winter appointments are by drop-off at the Bellevue location.'] : ['3', 'Confirm mobile or drop-off', 'The service, work area and weather determine whether mobile service or Bellevue drop-off is the better fit.'],
               ['4', 'Review condition-related work', 'If the vehicle needs work beyond the selected package, I discuss it with you before adding it.'],
             ].map(([number, title, body]) => (
               <div key={number} className="grid gap-3 py-5 sm:grid-cols-[44px_1fr]">
