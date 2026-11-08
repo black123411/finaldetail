@@ -9,6 +9,7 @@ import { AdminGuard } from './components/AdminGuard';
 import ChatAssistant from './components/ChatAssistant';
 import StickyBookingBar from './components/StickyBookingBar';
 import WinterNotice from './components/WinterNotice';
+import { WINTER_DROP_OFF_ONLY } from './lib/seasonal';
 import { CATEGORIES, SERVICES } from '@/shared/data/services';
 import { CITIES } from '@/shared/data/cities';
 import {
