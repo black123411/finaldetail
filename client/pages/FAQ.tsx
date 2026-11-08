@@ -5,6 +5,7 @@ import { ChevronDown, Loader2, MessageSquare } from 'lucide-react';
 import { FAQAPI } from '../services/api';
 import RelatedGuides from '../components/RelatedGuides';
 import { trackEvent } from '../lib/analytics';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 const textPhotosLink = 'sms:+17123056313?body=Hi%20Bryan%2C%20I%20have%20a%20question%20about%20detailing%20my%20vehicle.%20Here%20are%20photos%3A';
 
@@ -16,7 +17,7 @@ const DEFAULT_FAQS = [
   },
   {
     question: 'Do you offer mobile car detailing?',
-    answer: 'Yes. Mobile detailing is available throughout Bellevue, Omaha and surrounding communities when the selected service, weather, access and work area are suitable. Appointment-only Bellevue drop-off is available for longer or weather-sensitive services.',
+    answer: 'Mobile appointments are paused during the winter months. All winter appointments are Bellevue drop-off only by appointment at 1907 Arlington Cir, Bellevue, NE 68123. Mobile service will return when weather allows.',
     order: 2,
   },
   {
@@ -36,7 +37,7 @@ const DEFAULT_FAQS = [
   },
   {
     question: 'What is your weather policy for mobile detailing?',
-    answer: 'Mobile appointments depend on weather and a safe place to work. If rain, snow or extreme temperatures make the service impractical, the appointment may need to move or be rescheduled. Bellevue drop-off is available for longer or weather-sensitive work.',
+    answer: 'During the winter months, all appointments are Bellevue drop-off only. Mobile appointments are paused while cold temperatures, snow and changing conditions make outdoor work impractical. Mobile service will return when weather allows.',
     order: 6,
   },
 ];
@@ -55,7 +56,14 @@ export default function FAQ() {
 
   useEffect(() => {
     FAQAPI.getFaqs()
-      .then((data) => setFaqs(Array.isArray(data) && data.length > 0 ? data : DEFAULT_FAQS))
+      .then((data) => {
+        const source = Array.isArray(data) && data.length > 0 ? data : DEFAULT_FAQS;
+        setFaqs(WINTER_DROP_OFF_ONLY ? source.map((faq) => {
+          if (/mobile/i.test(faq.question)) return { ...faq, answer: 'Mobile appointments are paused during the winter months. All winter appointments are Bellevue drop-off only by appointment at 1907 Arlington Cir, Bellevue, NE 68123. Mobile service will return when weather allows.' };
+          if (/weather/i.test(faq.question)) return { ...faq, answer: 'During the winter months, all appointments are Bellevue drop-off only. Mobile appointments are paused while cold temperatures, snow and changing conditions make outdoor work impractical. Mobile service will return when weather allows.' };
+          return faq;
+        }) : source);
+      })
       .catch(() => setFaqs(DEFAULT_FAQS))
       .finally(() => setLoading(false));
   }, []);
@@ -81,7 +89,7 @@ export default function FAQ() {
       <section className="border-b border-slate-200 bg-white">
         <div className="container mx-auto grid gap-8 px-4 py-14 lg:grid-cols-[.8fr_1.2fr] lg:items-end lg:py-20">
           <div><h1 className="text-5xl font-black leading-[.98] tracking-tight sm:text-6xl">Car Detailing FAQ</h1></div>
-          <p className="max-w-2xl text-lg leading-8 text-slate-600">Straight answers to the questions I get most about prices, mobile appointments, drop-off work, interiors, paint correction, and ceramic coatings.</p>
+          <p className="max-w-2xl text-lg leading-8 text-slate-600">{WINTER_DROP_OFF_ONLY ? 'Straight answers about prices, winter drop-off appointments, interiors, paint correction, and ceramic coatings.' : 'Straight answers to the questions I get most about prices, mobile appointments, drop-off work, interiors, paint correction, and ceramic coatings.'}</p>
         </div>
       </section>
 
