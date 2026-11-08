@@ -1,6 +1,7 @@
 import { CheckCircle2, Shield, Star, Crown, MessageSquare } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import RelatedGuides from '../components/RelatedGuides';
+import { WINTER_DROP_OFF_ONLY } from '../lib/seasonal';
 
 const membershipTextLink = (plan: string) =>
   `sms:+17123056313?body=${encodeURIComponent(`Hi Bryan, I'm interested in the ${plan} maintenance plan. Can you confirm availability, eligibility, and billing details?`)}`;
